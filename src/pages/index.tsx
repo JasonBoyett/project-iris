@@ -25,10 +25,11 @@ const Home: NextPage = () => {
               href="https://create.t3.gg/en/usage/first-steps"
               target="_blank"
             >
-              <h3 className="text-2xl font-bold">First Steps →</h3>
+              <h3 className="text-2xl font-bold">Signe up→</h3>
               <div className="text-lg">
-                Just the basics - Everything you need to know to set up your
-                database and authentication.
+                Submit your information to enter our beta program.
+                Join us in creating a routeen to enhance student's reading speed
+                and academic potential.
               </div>
             </Link>
             <Link
@@ -36,10 +37,9 @@ const Home: NextPage = () => {
               href="https://create.t3.gg/en/introduction"
               target="_blank"
             >
-              <h3 className="text-2xl font-bold">Documentation →</h3>
+              <h3 className="text-2xl font-bold">Your <span className="text-[hsl(280,100%,70%)]">Routeen</span>→</h3>
               <div className="text-lg">
-                Learn more about Create T3 App, the libraries it uses, and how
-                to deploy it.
+                Train with your own custom built routeen and help us build our system.
               </div>
             </Link>
           </div>
