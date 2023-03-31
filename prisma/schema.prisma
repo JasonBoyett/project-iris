@@ -11,8 +11,23 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model User {
+    Id        String   @id @default(cuid())
+    CreatedAt DateTime @default(now())
+    UpdatedAt DateTime @updatedAt
+    Email     String   @unique @db.VarChar(320)
+    Password  String   @db.VarChar(255)
+    FirstName String   @db.VarChar(255)
+    LastName  String   @db.VarChar(255)
+    MaxWpm    Int      @db.SmallInt
+
+    @@index([Email])
+}
+
+model ShulteSession {
+    Id         String   @id @default(cuid())
+    SideLength Int      @db.TinyInt
+    StartTime  DateTime @db.DateTime
+    EndTime    DateTime @db.DateTime
+    ErrorCount Int      @db.SmallInt
 }
