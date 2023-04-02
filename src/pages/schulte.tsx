@@ -7,7 +7,7 @@ import { api } from "~/utils/api";
 
 const Page: NextPage = () => {
     
-    const [sideLength, setSideLength] = useState(9);
+    const [sideLength, setSideLength] = useState(7);
 
     function shuffledNumbers(last: number): number[] {
     const arr: number[] | undefined[] = [];
