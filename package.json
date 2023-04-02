@@ -20,6 +20,7 @@
     "preact": "^10.13.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "shuffle-array": "^1.0.1",
     "superjson": "1.12.2",
     "zod": "^3.21.4"
   },

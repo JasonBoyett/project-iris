@@ -1,71 +1,63 @@
 import { type NextPage } from "next";
-import { useEffect, useState } from "react";
 import {h, Fragment} from "preact"; 
+import {useState, useEffect} from "react";
 import Head from "next/head";
 import Link from "next/link";
-
 import { api } from "~/utils/api";
 
-interface Props{
-    divs: Array<JSX.Element>
-}
+const Page: NextPage = () => {
+    
+    const [sideLength, setSideLength] = useState(9);
 
-function shuffle(arr: Array<any>) {
+    function shuffledNumbers(last: number): number[] {
+    const arr: number[] | undefined[] = [];
+    for (let i = 1; i <= last; i++) {
+        arr.push(i as never);
+    }
     for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
+        [arr[i] , arr[j]] = [arr[j], arr[i]];
     }
-    return arr;
-}
+    return arr as number[];
+    }
 
-const Cell = (content: number) => {
-    return(
-        <div className='h-20 w-20 flex items-center justify-center text-center text-lg border border-white-100'>{content.toString()}
-        </div>
-    );
-};
+    const [numbers, changeNumbers] = useState(shuffledNumbers(sideLength * sideLength));
 
-const ShulteTable = (sideLength: number) => {
-    let cells = () => {
-        let cells = [];
-        for (let i = 0; i < sideLength; i++) {
-            for (let j = 0; j < sideLength; j++) {
-                cells.push(Cell((i * sideLength + j)+1));
-            }
-        }
-    return shuffle(cells);
-};
-    let render = ({ divs }: Props) => {
+    const Cell = (content: number | string): JSX.Element => {
         return(
-            <div className={`grid grid-cols-${sideLength}`}>
-                {divs.map((div) => (
-                  <Fragment key={div.key}>{div}</Fragment>
-                ))}
+            <button className='h-20 w-20 flex items-center justify-center border border-zinc-800 border-2 rounded hover:bg-gray-900'>
+                <div className="text-center text-2xl text-white">{content}</div>
+            </button>
+        );
+    };
+
+    const generateCells = (): JSX.Element[] => {
+        const cells: JSX.Element[] = numbers.map( n => {
+            return Cell(n);
+        });
+        return cells;
+    };
+
+    const generateTable = (): JSX.Element => {
+        return(
+            <div className={`flex grid grid-cols-${sideLength} gap-1`}>
+                {generateCells()}
             </div>
         );
-    }
+    };
+    const [table, setTable] = useState(generateTable());
+    useEffect(() => { setTable(table); }, [table]);
+
     return(
-        <div>
-            {render({divs: cells()})}
-        </div>
-    );
-};
-
-
-
-const Page: NextPage = () => {
-    return (
-    <>
-        <Head>
-            <title>Shulte Table</title>
-        </Head>
-        <main>
-            <div className="flex justify-center items-center h-screen">
-                {ShulteTable(7)}
+        <>
+            <Head>
+                <title>Schulte Table</title>
+                <meta name="Schulte Table" content="A speed reading game called Schulte Table" />
+            </Head>
+            <div className="flex justify-center h-screen items-center">
+                {table}
             </div>
-        </main>
-    </>
+        </>
     );
 };
-
 export default Page;

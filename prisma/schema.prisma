@@ -11,6 +11,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model example {
+  id    Int    @unique@id @default(autoincrement())
+  title String
+}
+
 model User {
     Id        String   @id @default(cuid())
     CreatedAt DateTime @default(now())
@@ -30,4 +35,5 @@ model ShulteSession {
     StartTime  DateTime @db.DateTime
     EndTime    DateTime @db.DateTime
     ErrorCount Int      @db.SmallInt
+    UserId     String   @db.VarChar(255)
 }
