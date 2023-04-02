@@ -81,13 +81,17 @@ const Page: NextPage = () => {
                 <title>Schulte Table</title>
                 <meta name="Schulte Table" content="A speed reading game called Schulte Table" />
             </Head>
-            <div className='text-3xl text-white'>
-                <p>Errors: {currentErrors}</p>
-                <p>Number: {currentNumber}</p>
-                <p className='text-green-500'>{doneString}</p>
-            </div>
-            <div className="flex justify-center h-screen items-center">
-                {table}
+            <div className="flex justify-center items-center flex-col">
+                <div className="flex flex-col justify-center h-screen items-start">
+                    <div>
+                        <p className='text-green-500 text-7xl text-center'>{doneString}</p>
+                    </div>
+                        {table}
+                    <div className='text-3xl text-white justify-left'>
+                        <p>Errors: {currentErrors}</p>
+                        <p>Number: {currentNumber}</p>
+                    </div>
+                </div>
             </div>
         </>
     );
