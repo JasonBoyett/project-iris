@@ -40,7 +40,7 @@ const Page: NextPage = () => {
 
     const generateTable = (): JSX.Element => {
         return(
-            <div className={`flex grid grid-cols-${sideLength} gap-1`}>
+            <div className={`flex grid grid-cols-7 gap-1`}>
                 {generateCells()}
             </div>
         );
