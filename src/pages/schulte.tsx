@@ -7,8 +7,9 @@ import { api } from "~/utils/api";
 
 const Page: NextPage = () => {
     const [currentNumber, setCurrentNumber] = useState(1);
-    let localNumber = currentNumber;  
-    const [sideLength, setSideLength] = useState(7);
+    let localNumber: number = currentNumber;  
+    const [doneString, setDoneString] = useState(' ');
+    const [sideLength, setSideLength] = useState(5);
     const [currentErrors, setCurrentErrors] = useState(0);
     
 
@@ -29,17 +30,17 @@ const Page: NextPage = () => {
     const handleClick = (content: number) => { 
         if (content === localNumber || content === currentNumber){
             setCurrentNumber(prevNumber => prevNumber + 1);
-            localNumber++;
-            console.log('compared', currentNumber);
+            if(localNumber < sideLength*sideLength){
+                localNumber++;
+            }
         }
         else{
             setCurrentErrors(prevErrors => prevErrors + 1);
-            console.log(content,currentNumber);
         }
     };
 
     const Cell = (content: number): JSX.Element => {
-        const className = 'h-20 w-20 flex items-center justify-center border border-zinc-800 border-2 rounded bg-gray-900';
+        const className = 'h-20 w-20 flex items-center justify-center hover:border hover:border-white hover:border-2 rounded bg-gray-900';
     return(
             <button className={className} onClick={() => handleClick(content)}>
                 <div className="text-center text-2xl text-white">{content}</div>
@@ -56,7 +57,7 @@ const Page: NextPage = () => {
 
     const generateTable = (): JSX.Element => {
         return(
-            <div className={`flex grid grid-cols-7 gap-1`}>
+            <div className={`flex grid grid-cols-5 gap-1`}>
                 {generateCells()}
             </div>
         );
@@ -64,10 +65,15 @@ const Page: NextPage = () => {
     const [table, setTable] = useState(generateTable());
     useEffect(() => { setTable(table); }, [table]);
     useEffect(() => {
-        setCurrentNumber(localNumber)
-        console.log('triggered')
+        if(localNumber < sideLength*sideLength + 1){
+            setCurrentNumber(localNumber)
+        }
+        else{
+            setCurrentNumber(0);
+            setDoneString('Done!');
+        }
     }, 
-    [currentNumber, currentErrors, localNumber]);
+    [currentNumber, currentErrors, localNumber, doneString]);
 
     return(
         <>
@@ -78,6 +84,7 @@ const Page: NextPage = () => {
             <div className='text-3xl text-white'>
                 <p>Errors: {currentErrors}</p>
                 <p>Number: {currentNumber}</p>
+                <p className='text-green-500'>{doneString}</p>
             </div>
             <div className="flex justify-center h-screen items-center">
                 {table}
