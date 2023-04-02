@@ -6,10 +6,10 @@ import Link from "next/link";
 import { api } from "~/utils/api";
 
 const Page: NextPage = () => {
-    let [currentNumber, setCurrentNumber] = useState(1);
+    const [currentNumber, setCurrentNumber] = useState(1);
     let localNumber = currentNumber;  
     const [sideLength, setSideLength] = useState(7);
-    let [currentErrors, setCurrentErrors] = useState(0);
+    const [currentErrors, setCurrentErrors] = useState(0);
     
 
     function shuffledNumbers(last: number): number[] {
@@ -39,7 +39,7 @@ const Page: NextPage = () => {
     };
 
     const Cell = (content: number): JSX.Element => {
-        let className = 'h-20 w-20 flex items-center justify-center border border-zinc-800 border-2 rounded bg-gray-900';
+        const className = 'h-20 w-20 flex items-center justify-center border border-zinc-800 border-2 rounded bg-gray-900';
     return(
             <button className={className} onClick={() => handleClick(content)}>
                 <div className="text-center text-2xl text-white">{content}</div>
