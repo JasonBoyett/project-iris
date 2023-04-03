@@ -22,7 +22,7 @@ const Home: NextPage = () => {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
             <Link
               className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-              href="https://create.t3.gg/en/usage/first-steps"
+              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
               target="_blank"
             >
               <h3 className="text-2xl font-bold">Sign up→</h3>
@@ -33,7 +33,7 @@ const Home: NextPage = () => {
             </Link>
             <Link
               className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-              href="/schulte" //this will lead to a page that will serve games to the user
+              href="/nav" //this will lead to a page that will serve games to the user
               target="_blank"
             >
               <h3 className="text-2xl font-bold">Your <span className="text-[hsl(280,100%,70%)]">Routine</span>→</h3>

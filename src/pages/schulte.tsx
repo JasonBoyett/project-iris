@@ -13,7 +13,7 @@ const Page: NextPage = () => {
     const [currentErrors, setCurrentErrors] = useState(0);
     
 
-    function shuffledNumbers(last: number): number[] {
+    const shuffledNumbers = (last: number): number[] => {
     const arr: number[] | undefined[] = [];
     for (let i = 1; i <= last; i++) {
         arr.push(i as never);
@@ -40,7 +40,7 @@ const Page: NextPage = () => {
     };
 
     const Cell = (content: number): JSX.Element => {
-        const className = 'h-20 w-20 flex items-center justify-center hover:border hover:border-white hover:border-2 rounded bg-gray-900';
+        const className = 'lg:h-20 lg:w-20 flex items-center justify-center hover:border hover:border-white hover:border-2 rounded bg-gray-900 sm:h-16 sm:w-16';
     return(
             <button className={className} onClick={() => handleClick(content)}>
                 <div className="text-center text-2xl text-white">{content}</div>
@@ -81,6 +81,9 @@ const Page: NextPage = () => {
                 <title>Schulte Table</title>
                 <meta name="Schulte Table" content="A speed reading game called Schulte Table" />
             </Head>
+            <button className='h-20 w-60 flex bg-gradient-to-bl from-black to-bleu-200 text-white items-center justify-center border border-white hover:border-2 rounded hover:bg-gray-800'>
+              Instructions
+            </button>
             <div className="flex justify-center items-center flex-col">
                 <div className="flex flex-col justify-center h-screen items-start">
                     <div>

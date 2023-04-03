@@ -5,3 +5,7 @@
 body{
     @apply bg-gradient-to-br from-slate-800 to-gray-600;
 }
+
+stdButton:global{
+  @apply bg-gradient-to-bl from-slate-600 to-gray-800 w-3 h-3/4 rounded-lg shadow-lg;
+}
