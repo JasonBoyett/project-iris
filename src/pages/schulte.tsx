@@ -40,7 +40,7 @@ const Page: NextPage = () => {
     };
 
     const Cell = (content: number): JSX.Element => {
-        const className = 'lg:h-20 lg:w-20 flex items-center justify-center hover:border hover:border-white hover:border-2 rounded bg-gray-900 sm:h-16 sm:w-16';
+        const className = 'h-16 w-16 lg:h-22 lg:w-22 flex items-center justify-center hover:border hover:border-white hover:border-2 rounded bg-gray-900 sm:h-20 sm:w-20';
     return(
             <button className={className} onClick={() => handleClick(content)}>
                 <div className="text-center text-2xl text-white">{content}</div>
