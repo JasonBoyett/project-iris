@@ -39,6 +39,15 @@ const Page: NextPage = () => {
         }
     };
 
+    const teardown = () => {
+        //log info here
+        changeNumbers(shuffledNumbers(sideLength * sideLength));
+        setCurrentNumber(1);
+        localNumber = 1;
+        setCurrentErrors(0);
+        setDoneString(' ');
+    };
+
     const Cell = (content: number): JSX.Element => {
         const className = 'h-16 w-16 lg:h-22 lg:w-22 flex items-center justify-center hover:border hover:border-white hover:border-2 rounded bg-gray-900 sm:h-20 sm:w-20';
     return(
@@ -65,10 +74,10 @@ const Page: NextPage = () => {
     const [table, setTable] = useState(generateTable());
     useEffect(() => { setTable(table); }, [table]);
     useEffect(() => {
-        if(localNumber < sideLength*sideLength + 1){
+        if(localNumber < sideLength*sideLength + 1 && doneString !== 'Done!'){
             setCurrentNumber(localNumber)
         }
-        else{
+        else if(localNumber === sideLength*sideLength + 1 && doneString !== 'Done!'){
             setCurrentNumber(0);
             setDoneString('Done!');
         }
@@ -86,9 +95,11 @@ const Page: NextPage = () => {
             </button>
             <div className="flex justify-center items-center flex-col">
                 <div className="flex flex-col justify-center h-screen items-start">
-                    <div>
-                        <p className='text-green-500 text-7xl text-center'>{doneString}</p>
-                    </div>
+                    <button onClick={teardown}>
+                        <p className='text-green-500 text-7xl text-center'>
+                            {doneString}
+                        </p>
+                    </button>
                         {table}
                     <div className='text-2xl text-white justify-left p-2'>
                         <p>Number: {currentNumber}</p>
