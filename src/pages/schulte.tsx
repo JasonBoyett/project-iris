@@ -90,9 +90,9 @@ const Page: NextPage = () => {
                         <p className='text-green-500 text-7xl text-center'>{doneString}</p>
                     </div>
                         {table}
-                    <div className='text-3xl text-white justify-left'>
-                        <p>Errors: {currentErrors}</p>
+                    <div className='text-2xl text-white justify-left p-2'>
                         <p>Number: {currentNumber}</p>
+                        <p>Errors: {currentErrors}</p>
                     </div>
                 </div>
             </div>
