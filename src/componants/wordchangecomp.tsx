@@ -16,10 +16,7 @@ type ChangerProps = {
 const WordChanger = (props: ChangerProps) => {
   const [state, setState]: [ChangerProps, Function] = useState(props);
   const counter = useRef(0);
-  const [content, setContent]: [string, Function] = useState(() => {
-    if (!state.words[counter.current]) throw new Error("No words to display");
-    return state.words[counter.current] as string;
-  });
+  const [content, setContent] = useState(state.words[counter.current]);
 
   useEffect(() => {
     const timer = setTimeout(() => {

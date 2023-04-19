@@ -7,7 +7,7 @@ import FlashingGrid from "src/componants/flashingcell";
 import { GridProps } from "src/componants/flashingcell";
 
 const Page: NextPage = () => {
-  const [words, setWords]: [string[], Function] = useState([
+  const [words, setWords] = useState([
     "This",
     "is",
     "a",
