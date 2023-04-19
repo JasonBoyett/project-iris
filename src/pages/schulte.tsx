@@ -95,9 +95,11 @@ const Page: NextPage = () => {
           content="A speed reading game called Schulte Table"
         />
       </Head>
-      <button className="to-bleu-200 flex h-20 w-60 items-center justify-center rounded border border-white bg-gradient-to-bl from-black text-white hover:border-2 hover:bg-gray-800 gap-1">
+
+      <button className="flex h-20 w-60 items-center justify-center rounded border border-white bg-gradient-to-bl from-black text-white hover:border-2 hover:bg-gray-800 gap-1">
         Instructions
       </button>
+
       <div className="flex flex-col items-center justify-center">
         <div className="flex h-screen flex-col items-start justify-center">
           <button onClick={teardown}>
