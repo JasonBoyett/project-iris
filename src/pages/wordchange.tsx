@@ -16,7 +16,7 @@ const Page: NextPage = () => {
       </Head>
 
       <div className="flex-grid flex h-screen items-center justify-center text-3xl">
-        <WordChanger words={words} rate={3000} />
+        <WordChanger words={words} rate={60000/200} />
       </div>
     </>
   );

@@ -1,138 +1,150 @@
-import { warn } from "console";
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  useContext,
-  createContext,
-} from "react";
-import { api } from "~/utils/api";
+import React, { 
+  useState, 
+  useEffect 
+} from 'react';
 
-type CellProps = {
-  content: string;
-  flashTime: number;
-  id: number;
-};
+import axios from 'axios';
+import { api } from '~/utils/api';
 
+//props for the Grid
 type GridProps = {
-  words: string[];
-  cols: number;
-  rows: number;
-  flashTime: number;
-};
+  wordCount: number;
+  width: number;
+  height: number;
+}
 
-let flashNumberContext = createContext(0);
+//tailwind class constants
+const FLASH = "flex text-white text-2xl justify-center p-4 bg-gray-500 rounded-md gap-1";
+const NO_FLASH = "flex text-white text-2xl justify-center p-4";
 
-const Cell = (props: CellProps) => {
-  const [state, setState]: [CellProps, Function] = useState(props);
-  const flashNumber = useContext(flashNumberContext);
-  const flashString =
-    "flex text-white text-2xl justify-center p-2 bg-blue-500 rounded-md";
-  const noFlashString =
-    "flex text-white text-2xl justify-center p-2 bg-gray-500 rounded-md";
-  const [className, setClassName]: [string, Function] = useState(noFlashString);
+//helper functions
+const getWords = async (number: number)  => {
+  const response = await axios.get(`https://random-word-api.vercel.app/api?words=${number}`);
+  return response.data as string[];
+}
 
-  useEffect(() => {
-    if (flashNumber === state.id) {
-      setClassName(flashString);
-    } else {
-      setClassName(noFlashString);
-    }
-  }, [flashNumber]);
+const partitionWords = (words: string[], indexes: number, sections: number) => {
+  const partitionedWords: string[][] = [];
+  for (let i = 0; i < sections; i++) {
+    partitionedWords.push(words.slice(i * indexes, (i + 1) * indexes));
+  }
+  return partitionedWords;
+}
 
-  useEffect(() => {
-    if (flashNumber === state.id) {
-      setClassName(flashString);
-    } else {
-      setClassName(noFlashString);
-    }
-  }, []);
-
+const wordToComponent = (word: string, id: string) => {
   return (
-    <>
-      <div className={className}>{state.content}</div>
-    </>
+    React.createElement(
+      "div", {className: NO_FLASH, key: id}, word
+    )
   );
+}
+
+const toggleFlash = (element: React.ReactElement) => {
+  const currentClass = element.props.className;
+  const newClassName = currentClass !== FLASH ? FLASH : NO_FLASH;
+  const newProps = {...element.props, className: newClassName};
+  const newElm = React.cloneElement(element, newProps, element.props.children);
+  return newElm;
+}
+
+const calculateSectionNumber = (props: GridProps) => {
+  const perSection = props.width * props.height;
+  return Math.ceil(props.wordCount / perSection); 
 };
 
-const FlashingGrid = (props: GridProps) => {
-  const [state, setState] = useState(props);
-  const [shownWords, setShownWords] = useState(
-    state.words.slice(0, props.cols * props.rows)
+const flashingGrid = (props: GridProps) => {
+  const [words, setWords] = useState<string[][]>([[]]);
+  const [section, setSection] = useState<number>(0);
+  const [index, setIndex]: [number, Function] = useState<number>(0);
+  const [grid, setGrid]: [React.ReactElement[], Function] = useState([]);
+  const [gridCount, setGridCount]: [number, Function] = useState<number>(
+    calculateSectionNumber(props)
   );
-  const [flashNumber, setFlashNumber] = useState(0);
-  const [section, setSection] = useState(0);
-  const [grid, setGrid]: [JSX.Element[], Function] = useState([]);
+  const [returnClass, setReturnClass]: [string, Function] = useState<string>(
+    `grid grid-cols-${props.width} gap-2`
+  );
+  const [cellCount, setCellCount]: [number, Function] = useState<number>(
+    props.width * props.height
+  );
 
-  const reset = () => {
-    let tempArray: string[] = [];
-    setSection(section + 1);
-    const trueSection = section + 1;
-    console.log(section, trueSection);
-    tempArray = state.words.slice(
-      trueSection * state.cols * state.rows,
-      (trueSection + 1) * state.cols * state.rows
-    );
-    tempArray = tempArray.filter((element: any) => {
-      return element !== undefined;
-    });
-    return tempArray;
-  };
+  let loading: React.ReactElement | null = <div>Loading...</div> 
+  const done = <div>Done</div>
+  const error = <div>Error</div>
 
-  const makeGrid = () => {
-    if (shownWords === undefined) throw new Error("No words to show");
-    const size = shownWords.length;
-    let tempGrid: JSX.Element[] = [];
-    for (let i = 0; i < size; i++) {
-      tempGrid.push(
-        <Cell
-          content={shownWords[i] as string}
-          id={i}
-          flashTime={state.flashTime}
-          key={i}
-        />
+  const buildGrid = () => {
+    let newGrid: React.ReactElement[] = [];
+    for (let i = 0; i < cellCount; i++) {
+      newGrid.push(
+        wordToComponent(words[section]?.[i]!, 
+        i.toString() + ", "+ section.toString())
       );
-    }
-    setGrid(tempGrid);
-    console.log(tempGrid);
-  };
+    };
+    setGrid(newGrid);
+  }
 
-  const cycle = () => {
-    if (flashNumber < state.cols * state.rows) {
-      setFlashNumber((prev) => prev + 1);
-    } else {
-      setShownWords(reset());
-      console.log(shownWords);
-      setFlashNumber(0);
-      makeGrid();
+  const handlePress = () => {
+    try{
+      if(index === cellCount && section === gridCount){
+        console.log(index, section);
+        return;
+      }
+      if(!index){
+        setGrid(grid, grid[index] = toggleFlash(grid[index]!));
+        setIndex(index + 1);
+      }
+      else if(index < cellCount){
+        setGrid(
+          grid, 
+          grid[index] = toggleFlash(grid[index]!), 
+          grid[index - 1] = toggleFlash(grid[index - 1]!)
+        );
+        setIndex(index + 1);
+      }
+      else{
+        setSection(section + 1);
+        setIndex(0);
+      }
+      console.log(index, section);
     }
-  };
+    catch(Exception){
+      return;
+    }
+  }
 
   useEffect(() => {
-    console.log("useEffect ran");
-    if (section !== 0) {
-      makeGrid();
+    const getWordsAndBuildGrid = async () => {
+      const holder = await getWords(gridCount * cellCount);
+      setWords(partitionWords(holder, cellCount, gridCount));
+      buildGrid();
     }
-  }, [shownWords]);
-
-  useEffect(() => {
-    makeGrid();
-    // console.log(grid);
+    getWordsAndBuildGrid();
   }, []);
 
-  // useEffect(() => {
-  //   makeGrid();
-  // }, [flashNumber]);
-  //
-  return (
-    <>
-      <flashNumberContext.Provider value={flashNumber}>
-        <button onClick={cycle}>Flash</button>
-        <div className={`flex grid grid-cols-1 gap-1`}>{grid}</div>
-      </flashNumberContext.Provider>
-    </>
-  );
-};
+  useEffect(() => {
+    if(section < gridCount){
+    buildGrid();
+    }
+    else{
+      setGrid(null);
+      loading = null;
+    }
+  }, [words, section]);
 
-export default FlashingGrid;
-export type { CellProps, GridProps };
+  try{
+    return (
+      <>
+        <button onClick={handlePress}>Press</button>
+        <div className={returnClass}>
+          {grid??loading??done}
+        </div>
+      </>
+    );
+  }
+  catch(Exception){
+    return error;
+  }
+
+}
+
+export default flashingGrid;
+export type { GridProps };

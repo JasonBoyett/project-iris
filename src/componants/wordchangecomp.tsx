@@ -31,7 +31,7 @@ const WordChanger = (props: ChangerProps) => {
 
   return (
     <>
-      <div className="flex h-20 w-60 items-center justify-center rounded border border-2 border-white">
+      <div className="flex h-20 w-60 items-center justify-center rounded border border-2 border-white bg-gray-400">
         {content}
       </div>
     </>
