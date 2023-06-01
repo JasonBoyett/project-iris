@@ -1,18 +1,19 @@
 
-import type { NextPage } from "next";
+
+import { NextPage, GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { api } from "~/utils/api";
 import { useEffect, useState } from "react";
 import FlashingGrid from "src/componants/flashingcell";
-import type { GridProps } from "src/componants/flashingcell";
+import { GridProps } from "src/componants/flashingcell";
 
 interface PageProps {
   grid?: JSX.Element;
 }
 
 const buildProps: GridProps = {
-  wordsPerCell: 1,
+  wordsPerCell: 2,
   width: 2,
   height: 7,
   wpm: 200

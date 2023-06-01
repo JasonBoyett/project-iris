@@ -5,6 +5,8 @@ import React, {
   useRef,
   useContext,
   createContext,
+  Dispatch,
+  SetStateAction,
 } from "react";
 import { api } from "~/utils/api";
 
@@ -14,7 +16,7 @@ type ChangerProps = {
 };
 
 const WordChanger = (props: ChangerProps) => {
-  const [state, setState]: [ChangerProps, Function] = useState(props);
+  const [state, setState]: [ChangerProps, Dispatch<SetStateAction<ChangerProps>>]= useState(props);
   const counter = useRef(0);
   const [content, setContent] = useState(state.words[counter.current]);
 

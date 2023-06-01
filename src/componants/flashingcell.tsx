@@ -1,9 +1,14 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { 
   useState, 
   useEffect, 
-  useRef,
+  ReactNode,
+  ReactElement,
+  Dispatch,
+  SetStateAction,
 } from 'react';
-import useInterval from '~/hooks/useInterval.tsx';
+import useInterval from '~/hooks/useInterval';
 import axios from 'axios';
 import { api } from '~/utils/api';
 
@@ -21,8 +26,23 @@ const NO_FLASH = "flex text-white text-2xl justify-center p-4";
 
 //helper functions
 const getWords = async (number: number)  => {
-  const response = await axios.get(`https://random-word-api.vercel.app/api?words=${number}`);
-  return response.data as string[];
+  try{
+    if (number > 500) {//random words api won't return more than 500 words at a time so here's a hacky workaround
+      const holder: string[] = [];
+      for (let i = 0; i < (number/500)+1; i++) {
+        const response = await axios.get(`https://random-word-api.vercel.app/api?words=500`);
+        holder.push(...response.data as string[]);
+      }
+      return holder.slice(0, number);
+    }
+    else{
+      const response = await axios.get(`https://random-word-api.vercel.app/api?words=${number}`);
+      return response.data as string[];
+    }
+  } catch (error) {
+    console.log("Here's the error: ", error);
+    return ["error"]
+  }
 }
 
 const partitionWords = (words: string[], indexes: number, sections: number, wordsPerCell: number) => {
@@ -46,11 +66,13 @@ const wordToComponent = (word: string, id: string) => {
 }
 
 const toggleFlash = (element: React.ReactElement) => {
-  const currentClass = element.props.className;
+  const currentClass: React.FC | string = element.props.className as React.FC | string;
   const newClassName = currentClass !== FLASH ? FLASH : NO_FLASH;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const newProps = {...element.props, className: newClassName};
-  const newElm = React.cloneElement(element, newProps, element.props.children);
-  return newElm;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  const newElm: ReactNode = React.cloneElement(element, newProps, element.props.children);
+  return newElm as ReactElement;
 }
 
 const calculateSectionNumber = (props: GridProps) => {
@@ -58,18 +80,19 @@ const calculateSectionNumber = (props: GridProps) => {
   return Math.ceil(props.wpm / perSection); 
 };
 
-const flashingGrid = (props: GridProps) => {
+const flashingGrid: React.FC<GridProps> = (props: GridProps) => {
   const [words, setWords] = useState<string[][]>([[]]);
-  const [section, setSection] = useState<number>(0);
-  const [index, setIndex] = useState<number>(0);
-  const [grid, setGrid]: [React.ReactElement[], Function] = useState([]);
-  const [gridCount, setGridCount]: [number, Function] = useState<number>(
+  const [section, setSection]: [number , Dispatch<SetStateAction<number>>]= useState<number>(0);
+  const [index, setIndex]: [number, Dispatch<SetStateAction<number>>]= useState<number>(0);
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  const [grid, setGrid]: [any[], Function] = useState([]);
+  const [gridCount, setGridCount]: [number, Dispatch<SetStateAction<number>>] = useState<number>(
     calculateSectionNumber(props)
   );
-  const [returnClass, setReturnClass]: [string, Function] = useState<string>(
+  const [returnClass, setReturnClass]: [string, Dispatch<SetStateAction<string>>] = useState<string>(
     `grid grid-cols-${props.width} gap-2`
   );
-  const [cellCount, setCellCount]: [number, Function] = useState<number>(
+  const [cellCount, setCellCount]: [number, Dispatch<SetStateAction<number>>] = useState<number>(
     props.width * props.height
   );
 
@@ -77,13 +100,16 @@ const flashingGrid = (props: GridProps) => {
   const error = <div>Error</div>
 
   const buildGrid = () => {
+    // eslint-disable-next-line prefer-const
     let newGrid: React.ReactElement[] = [];
     for (let i = 0; i < cellCount; i++) {
       newGrid.push(
-        wordToComponent(words[section]?.[i]!, 
+        wordToComponent(words[section]?.[i] as string, 
         i.toString() + ", "+ section.toString())
       );
-    };
+    }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
     setGrid(newGrid);
   }
 
@@ -93,19 +119,21 @@ const flashingGrid = (props: GridProps) => {
         return false;
       }
       if(!index){
-        setGrid(grid, grid[index] = toggleFlash(grid[index]!));
+        const newGrid: React.ReactElement[] = grid as React.ReactElement[];
+        newGrid[0] = toggleFlash(newGrid[0]!);
+        setGrid(newGrid);
         setIndex(previous => previous + 1);
       }
       else if(index < cellCount){
-        setGrid(
-          grid, 
-          grid[index] = toggleFlash(grid[index]!), 
-          grid[index - 1] = toggleFlash(grid[index - 1]!)
-        );
+        const newGrid: React.ReactElement[] = grid as React.ReactElement[];
+        newGrid[index] = toggleFlash(newGrid[index]!);
+        newGrid[index - 1] = toggleFlash(newGrid[index - 1]!);
+
+        setGrid(newGrid);
         setIndex(previous => previous + 1);
       }
       else{
-        setSection(previous => previous + 1);
+        setSection((previous: number) => previous + 1);
         setIndex(0);
       }
       return true;
@@ -125,6 +153,7 @@ const flashingGrid = (props: GridProps) => {
       setWords(partitionWords(holder, cellCount, gridCount, props.wordsPerCell));
       buildGrid();
     }
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getWordsAndBuildGrid();
   }, []);
 
