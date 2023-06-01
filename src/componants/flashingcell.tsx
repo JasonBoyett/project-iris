@@ -1,14 +1,16 @@
 import React, { 
   useState, 
-  useEffect 
+  useEffect, 
+  useRef,
 } from 'react';
-
+import useInterval from '~/hooks/useInterval.tsx';
 import axios from 'axios';
 import { api } from '~/utils/api';
 
 //props for the Grid
 type GridProps = {
-  wordCount: number;
+  wordsPerCell: number;
+  wpm: number;
   width: number;
   height: number;
 }
@@ -23,10 +25,14 @@ const getWords = async (number: number)  => {
   return response.data as string[];
 }
 
-const partitionWords = (words: string[], indexes: number, sections: number) => {
+const partitionWords = (words: string[], indexes: number, sections: number, wordsPerCell: number) => {
   const partitionedWords: string[][] = [];
+  const wordJoiner: string[] = [];
+  for (let i = 0; i < words.length/wordsPerCell; i += wordsPerCell){
+    wordJoiner.push(words.slice(i, i + wordsPerCell).join(" "));
+  }
   for (let i = 0; i < sections; i++) {
-    partitionedWords.push(words.slice(i * indexes, (i + 1) * indexes));
+    partitionedWords.push(wordJoiner.slice(i));
   }
   return partitionedWords;
 }
@@ -49,13 +55,13 @@ const toggleFlash = (element: React.ReactElement) => {
 
 const calculateSectionNumber = (props: GridProps) => {
   const perSection = props.width * props.height;
-  return Math.ceil(props.wordCount / perSection); 
+  return Math.ceil(props.wpm / perSection); 
 };
 
 const flashingGrid = (props: GridProps) => {
   const [words, setWords] = useState<string[][]>([[]]);
   const [section, setSection] = useState<number>(0);
-  const [index, setIndex]: [number, Function] = useState<number>(0);
+  const [index, setIndex] = useState<number>(0);
   const [grid, setGrid]: [React.ReactElement[], Function] = useState([]);
   const [gridCount, setGridCount]: [number, Function] = useState<number>(
     calculateSectionNumber(props)
@@ -67,8 +73,7 @@ const flashingGrid = (props: GridProps) => {
     props.width * props.height
   );
 
-  let loading: React.ReactElement | null = <div>Loading...</div> 
-  const done = <div>Done</div>
+  const done = <div className="flex text-4xl text-white justify-center items-center">Done!</div>
   const error = <div>Error</div>
 
   const buildGrid = () => {
@@ -82,15 +87,14 @@ const flashingGrid = (props: GridProps) => {
     setGrid(newGrid);
   }
 
-  const handlePress = () => {
+  const step = () => {
     try{
       if(index === cellCount && section === gridCount){
-        console.log(index, section);
-        return;
+        return false;
       }
       if(!index){
         setGrid(grid, grid[index] = toggleFlash(grid[index]!));
-        setIndex(index + 1);
+        setIndex(previous => previous + 1);
       }
       else if(index < cellCount){
         setGrid(
@@ -98,23 +102,27 @@ const flashingGrid = (props: GridProps) => {
           grid[index] = toggleFlash(grid[index]!), 
           grid[index - 1] = toggleFlash(grid[index - 1]!)
         );
-        setIndex(index + 1);
+        setIndex(previous => previous + 1);
       }
       else{
-        setSection(section + 1);
+        setSection(previous => previous + 1);
         setIndex(0);
       }
-      console.log(index, section);
+      return true;
     }
     catch(Exception){
-      return;
+      return false;
     }
   }
 
+  useInterval(() => {
+    step();
+  }, 60000 / props.wpm);
+
   useEffect(() => {
     const getWordsAndBuildGrid = async () => {
-      const holder = await getWords(gridCount * cellCount);
-      setWords(partitionWords(holder, cellCount, gridCount));
+      const holder = await getWords(gridCount * cellCount * props.wordsPerCell);
+      setWords(partitionWords(holder, cellCount, gridCount, props.wordsPerCell));
       buildGrid();
     }
     getWordsAndBuildGrid();
@@ -126,16 +134,14 @@ const flashingGrid = (props: GridProps) => {
     }
     else{
       setGrid(null);
-      loading = null;
     }
   }, [words, section]);
 
   try{
     return (
       <>
-        <button onClick={handlePress}>Press</button>
         <div className={returnClass}>
-          {grid??loading??done}
+          {grid??done}
         </div>
       </>
     );

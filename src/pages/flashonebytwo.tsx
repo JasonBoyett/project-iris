@@ -1,3 +1,4 @@
+
 import { NextPage, GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -11,15 +12,16 @@ interface PageProps {
 }
 
 const buildProps: GridProps = {
+  wordsPerCell: 2,
   width: 2,
-  wordCount: 60,
-  height: 5
+  height: 7,
+  wpm: 200
 };
 
 const Page: NextPage<PageProps> = () => {
   const loading = (
     <div className="flex flex-col items-center justify-center">
-      Loading...
+      Loading Game...
     </div>
   );
 
