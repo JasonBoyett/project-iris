@@ -86,6 +86,8 @@ const flashingGrid: React.FC<GridProps> = (props: GridProps) => {
   const [index, setIndex]: [number, Dispatch<SetStateAction<number>>]= useState<number>(0);
   // eslint-disable-next-line @typescript-eslint/ban-types
   const [grid, setGrid]: [any[], Function] = useState([]);
+  const [fetched, setFetched]: [boolean, Dispatch<SetStateAction<boolean>>] = useState<boolean>(false);
+  const [loaded, setLoaded]: [boolean, Dispatch<SetStateAction<boolean>>] = useState<boolean>(false);
   const [gridCount, setGridCount]: [number, Dispatch<SetStateAction<number>>] = useState<number>(
     calculateSectionNumber(props)
   );
@@ -98,6 +100,7 @@ const flashingGrid: React.FC<GridProps> = (props: GridProps) => {
 
   const done = <div className="flex text-4xl text-white justify-center items-center">Done!</div>
   const error = <div>Error</div>
+  const loading = <div className="flex text-4xl text-white justify-center items-center">Loading..</div>
 
   const buildGrid = () => {
     // eslint-disable-next-line prefer-const
@@ -111,6 +114,7 @@ const flashingGrid: React.FC<GridProps> = (props: GridProps) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     setGrid(newGrid);
+    setFetched(true);
   }
 
   const step = () => {
@@ -144,7 +148,7 @@ const flashingGrid: React.FC<GridProps> = (props: GridProps) => {
   }
 
   useInterval(() => {
-    step();
+    fetched? step() : setLoaded(true);
   }, 60000 / props.wpm);
 
   useEffect(() => {
@@ -170,7 +174,7 @@ const flashingGrid: React.FC<GridProps> = (props: GridProps) => {
     return (
       <>
         <div className={returnClass}>
-          {grid??done}
+          {loaded? loading : grid??done}
         </div>
       </>
     );
