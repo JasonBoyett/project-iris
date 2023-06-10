@@ -27,6 +27,9 @@ const Page: NextPage = () => {
   const openOneByOne = () => {
     window.open("/flashonebyone", "_self");
   };
+  const openEvensAndOdds = () => {
+    window.open("/evennumbers", "_self");
+  };
 
   return(
     <>
@@ -49,6 +52,9 @@ const Page: NextPage = () => {
           </button>
           <button className={buttonStyle} onClick={openOneByOne}>
             Flashing Grid One by One
+          </button>
+          <button className={buttonStyle} onClick={openEvensAndOdds}>
+            Even Numbers
           </button>
 
         </div>

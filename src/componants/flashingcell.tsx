@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import React, { 
-  useState, 
-  useEffect, 
+import React, {
+  useState,
+  useEffect,
   ReactNode,
   ReactElement,
   Dispatch,
@@ -21,21 +21,21 @@ type GridProps = {
 }
 
 //tailwind class constants
-const FLASH = "flex text-white text-2xl justify-center p-4 bg-gray-500 rounded-md gap-1";
-const NO_FLASH = "flex text-white text-2xl justify-center p-4";
+const FLASH = "flex text-white text-xl justify-center p-4 bg-gray-500 rounded-md gap-1";
+const NO_FLASH = "flex text-white text-xl justify-center p-4";
 
 //helper functions
-const getWords = async (number: number)  => {
-  try{
+const getWords = async (number: number) => {
+  try {
     if (number > 500) {//random words api won't return more than 500 words at a time so here's a hacky workaround
       const holder: string[] = [];
-      for (let i = 0; i < (number/500)+1; i++) {
+      for (let i = 0; i < (number / 500) + 1; i++) {
         const response = await axios.get(`https://random-word-api.vercel.app/api?words=500`);
         holder.push(...response.data as string[]);
       }
       return holder.slice(0, number);
     }
-    else{
+    else {
       const response = await axios.get(`https://random-word-api.vercel.app/api?words=${number}`);
       return response.data as string[];
     }
@@ -48,7 +48,7 @@ const getWords = async (number: number)  => {
 const partitionWords = (words: string[], indexes: number, sections: number, wordsPerCell: number) => {
   const partitionedWords: string[][] = [];
   const wordJoiner: string[] = [];
-  for (let i = 0; i < words.length/wordsPerCell; i += wordsPerCell){
+  for (let i = 0; i < words.length / wordsPerCell; i += wordsPerCell) {
     wordJoiner.push(words.slice(i, i + wordsPerCell).join(" "));
   }
   for (let i = 0; i < sections; i++) {
@@ -60,30 +60,35 @@ const partitionWords = (words: string[], indexes: number, sections: number, word
 const wordToComponent = (word: string, id: string) => {
   return (
     React.createElement(
-      "div", {className: NO_FLASH, key: id}, word
+      "div", { className: NO_FLASH, key: id }, word
     )
   );
 }
 
 const toggleFlash = (element: React.ReactElement) => {
+  if(element.props.children !== undefined){
   const currentClass: React.FC | string = element.props.className as React.FC | string;
   const newClassName = currentClass !== FLASH ? FLASH : NO_FLASH;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const newProps = {...element.props, className: newClassName};
+  const newProps = { ...element.props, className: newClassName };
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const newElm: ReactNode = React.cloneElement(element, newProps, element.props.children);
   return newElm as ReactElement;
+  }
+  else{
+    return element;
+  }
 }
 
 const calculateSectionNumber = (props: GridProps) => {
   const perSection = props.width * props.height;
-  return Math.ceil(props.wpm / perSection); 
+  return Math.ceil(props.wpm / perSection);
 };
 
 const flashingGrid: React.FC<GridProps> = (props: GridProps) => {
   const [words, setWords] = useState<string[][]>([[]]);
-  const [section, setSection]: [number , Dispatch<SetStateAction<number>>]= useState<number>(0);
-  const [index, setIndex]: [number, Dispatch<SetStateAction<number>>]= useState<number>(0);
+  const [section, setSection]: [number, Dispatch<SetStateAction<number>>] = useState<number>(0);
+  const [index, setIndex]: [number, Dispatch<SetStateAction<number>>] = useState<number>(0);
   // eslint-disable-next-line @typescript-eslint/ban-types
   const [grid, setGrid]: [any[], Function] = useState([]);
   const [fetched, setFetched]: [boolean, Dispatch<SetStateAction<boolean>>] = useState<boolean>(false);
@@ -91,24 +96,22 @@ const flashingGrid: React.FC<GridProps> = (props: GridProps) => {
   const [gridCount, setGridCount]: [number, Dispatch<SetStateAction<number>>] = useState<number>(
     calculateSectionNumber(props)
   );
-  const [returnClass, setReturnClass]: [string, Dispatch<SetStateAction<string>>] = useState<string>(
-    `grid grid-cols-${props.width} gap-2`
-  );
+  const returnClass = useState<string>(`grid grid-cols-${props.width} gap-2`)[0];
   const [cellCount, setCellCount]: [number, Dispatch<SetStateAction<number>>] = useState<number>(
     props.width * props.height
   );
 
-  const done = <div className="flex text-4xl text-white justify-center items-center">Done!</div>
+  const done = <div className="flex text-3xl text-white justify-center items-center">Done!</div>
   const error = <div>Error</div>
-  const loading = <div className="flex text-4xl text-white justify-center items-center">Loading..</div>
+  const loading = <div className="flex text-3xl text-white justify-center items-center">Loading..</div>
 
   const buildGrid = () => {
     // eslint-disable-next-line prefer-const
     let newGrid: React.ReactElement[] = [];
     for (let i = 0; i < cellCount; i++) {
       newGrid.push(
-        wordToComponent(words[section]?.[i] as string, 
-        i.toString() + ", "+ section.toString())
+        wordToComponent(words[section]?.[i] as string,
+          i.toString() + ", " + section.toString())
       );
     }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -118,17 +121,17 @@ const flashingGrid: React.FC<GridProps> = (props: GridProps) => {
   }
 
   const step = () => {
-    try{
-      if(index === cellCount && section === gridCount){
+    try {
+      if (index === cellCount && section === gridCount) {
         return false;
       }
-      if(!index){
+      if (!index) {
         const newGrid: React.ReactElement[] = grid as React.ReactElement[];
         newGrid[0] = toggleFlash(newGrid[0]!);
         setGrid(newGrid);
         setIndex(previous => previous + 1);
       }
-      else if(index < cellCount){
+      else if (index < cellCount) {
         const newGrid: React.ReactElement[] = grid as React.ReactElement[];
         newGrid[index] = toggleFlash(newGrid[index]!);
         newGrid[index - 1] = toggleFlash(newGrid[index - 1]!);
@@ -136,19 +139,19 @@ const flashingGrid: React.FC<GridProps> = (props: GridProps) => {
         setGrid(newGrid);
         setIndex(previous => previous + 1);
       }
-      else{
+      else {
         setSection((previous: number) => previous + 1);
         setIndex(0);
       }
       return true;
     }
-    catch(Exception){
+    catch (Exception) {
       return false;
     }
   }
 
   useInterval(() => {
-    fetched? step() : setLoaded(true);
+    fetched ? step() : setLoaded(true);
   }, 60000 / props.wpm);
 
   useEffect(() => {
@@ -162,24 +165,24 @@ const flashingGrid: React.FC<GridProps> = (props: GridProps) => {
   }, []);
 
   useEffect(() => {
-    if(section < gridCount){
-    buildGrid();
+    if (section < gridCount) {
+      buildGrid();
     }
-    else{
+    else {
       setGrid(null);
     }
   }, [words, section]);
 
-  try{
+  try {
     return (
       <>
         <div className={returnClass}>
-          {loaded? loading : grid??done}
+          {loaded ? loading : grid ?? done}
         </div>
       </>
     );
   }
-  catch(Exception){
+  catch (Exception) {
     return error;
   }
 

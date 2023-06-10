@@ -3,10 +3,9 @@ import Head from "next/head";
 import Link from "next/link";
 import { api } from "~/utils/api";
 import { useEffect, useState } from "react";
-import WordChanger from "src/componants/wordchanger";
-import { ChangerProps } from "src/componants/wordchanger";
+import EvensAndOdds from "src/componants/evensandodds";
+import { EvenOddProps } from "src/componants/evensandodds";
 
-const words = ["this", "is", "a", "test", "of", "the", "word", "changer"];
 
 const Page: NextPage = () => {
   return (
@@ -16,7 +15,7 @@ const Page: NextPage = () => {
       </Head>
 
       <div className="flex-grid flex h-screen  text-white items-center justify-center text-3xl">
-        <WordChanger  wpm={200} wordsPerCell={1}/>
+        <EvensAndOdds numToFind={6} width={5} height={8} segFigs={4} />
       </div>
     </>
   );

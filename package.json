@@ -23,6 +23,7 @@
     "react-dom": "18.2.0",
     "shuffle-array": "^1.0.1",
     "superjson": "1.12.2",
+    "uuidv4": "^6.2.13",
     "zod": "^3.21.4"
   },
   "devDependencies": {
