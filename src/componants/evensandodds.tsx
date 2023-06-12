@@ -1,14 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import type { Dispatch, FC, ReactElement, SetStateAction } from "react";
+import { useSwitcher } from "~/hooks/useSwitcher";
 import { uuid } from "uuidv4";
-const DEFAULT = "flex text-white text-xl justify-center p-4 border-2 border-black gap-0"
+import { framesContext } from "~/pages/evennumbers";
+const DEFAULT = 'flex text-white text-xl justify-center p-4 border-2 border-black gap-0'
 const HILIGHT = 'flex text-white text-xl justify-center p-4 bg-blue-500 border-2 border-black gap-0'
 
 export type EvenOddProps = {
   segFigs: number;
   numToFind: number;
-  height: number;
-  width: number;
+  cols: number;
+  rows: number;
 }
 
 type CellProps = {
@@ -50,7 +52,7 @@ const randomNumber = (segFigs: number, isEven: boolean) => {
 }
 
 const generateNumbers = (props: EvenOddProps) => {
-  const count = props.height * props.width;
+  const count = props.cols * props.rows;
   const numbers: number[] = [];
 
   for (let i = 0; i < count; i++) {
@@ -92,10 +94,6 @@ const generateComponants = (props: EvenOddProps, evenEvent: () => void, oddEvent
   const numbers = generateNumbers(props);
 
   for (const num of numbers) {
-    // componants.push(React.createElement(
-    // 'div',
-    // {className: DEFAULT, id: num, onClick: handleClick, key: num.toString()},
-    // num))
     const attributes: CellProps = {
       id: num,
       defaultClass: DEFAULT,
@@ -115,21 +113,21 @@ const EvensAndOdds = (props: EvenOddProps) => {
   const [cleared, setCleared]: [number, Dispatch<SetStateAction<number>>] = useState<number>(0);
   const evenCount = useRef(0);
   const errorCount = useRef(0);
-  const GRID_CLASS = `grid grid-cols-${props.width}`;
+  const GRID_CLASS = useState(`grid grid-cols-${props.cols}`)[0];
+  const context = useContext(framesContext);
 
   const pressEven = () => {
     evenCount.current++;
-    console.log("even: ", evenCount);
     if (evenCount.current === props.numToFind) {
       setGrid(generateComponants(props, pressEven, pressOdd));
       evenCount.current = 0;
+      context.setFramesCleared(prev => prev + 1);
       setCleared(prev => prev + 1);
     }
   }
 
   const pressOdd = () => {
     errorCount.current++;
-    console.log("errors: ", errorCount.current);
   }
 
   useEffect(() => {
@@ -137,7 +135,7 @@ const EvensAndOdds = (props: EvenOddProps) => {
     setGrid(newGrid)
   }, [])
 
-  useEffect(() => { console.log('grid changed') }, [grid])
+
 
   return (
     <>

@@ -66,16 +66,16 @@ const wordToComponent = (word: string, id: string) => {
 }
 
 const toggleFlash = (element: React.ReactElement) => {
-  if(element.props.children !== undefined){
-  const currentClass: React.FC | string = element.props.className as React.FC | string;
-  const newClassName = currentClass !== FLASH ? FLASH : NO_FLASH;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const newProps = { ...element.props, className: newClassName };
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const newElm: ReactNode = React.cloneElement(element, newProps, element.props.children);
-  return newElm as ReactElement;
+  if (element.props.children !== undefined) {
+    const currentClass: React.FC | string = element.props.className as React.FC | string;
+    const newClassName = currentClass !== FLASH ? FLASH : NO_FLASH;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const newProps = { ...element.props, className: newClassName };
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    const newElm: ReactNode = React.cloneElement(element, newProps, element.props.children);
+    return newElm as ReactElement;
   }
-  else{
+  else {
     return element;
   }
 }
