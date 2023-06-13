@@ -82,7 +82,9 @@ const toggleFlash = (element: React.ReactElement) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         const newElm: ReactNode = React.cloneElement(
             element,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             newProps,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             element.props.children,
         )
         return newElm as ReactElement
