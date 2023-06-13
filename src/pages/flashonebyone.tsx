@@ -1,41 +1,41 @@
-import { NextPage, GetServerSideProps } from "next";
-import Head from "next/head";
-import Link from "next/link";
-import { api } from "~/utils/api";
-import { useEffect, useState } from "react";
-import FlashingGrid from "src/componants/flashingcell";
-import { GridProps } from "src/componants/flashingcell";
+import { NextPage, GetServerSideProps } from 'next'
+import Head from 'next/head'
+import Link from 'next/link'
+import { api } from '~/utils/api'
+import { useEffect, useState } from 'react'
+import FlashingGrid from 'src/componants/flashingcell'
+import { GridProps } from 'src/componants/flashingcell'
 
 interface PageProps {
-  grid?: JSX.Element;
+    grid?: JSX.Element
 }
 
 const buildProps: GridProps = {
-  wordsPerCell: 1,
-  width: 1,
-  height: 7,
-  wpm: 200
-};
+    wordsPerCell: 1,
+    width: 1,
+    height: 7,
+    wpm: 200,
+}
 
 const Page: NextPage<PageProps> = () => {
-  const loading = (
-    <div className="flex flex-col items-center justify-center">
-      Loading Game...
-    </div>
-  );
+    const loading = (
+        <div className='flex flex-col items-center justify-center'>
+            Loading Game...
+        </div>
+    )
 
-  const grid = FlashingGrid(buildProps);
+    const grid = FlashingGrid(buildProps)
 
-  return (
-    <>
-      <Head>
-        <title>Speed Read</title>
-      </Head>
-      <div className="flex min-h-screen flex-col items-center justify-center grid-cols-2 py-2 gap-4">
-        {grid ?? loading}
-      </div>
-    </>
-  );
-};
+    return (
+        <>
+            <Head>
+                <title>Speed Read</title>
+            </Head>
+            <div className='flex min-h-screen grid-cols-2 flex-col items-center justify-center gap-4 py-2'>
+                {grid ?? loading}
+            </div>
+        </>
+    )
+}
 
-export default Page;
+export default Page

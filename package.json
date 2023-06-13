@@ -7,7 +7,8 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "test": "vitest"
   },
   "dependencies": {
     "@prisma/client": "^4.11.0",
@@ -23,10 +24,13 @@
     "react-dom": "18.2.0",
     "shuffle-array": "^1.0.1",
     "superjson": "1.12.2",
+    "ts-node": "^10.9.1",
     "uuidv4": "^6.2.13",
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
     "@types/eslint": "^8.21.3",
     "@types/node": "^18.15.5",
     "@types/prettier": "^2.7.2",
@@ -42,7 +46,9 @@
     "prettier-plugin-tailwindcss": "^0.2.5",
     "prisma": "^4.11.0",
     "tailwindcss": "^3.2.7",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.2",
+    "vite-tsconfig-paths": "^4.2.0",
+    "vitest": "^0.32.0"
   },
   "ct3aMetadata": {
     "initVersion": "7.10.0"
