@@ -1,8 +1,11 @@
+import { motion } from 'framer-motion'
 import { type NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import React, { useEffect, useState, useContext } from 'react'
 import { EvensAndOdds } from 'src/componants/evensandodds'
+import InstructionsPage from 'src/componants/instructionPages/pages/evennumbers'
+import type { instructionsPageProps } from 'src/componants/instructionPages/pages/evennumbers'
 import { useSwitcher } from '../hooks/useSwitcher'
 const MINUTE_TO_MILLIS = 60_000
 
@@ -18,6 +21,7 @@ export const framesContext = React.createContext<framesContextType>({
 })
 
 const Page: NextPage = () => {
+    const [instructionsOpen, setInstructionsOpen] = useState<boolean>(false)
     const [framesCleared, setFramesCleared] = useState<number>(0)
     const display = useSwitcher(
         <framesContext.Provider value={{ framesCleared, setFramesCleared }}>
@@ -43,9 +47,15 @@ const Page: NextPage = () => {
             <Head>
                 <title>Speed Read</title>
             </Head>
+            <button 
+            onClick={() => setInstructionsOpen(!instructionsOpen)}
+            className='absolute top-0 right-0 m-4 text-3xl text-white border-white border-2 rounded-lg'
+            >
+              Instructions
+            </button>
 
             <div className='flex-grid flex h-screen  items-center justify-center text-3xl text-white'>
-                {display}
+        {<InstructionsPage isOpen={instructionsOpen} handleClose={() => setInstructionsOpen(false)}/>}
             </div>
         </>
     )

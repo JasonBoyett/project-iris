@@ -1,0 +1,10 @@
+.instruction-page{
+  width: clamp(50%, 700px, 90%);
+  height: clamp(50%, 300px);
+  margin: auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  align-items: center;
+}
