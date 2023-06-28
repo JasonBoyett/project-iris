@@ -6,21 +6,21 @@ import Link from 'next/link'
 import { api } from '~/utils/api'
 
 const Page: NextPage = () => {
-    const tempClick = () => {
-        window.open('/', '_self')
-    }
-    return (
-        <>
-            <Head>
-                <title>Sign up</title>
-            </Head>
-            <main className='grid-col-2 flex grid min-h-screen flex-col items-center justify-center'>
-                <div onClick={tempClick}>
-                    <p className='text-5xl text-white'>Sign up coming soon</p>
-                </div>
-            </main>
-        </>
-    )
+  const tempClick = () => {
+    window.open('/', '_self')
+  }
+  return (
+    <>
+      <Head>
+        <title>Sign up</title>
+      </Head>
+      <main className='grid-col-2 flex grid min-h-screen flex-col items-center justify-center'>
+        <div onClick={tempClick}>
+          <p className='text-5xl text-white'>Sign up coming soon</p>
+        </div>
+      </main>
+    </>
+  )
 }
 
 export default Page

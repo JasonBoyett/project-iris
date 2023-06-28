@@ -2,8 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
@@ -11,29 +11,86 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model example {
-  id    Int    @unique@id @default(autoincrement())
-  title String
+model User {
+  Id                      String                   @id @default(cuid())@unique
+  CreatedAt               DateTime                 @default(now())
+  UpdatedAt               DateTime                 @updatedAt
+  Email                   String                   @unique @db.VarChar(320)
+  Password                String                   @db.VarChar(255)
+  FirstName               String                   @db.VarChar(255)
+  LastName                String                   @db.VarChar(255)
+  MaxWpm                  Int                      @db.SmallInt
+  TimeTests               TimeTest[]
+  ShulteSessions          ShulteSession[]
+  EvenNumberSessions      EvenNumberSession[]
+  WordGridFlasherSessions WordGridFlasherSession[]
+  WordFlasherSessions     WordFlasherSession[]
+
+  @@index([Email])
 }
 
-model User {
-    Id        String   @id @default(cuid())
-    CreatedAt DateTime @default(now())
-    UpdatedAt DateTime @updatedAt
-    Email     String   @unique @db.VarChar(320)
-    Password  String   @db.VarChar(255)
-    FirstName String   @db.VarChar(255)
-    LastName  String   @db.VarChar(255)
-    MaxWpm    Int      @db.SmallInt
-
-    @@index([Email])
+model TimeTest {
+  Id        String  @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [Id])
+  sessionId String   @id @default(cuid())
+  CreatedAt DateTime @default(now())
+  highScore Int      @db.SmallInt
+  lowScore  Int      @db.SmallInt
+  accuracy  Int      @db.SmallInt
 }
 
 model ShulteSession {
-    Id         String   @id @default(cuid())
-    SideLength Int      @db.TinyInt
-    StartTime  DateTime @db.DateTime
-    EndTime    DateTime @db.DateTime
-    ErrorCount Int      @db.SmallInt
-    UserId     String   @db.VarChar(255)
+  Id         String @unique
+  user       User     @relation(fields: [UserId], references: [Id])
+  SideLength Int      @db.TinyInt
+  StartTime  DateTime @db.DateTime
+  EndTime    DateTime @db.DateTime
+  ErrorCount Int      @db.SmallInt
+  UserId     String   @db.VarChar(255)
+}
+
+model EvenNumberSession {
+  Id            String  @unique
+  UserId        String
+  user          User     @relation(fields: [UserId], references: [Id])
+  ErrorCount    Int      @db.SmallInt
+  numberCleared Int      @db.SmallInt
+  date          DateTime @db.DateTime
+}
+
+model WordGridFlasherSession {
+  Id    String @unique
+  UserId        String
+  user  User     @relation(fields: [UserId], references: [Id])
+  speed Int      @db.SmallInt
+  date  DateTime @db.DateTime
+  type  String   @db.VarChar(255)
+}
+
+model WordFlasherSession {
+  Id    String @unique
+  UserId    String
+  user  User     @relation(fields: [UserId], references: [Id])
+  speed Int      @db.SmallInt
+  date  DateTime @db.DateTime
+  type  String   @db.VarChar(255)
+}
+
+model SatPassage {
+  Id        String @unique
+  passageText String
+  questions SatQuestion[]
+}
+
+model SatQuestion {
+  Id            String @unique
+  PassageId            String
+  passage       SatPassage @relation(fields: [PassageId], references: [Id])
+  question      String
+  answerA       String     @db.VarChar(255)
+  answerB       String     @db.VarChar(255)
+  answerC       String     @db.VarChar(255)
+  answerD       String     @db.VarChar(255)
+  correctAnswer String       @db.Char(1)
 }

@@ -1,9 +1,9 @@
+import SchultyTable from 'src/componants/schultetable'
 import { type NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { api } from '~/utils/api'
 import { useEffect, useState } from 'react'
-import WordChanger from 'src/componants/wordchanger'
 import { ChangerProps } from 'src/componants/wordchanger'
 import React from 'react'
 
@@ -13,13 +13,16 @@ const Page: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Speed Read</title>
+        <title>Schulte Table</title>
+        <meta
+          name='Schulte Table'
+          content='A speed reading game called Schulte Table'
+        />
       </Head>
-
-      <div className='flex-grid flex h-screen  items-center justify-center text-3xl text-white'>
-        <WordChanger
-          wpm={200}
-          wordsPerCell={1}
+      <div className='flex h-screen flex-col items-start justify-center'>
+        <SchultyTable
+          length={5}
+          width={5}
         />
       </div>
     </>
