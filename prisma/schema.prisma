@@ -16,12 +16,12 @@ model User {
   CreatedAt               DateTime                 @default(now())
   UpdatedAt               DateTime                 @updatedAt
   Email                   String                   @unique @db.VarChar(320)
-  Password                String                   @db.VarChar(255)
   FirstName               String                   @db.VarChar(255)
   LastName                String                   @db.VarChar(255)
   MaxWpm                  Int                      @db.SmallInt
-  TimeTests               TimeTest[]
-  ShulteSessions          ShulteSession[]
+  CurrentWpm              Int                      @db.SmallInt
+  TimeTests               TimeTest[]               
+  ShulteSessions          ShulteSession[]          
   EvenNumberSessions      EvenNumberSession[]
   WordGridFlasherSessions WordGridFlasherSession[]
   WordFlasherSessions     WordFlasherSession[]

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "quick": "deno run src/server/tester.ts",
     "build": "next build",
     "dev": "next dev",
     "postinstall": "prisma generate",

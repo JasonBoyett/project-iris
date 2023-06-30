@@ -9,8 +9,20 @@ import type { ReactElement } from 'react'
 import useInterval from '../hooks/useInterval'
 import { v4 as uuid } from 'uuid'
 import axios from 'axios'
+import { api } from '../utils/api'
+import { useIsVisible } from '~/hooks/useIsVisible'
+import { userContext } from '~/pages/_app'
 
 const counterContext = createContext <number>(0)
+
+export enum Layout {
+  ONE_BY_ONE = 'ONE_BY_ONE',
+  ONE_BY_TWO = 'ONE_BY_TWO',
+  TWO_BY_ONE = 'TWO_BY_ONE',
+  TWO_BY_TWO = 'TWO_BY_TWO',
+  FOUR_BY_TWO = 'FOUR_BY_TWO',
+  FOUR_BY_ONE = 'FOUR_BY_ONE',
+}
 
 interface CellType extends ReactElement {
   display: JSX.Element
@@ -20,7 +32,7 @@ interface CellType extends ReactElement {
 type CellProps = {
   content: string
   location: number
-  current: number
+  loadCheck: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface GridType extends ReactElement {
@@ -30,10 +42,19 @@ interface GridType extends ReactElement {
 }
 
 type GridProps = {
-  wordsPerCell: number
-  rows: number
-  wpm: number
-  width: number
+  layout: Layout
+  rows?: number
+}
+
+const layoutManager = (layout: Layout) => {
+  switch (layout) {
+    case Layout.ONE_BY_ONE: return [1, 1]
+    case Layout.ONE_BY_TWO: return [1, 2]
+    case Layout.TWO_BY_ONE: return [2, 1]
+    case Layout.TWO_BY_TWO: return [2, 2]
+    case Layout.FOUR_BY_TWO: return [4, 2]
+    case Layout.FOUR_BY_ONE: return [4, 1]
+  }
 }
 export const getWords = async (number: number) => {
   try {
@@ -74,16 +95,17 @@ export const partitionWords = (
     partitionedWords.push(wordJoiner.slice(i, i + frames))
   }
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  console.log(partitionedWords.length)
   return partitionedWords
 }
 
-const Cell = ({ content, location }: CellProps) => {
+const Cell = ({ content, location, loadCheck}: CellProps) => {
   const FLASH =
     'flex text-white text-xl justify-center p-4 bg-gray-500 rounded-md gap-1'
   const NO_FLASH = 'flex text-white text-xl justify-center p-4'
   const [className, setClassName] = useState(NO_FLASH)
   const counter = useContext(counterContext)
+  const ref = useRef<HTMLDivElement>(null)
+  const isVisible = useIsVisible(ref)
 
   const highlight = () => {
     setClassName(FLASH)
@@ -100,10 +122,14 @@ const Cell = ({ content, location }: CellProps) => {
       : toDefault()
   }, [counter, location])
 
+  useEffect(() => loadCheck(true)
+  , [ref])
+
   return (
     <div 
     className={className}
     key={uuid()}
+    ref={ref}
     >
       {content}
     </div>
@@ -112,10 +138,10 @@ const Cell = ({ content, location }: CellProps) => {
 
 export const createCells = ({
   words,
-  cellCounter,
+  loadCheck,
 }: {
   words: string[]
-  cellCounter: number
+  loadCheck: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const cells: ReactElement[] = []
   words.forEach((word, index) => {
@@ -123,7 +149,7 @@ export const createCells = ({
       <Cell
         location={index}
         content={word}
-        current={cellCounter}
+        loadCheck={loadCheck}
         key={uuid()}
       />,
     )
@@ -131,14 +157,19 @@ export const createCells = ({
   return cells
 }
 
-const Grid = ({ wordsPerCell, wpm, rows, width }: GridProps) => {
-  const [cellCounter, setCounter] = useState<number>(0)
+const Grid = ({ rows=5, layout}: GridProps) => {
+  const [cellCounter, setCounter] = useState<number>(-1)
+  //cellCounter starts at -1 so the animation doesn't start until
+  //the component has been visible for just a moment
   const words = useRef<string[][]>([])
   const section = useRef<number>(0)
+  const [wordsPerCell, width]: [number, number] | number[]= layoutManager(layout)
   const [done, setDone] = useState<JSX.Element | null>(null)
   const [grid, setGrid] = useState<JSX.Element[]>()
   const returnClass = useState<string>(`grid grid-cols-${width} gap-2`)[0]
-  const [loadBuffer, setBuffer] = useState<number>(0) //WARNING: this is a hacky solution for loading lag. prototype use only remove before launch
+  const ref = useRef<HTMLDivElement>(null)
+  const [isVisible, setIsVisible] = useState<boolean>(false)
+  const user = useContext(userContext)
 
   const tearDown = () => {
     setDone(<div className='text-white text-4xl'>done</div>)
@@ -146,19 +177,25 @@ const Grid = ({ wordsPerCell, wpm, rows, width }: GridProps) => {
 
   useEffect(() => {
     const setup = (async () => {
-      const wordsArry = await getWords(wordsPerCell * wpm * rows )
-      words.current = partitionWords(wordsArry, wordsArry.length / (wordsPerCell), rows * width)
-      setGrid(createCells({ words: words.current[0]!, cellCounter }))
+      const wordsArry = await getWords(wordsPerCell * user.CurrentWpm * rows )
+      words.current = partitionWords(
+        wordsArry,
+        wordsArry.length / wordsPerCell,
+        rows * width
+      )
+      setGrid(createCells({ words: words.current[0]!, loadCheck: setIsVisible }))
+      console.log('width: ', width)
+      console.log('wordsPerCell: ', wordsPerCell)
     })()
   }, [])
 
 
   useInterval(() => {
-    if (loadBuffer < (rows * width)){
-      setBuffer(prev => prev + 1)
-      console.log('triggered')
+    if (!isVisible) { 
+      console.log(isVisible)
+      console.log('not visible')
       return
-    }//WARNING: this is a hacky solution for loading lag. prototype use only remove before launch
+    }
     if (section.current >= words.current.length - 1 && cellCounter >= rows * width) {
       tearDown()
       return
@@ -169,7 +206,7 @@ const Grid = ({ wordsPerCell, wpm, rows, width }: GridProps) => {
       setGrid(
         createCells({
           words: words.current[section.current]!,
-          cellCounter,
+          loadCheck: setIsVisible
         }),
       )
       setCounter(0)
@@ -177,11 +214,14 @@ const Grid = ({ wordsPerCell, wpm, rows, width }: GridProps) => {
       setCounter(prev => prev + 1)
     }
     console.log(cellCounter)
-  }, 60_000 / wpm)
+  }, 60_000 / user.CurrentWpm)
   
   return (
     <counterContext.Provider value={cellCounter}>
-      <div className={returnClass}>{grid}</div>
+      <div 
+        className={returnClass}
+        ref={ref}
+      >{grid}</div>
     </counterContext.Provider>
   ) as GridType
 }
