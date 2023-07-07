@@ -1,3 +1,4 @@
+import { RefObject } from 'preact';
 import { useState, useEffect } from 'react';
 
 export const useIsVisible = (ref: React.RefObject<HTMLDivElement>) => {
