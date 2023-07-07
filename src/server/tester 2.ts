@@ -9,6 +9,7 @@ const main = async () => {
       CreatedAt: new Date(),
       UpdatedAt: new Date(),
       MaxWpm: 200,
+      CurrentWpm: 200,
     }
   })
 }
