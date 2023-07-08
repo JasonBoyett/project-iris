@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { api } from '~/utils/api'
 import { useEffect, useState } from 'react'
 import FlashingGrid from 'src/componants/flashingcell'
-import { Layout } from 'src/componants/flashingcell'
 
 interface PageProps {
   grid?: JSX.Element
@@ -27,7 +26,7 @@ const Page: NextPage<PageProps> = () => {
       <div 
         className='flex min-h-screen grid-cols-2 flex-col items-center justify-center gap-4 py-2'
       >
-        <FlashingGrid layout={Layout.FOUR_BY_ONE}/>
+        <FlashingGrid layout={FlasherLayout.FOUR_BY_ONE}/>
       </div>
     </>
   )

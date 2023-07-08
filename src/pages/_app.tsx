@@ -22,7 +22,7 @@ const user = {
   LastName: 'User',
   Email: 'test@test.test',
   MaxWpm: 250,
-  CurrentWpm: 200,
+  CurrentWpm: 700,
   CreatedAt: new Date(),
   UpdatedAt: new Date(),
   update: () => {

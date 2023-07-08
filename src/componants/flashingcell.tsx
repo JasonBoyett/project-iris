@@ -15,14 +15,6 @@ import { userContext } from '~/pages/_app'
 
 const counterContext = createContext <number>(0)
 
-export enum Layout {
-  ONE_BY_ONE = 'ONE_BY_ONE',
-  ONE_BY_TWO = 'ONE_BY_TWO',
-  TWO_BY_ONE = 'TWO_BY_ONE',
-  TWO_BY_TWO = 'TWO_BY_TWO',
-  FOUR_BY_TWO = 'FOUR_BY_TWO',
-  FOUR_BY_ONE = 'FOUR_BY_ONE',
-}
 
 interface CellType extends ReactElement {
   display: JSX.Element
@@ -42,18 +34,18 @@ interface GridType extends ReactElement {
 }
 
 type GridProps = {
-  layout: Layout
+  layout: FlasherLayout
   rows?: number
 }
 
-const layoutManager = (layout: Layout) => {
+const layoutManager = (layout: FlasherLayout) => {
   switch (layout) {
-    case Layout.ONE_BY_ONE: return [1, 1]
-    case Layout.ONE_BY_TWO: return [1, 2]
-    case Layout.TWO_BY_ONE: return [2, 1]
-    case Layout.TWO_BY_TWO: return [2, 2]
-    case Layout.FOUR_BY_TWO: return [4, 2]
-    case Layout.FOUR_BY_ONE: return [4, 1]
+    case FlasherLayout.ONE_BY_ONE: return [1, 1]
+    case FlasherLayout.ONE_BY_TWO: return [1, 2]
+    case FlasherLayout.TWO_BY_ONE: return [2, 1]
+    case FlasherLayout.TWO_BY_TWO: return [2, 2]
+    case FlasherLayout.FOUR_BY_TWO: return [4, 2]
+    case FlasherLayout.FOUR_BY_ONE: return [4, 1]
   }
 }
 export const getWords = async (number: number) => {
