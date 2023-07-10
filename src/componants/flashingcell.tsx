@@ -21,6 +21,15 @@ interface CellType extends ReactElement {
   flash: (current: number) => void
 }
 
+export enum FlasherLayout {
+  ONE_BY_ONE = 'ONE_BY_ONE',
+  ONE_BY_TWO = 'ONE_BY_TWO',
+  TWO_BY_ONE = 'TWO_BY_ONE',
+  TWO_BY_TWO = 'TWO_BY_TWO',
+  FOUR_BY_TWO = 'FOUR_BY_TWO',
+  FOUR_BY_ONE = 'FOUR_BY_ONE',
+}
+
 type CellProps = {
   content: string
   location: number

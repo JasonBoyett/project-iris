@@ -11,6 +11,19 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum Overlay {//maps directly to the global Overlay enum in globals.d.ts
+  BLUE 
+  BLUE_GREY 
+  GREEN 
+  GREY 
+  ORANGE 
+  PEACH 
+  PURPLE 
+  RED 
+  TURQUOISE 
+  YELLOW 
+}
+
 model User {
   Id                      String                   @id @default(cuid())@unique
   CreatedAt               DateTime                 @default(now())
@@ -25,6 +38,8 @@ model User {
   EvenNumberSessions      EvenNumberSession[]
   WordGridFlasherSessions WordGridFlasherSession[]
   WordFlasherSessions     WordFlasherSession[]
+  HighlghtColor           Overlay                 
+  DarkMode                Boolean                  @default(false)
 
   @@index([Email])
 }

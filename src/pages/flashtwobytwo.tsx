@@ -5,6 +5,7 @@ import { api } from '~/utils/api'
 import { useEffect, useState } from 'react'
 import FlashingGrid from 'src/componants/flashingcell'
 import { FlasherLayout } from 'src/componants/flashingcell'
+import HomeButton from '~/componants/homebutton'
 
 interface PageProps {
   grid?: JSX.Element
@@ -18,6 +19,7 @@ const Page: NextPage<PageProps> = () => {
       <Head>
         <title>Speed Read</title>
       </Head>
+      <HomeButton />
       <div 
         className='flex min-h-screen grid-cols-2 flex-col items-center justify-center gap-4 py-2'
       >

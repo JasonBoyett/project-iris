@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { v4 } from 'uuid'
 
-type SchulteTableProps = {
+export type SchulteTableProps = {
   length: number
   width: number
 }

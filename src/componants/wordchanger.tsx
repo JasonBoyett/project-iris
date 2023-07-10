@@ -9,7 +9,6 @@ import useInterval from '~/hooks/useInterval'
 import axios from 'axios'
 import { api } from '~/utils/api'
 import { NextPage } from 'next/types'
-const MINUTE_TO_MILLIS = 60000
 
 export type ChangerProps = {
   wordsPerCell: number
@@ -79,7 +78,7 @@ export default function Changer(props: ChangerProps) {
       setCurrent(words[wordIndex] as string)
       setWordIndex((prev) => prev + 1)
     }
-  }, MINUTE_TO_MILLIS / props.wpm)
+  }, MILISECONDS_IN_A_MINUTE / props.wpm)
 
   return <>{current}</>
 }

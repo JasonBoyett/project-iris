@@ -1,10 +1,11 @@
 import { type NextPage } from 'next'
 import { motion } from 'framer-motion'
-import { h, Fragment } from 'preact'
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import { api } from '~/utils/api'
+import HomeButton from '~/componants/homebutton'
 
 const Page: NextPage = () => {
   const [currentNumber, setCurrentNumber] = useState(1)
@@ -79,11 +80,14 @@ const Page: NextPage = () => {
     setTable(table)
   }, [table])
   useEffect(() => {
-    if (localNumber < sideLength * sideLength + 1 && doneString !== 'Done!') {
+    if (
+      localNumber < sideLength * sideLength + 1 
+      && doneString !== 'Done!'
+    ) {
       setCurrentNumber(localNumber)
     } else if (
-      localNumber === sideLength * sideLength + 1 &&
-      doneString !== 'Done!'
+      localNumber === sideLength * sideLength + 1 
+      && doneString !== 'Done!'
     ) {
       setCurrentNumber(0)
       setDoneString('Done!')
@@ -99,10 +103,7 @@ const Page: NextPage = () => {
           content='A speed reading game called Schulte Table'
         />
       </Head>
-
-      <button className='flex h-20 w-60 items-center justify-center gap-1 rounded border border-white bg-gradient-to-bl from-black text-white hover:border-2 hover:bg-gray-800'>
-        Instructions
-      </button>
+      <HomeButton />
 
       <motion.div
         className='flex flex-col items-center justify-center'

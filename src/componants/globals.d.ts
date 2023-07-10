@@ -11,16 +11,16 @@ enum Overlay {
   YELLOW = '#F8FD89',
 }
 
-enum FlasherLayout {
-  ONE_BY_ONE = 'ONE_BY_ONE',
-  ONE_BY_TWO = 'ONE_BY_TWO',
-  TWO_BY_ONE = 'TWO_BY_ONE',
-  TWO_BY_TWO = 'TWO_BY_TWO',
-  FOUR_BY_TWO = 'FOUR_BY_TWO',
-  FOUR_BY_ONE = 'FOUR_BY_ONE',
+
+enum SquareGameLayout{
+  ONE_SQUARE = 'ONE_SQUARE',
+  TWO_SQUARE = 'TWO_SQUARE',
 }
+
+export const MILISECONDS_IN_A_MINUTE = 60000
 
 module.exports = {
   Overlay,
-  FlasherLayout,
+  SquareGameLayout,
+  MILISECONDS_IN_A_MINUTE,
 }
