@@ -10,6 +10,7 @@ const main = async () => {
       UpdatedAt: new Date(),
       MaxWpm: 200,
       CurrentWpm: 100,
+      HighlghtColor: "GREY"
     }
   })
 }
