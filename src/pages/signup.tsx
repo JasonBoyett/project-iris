@@ -1,23 +1,25 @@
 import { type NextPage } from 'next'
-import { h, Fragment } from 'preact'
-import { useState, useEffect } from 'react'
 import Head from 'next/head'
-import Link from 'next/link'
-import { api } from '~/utils/api'
+import Image from 'next/image'
+import StudyLogo from 'public/study-logo.png'
+import { SignUp } from '@clerk/nextjs'
 
 const Page: NextPage = () => {
-  const tempClick = () => {
-    window.open('/', '_self')
-  }
   return (
     <>
       <Head>
         <title>Sign up</title>
       </Head>
-      <main className='grid-col-2 flex grid min-h-screen flex-col items-center justify-center'>
-        <div onClick={tempClick}>
-          <p className='text-5xl text-white'>Sign up coming soon</p>
-        </div>
+
+      <main className='flex h-screen flex-col items-center justify-center'>
+       <SignUp signInUrl={"/signin"} redirectUrl={"/nav"}/>
+        <Image 
+          src={StudyLogo} 
+          alt="Visionary" 
+          width={580} 
+          height={325}
+          className='p-10'
+        />
       </main>
     </>
   )

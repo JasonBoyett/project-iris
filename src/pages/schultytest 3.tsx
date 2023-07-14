@@ -6,7 +6,6 @@ import { api } from '~/utils/api'
 import { useEffect, useState } from 'react'
 import { ChangerProps } from 'src/componants/wordchanger'
 import React from 'react'
-import HomeButton from '~/componants/homebutton'
 
 const words = ['this', 'is', 'a', 'test', 'of', 'the', 'word', 'changer']
 
@@ -20,8 +19,7 @@ const Page: NextPage = () => {
           content='A speed reading game called Schulte Table'
         />
       </Head>
-      <HomeButton />
-      <div className='flex h-screen flex-col items-center justify-center'>
+      <div className='flex h-screen flex-col items-start justify-center'>
         <SchultyTable
           length={5}
           width={5}

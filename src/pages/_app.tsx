@@ -1,10 +1,10 @@
-import { createContext, Context } from 'react'
+import { createContext } from 'react'
 import { type AppType } from 'next/app'
 import { ClerkProvider } from '@clerk/nextjs'
 import { api } from '~/utils/api'
 import '~/styles/globals.css'
 
-interface User {
+type User = {
   Id: string
   FirstName: string
   LastName: string
@@ -16,19 +16,20 @@ interface User {
   update: () => void
 }
 
-const user = {
+const user: User = {
   Id: 'test',
   FirstName: 'test',
   LastName: 'User',
   Email: 'test@test.test',
   MaxWpm: 250,
-  CurrentWpm: 700,
+  CurrentWpm: 100,
   CreatedAt: new Date(),
   UpdatedAt: new Date(),
   update: () => {
     console.log(this)
   }
 }
+
 export const userContext = createContext(user)
 
 const MyApp: AppType = ({ Component, pageProps }) => {

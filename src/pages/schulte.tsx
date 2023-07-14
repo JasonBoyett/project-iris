@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { api } from '~/utils/api'
 import HomeButton from '~/componants/homebutton'
+import SettingsButton from '~/componants/settingsbutton'
 
 const Page: NextPage = () => {
   const [currentNumber, setCurrentNumber] = useState(1)
@@ -103,6 +104,7 @@ const Page: NextPage = () => {
           content='A speed reading game called Schulte Table'
         />
       </Head>
+      <SettingsButton />
       <HomeButton />
 
       <motion.div

@@ -12,8 +12,9 @@ import axios from 'axios'
 import { api } from '../utils/api'
 import { useIsVisible } from '~/hooks/useIsVisible'
 import { userContext } from '~/pages/_app'
+import { useRouter } from 'next/router'
 
-const counterContext = createContext <number>(0)
+const counterContext = createContext<number>(0)
 
 
 interface CellType extends ReactElement {
@@ -45,6 +46,7 @@ interface GridType extends ReactElement {
 type GridProps = {
   layout: FlasherLayout
   rows?: number
+  next?: string
 }
 
 const layoutManager = (layout: FlasherLayout) => {
@@ -89,7 +91,7 @@ export const partitionWords = (
   const partitionedWords: string[][] = []
   const wordJoiner: string[] = []
   const wordsPerCell = words.length / sections
-  for (let i = 0; i < sections; i += wordsPerCell){
+  for (let i = 0; i < sections; i += wordsPerCell) {
     wordJoiner.push(words.slice(i, i + wordsPerCell).join(' '))
   }
   for (let i = 0; i < wordJoiner.length; i += frames) {
@@ -99,7 +101,7 @@ export const partitionWords = (
   return partitionedWords
 }
 
-const Cell = ({ content, location, loadCheck}: CellProps) => {
+const Cell = ({ content, location, loadCheck }: CellProps) => {
   const FLASH =
     'flex text-white text-xl justify-center p-4 bg-gray-500 rounded-md gap-1'
   const NO_FLASH = 'flex text-white text-xl justify-center p-4'
@@ -118,19 +120,19 @@ const Cell = ({ content, location, loadCheck}: CellProps) => {
 
 
   useEffect(() => {
-    counter === location 
-      ? highlight() 
+    counter === location
+      ? highlight()
       : toDefault()
   }, [counter, location])
 
   useEffect(() => loadCheck(true)
-  , [ref])
+    , [ref])
 
   return (
-    <div 
-    className={className}
-    key={uuid()}
-    ref={ref}
+    <div
+      className={className}
+      key={uuid()}
+      ref={ref}
     >
       {content}
     </div>
@@ -158,27 +160,30 @@ export const createCells = ({
   return cells
 }
 
-const Grid = ({ rows=5, layout}: GridProps) => {
+const Grid = ({ rows = 5, layout, next }: GridProps) => {
   const [cellCounter, setCounter] = useState<number>(-1)
   //cellCounter starts at -1 so the animation doesn't start until
   //the component has been visible for just a moment
   const words = useRef<string[][]>([])
   const section = useRef<number>(0)
-  const [wordsPerCell, width]: [number, number] | number[]= layoutManager(layout)
-  const [done, setDone] = useState<JSX.Element | null>(null)
+  const [wordsPerCell, width]: [number, number] | number[] = layoutManager(layout)
   const [grid, setGrid] = useState<JSX.Element[]>()
   const returnClass = useState<string>(`grid grid-cols-${width} gap-2`)[0]
   const ref = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const user = useContext(userContext)
+  const router = useRouter()
 
   const tearDown = () => {
-    setDone(<div className='text-white text-4xl'>done</div>)
+    if(next){
+      //TODO impliment data collection here
+      return router.push(next).catch(err => console.log(err))
+    } else router.push("/nav").catch(err => console.log(err))
   }
 
   useEffect(() => {
     const setup = (async () => {
-      const wordsArry = await getWords(wordsPerCell * user.CurrentWpm * rows )
+      const wordsArry = await getWords(wordsPerCell * user.CurrentWpm * rows)
       words.current = partitionWords(
         wordsArry,
         wordsArry.length / wordsPerCell,
@@ -192,17 +197,17 @@ const Grid = ({ rows=5, layout}: GridProps) => {
 
 
   useInterval(() => {
-    if (!isVisible) { 
+    if (!isVisible) {
       console.log(isVisible)
       console.log('not visible')
       return
     }
     if (section.current >= words.current.length - 1 && cellCounter >= rows * width) {
-      tearDown()
+      tearDown()?.catch(err => console.log(err))
       return
     }
     if (cellCounter >= rows * width) {
-      section.current ++
+      section.current++
       console.log(section)
       setGrid(
         createCells({
@@ -216,10 +221,10 @@ const Grid = ({ rows=5, layout}: GridProps) => {
     }
     console.log(cellCounter)
   }, 60_000 / user.CurrentWpm)
-  
+
   return (
     <counterContext.Provider value={cellCounter}>
-      <div 
+      <div
         className={returnClass}
         ref={ref}
       >{grid}</div>

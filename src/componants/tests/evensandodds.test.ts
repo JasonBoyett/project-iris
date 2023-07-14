@@ -2,13 +2,6 @@ import { expect, test, describe } from 'vitest'
 import { generateNumbers } from '../evensandodds'
 import type { EvenOddProps } from '../evensandodds'
 
-// type EvenOddProps = {
-//     segFigs: number
-//     evens: number
-//     cols: number
-//     rows: number
-// }
-
 describe('generates an array of random numbers with a given number of significant figures and with a given number of even numbers', () => {
   test('generates a single array of 10 numbers with 5 even numbers and 3 significant figures', () => {
     const props = {
