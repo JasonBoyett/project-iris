@@ -15,6 +15,8 @@ export type ChangerProps = {
   wpm: number
 }
 
+const MILISECONDS_IN_A_MINUTE = 60000
+
 const fetchWords = async (number: number) => {
   try {
     if (number > 500) {
