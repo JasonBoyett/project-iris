@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")
@@ -11,41 +8,40 @@ generator client {
   provider = "prisma-client-js"
 }
 
-enum Overlay {//maps directly to the global Overlay enum in globals.d.ts
-  BLUE 
-  BLUE_GREY 
-  GREEN 
-  GREY 
-  ORANGE 
-  PEACH 
-  PURPLE 
-  RED 
-  TURQUOISE 
-  YELLOW 
+enum Overlay {
+  BLUE
+  BLUE_GREY
+  GREEN
+  GREY
+  ORANGE
+  PEACH
+  PURPLE
+  RED
+  TURQUOISE
+  YELLOW
 }
 
 model User {
-  Id                      String                   @id @default(cuid())@unique
+  Id                      String                   @id @unique @default(cuid())
   CreatedAt               DateTime                 @default(now())
   UpdatedAt               DateTime                 @updatedAt
-  Email                   String                   @unique @db.VarChar(320)
   FirstName               String                   @db.VarChar(255)
   LastName                String                   @db.VarChar(255)
   MaxWpm                  Int                      @db.SmallInt
   CurrentWpm              Int                      @db.SmallInt
-  TimeTests               TimeTest[]               
-  ShulteSessions          ShulteSession[]          
+  TimeTests               TimeTest[]
+  ShulteSessions          ShulteSession[]
   EvenNumberSessions      EvenNumberSession[]
   WordGridFlasherSessions WordGridFlasherSession[]
   WordFlasherSessions     WordFlasherSession[]
-  HighlghtColor           Overlay                 
+  HighlghtColor           Overlay
   DarkMode                Boolean                  @default(false)
 
-  @@index([Email])
+  @@index([Id])
 }
 
 model TimeTest {
-  Id        String  @unique
+  Id        String   @unique
   userId    String
   user      User     @relation(fields: [userId], references: [Id])
   sessionId String   @id @default(cuid())
@@ -53,59 +49,73 @@ model TimeTest {
   highScore Int      @db.SmallInt
   lowScore  Int      @db.SmallInt
   accuracy  Int      @db.SmallInt
+
+  @@index([Id])
 }
 
 model ShulteSession {
-  Id         String @unique
+  Id         String   @unique
   user       User     @relation(fields: [UserId], references: [Id])
   SideLength Int      @db.TinyInt
   StartTime  DateTime @db.DateTime
   EndTime    DateTime @db.DateTime
   ErrorCount Int      @db.SmallInt
   UserId     String   @db.VarChar(255)
+
+  @@index([Id])
 }
 
 model EvenNumberSession {
-  Id            String  @unique
+  Id            String   @unique
   UserId        String
   user          User     @relation(fields: [UserId], references: [Id])
   ErrorCount    Int      @db.SmallInt
   numberCleared Int      @db.SmallInt
   date          DateTime @db.DateTime
+
+  @@index([Id])
 }
 
 model WordGridFlasherSession {
-  Id    String @unique
-  UserId        String
-  user  User     @relation(fields: [UserId], references: [Id])
-  speed Int      @db.SmallInt
-  date  DateTime @db.DateTime
-  type  String   @db.VarChar(255)
+  Id     String   @unique
+  UserId String
+  user   User     @relation(fields: [UserId], references: [Id])
+  speed  Int      @db.SmallInt
+  date   DateTime @db.DateTime
+  type   String   @db.VarChar(255)
+
+  @@index([Id])
 }
 
 model WordFlasherSession {
-  Id    String @unique
-  UserId    String
-  user  User     @relation(fields: [UserId], references: [Id])
-  speed Int      @db.SmallInt
-  date  DateTime @db.DateTime
-  type  String   @db.VarChar(255)
+  Id     String   @unique
+  UserId String
+  user   User     @relation(fields: [UserId], references: [Id])
+  speed  Int      @db.SmallInt
+  date   DateTime @db.DateTime
+  type   String   @db.VarChar(255)
+
+  @@index([Id])
 }
 
 model SatPassage {
-  Id        String @unique
+  Id          String        @unique
   passageText String
-  questions SatQuestion[]
+  questions   SatQuestion[]
+
+  @@index([Id])
 }
 
 model SatQuestion {
-  Id            String @unique
-  PassageId            String
+  Id            String     @unique
+  PassageId     String
   passage       SatPassage @relation(fields: [PassageId], references: [Id])
   question      String
   answerA       String     @db.VarChar(255)
   answerB       String     @db.VarChar(255)
   answerC       String     @db.VarChar(255)
   answerD       String     @db.VarChar(255)
-  correctAnswer String       @db.Char(1)
+  correctAnswer String     @db.Char(1)
+
+  @@index([Id])
 }
