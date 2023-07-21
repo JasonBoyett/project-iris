@@ -28,18 +28,21 @@ export const state: userType = {
   DarkMode: true,
 }
 
-export const userContext = createContext<{state: userType, set: (user: userType) => void}>(
-  {
-  state: state, 
-  set: () => console.log('test')
-  }
-)
+export const userContext = createContext<{
+  state: userType
+  set: (user: userType) => void
+}>({
+  state: state,
+  set: () => console.log('test'),
+})
 
 const MyApp: AppType = ({ Component, pageProps }) => {
-const [currentUser, setUser] = useState(state)
+  const [currentUser, setUser] = useState(state)
 
   return (
-    <userContext.Provider value={{state: currentUser, set: (user: userType) => setUser(user)}}>
+    <userContext.Provider
+      value={{ state: currentUser, set: (user: userType) => setUser(user) }}
+    >
       <ClerkProvider>
         <Component {...pageProps} />
       </ClerkProvider>

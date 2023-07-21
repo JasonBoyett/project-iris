@@ -11,8 +11,7 @@ enum Overlay {
   YELLOW = '#F8FD89',
 }
 
-
-enum SquareGameLayout{
+enum SquareGameLayout {
   ONE_SQUARE = 'ONE_SQUARE',
   TWO_SQUARE = 'TWO_SQUARE',
 }

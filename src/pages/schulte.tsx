@@ -59,8 +59,8 @@ const Page: NextPage = () => {
         className={className}
         onClick={() => handleClick(content)}
       >
-        <div 
-          key={content} 
+        <div
+          key={content}
           className='text-center text-2xl text-white'
         >
           {content}
@@ -86,14 +86,11 @@ const Page: NextPage = () => {
     setTable(table)
   }, [table])
   useEffect(() => {
-    if (
-      localNumber < sideLength * sideLength + 1 
-      && doneString !== 'Done!'
-    ) {
+    if (localNumber < sideLength * sideLength + 1 && doneString !== 'Done!') {
       setCurrentNumber(localNumber)
     } else if (
-      localNumber === sideLength * sideLength + 1 
-      && doneString !== 'Done!'
+      localNumber === sideLength * sideLength + 1 &&
+      doneString !== 'Done!'
     ) {
       setCurrentNumber(0)
       setDoneString('Done!')

@@ -1,3 +1,0 @@
-import { prisma } from './db'
-
-

@@ -15,6 +15,5 @@ export const exampleRouter = createTRPCRouter({
   }),
   getUser: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.user.findFirst()
-  })
+  }),
 })
-

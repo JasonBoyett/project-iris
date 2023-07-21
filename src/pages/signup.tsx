@@ -12,11 +12,14 @@ const Page: NextPage = () => {
       </Head>
 
       <main className='flex h-screen flex-col items-center justify-center'>
-       <SignUp signInUrl={"/signin"} redirectUrl={"/nav"}/>
-        <Image 
-          src={StudyLogo} 
-          alt="Visionary" 
-          width={580} 
+        <SignUp
+          signInUrl={'/signin'}
+          redirectUrl={'/nav'}
+        />
+        <Image
+          src={StudyLogo}
+          alt='Visionary'
+          width={580}
           height={325}
           className='p-10'
         />

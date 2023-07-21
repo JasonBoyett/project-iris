@@ -16,7 +16,6 @@ import { useRouter } from 'next/router'
 
 const counterContext = createContext<number>(0)
 
-
 interface CellType extends ReactElement {
   display: JSX.Element
   flash: (current: number) => void
@@ -51,12 +50,18 @@ type GridProps = {
 
 const layoutManager = (layout: FlasherLayout) => {
   switch (layout) {
-    case FlasherLayout.ONE_BY_ONE: return [1, 1]
-    case FlasherLayout.ONE_BY_TWO: return [1, 2]
-    case FlasherLayout.TWO_BY_ONE: return [2, 1]
-    case FlasherLayout.TWO_BY_TWO: return [2, 2]
-    case FlasherLayout.FOUR_BY_TWO: return [4, 2]
-    case FlasherLayout.FOUR_BY_ONE: return [4, 1]
+    case FlasherLayout.ONE_BY_ONE:
+      return [1, 1]
+    case FlasherLayout.ONE_BY_TWO:
+      return [1, 2]
+    case FlasherLayout.TWO_BY_ONE:
+      return [2, 1]
+    case FlasherLayout.TWO_BY_TWO:
+      return [2, 2]
+    case FlasherLayout.FOUR_BY_TWO:
+      return [4, 2]
+    case FlasherLayout.FOUR_BY_ONE:
+      return [4, 1]
   }
 }
 export const getWords = async (number: number) => {
@@ -118,15 +123,11 @@ const Cell = ({ content, location, loadCheck }: CellProps) => {
     setClassName(NO_FLASH)
   }
 
-
   useEffect(() => {
-    counter === location
-      ? highlight()
-      : toDefault()
+    counter === location ? highlight() : toDefault()
   }, [counter, location])
 
-  useEffect(() => loadCheck(true)
-    , [ref])
+  useEffect(() => loadCheck(true), [ref])
 
   return (
     <div
@@ -166,7 +167,8 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
   //the component has been visible for just a moment
   const words = useRef<string[][]>([])
   const section = useRef<number>(0)
-  const [wordsPerCell, width]: [number, number] | number[] = layoutManager(layout)
+  const [wordsPerCell, width]: [number, number] | number[] =
+    layoutManager(layout)
   const [grid, setGrid] = useState<JSX.Element[]>()
   const returnClass = useState<string>(`grid grid-cols-${width} gap-2`)[0]
   const ref = useRef<HTMLDivElement>(null)
@@ -176,10 +178,10 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
   const router = useRouter()
 
   const tearDown = () => {
-    if(next){
+    if (next) {
       //TODO impliment data collection here
-      return router.push(next).catch(err => console.log(err))
-    } else router.push("/nav").catch(err => console.log(err))
+      return router.push(next).catch((err) => console.log(err))
+    } else router.push('/nav').catch((err) => console.log(err))
   }
 
   useEffect(() => {
@@ -188,14 +190,15 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
       words.current = partitionWords(
         wordsArry,
         wordsArry.length / wordsPerCell,
-        rows * width
+        rows * width,
       )
-      setGrid(createCells({ words: words.current[0]!, loadCheck: setIsVisible }))
+      setGrid(
+        createCells({ words: words.current[0]!, loadCheck: setIsVisible }),
+      )
       console.log('width: ', width)
       console.log('wordsPerCell: ', wordsPerCell)
     })()
   }, [])
-
 
   useInterval(() => {
     if (!isVisible) {
@@ -203,8 +206,11 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
       console.log('not visible')
       return
     }
-    if (section.current >= words.current.length - 1 && cellCounter >= rows * width) {
-      tearDown()?.catch(err => console.log(err))
+    if (
+      section.current >= words.current.length - 1 &&
+      cellCounter >= rows * width
+    ) {
+      tearDown()?.catch((err) => console.log(err))
       return
     }
     if (cellCounter >= rows * width) {
@@ -213,12 +219,12 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
       setGrid(
         createCells({
           words: words.current[section.current]!,
-          loadCheck: setIsVisible
+          loadCheck: setIsVisible,
         }),
       )
       setCounter(0)
     } else {
-      setCounter(prev => prev + 1)
+      setCounter((prev) => prev + 1)
     }
     console.log(cellCounter)
   }, 60_000 / user.CurrentWpm)
@@ -228,7 +234,9 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
       <div
         className={returnClass}
         ref={ref}
-      >{grid}</div>
+      >
+        {grid}
+      </div>
     </counterContext.Provider>
   ) as GridType
 }

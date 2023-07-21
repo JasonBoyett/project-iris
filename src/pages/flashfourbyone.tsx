@@ -10,16 +10,14 @@ import HomeButton from 'src/componants/homebutton'
 import SettingsButton from '~/componants/settingsbutton'
 import SchulteTable from '~/componants/schultetable'
 
-
 interface PageProps {
   grid?: JSX.Element
 }
 
 const nextComponant = '/schulte'
 
-
 const Page: NextPage<PageProps> = () => {
-  const loading: ReactElement= (
+  const loading: ReactElement = (
     <div className='flex flex-col items-center justify-center'>
       Loading Game...
     </div>
@@ -34,10 +32,8 @@ const Page: NextPage<PageProps> = () => {
       </Head>
       <SettingsButton />
       <HomeButton />
-      <div 
-        className='flex min-h-screen grid-cols-2 flex-col items-center justify-center gap-4 py-2'
-      >
-        <FlashingGrid 
+      <div className='flex min-h-screen grid-cols-2 flex-col items-center justify-center gap-4 py-2'>
+        <FlashingGrid
           layout={FlasherLayout.FOUR_BY_ONE}
           next={nextComponant}
         />

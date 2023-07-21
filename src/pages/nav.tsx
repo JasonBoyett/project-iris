@@ -41,10 +41,9 @@ const Page: NextPage = () => {
   }
 
   useEffect(() => {
-    console.log('context',context.state, 'user', user)
+    console.log('context', context.state, 'user', user)
     context.set({ ...context.state, ...user })
-  },[user])
-
+  }, [user])
 
   return (
     <>
@@ -53,7 +52,10 @@ const Page: NextPage = () => {
       </Head>
       <main className='grid-col-2 flex grid min-h-screen flex-col items-center justify-center'>
         <div className='container flex flex-col items-center justify-center gap-2 px-4 py-16'>
-          <button className={buttonStyle} onClick={() => console.log(context.state)}>
+          <button
+            className={buttonStyle}
+            onClick={() => console.log(context.state)}
+          >
             state
           </button>
           <button

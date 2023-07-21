@@ -12,9 +12,7 @@ interface PageProps {
   grid?: JSX.Element
 }
 
-
 const Page: NextPage<PageProps> = () => {
-
   return (
     <>
       <Head>
@@ -22,10 +20,8 @@ const Page: NextPage<PageProps> = () => {
       </Head>
       <SettingsButton />
       <HomeButton />
-      <div 
-        className='flex min-h-screen grid-cols-2 flex-col items-center justify-center gap-4 py-2'
-      >
-        <FlashingGrid layout={FlasherLayout.ONE_BY_TWO}/>
+      <div className='flex min-h-screen grid-cols-2 flex-col items-center justify-center gap-4 py-2'>
+        <FlashingGrid layout={FlasherLayout.ONE_BY_TWO} />
       </div>
     </>
   )
