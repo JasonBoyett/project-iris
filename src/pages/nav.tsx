@@ -1,19 +1,28 @@
 import { type NextPage } from 'next'
 import { h, Fragment } from 'preact'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext, useRef } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { api } from '~/utils/api'
+import { userContext } from '~/pages/_app'
+import userType from '~/pages/_app'
+import { useRouter } from 'next/router'
 
 const Page: NextPage = () => {
   const buttonStyle =
     'border text-white bg-black border-2 rounded-lg p-2 hover:border-3 hover:bg-gray-500'
+
+  const context = useContext(userContext)
+  const user = api.user.getDebug.useQuery().data
+
+  const router = useRouter()
+
   const schulteOpen = () => {
     window.open('/schulte', '_self')
   }
 
   const openFlashFourByOne = () => {
-    window.open('/flashfourbyone', '_self')
+    router.push('/flashfourbyone').catch((err) => console.log(err))
   }
 
   const openOneByTwo = () => {
@@ -31,6 +40,12 @@ const Page: NextPage = () => {
     window.open('/evennumbers', '_self')
   }
 
+  useEffect(() => {
+    console.log('context',context.state, 'user', user)
+    context.set({ ...context.state, ...user })
+  },[user])
+
+
   return (
     <>
       <Head>
@@ -38,6 +53,9 @@ const Page: NextPage = () => {
       </Head>
       <main className='grid-col-2 flex grid min-h-screen flex-col items-center justify-center'>
         <div className='container flex flex-col items-center justify-center gap-2 px-4 py-16'>
+          <button className={buttonStyle} onClick={() => console.log(context.state)}>
+            state
+          </button>
           <button
             className={buttonStyle}
             onClick={schulteOpen}

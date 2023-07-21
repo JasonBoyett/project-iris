@@ -34,7 +34,7 @@ model User {
   EvenNumberSessions      EvenNumberSession[]
   WordGridFlasherSessions WordGridFlasherSession[]
   WordFlasherSessions     WordFlasherSession[]
-  HighlghtColor           Overlay
+  HighlightColor           Overlay
   DarkMode                Boolean                  @default(false)
 
   @@index([Id])

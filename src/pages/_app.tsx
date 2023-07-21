@@ -1,40 +1,45 @@
-import { createContext } from 'react'
+import { createContext, useState } from 'react'
 import { type AppType } from 'next/app'
 import { ClerkProvider } from '@clerk/nextjs'
 import { api } from '~/utils/api'
 import '~/styles/globals.css'
 
-type User = {
+export type userType = {
   Id: string
   FirstName: string
   LastName: string
-  Email: string
   MaxWpm: number
   CurrentWpm: number
   CreatedAt: Date
   UpdatedAt: Date
-  update: () => void
+  HighlightColor: string
+  DarkMode: boolean
 }
 
-const user: User = {
+export const state: userType = {
   Id: 'test',
   FirstName: 'test',
   LastName: 'User',
-  Email: 'test@test.test',
   MaxWpm: 250,
-  CurrentWpm: 100,
+  CurrentWpm: 10,
   CreatedAt: new Date(),
   UpdatedAt: new Date(),
-  update: () => {
-    console.log(this)
-  }
+  HighlightColor: 'GREY',
+  DarkMode: true,
 }
 
-export const userContext = createContext(user)
+export const userContext = createContext<{state: userType, set: (user: userType) => void}>(
+  {
+  state: state, 
+  set: () => console.log('test')
+  }
+)
 
 const MyApp: AppType = ({ Component, pageProps }) => {
+const [currentUser, setUser] = useState(state)
+
   return (
-    <userContext.Provider value={user}>
+    <userContext.Provider value={{state: currentUser, set: (user: userType) => setUser(user)}}>
       <ClerkProvider>
         <Component {...pageProps} />
       </ClerkProvider>

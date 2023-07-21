@@ -11,7 +11,7 @@ import { v4 as uuid } from 'uuid'
 import axios from 'axios'
 import { api } from '../utils/api'
 import { useIsVisible } from '~/hooks/useIsVisible'
-import { userContext } from '~/pages/_app'
+import { userContext, userType } from '~/pages/_app'
 import { useRouter } from 'next/router'
 
 const counterContext = createContext<number>(0)
@@ -171,7 +171,8 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
   const returnClass = useState<string>(`grid grid-cols-${width} gap-2`)[0]
   const ref = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState<boolean>(false)
-  const user = useContext(userContext)
+  const context = useContext(userContext)
+  const user = context.state
   const router = useRouter()
 
   const tearDown = () => {
