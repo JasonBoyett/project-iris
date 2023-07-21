@@ -1,5 +1,5 @@
 import HomeButton from "~/componants/homebutton";
-import SchulteTable from "~/componants/schultetable 2";
+import SchulteTable from "~/componants/schultetable";
 import { NextPage } from "next";
 import Head from "next/head";
 import SettingsButton from "~/componants/settingsbutton";

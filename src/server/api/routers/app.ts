@@ -2,9 +2,33 @@ import { z } from 'zod'
 
 import { createTRPCRouter, publicProcedure, } from '~/server/api/trpc'
 
+const userSchema = z.object({
+      Id: z.string(),
+      FirstName: z.string(),
+      LastName: z.string(),
+      MaxWpm: z.number(),
+      CurrentWpm: z.number(),
+      CreatedAt: z.date(),
+      UpdatedAt: z.date(),
+      DarkMode: z.boolean(),
+      HighlightColor: z.enum([
+        'BLUE',
+        'BLUE_GREY',
+        'GREEN',
+        'GREY',
+        'ORANGE',
+        'PEACH',
+        'PURPLE',
+        'RED',
+        'TURQUOISE',
+        'YELLOW'
+      ])
+    })
+
 export const userRouter = createTRPCRouter({
 
   getUnique: publicProcedure
+  .output(userSchema)
   .input(
     z.object({
       id: z.string(),
@@ -12,14 +36,14 @@ export const userRouter = createTRPCRouter({
       lastName: z.string(),
     })
   )
-  .query(({ ctx, input }) => {
-    const user = ctx.prisma.user.findUnique({
+  .query(async ({ ctx, input }) => {
+    const user = await ctx.prisma.user.findUnique({
       where: {
         Id: input.id
       }
     }) 
     if(user === null || user === undefined) {
-      const newUser = ctx.prisma.user.create({
+      const newUser = await ctx.prisma.user.create({
         data:{
           Id: 'test',
           FirstName: 'test',
@@ -38,6 +62,7 @@ export const userRouter = createTRPCRouter({
   }),
 
   setUser: publicProcedure
+  .output(userSchema)
   .input(
     z.object({
       Id: z.string(),
@@ -80,7 +105,8 @@ export const userRouter = createTRPCRouter({
     })
   }),
 
-  getDebug: publicProcedure.output(
+  getDebug: publicProcedure
+  .output(
     z.object({
       Id: z.string(),
       FirstName: z.string(),

@@ -59,7 +59,12 @@ const Page: NextPage = () => {
         className={className}
         onClick={() => handleClick(content)}
       >
-        <div className='text-center text-2xl text-white'>{content}</div>
+        <div 
+          key={content} 
+          className='text-center text-2xl text-white'
+        >
+          {content}
+        </div>
       </button>
     )
   }
