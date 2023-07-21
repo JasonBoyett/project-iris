@@ -11,10 +11,6 @@ const Page: NextPage = () => {
         <title>Sign In</title>
       </Head>
       <main className='flex h-screen flex-col items-center justify-center'>
-        <SignIn
-          signUpUrl={'/signup'}
-          redirectUrl={'/nav'}
-        />
         <Image
           src={StudyLogo}
           alt='Visionary'

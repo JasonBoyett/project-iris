@@ -54,12 +54,6 @@ const Page: NextPage = () => {
         <div className='container flex flex-col items-center justify-center gap-2 px-4 py-16'>
           <button
             className={buttonStyle}
-            onClick={() => console.log(context.state)}
-          >
-            state
-          </button>
-          <button
-            className={buttonStyle}
             onClick={schulteOpen}
           >
             Schulte Table
