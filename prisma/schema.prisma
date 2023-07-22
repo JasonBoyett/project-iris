@@ -119,3 +119,16 @@ model SatQuestion {
 
   @@index([Id])
 }
+
+model SpeedQestion{
+  Id            String     @unique
+  question      String
+  answerA       String     @db.VarChar(255)
+  answerB       String     @db.VarChar(255)
+  answerC       String     @db.VarChar(255)
+  answerD       String     @db.VarChar(255)
+  correctAnswer String     @db.Char(1)
+
+  @@index([Id])
+}
+
