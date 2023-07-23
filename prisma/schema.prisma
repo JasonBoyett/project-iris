@@ -22,7 +22,7 @@ enum Overlay {
 }
 
 model User {
-  Id                      String                   @id @unique @default(cuid())
+  Id                      String                   @id @unique 
   CreatedAt               DateTime                 @default(now())
   UpdatedAt               DateTime                 @updatedAt
   FirstName               String                   @db.VarChar(255)
@@ -120,14 +120,14 @@ model SatQuestion {
   @@index([Id])
 }
 
-model SpeedQestion{
-  Id            String     @unique
-  question      String
-  answerA       String     @db.VarChar(255)
-  answerB       String     @db.VarChar(255)
-  answerC       String     @db.VarChar(255)
-  answerD       String     @db.VarChar(255)
-  correctAnswer String     @db.Char(1)
+model SpeedQuestion{
+  Id            String     @unique@id@default(cuid())
+  question      String     @db.Text
+  answerA       String     
+  answerB       String    
+  answerC       String   
+  answerD       String  
+  correctAnswer String 
 
   @@index([Id])
 }

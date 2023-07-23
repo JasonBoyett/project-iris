@@ -1,17 +1,20 @@
-import { z } from 'zod'
+import { Prisma } from '@prisma/client'
+import { Sql } from '@prisma/client/runtime'
+import { z as zodValidate } from 'zod'
+import type { SpeedQuestion } from '@prisma/client'
 
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 
-const userSchema = z.object({
-  Id: z.string(),
-  FirstName: z.string(),
-  LastName: z.string(),
-  MaxWpm: z.number(),
-  CurrentWpm: z.number(),
-  CreatedAt: z.date(),
-  UpdatedAt: z.date(),
-  DarkMode: z.boolean(),
-  HighlightColor: z.enum([
+const userSchema = zodValidate.object({
+  Id: zodValidate.string(),
+  FirstName: zodValidate.string(),
+  LastName: zodValidate.string(),
+  MaxWpm: zodValidate.number(),
+  CurrentWpm: zodValidate.number(),
+  CreatedAt: zodValidate.date(),
+  UpdatedAt: zodValidate.date(),
+  DarkMode: zodValidate.boolean(),
+  HighlightColor: zodValidate.enum([
     'BLUE',
     'BLUE_GREY',
     'GREEN',
@@ -25,14 +28,24 @@ const userSchema = z.object({
   ]),
 })
 
+const speedTestSchema = zodValidate.object({
+  Id: zodValidate.string(),
+  question: zodValidate.string(),
+  answerA: zodValidate.string(),
+  answerB: zodValidate.string(),
+  answerC: zodValidate.string(),
+  answerD: zodValidate.string(),
+  correctAnswer: zodValidate.string(),
+})
+
 export const userRouter = createTRPCRouter({
   getUnique: publicProcedure
     .output(userSchema)
     .input(
-      z.object({
-        id: z.string(),
-        firstName: z.string(),
-        lastName: z.string(),
+      zodValidate.object({
+        id: zodValidate.string(),
+        firstName: zodValidate.string(),
+        lastName: zodValidate.string(),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -62,30 +75,7 @@ export const userRouter = createTRPCRouter({
 
   setUser: publicProcedure
     .output(userSchema)
-    .input(
-      z.object({
-        Id: z.string(),
-        FirstName: z.string(),
-        LastName: z.string(),
-        MaxWpm: z.number(),
-        CurrentWpm: z.number(),
-        CreatedAt: z.date(),
-        UpdatedAt: z.date(),
-        DarkMode: z.boolean(),
-        HighlightColor: z.enum([
-          'BLUE',
-          'BLUE_GREY',
-          'GREEN',
-          'GREY',
-          'ORANGE',
-          'PEACH',
-          'PURPLE',
-          'RED',
-          'TURQUOISE',
-          'YELLOW',
-        ]),
-      }),
-    )
+    .input(userSchema)
     .mutation(({ ctx, input }) => {
       return ctx.prisma.user.update({
         where: {
@@ -104,19 +94,41 @@ export const userRouter = createTRPCRouter({
       })
     }),
 
-  getDebug: publicProcedure
-    .output(userSchema)
-    .query(() => {
-      return {
-        Id: 'test',
-        FirstName: 'test',
-        LastName: 'User',
-        MaxWpm: 250,
-        CurrentWpm: 100,
-        CreatedAt: new Date(),
-        UpdatedAt: new Date(),
-        DarkMode: false,
-        HighlightColor: 'GREY',
-      }
+  getDebug: publicProcedure.output(userSchema).query(() => {
+    return {
+      Id: 'test',
+      FirstName: 'test',
+      LastName: 'User',
+      MaxWpm: 250,
+      CurrentWpm: 100,
+      CreatedAt: new Date(),
+      UpdatedAt: new Date(),
+      DarkMode: false,
+      HighlightColor: 'GREY',
+    }
+  }),
+})
+
+export const excercisesPropsRouter = createTRPCRouter({
+  getSingleSpeedTestProps: publicProcedure
+    .query(async ({ ctx }) => {
+      const result = await ctx.prisma.$queryRaw<SpeedQuestion>(
+        Prisma.sql
+          `SELECT * FROM "SpeedQuestion" ORDER BY RANDOM() LIMIT 1`
+      )
+      if (result === null || result === undefined) throw new Error('No result')
+      return result
+    }),
+
+  getMultipleSpeedTestProps: publicProcedure
+    .output(zodValidate.array(speedTestSchema))
+    .input(zodValidate.number())
+    .query(async ({ input, ctx }) => {
+      const result = await ctx.prisma.$queryRaw<Array<SpeedQuestion>>(
+        Prisma.sql
+          `SELECT * FROM SpeedQuestion ORDER BY RANDOM() LIMIT ${input}`
+      )
+      if (result === null || result === undefined) throw new Error('No result')
+      return result
     }),
 })

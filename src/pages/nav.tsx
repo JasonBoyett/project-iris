@@ -7,6 +7,7 @@ import { api } from '~/utils/api'
 import { userContext } from '~/pages/_app'
 import userType from '~/pages/_app'
 import { useRouter } from 'next/router'
+import { SignOutButton } from '@clerk/nextjs'
 
 const Page: NextPage = () => {
   const buttonStyle =
@@ -50,6 +51,11 @@ const Page: NextPage = () => {
       <Head>
         <title>Select a game</title>
       </Head>
+      <SignOutButton>
+        <button className='border text-white bg-black border-2 rounded-lg p-2 hover:border-3 hover:bg-gray-500'>
+          Sign Out
+        </button>
+      </SignOutButton>
       <main className='grid-col-2 flex grid min-h-screen flex-col items-center justify-center'>
         <div className='container flex flex-col items-center justify-center gap-2 px-4 py-16'>
           <button
