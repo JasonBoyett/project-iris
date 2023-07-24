@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
-import { api } from "~/utils/api";
 import useInterval from '../hooks/useInterval'
 import { User } from "@prisma/client";
 import { useIsVisible } from "~/hooks/useIsVisible";
 import { SpeedQuestion } from "@prisma/client";
+import HomeButton from "./homebutton";
+import SettingsButton from "./settingsbutton";
 
 type QuestionViewProps = {
   speedQuestion: SpeedQuestion,
@@ -45,53 +46,63 @@ const AnswerView = ({ speedQuestion }: { speedQuestion: SpeedQuestion}) => {
 
   const selectAnswer = (answer: Answers) => {
     if (answer === speedQuestion.correctAnswer.toUpperCase()) {
-      setCorrectOrNot(<><div><p className=' font-medum sm:text-xl text-green-500'>Correct! 🤩</p></div></>)
+      setCorrectOrNot(<>
+        <div className="flex items-center justify-center">
+          <p className='font-medum text-3xl text-green-500'>Correct! 🤩</p>
+        </div>
+      </>)
     }
-    else setCorrectOrNot(<><div><p className=' font-medum sm:text-xl text-red-700'>Incorrect 😭</p></div></>)
+    else setCorrectOrNot(<>
+       <div className="flex items-center justify-center">
+         <p className='font-medum text-3xl text-red-600'>Incorrect 😭</p>
+       </div>
+      </>)
   }
 
   return (
     <>
+      <HomeButton />
+      <SettingsButton />
       <div>
           {correctOrNot}
-        <div className='flex items-center p-5'>
-          <p className=' font-medum sm:text-lg text-white'>{speedQuestion.question}</p>
+        <div className='flex items-center justify-center p-5'>
+          <p className=' font-medum text-xl md:text-lg text-white justify-center'>{speedQuestion.question}</p>
         </div>
         <div className='flex items-center p-5'>
           <button
-            className=' font-medum sm:text-xl flex items-center justify-center text-fuchsia-600 bg-slate-500 rounded-md w-14 h-12 p-5' 
+            className=' font-medum text-xl md:text-lg flex items-center justify-center text-fuchsia-600 bg-slate-500 rounded-md w-14 h-12 p-5' 
             onClick={() => selectAnswer(Answers.A)}
           >
             A)
           </button>
-          <p className=" font-medum sm:text-lg text-white px-5">{speedQuestion.answerA}</p>
+          <p className=" font-medum text-xl md:text-lg text-white px-5">{speedQuestion.answerA}</p>
         </div>
         <div className="flex items-center p-5">
           <button
-            className=' font-medum sm:text-xl flex items-center justify-center text-fuchsia-600 bg-slate-500 rounded-md w-14 h-12 p-5' 
+            className=' font-medum text-xl md:text-lg flex items-center justify-center text-fuchsia-600 bg-slate-500 rounded-md w-14 h-12 p-5' 
             onClick={() => selectAnswer(Answers.B)}
           >
             B)
           </button>
-          <p className=' font-medum sm:text-lg text-white px-5'>{speedQuestion.answerB}</p>
+          <p className=' font-medum text-xl md:text-lg text-white px-5'>{speedQuestion.answerB}</p>
         </div>
         <div className='flex items-center p-5'>
           <button
-            className=' font-medum sm:text-xl flex items-center justify-center text-fuchsia-600 bg-slate-500 rounded-md w-14 h-12 p-5' 
+            className=' font-medum text-xl md:text-lg flex items-center justify-center text-fuchsia-600 bg-slate-500 rounded-md w-14 h-12 p-5' 
             onClick={() => selectAnswer(Answers.C)}
           >
             C)
           </button>
-          <p className=' font-medum sm:text-lg text-white px-5'>{speedQuestion.answerC}</p>
+          <p className=' font-medum text-xl md:text-lg text-white px-5'>{speedQuestion.answerC}</p>
         </div>
         <div className='flex items-center p-5'>
           <button
-            className=' font-medum sm:text-xl flex items-center justify-center text-fuchsia-600 bg-slate-500 rounded-md w-14 h-12 p-5' 
+            className=' font-medum text-xl md:text-lg flex items-center justify-center text-fuchsia-600 bg-slate-500 rounded-md w-14 h-12 p-5' 
             onClick={() => selectAnswer(Answers.D)}
           >
             D)
           </button>
-          <p className=' font-medum sm:text-lg text-white px-5'>{speedQuestion.answerD}</p>
+          <p className=' font-medum text-xl md:text-lg text-white px-5'>{speedQuestion.answerD}</p>
         </div>
       </div>
     </>

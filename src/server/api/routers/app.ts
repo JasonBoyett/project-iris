@@ -1,15 +1,13 @@
 import { Prisma } from '@prisma/client'
-import { Sql } from '@prisma/client/runtime'
 import { z as zodValidate } from 'zod'
 import type { SpeedQuestion } from '@prisma/client'
-
+import { User } from '@prisma/client'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
-import { TemplateString } from 'next/dist/lib/metadata/types/metadata-types'
 
 const userSchema = zodValidate.object({
   Id: zodValidate.string(),
-  FirstName: zodValidate.string(),
-  LastName: zodValidate.string(),
+  FirstName: zodValidate.string().optional(),
+  LastName: zodValidate.string().optional(),
   MaxWpm: zodValidate.number(),
   CurrentWpm: zodValidate.number(),
   CreatedAt: zodValidate.date(),
@@ -43,25 +41,19 @@ const speedTestSchema = zodValidate.object({
 export const userRouter = createTRPCRouter({
   getUnique: publicProcedure
     .output(userSchema)
-    .input(
-      zodValidate.object({
-        id: zodValidate.string(),
-        firstName: zodValidate.string(),
-        lastName: zodValidate.string(),
-      }),
-    )
-    .query(async ({ ctx, input }) => {
+    .query<User>(async ({ ctx, input }) => {
       const user = await ctx.prisma.user.findUnique({
         where: {
-          Id: input.id,
+          Id: ctx.auth.userId?.toString()
         },
       })
+      if (ctx.auth.userId === null || ctx.auth.userId === undefined) throw new Error('User not found')
       if (user === null || user === undefined) {
         const newUser = await ctx.prisma.user.create({
           data: {
-            Id: 'test',
-            FirstName: 'test',
-            LastName: 'User',
+            Id: ctx.auth.userId?.toString(),
+            FirstName: ctx.auth.user?.firstName ?? 'Unnamed',
+            LastName: ctx.auth.user?.lastName ?? 'User',
             MaxWpm: 250,
             CurrentWpm: 100,
             CreatedAt: new Date(),
@@ -78,14 +70,14 @@ export const userRouter = createTRPCRouter({
   setUser: publicProcedure
     .output(userSchema)
     .input(userSchema)
-    .mutation(({ ctx, input }) => {
+    .mutation<User>(({ ctx, input }) => {
       return ctx.prisma.user.update({
         where: {
-          Id: input.Id,
+          Id: ctx.auth.userId ?? input.Id,
         },
         data: {
-          FirstName: input.FirstName,
-          LastName: input.LastName,
+          FirstName: input.FirstName ?? 'Unnamed',
+          LastName: input.LastName ?? 'User',
           MaxWpm: input.MaxWpm,
           CurrentWpm: input.CurrentWpm,
           CreatedAt: input.CreatedAt,
@@ -96,7 +88,7 @@ export const userRouter = createTRPCRouter({
       })
     }),
 
-  getDebug: publicProcedure.output(userSchema).query(() => {
+  getDebug: publicProcedure.output(userSchema).query<User>(() => {
     return {
       Id: 'test',
       FirstName: 'test',

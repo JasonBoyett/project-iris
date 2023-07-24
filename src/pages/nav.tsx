@@ -1,20 +1,19 @@
 import { type NextPage } from 'next'
-import { h, Fragment } from 'preact'
-import { useState, useEffect, useContext, useRef } from 'react'
+import { useEffect, useContext } from 'react'
 import Head from 'next/head'
-import Link from 'next/link'
 import { api } from '~/utils/api'
 import { userContext } from '~/pages/_app'
-import userType from '~/pages/_app'
 import { useRouter } from 'next/router'
 import { SignOutButton } from '@clerk/nextjs'
+import { SignedIn, SignedOut } from '@clerk/clerk-react';
+import { SignIn } from '@clerk/clerk-react'
 
 const Page: NextPage = () => {
   const buttonStyle =
     'border text-white bg-black border-2 rounded-lg p-2 hover:border-3 hover:bg-gray-500'
 
   const context = useContext(userContext)
-  const user = api.user.getDebug.useQuery().data
+  const user = api.user.getUnique.useQuery().data
 
   const router = useRouter()
 
@@ -23,26 +22,26 @@ const Page: NextPage = () => {
   }
 
   const schulteOpen = () => {
-    window.open('/schulte', '_self')
+    router.replace('/schulte').catch((err) => console.log(err))
   }
 
   const openFlashFourByOne = () => {
-    router.push('/flashfourbyone').catch((err) => console.log(err))
+    router.replace('/flashfourbyone').catch((err) => console.log(err))
   }
 
   const openOneByTwo = () => {
-    window.open('/flashonebytwo', '_self')
+    router.replace('/flashonebytwo').catch((err) => console.log(err))
   }
 
   const openTwoByTwo = () => {
-    window.open('/flashtwobytwo', '_self')
+    router.replace('/flashtwobytwo').catch((err) => console.log(err))
   }
 
   const openOneByOne = () => {
-    window.open('/flashonebyone', '_self')
+    router.replace('/flashonebyone').catch((err) => console.log(err))
   }
   const openEvensAndOdds = () => {
-    window.open('/evennumbers', '_self')
+    router.replace('/evennumbers').catch((err) => console.log(err))
   }
 
   useEffect(() => {
@@ -55,6 +54,7 @@ const Page: NextPage = () => {
       <Head>
         <title>Select a game</title>
       </Head>
+      <SignedIn>
       <SignOutButton>
         <button className='border text-white bg-black border-2 rounded-lg p-2 hover:border-3 hover:bg-gray-500'>
           Sign Out
@@ -106,6 +106,12 @@ const Page: NextPage = () => {
           </button>
         </div>
       </main>
+      </SignedIn>
+      <SignedOut>
+        <main className='flex min-h-screen items-center justify-center'>
+          <SignIn />
+        </main>
+      </SignedOut>
     </>
   )
 }
