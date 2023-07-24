@@ -3,20 +3,10 @@ import { type AppType } from 'next/app'
 import { ClerkProvider } from '@clerk/nextjs'
 import { api } from '~/utils/api'
 import '~/styles/globals.css'
+import { User } from '@prisma/client'
 
-export type userType = {
-  Id: string
-  FirstName: string
-  LastName: string
-  MaxWpm: number
-  CurrentWpm: number
-  CreatedAt: Date
-  UpdatedAt: Date
-  HighlightColor: string
-  DarkMode: boolean
-}
 
-export const state: userType = {
+export const state: User = {
   Id: 'test',
   FirstName: 'test',
   LastName: 'User',
@@ -29,8 +19,8 @@ export const state: userType = {
 }
 
 export const userContext = createContext<{
-  state: userType
-  set: (user: userType) => void
+  state: User
+  set: (user: User) => void
 }>({
   state: state,
   set: () => console.log('test'),
@@ -41,7 +31,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
 
   return (
     <userContext.Provider
-      value={{ state: currentUser, set: (user: userType) => setUser(user) }}
+      value={{ state: currentUser, set: (user: User) => setUser(user) }}
     >
       <ClerkProvider>
         <Component {...pageProps} />

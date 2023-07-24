@@ -11,7 +11,7 @@ import { v4 as uuid } from 'uuid'
 import axios from 'axios'
 import { api } from '../utils/api'
 import { useIsVisible } from '~/hooks/useIsVisible'
-import { userContext, userType } from '~/pages/_app'
+import { userContext } from '~/pages/_app'
 import { useRouter } from 'next/router'
 
 const counterContext = createContext<number>(0)

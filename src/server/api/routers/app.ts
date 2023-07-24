@@ -4,6 +4,7 @@ import { z as zodValidate } from 'zod'
 import type { SpeedQuestion } from '@prisma/client'
 
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
+import { TemplateString } from 'next/dist/lib/metadata/types/metadata-types'
 
 const userSchema = zodValidate.object({
   Id: zodValidate.string(),
@@ -29,8 +30,9 @@ const userSchema = zodValidate.object({
 })
 
 const speedTestSchema = zodValidate.object({
-  Id: zodValidate.string(),
+  Id: zodValidate.number(),
   question: zodValidate.string(),
+  passage: zodValidate.string(),
   answerA: zodValidate.string(),
   answerB: zodValidate.string(),
   answerC: zodValidate.string(),
@@ -112,10 +114,13 @@ export const userRouter = createTRPCRouter({
 export const excercisesPropsRouter = createTRPCRouter({
   getSingleSpeedTestProps: publicProcedure
     .query(async ({ ctx }) => {
-      const result = await ctx.prisma.$queryRaw<SpeedQuestion>(
-        Prisma.sql
-          `SELECT * FROM "SpeedQuestion" ORDER BY RANDOM() LIMIT 1`
-      )
+      const numberOfTables = await ctx.prisma.speedQuestion.count()
+      const random = Math.floor(Math.random() * numberOfTables)
+      const result = await ctx.prisma.speedQuestion.findUnique({
+        where: {
+          Id: random,
+        }
+      })
       if (result === null || result === undefined) throw new Error('No result')
       return result
     }),

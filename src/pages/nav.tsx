@@ -18,6 +18,10 @@ const Page: NextPage = () => {
 
   const router = useRouter()
 
+  const opentTest = () => {
+    router.replace('/speedtest').catch((err) => console.log(err))
+  }
+
   const schulteOpen = () => {
     window.open('/schulte', '_self')
   }
@@ -63,6 +67,12 @@ const Page: NextPage = () => {
             onClick={schulteOpen}
           >
             Schulte Table
+          </button>
+          <button
+            className={buttonStyle}
+            onClick={opentTest}
+          >
+            Speed Test
           </button>
           <button
             className={buttonStyle}
