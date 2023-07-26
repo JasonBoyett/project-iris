@@ -2,7 +2,7 @@ import { authMiddleware } from '@clerk/nextjs'
 
 export default authMiddleware({
   apiKey: process.env.NEXT_PUBLIC_CLERK_API_KEY,
-  publicRoutes: ['/','/nav']
+  publicRoutes: ['/', '/nav'],
 })
 
 export const config = {

@@ -1,4 +1,5 @@
 import { Prisma } from '@prisma/client'
+import type { Overlay } from '@prisma/client'
 import { z as zodValidate } from 'zod'
 import type { SpeedQuestion } from '@prisma/client'
 import { User } from '@prisma/client'
@@ -6,24 +7,24 @@ import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 
 const userSchema = zodValidate.object({
   Id: zodValidate.string(),
-  FirstName: zodValidate.string().optional(),
-  LastName: zodValidate.string().optional(),
+  FirstName: zodValidate.string(),
+  LastName: zodValidate.string(),
   MaxWpm: zodValidate.number(),
   CurrentWpm: zodValidate.number(),
   CreatedAt: zodValidate.date(),
   UpdatedAt: zodValidate.date(),
   DarkMode: zodValidate.boolean(),
-  HighlightColor: zodValidate.enum([
-    'BLUE',
-    'BLUE_GREY',
-    'GREEN',
-    'GREY',
-    'ORANGE',
-    'PEACH',
-    'PURPLE',
-    'RED',
-    'TURQUOISE',
-    'YELLOW',
+  HighlightColor: zodValidate.union([
+    zodValidate.literal('BLUE'),
+    zodValidate.literal('BLUE_GREY'),
+    zodValidate.literal('GREEN'),
+    zodValidate.literal('GREY'),
+    zodValidate.literal('ORANGE'),
+    zodValidate.literal('PEACH'),
+    zodValidate.literal('PURPLE'),
+    zodValidate.literal('RED'),
+    zodValidate.literal('TURQUOISE'),
+    zodValidate.literal('YELLOW'),
   ]),
 })
 
@@ -44,10 +45,11 @@ export const userRouter = createTRPCRouter({
     .query<User>(async ({ ctx, input }) => {
       const user = await ctx.prisma.user.findUnique({
         where: {
-          Id: ctx.auth.userId?.toString()
+          Id: ctx.auth.userId?.toString(),
         },
       })
-      if (ctx.auth.userId === null || ctx.auth.userId === undefined) throw new Error('User not found')
+      if (ctx.auth.userId === null || ctx.auth.userId === undefined)
+        throw new Error('User not found')
       if (user === null || user === undefined) {
         const newUser = await ctx.prisma.user.create({
           data: {
@@ -69,7 +71,7 @@ export const userRouter = createTRPCRouter({
 
   setUser: publicProcedure
     .output(userSchema)
-    .input(userSchema)
+    .input(userSchema.partial())
     .mutation<User>(({ ctx, input }) => {
       return ctx.prisma.user.update({
         where: {
@@ -88,6 +90,27 @@ export const userRouter = createTRPCRouter({
       })
     }),
 
+  setUserFirstName: publicProcedure
+    .output(userSchema)
+    .input(
+      zodValidate.object({
+        name: zodValidate.string(),
+        Id: zodValidate.string(),
+      }),
+    )
+    .mutation<User>(({ ctx, input }) => {
+      return ctx.prisma.user.update({
+        where: {
+          Id: ctx.auth.userId ?? input.Id,
+        },
+        data: {
+          FirstName: input.name,
+        },
+      })
+    }),
+
+  // setUserLastName: publicProcedure
+
   getDebug: publicProcedure.output(userSchema).query<User>(() => {
     return {
       Id: 'test',
@@ -104,26 +127,24 @@ export const userRouter = createTRPCRouter({
 })
 
 export const excercisesPropsRouter = createTRPCRouter({
-  getSingleSpeedTestProps: publicProcedure
-    .query(async ({ ctx }) => {
-      const numberOfTables = await ctx.prisma.speedQuestion.count()
-      const random = Math.floor(Math.random() * numberOfTables)
-      const result = await ctx.prisma.speedQuestion.findUnique({
-        where: {
-          Id: random,
-        }
-      })
-      if (result === null || result === undefined) throw new Error('No result')
-      return result
-    }),
+  getSingleSpeedTestProps: publicProcedure.query(async ({ ctx }) => {
+    const numberOfTables = await ctx.prisma.speedQuestion.count()
+    const random = Math.floor(Math.random() * numberOfTables)
+    const result = await ctx.prisma.speedQuestion.findUnique({
+      where: {
+        Id: random,
+      },
+    })
+    if (result === null || result === undefined) throw new Error('No result')
+    return result
+  }),
 
   getMultipleSpeedTestProps: publicProcedure
     .output(zodValidate.array(speedTestSchema))
     .input(zodValidate.number())
     .query(async ({ input, ctx }) => {
       const result = await ctx.prisma.$queryRaw<Array<SpeedQuestion>>(
-        Prisma.sql
-          `SELECT * FROM SpeedQuestion ORDER BY RANDOM() LIMIT ${input}`
+        Prisma.sql`SELECT * FROM SpeedQuestion ORDER BY RANDOM() LIMIT ${input}`,
       )
       if (result === null || result === undefined) throw new Error('No result')
       return result

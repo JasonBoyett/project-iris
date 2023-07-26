@@ -7,7 +7,7 @@ const SettingsButton = ({
 }) => {
   return (
     <div className={className}>
-      <Link href='/'>
+      <Link href='/settings'>
         <Image
           src={settings}
           alt='Settings'

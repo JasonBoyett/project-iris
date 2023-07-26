@@ -25,8 +25,8 @@ model User {
   Id                      String                   @id @unique 
   CreatedAt               DateTime                 @default(now())
   UpdatedAt               DateTime                 @updatedAt
-  FirstName               String                   @db.VarChar(255)
-  LastName                String                   @db.VarChar(255)
+  FirstName               String                   @db.VarChar(255)@default("Defaul")
+  LastName                String                   @db.VarChar(255)@default("User")
   MaxWpm                  Int                      @db.SmallInt
   CurrentWpm              Int                      @db.SmallInt
   TimeTests               TimeTest[]
@@ -34,7 +34,7 @@ model User {
   EvenNumberSessions      EvenNumberSession[]
   WordGridFlasherSessions WordGridFlasherSession[]
   WordFlasherSessions     WordFlasherSession[]
-  HighlightColor           Overlay
+  HighlightColor          Overlay
   DarkMode                Boolean                  @default(false)
 
   @@index([Id])

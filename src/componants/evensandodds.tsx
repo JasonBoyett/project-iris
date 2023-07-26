@@ -5,9 +5,9 @@ import { uuid } from 'uuidv4'
 import { framesContext } from '../pages/evennumbers'
 import { motion } from 'framer-motion'
 const DEFAULT =
-  'flex text-white text-xl justify-center p-4 border-2 border-black gap-0'
+  'flex text-white text-xl justify-center p-4 border-2 border-slate-700 gap-0 bg-white/20'
 const HILIGHT =
-  'flex text-white text-xl justify-center p-4 bg-blue-500 border-2 border-black gap-0'
+  'flex text-white text-xl justify-center p-4 bg-blue-500 border-2 border-slate-700 gap-0 bg-white/20'
 
 type EvenOddProps = {
   segFigs: number

@@ -5,7 +5,6 @@ import { api } from '~/utils/api'
 import '~/styles/globals.css'
 import { User } from '@prisma/client'
 
-
 export const state: User = {
   Id: 'test',
   FirstName: 'test',
