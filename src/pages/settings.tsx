@@ -5,6 +5,7 @@ import { Router, useRouter } from 'next/router'
 import useUserStore from '~/stores/userStore'
 import useMutateUser from '~/stores/useMutateUser'
 import { useEffect, useState } from 'react'
+import { api } from '~/utils/api'
 
 const Page: NextPage = () => {
   const user = useUserStore((state) => state.user)
@@ -12,6 +13,7 @@ const Page: NextPage = () => {
   const [last, setLast] = useState<string>()
   const [currentWpm, setCurrentWpm] = useState<number>()
   const { mutateUser } = useMutateUser()
+  const { mutate } = api.user.setUser.useMutation()
   const inputStyle =
     'rounded-full p-4 h-16 py-5 bg-white/20 text-black font-normal'
   const router = useRouter()
@@ -34,7 +36,7 @@ const Page: NextPage = () => {
           onSubmit={(e) => {
             e.preventDefault()
             if (!user) return
-            mutateUser({
+            mutate({
               ...user,
               FirstName: first as string,
               LastName: last as string,
