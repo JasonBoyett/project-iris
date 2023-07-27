@@ -5,6 +5,8 @@ import Link from 'next/link'
 import React, { useEffect, useState, useContext } from 'react'
 import { EvensAndOdds } from 'src/componants/evensandodds'
 import { useSwitcher } from '../hooks/useSwitcher'
+import SettingsButton from '~/componants/settingsbutton'
+import HomeButton from '~/componants/homebutton'
 const MINUTE_TO_MILLIS = 60_000
 
 export type framesContextType = {
@@ -47,6 +49,8 @@ const Page: NextPage = () => {
       <Head>
         <title>Speed Read</title>
       </Head>
+      <SettingsButton />
+      <HomeButton />
       <div className='flex-grid flex h-screen  items-center justify-center text-3xl text-white'>
         {display}
       </div>
