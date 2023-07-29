@@ -1,47 +1,16 @@
+import axios from 'axios'
 import { Prisma } from '@prisma/client'
 import type { Overlay } from '@prisma/client'
 import { z as zodValidate } from 'zod'
 import type { SpeedQuestion } from '@prisma/client'
-import { User } from '@prisma/client'
+import { User } from '~/utils/types'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
-
-const userSchema = zodValidate.object({
-  Id: zodValidate.string(),
-  FirstName: zodValidate.string(),
-  LastName: zodValidate.string(),
-  MaxWpm: zodValidate.number(),
-  CurrentWpm: zodValidate.number(),
-  CreatedAt: zodValidate.date(),
-  UpdatedAt: zodValidate.date(),
-  DarkMode: zodValidate.boolean(),
-  HighlightColor: zodValidate.union([
-    zodValidate.literal('BLUE'),
-    zodValidate.literal('BLUE_GREY'),
-    zodValidate.literal('GREEN'),
-    zodValidate.literal('GREY'),
-    zodValidate.literal('ORANGE'),
-    zodValidate.literal('PEACH'),
-    zodValidate.literal('PURPLE'),
-    zodValidate.literal('RED'),
-    zodValidate.literal('TURQUOISE'),
-    zodValidate.literal('YELLOW'),
-  ]),
-})
-
-const speedTestSchema = zodValidate.object({
-  Id: zodValidate.number(),
-  question: zodValidate.string(),
-  passage: zodValidate.string(),
-  answerA: zodValidate.string(),
-  answerB: zodValidate.string(),
-  answerC: zodValidate.string(),
-  answerD: zodValidate.string(),
-  correctAnswer: zodValidate.string(),
-})
+import { schemas, inputs } from '~/utils/validators'
+import 
 
 export const userRouter = createTRPCRouter({
   getUnique: publicProcedure
-    .output(userSchema)
+    .output(schemas.user)
     .query<User>(async ({ ctx, input }) => {
       const user = await ctx.prisma.user.findUnique({
         where: {
@@ -70,8 +39,8 @@ export const userRouter = createTRPCRouter({
     }),
 
   setUser: publicProcedure
-    .output(userSchema)
-    .input(userSchema.partial())
+    .output(schemas.user)
+    .input(schemas.user.partial())
     .mutation<User>(({ ctx, input }) => {
       return ctx.prisma.user.update({
         where: {
@@ -91,7 +60,7 @@ export const userRouter = createTRPCRouter({
     }),
 
   setUserFirstName: publicProcedure
-    .output(userSchema)
+    .output(schemas.user)
     .input(
       zodValidate.object({
         name: zodValidate.string(),
@@ -111,19 +80,21 @@ export const userRouter = createTRPCRouter({
 
   // setUserLastName: publicProcedure
 
-  getDebug: publicProcedure.output(userSchema).query<User>(() => {
-    return {
-      Id: 'test',
-      FirstName: 'test',
-      LastName: 'User',
-      MaxWpm: 250,
-      CurrentWpm: 100,
-      CreatedAt: new Date(),
-      UpdatedAt: new Date(),
-      DarkMode: false,
-      HighlightColor: 'GREY',
-    }
-  }),
+  getDebug: publicProcedure
+    .output(schemas.user)
+    .query<User>(() => {
+      return {
+        Id: 'test',
+        FirstName: 'test',
+        LastName: 'User',
+        MaxWpm: 250,
+        CurrentWpm: 100,
+        CreatedAt: new Date(),
+        UpdatedAt: new Date(),
+        DarkMode: false,
+        HighlightColor: 'GREY',
+      }
+    }),
 })
 
 export const excercisesPropsRouter = createTRPCRouter({
@@ -140,7 +111,7 @@ export const excercisesPropsRouter = createTRPCRouter({
   }),
 
   getMultipleSpeedTestProps: publicProcedure
-    .output(zodValidate.array(speedTestSchema))
+    .output(zodValidate.array(schemas.speedTest))
     .input(zodValidate.number())
     .query(async ({ input, ctx }) => {
       const result = await ctx.prisma.$queryRaw<Array<SpeedQuestion>>(
@@ -148,5 +119,22 @@ export const excercisesPropsRouter = createTRPCRouter({
       )
       if (result === null || result === undefined) throw new Error('No result')
       return result
+    }),
+    
+  getRandomWords: publicProcedure
+    .input(inputs.randomWords)
+    .query( ({ input }) => {
+      if(input.language === 'SPANISH'){
+        const response = await axios.get<string[]>(
+          `https://random-word-api.herokuapp.com/word?lang=es&number=${input.number}`
+        ).catch((err) => { throw new Error(err) })
+        return response.data
+      }
+      if(input.language === 'ENGLISH'){
+        const response = await axios.get<string[]>(
+          `https://random-word-api.herokuapp.com/word?number=${input.number}`
+        ).catch((err) => { throw new Error(err) })
+        return response.data
+      }
     }),
 })

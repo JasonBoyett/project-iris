@@ -1,4 +1,4 @@
-import type { User } from '@prisma/client'
+import type { User } from '~/utils/types'
 import { useEffect, useState } from 'react'
 import { create } from 'zustand'
 import { api } from '~/utils/api'

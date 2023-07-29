@@ -3,7 +3,7 @@ import { type AppType } from 'next/app'
 import { ClerkProvider } from '@clerk/nextjs'
 import { api } from '~/utils/api'
 import '~/styles/globals.css'
-import { User } from '@prisma/client'
+import type { User } from '~/utils/types'
 
 export const state: User = {
   Id: 'test',
