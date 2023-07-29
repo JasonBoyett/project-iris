@@ -6,7 +6,6 @@ import type { SpeedQuestion } from '@prisma/client'
 import { User } from '~/utils/types'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { schemas, inputs } from '~/utils/validators'
-import 
 
 export const userRouter = createTRPCRouter({
   getUnique: publicProcedure
@@ -123,17 +122,21 @@ export const excercisesPropsRouter = createTRPCRouter({
     
   getRandomWords: publicProcedure
     .input(inputs.randomWords)
-    .query( ({ input }) => {
+    .output(
+      zodValidate.array(zodValidate.string())
+      .or(zodValidate.undefined())
+    )
+    .query<string[] | undefined>(async ({ input }) => {
       if(input.language === 'SPANISH'){
         const response = await axios.get<string[]>(
           `https://random-word-api.herokuapp.com/word?lang=es&number=${input.number}`
-        ).catch((err) => { throw new Error(err) })
+        )
         return response.data
       }
       if(input.language === 'ENGLISH'){
         const response = await axios.get<string[]>(
           `https://random-word-api.herokuapp.com/word?number=${input.number}`
-        ).catch((err) => { throw new Error(err) })
+        )
         return response.data
       }
     }),

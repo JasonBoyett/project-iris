@@ -6,9 +6,10 @@ import useUserStore from '~/stores/userStore'
 import useMutateUser from '~/stores/useMutateUser'
 import { useEffect, useState } from 'react'
 import { api } from '~/utils/api'
+import { User } from '~/utils/types'
 
 const Page: NextPage = () => {
-  const user = api.user.getUnique.useQuery().data
+  const user: User | undefined = api.user.getUnique.useQuery().data
   const [first, setFirst] = useState<string>()
   const [last, setLast] = useState<string>()
   const [currentWpm, setCurrentWpm] = useState<number>()

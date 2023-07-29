@@ -22,7 +22,7 @@ const Page: NextPage = () => {
     }
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
-      ;[arr[i], arr[j]] = [arr[j], arr[i]]
+        ;[arr[i], arr[j]] = [arr[j], arr[i]]
     }
     return arr as number[]
   }
@@ -113,7 +113,7 @@ const Page: NextPage = () => {
         className='flex flex-col items-center justify-center'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 3 }}
+        transition={{ duration: 1 }}
       >
         <div className='flex h-screen flex-col items-start justify-center'>
           <button onClick={teardown}>

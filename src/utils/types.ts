@@ -24,4 +24,6 @@ export type User = {
   HighlightColor: Overlay
 }
 
+export type Language = 'ENGLISH'|'SPANISH'
+
 
