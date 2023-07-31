@@ -1,22 +1,22 @@
 import { type NextPage } from 'next'
-import { useEffect, useContext, useState } from 'react'
+import { useEffect } from 'react'
 import Head from 'next/head'
 import { api } from '~/utils/api'
-import { userContext } from '~/pages/_app'
 import { useRouter } from 'next/router'
 import { SignOutButton } from '@clerk/nextjs'
 import { SignedIn, SignedOut } from '@clerk/clerk-react'
 import { SignIn } from '@clerk/clerk-react'
 import { useUserStore } from '~/stores/userStore'
-import { Overlay } from '@prisma/client'
+import type { Overlay } from '~/utils/types'
+import { User } from '~/utils/types'
 
 const Page: NextPage = () => {
   const buttonStyle =
     'text-white md:text-3xl bg-white/10 rounded-full p-4 h-16 hover:bg-white/20'
 
-  const user = api.user.getUnique.useQuery().data
+  const user = api.user.getUnique.useQuery<User>().data
   const setUserStore = useUserStore((state) => state.setUser)
-  const { data, error, isLoading } = api.user.getUnique.useQuery()
+  const { data, isLoading } = api.user.getUnique.useQuery()
 
   const router = useRouter()
 
@@ -48,17 +48,7 @@ const Page: NextPage = () => {
   }
 
   useEffect(() => {
-    setUserStore({
-      Id: user?.Id as string,
-      FirstName: user?.FirstName as string,
-      LastName: user?.LastName as string,
-      MaxWpm: user?.MaxWpm as number,
-      CurrentWpm: user?.CurrentWpm as number,
-      CreatedAt: user?.CreatedAt as Date,
-      UpdatedAt: user?.UpdatedAt as Date,
-      DarkMode: user?.DarkMode as boolean,
-      HighlightColor: user?.HighlightColor as Overlay,
-    })
+    setUserStore(user)
   }, [user, isLoading, data])
 
   return (

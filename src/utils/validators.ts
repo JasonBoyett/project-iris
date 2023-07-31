@@ -21,6 +21,12 @@ const userSchema = zodValidate.object({
     zodValidate.literal('TURQUOISE'),
     zodValidate.literal('YELLOW'),
   ]),
+  LastSchulteSession: zodValidate.date().optional(),
+  LastSpeedTest: zodValidate.date().optional(),
+  LastFourByOne: zodValidate.date().optional(),
+  LastOneByTwo: zodValidate.date().optional(),
+  LastTwoByTwo: zodValidate.date().optional(),
+  LastOneByOne: zodValidate.date().optional(),
 })
 
 const speedTestSchema = zodValidate.object({

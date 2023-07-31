@@ -54,6 +54,12 @@ export const userRouter = createTRPCRouter({
           UpdatedAt: input.UpdatedAt,
           DarkMode: input.DarkMode,
           HighlightColor: input.HighlightColor,
+          LastSchulteSession: input.LastSchulteSession,
+          LastSpeedTest: input.LastSpeedTest,
+          LastFourByOne: input.LastFourByOne,
+          LastOneByTwo: input.LastOneByTwo,
+          LastTwoByTwo: input.LastTwoByTwo,
+          LastOneByOne: input.LastOneByOne,
         },
       })
     }),
