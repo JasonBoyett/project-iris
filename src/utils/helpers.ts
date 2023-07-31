@@ -63,6 +63,8 @@ export const getNextExercise = (user: User) => {
         return isSameDay(user.LastOneByOne, new Date())
       case 'SCHULTE':
         return isSameDay(user.LastSchulteSession, new Date())
+      case 'EVEN_NUMBERS':
+        return isSameDay(user.LastEvenNumbers, new Date())
       case 'SPEED_TEST':
         return false
     }

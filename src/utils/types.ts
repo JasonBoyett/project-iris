@@ -38,6 +38,7 @@ export type User = {
   LastOneByTwo: Date
   LastTwoByTwo: Date
   LastOneByOne: Date
+  LastEvenNumbers: Date
 }
 
 const Language = ['ENGLISH','SPANISH'] as const
