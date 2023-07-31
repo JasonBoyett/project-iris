@@ -11,14 +11,14 @@ export const useUserStore = create<{
   /**
    * The single source of truth for the user object
    */
-  user: User | null | undefined
+  user: User | undefined
   /**
    * use this function to set the user object in the store
    * @param userFromClient - the new version of the user object
    */
   setUser: (user: User | undefined) => void
 }>((set) => ({
-  user: null,
+  user: undefined,
   setUser: (userFromClient: User | undefined) => {
     return set((state) => ({ ...state, user: userFromClient }))
   },

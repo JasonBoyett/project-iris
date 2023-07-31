@@ -7,8 +7,7 @@ import { SignOutButton } from '@clerk/nextjs'
 import { SignedIn, SignedOut } from '@clerk/clerk-react'
 import { SignIn } from '@clerk/clerk-react'
 import { useUserStore } from '~/stores/userStore'
-import type { Overlay } from '~/utils/types'
-import { User } from '~/utils/types'
+import type { User } from '~/utils/types'
 
 const Page: NextPage = () => {
   const buttonStyle =
@@ -48,8 +47,9 @@ const Page: NextPage = () => {
   }
 
   useEffect(() => {
+    if (!user) throw new Error('User not found')
     setUserStore(user)
-  }, [user, isLoading, data])
+  }, [user, isLoading, data, setUserStore])
 
   return (
     <>
@@ -58,7 +58,7 @@ const Page: NextPage = () => {
       </Head>
       <SignedIn>
         <SignOutButton>
-          <button className='border text-white bg-black border-2 rounded-full p-2 hover:border-3 hover:bg-gray-500'>
+          <button className='text-white bg-black border-2 rounded-full p-2 hover:border-3 hover:bg-gray-500'>
             Sign Out
           </button>
         </SignOutButton>

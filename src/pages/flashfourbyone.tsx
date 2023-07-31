@@ -1,11 +1,9 @@
-import { NextPage, GetServerSideProps } from 'next'
+import type { NextPage } from 'next'
 import Head from 'next/head'
-import { ReactElement, useEffect, useState } from 'react'
 import FlashingGrid from 'src/componants/flashingcell'
 import { FlasherLayout } from 'src/componants/flashingcell'
 import HomeButton from 'src/componants/homebutton'
 import SettingsButton from '~/componants/settingsbutton'
-import { useUserStore } from '~/stores/userStore'
 
 interface PageProps {
   grid?: JSX.Element

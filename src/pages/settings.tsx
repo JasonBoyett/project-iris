@@ -9,7 +9,7 @@ import { api } from '~/utils/api'
 import { User } from '~/utils/types'
 
 const Page: NextPage = () => {
-  const user: User | undefined = api.user.getUnique.useQuery().data
+  const user: User | undefined = api.user.getUnique.useQuery<User>().data
   const [first, setFirst] = useState<string>()
   const [last, setLast] = useState<string>()
   const [currentWpm, setCurrentWpm] = useState<number>()

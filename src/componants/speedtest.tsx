@@ -1,11 +1,11 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import useInterval from '../hooks/useInterval'
-import type { User, SpeedQuestion } from '@prisma/client'
-import { useIsVisible } from '~/hooks/useIsVisible'
+import type { SpeedQuestion } from '@prisma/client'
+import type { User } from '~/utils/types'
 
 type QuestionViewProps = {
   speedQuestion: SpeedQuestion
-  user: User
+  user: User | undefined
   doneSignal: () => void
 }
 const QuestionView = ({
@@ -18,13 +18,19 @@ const QuestionView = ({
   const isVisivle = true
   const [itteration, setItteration] = useState(0)
 
+  const setSpeed = () => {
+    if (!user) throw new Error('User not found')
+    return 60_000 / user.CurrentWpm
+  }
+
   useInterval(() => {
+    if (!user) throw new Error('User is undefined')
     if (isVisivle) setItteration((prev) => prev + 1)
     if (itteration >= formattedQuestion.length) {
       doneSignal()
     }
     setCurrentWord(formattedQuestion[itteration])
-  }, 60_000 / user.CurrentWpm)
+  }, setSpeed())
   return (
     <>
       <div>
@@ -130,7 +136,7 @@ const SpeedTest = ({
   user,
   speedQuestion,
 }: {
-  user: User
+  user: User | undefined
   speedQuestion: SpeedQuestion
 }) => {
   const [isAnswerTime, setIsAnswerTime] = useState(false)

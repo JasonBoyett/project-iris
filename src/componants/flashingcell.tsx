@@ -9,10 +9,10 @@ import type { ReactElement } from 'react'
 import useInterval from '../hooks/useInterval'
 import { v4 as uuid } from 'uuid'
 import axios from 'axios'
-import { api } from '../utils/api'
 import { useIsVisible } from '~/hooks/useIsVisible'
 import { useRouter } from 'next/router'
 import { useUserStore } from '~/stores/userStore'
+import type { User } from '~/utils/types'
 
 const counterContext = createContext<number>(0)
 
@@ -64,6 +64,7 @@ const layoutManager = (layout: FlasherLayout) => {
       return [4, 1]
   }
 }
+
 export const getWords = async (number: number) => {
   try {
     if (number > 500) {
@@ -83,7 +84,6 @@ export const getWords = async (number: number) => {
       return response.data as string[]
     }
   } catch (error) {
-    console.log("Here's the error: ", error)
     return ['error']
   }
 }
@@ -113,6 +113,7 @@ const Cell = ({ content, location, loadCheck }: CellProps) => {
   const [className, setClassName] = useState(NO_FLASH)
   const counter = useContext(counterContext)
   const ref = useRef<HTMLDivElement>(null)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isVisible = useIsVisible(ref)
 
   const highlight = () => {
@@ -127,6 +128,7 @@ const Cell = ({ content, location, loadCheck }: CellProps) => {
     counter === location ? highlight() : toDefault()
   }, [counter, location])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => loadCheck(true), [ref])
 
   return (
@@ -144,10 +146,11 @@ export const createCells = ({
   words,
   loadCheck,
 }: {
-  words: string[]
+  words: string[] | undefined
   loadCheck: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const cells: ReactElement[] = []
+  if (!words) throw new Error('Words not found')
   words.forEach((word, index) => {
     cells.push(
       <Cell
@@ -174,7 +177,7 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
   const user = useUserStore((state) => state.user)
   const router = useRouter()
 
-  const setSpeed = () => {
+  const setSpeed = (user: User | undefined) => {
     if (!user) throw new Error('User not found')
     return 60_000 / user.CurrentWpm
   }
@@ -187,6 +190,7 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
 
   useEffect(() => {
     if (!user) throw new Error('User not found')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const setup = (async () => {
       const wordsArry = await getWords(wordsPerCell * user.CurrentWpm * rows)
       words.current = partitionWords(
@@ -195,15 +199,14 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
         rows * width,
       )
       setGrid(
-        createCells({ words: words.current[0]!, loadCheck: setIsVisible }),
+        createCells({ words: words.current[0], loadCheck: setIsVisible }),
       )
     })()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useInterval(() => {
     if (!isVisible) {
-      console.log(isVisible)
-      console.log('not visible')
       return
     }
     if (
@@ -215,10 +218,9 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
     }
     if (cellCounter >= rows * width) {
       section.current++
-      console.log(section)
       setGrid(
         createCells({
-          words: words.current[section.current]!,
+          words: words.current[section.current],
           loadCheck: setIsVisible,
         }),
       )
@@ -226,8 +228,7 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
     } else {
       setCounter((prev) => prev + 1)
     }
-    console.log(cellCounter)
-  }, setSpeed())
+  }, setSpeed(user))
 
   return (
     <counterContext.Provider value={cellCounter}>
