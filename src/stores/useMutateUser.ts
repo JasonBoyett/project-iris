@@ -8,7 +8,7 @@ const useMutateUser = () => {
   const [user, setUser] = useState<User | null>()
   const { mutate } = api.user.setUser.useMutation()
   useEffect(() => {
-    if(!user) return
+    if (!user) return
     mutate(user)
     store.setUser(user)
   }, [user])

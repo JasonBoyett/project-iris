@@ -19,35 +19,12 @@ const Page: NextPage = () => {
 
   const router = useRouter()
 
-  const opentTest = () => {
-    router.replace('/speedtest').catch((err) => console.log(err))
-  }
-
-  const schulteOpen = () => {
-    router.replace('/schulte').catch((err) => console.log(err))
-  }
-
-  const openFlashFourByOne = () => {
-    router.replace('/flashfourbyone').catch((err) => console.log(err))
-  }
-
-  const openOneByTwo = () => {
-    router.replace('/flashonebytwo').catch((err) => console.log(err))
-  }
-
-  const openTwoByTwo = () => {
-    router.replace('/flashtwobytwo').catch((err) => console.log(err))
-  }
-
-  const openOneByOne = () => {
-    router.replace('/flashonebyone').catch((err) => console.log(err))
-  }
-  const openEvensAndOdds = () => {
-    router.replace('/evennumbers').catch((err) => console.log(err))
+  const start = () => {
+    router.push('/loadnext').catch((err) => console.log(err))
   }
 
   useEffect(() => {
-    if (!user) throw new Error('User not found')
+    console.log(user)
     setUserStore(user)
   }, [user, isLoading, data, setUserStore])
 
@@ -66,45 +43,9 @@ const Page: NextPage = () => {
           <div className='container flex flex-col items-center justify-center gap-5 px-4'>
             <button
               className={buttonStyle}
-              onClick={schulteOpen}
+              onClick={() => start()}
             >
-              Schulte Table
-            </button>
-            <button
-              className={buttonStyle}
-              onClick={opentTest}
-            >
-              Speed Test
-            </button>
-            <button
-              className={buttonStyle}
-              onClick={openFlashFourByOne}
-            >
-              Flashing Grid Four by One
-            </button>
-            <button
-              className={buttonStyle}
-              onClick={openOneByTwo}
-            >
-              Flashing Grid One by Two
-            </button>
-            <button
-              className={buttonStyle}
-              onClick={openTwoByTwo}
-            >
-              Flashing Grid Two by Two
-            </button>
-            <button
-              className={buttonStyle}
-              onClick={openOneByOne}
-            >
-              Flashing Grid One by One
-            </button>
-            <button
-              className={buttonStyle}
-              onClick={openEvensAndOdds}
-            >
-              Even Numbers
+              Get Started
             </button>
           </div>
         </main>

@@ -3,17 +3,21 @@ import { Prisma } from '@prisma/client'
 import type { Overlay } from '@prisma/client'
 import { z as zodValidate } from 'zod'
 import type { SpeedQuestion } from '@prisma/client'
+//import { User } from '~/utils/types'
 import { User } from '~/utils/types'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { schemas, inputs } from '~/utils/validators'
+import { formatDate } from '~/utils/helpers'
 
 export const userRouter = createTRPCRouter({
   getUnique: publicProcedure
-    .output(schemas.user)
-    .query<User>(async ({ ctx, input }) => {
+    //.output(schemas.user.partial())
+    .query<User>(async ({ ctx }) => {
+      const userId = ctx.auth.userId
+      if (userId === null || userId === undefined) throw new Error('No user')
       const user = await ctx.prisma.user.findUnique({
         where: {
-          Id: ctx.auth.userId?.toString(),
+          Id: userId,
         },
       })
       if (ctx.auth.userId === null || ctx.auth.userId === undefined)
@@ -22,13 +26,12 @@ export const userRouter = createTRPCRouter({
         const newUser = await ctx.prisma.user.create({
           data: {
             Id: ctx.auth.userId?.toString(),
-            FirstName: ctx.auth.user?.firstName ?? 'Unnamed',
-            LastName: ctx.auth.user?.lastName ?? 'User',
+            FirstName: ctx.auth.user?.firstName ?? 'Source',
+            LastName: ctx.auth.user?.lastName ?? 'tRPC',
             MaxWpm: 250,
             CurrentWpm: 100,
             CreatedAt: new Date(),
             UpdatedAt: new Date(),
-            DarkMode: false,
             HighlightColor: 'GREY',
           },
         })
@@ -38,7 +41,7 @@ export const userRouter = createTRPCRouter({
     }),
 
   setUser: publicProcedure
-    .output(schemas.user)
+    .output(schemas.user.partial())
     .input(schemas.user.partial())
     .mutation<User>(({ ctx, input }) => {
       return ctx.prisma.user.update({
@@ -46,13 +49,12 @@ export const userRouter = createTRPCRouter({
           Id: ctx.auth.userId ?? input.Id,
         },
         data: {
-          FirstName: input.FirstName ?? 'Unnamed',
-          LastName: input.LastName ?? 'User',
+          FirstName: input.FirstName,
+          LastName: input.LastName,
           MaxWpm: input.MaxWpm,
           CurrentWpm: input.CurrentWpm,
           CreatedAt: input.CreatedAt,
           UpdatedAt: input.UpdatedAt,
-          DarkMode: input.DarkMode,
           HighlightColor: input.HighlightColor,
           LastSchulteSession: input.LastSchulteSession,
           LastSpeedTest: input.LastSpeedTest,
@@ -60,46 +62,24 @@ export const userRouter = createTRPCRouter({
           LastOneByTwo: input.LastOneByTwo,
           LastTwoByTwo: input.LastTwoByTwo,
           LastOneByOne: input.LastOneByOne,
+          LastTwoByOne: input.LastTwoByOne,
+          LastEvenNumbers: input.LastEvenNumbers,
         },
       })
     }),
 
-  setUserFirstName: publicProcedure
-    .output(schemas.user)
-    .input(
-      zodValidate.object({
-        name: zodValidate.string(),
-        Id: zodValidate.string(),
-      }),
-    )
-    .mutation<User>(({ ctx, input }) => {
-      return ctx.prisma.user.update({
-        where: {
-          Id: ctx.auth.userId ?? input.Id,
-        },
-        data: {
-          FirstName: input.name,
-        },
-      })
-    }),
-
-  // setUserLastName: publicProcedure
-
-  getDebug: publicProcedure
-    .output(schemas.user)
-    .query<User>(() => {
-      return {
-        Id: 'test',
-        FirstName: 'test',
-        LastName: 'User',
-        MaxWpm: 250,
-        CurrentWpm: 100,
-        CreatedAt: new Date(),
-        UpdatedAt: new Date(),
-        DarkMode: false,
-        HighlightColor: 'GREY',
-      }
-    }),
+  getDebug: publicProcedure.output(schemas.user.partial()).query<User>(() => {
+    return {
+      Id: 'test',
+      FirstName: 'test',
+      LastName: 'User',
+      MaxWpm: 250,
+      CurrentWpm: 100,
+      CreatedAt: new Date(),
+      UpdatedAt: new Date(),
+      HighlightColor: 'GREY',
+    }
+  }),
 })
 
 export const excercisesPropsRouter = createTRPCRouter({
@@ -125,23 +105,20 @@ export const excercisesPropsRouter = createTRPCRouter({
       if (result === null || result === undefined) throw new Error('No result')
       return result
     }),
-    
+
   getRandomWords: publicProcedure
     .input(inputs.randomWords)
-    .output(
-      zodValidate.array(zodValidate.string())
-      .or(zodValidate.undefined())
-    )
+    .output(zodValidate.array(zodValidate.string()).or(zodValidate.undefined()))
     .query<string[] | undefined>(async ({ input }) => {
-      if(input.language === 'SPANISH'){
+      if (input.language === 'SPANISH') {
         const response = await axios.get<string[]>(
-          `https://random-word-api.herokuapp.com/word?lang=es&number=${input.number}`
+          `https://random-word-api.herokuapp.com/word?lang=es&number=${input.number}`,
         )
         return response.data
       }
-      if(input.language === 'ENGLISH'){
+      if (input.language === 'ENGLISH') {
         const response = await axios.get<string[]>(
-          `https://random-word-api.herokuapp.com/word?number=${input.number}`
+          `https://random-word-api.herokuapp.com/word?number=${input.number}`,
         )
         return response.data
       }

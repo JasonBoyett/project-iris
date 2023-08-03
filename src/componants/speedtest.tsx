@@ -2,6 +2,10 @@ import { useState } from 'react'
 import useInterval from '../hooks/useInterval'
 import type { SpeedQuestion } from '@prisma/client'
 import type { User } from '~/utils/types'
+import { api } from '~/utils/api'
+import useUserStore from '~/stores/userStore'
+import { useRouter } from 'next/router'
+import { formatDate } from '~/utils/helpers'
 
 type QuestionViewProps = {
   speedQuestion: SpeedQuestion
@@ -19,12 +23,12 @@ const QuestionView = ({
   const [itteration, setItteration] = useState(0)
 
   const setSpeed = () => {
-    if (!user) throw new Error('User not found')
+    if (!user) return 60_000 / 200
     return 60_000 / user.CurrentWpm
   }
 
   useInterval(() => {
-    if (!user) throw new Error('User is undefined')
+    if (!user) console.log('User not found') 
     if (isVisivle) setItteration((prev) => prev + 1)
     if (itteration >= formattedQuestion.length) {
       doneSignal()
@@ -40,7 +44,16 @@ const QuestionView = ({
   )
 }
 
-const AnswerView = ({ speedQuestion }: { speedQuestion: SpeedQuestion }) => {
+const AnswerView = ({
+  speedQuestion,
+  user,
+}: {
+  speedQuestion: SpeedQuestion
+  user: User | undefined
+}) => {
+  const { mutate } = api.user.setUser.useMutation()
+  const setUserStore = useUserStore((state) => state.setUser)
+  const router = useRouter()
   const [correctOrNot, setCorrectOrNot] = useState(
     <>
       <div>
@@ -64,7 +77,17 @@ const AnswerView = ({ speedQuestion }: { speedQuestion: SpeedQuestion }) => {
           </div>
         </>,
       )
-    } else
+      if (!user) return 
+      mutate({
+        MaxWpm: user.MaxWpm + 10,
+        CurrentWpm: (() => {
+          const roundedCurrentWpm =
+            Math.round(((user.MaxWpm + 10) * 0.9) / 10) * 10
+          return roundedCurrentWpm
+        })(),
+        LastSpeedTest: formatDate(new Date()),
+      })
+    } else {
       setCorrectOrNot(
         <>
           <div className='flex items-center justify-center'>
@@ -72,6 +95,15 @@ const AnswerView = ({ speedQuestion }: { speedQuestion: SpeedQuestion }) => {
           </div>
         </>,
       )
+      if (!user) return 
+      mutate({
+        CurrentWpm: user.CurrentWpm - 10,
+        LastSpeedTest: formatDate(new Date()),
+      })
+    }
+    setTimeout(() => {
+      router.replace('/next').catch((err) => console.log(err))
+    }, 1500)
   }
 
   return (
@@ -143,7 +175,10 @@ const SpeedTest = ({
   return (
     <>
       {isAnswerTime ? (
-        <AnswerView speedQuestion={speedQuestion} />
+        <AnswerView
+          speedQuestion={speedQuestion}
+          user={user}
+        />
       ) : (
         <QuestionView
           user={user}

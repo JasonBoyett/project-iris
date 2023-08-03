@@ -7,6 +7,9 @@ import { EvensAndOdds } from 'src/componants/evensandodds'
 import { useSwitcher } from '../hooks/useSwitcher'
 import SettingsButton from '~/componants/settingsbutton'
 import HomeButton from '~/componants/homebutton'
+import { api } from '~/utils/api'
+import { useRouter } from 'next/router'
+import { formatDate } from '~/utils/helpers'
 const MINUTE_TO_MILLIS = 60_000
 
 export type framesContextType = {
@@ -21,8 +24,13 @@ export const framesContext = React.createContext<framesContextType>({
 })
 
 const Page: NextPage = () => {
-  const [instructionsOpen, setInstructionsOpen] = useState<boolean>(false)
   const [framesCleared, setFramesCleared] = useState<number>(0)
+  const { mutate } = api.user.setUser.useMutation()
+  const router = useRouter()
+  const tearDown = () => {
+    mutate({ LastEvenNumbers: formatDate(new Date()) })
+    router.replace('/next').catch((err) => console.log(err))
+  }
   const display = useSwitcher(
     <EvensAndOdds
       evens={6}
@@ -40,6 +48,7 @@ const Page: NextPage = () => {
             ? 'You cleared 1 frame'
             : `You cleared ${framesCleared} frames`}
         </div>
+        <button onClick={() => tearDown()}>Done</button>
       </div>
     </>,
     MINUTE_TO_MILLIS,

@@ -22,6 +22,12 @@ const Home: NextPage = () => {
       </Head>
       <main className='flex min-h-screen flex-col items-center justify-center'>
         <div className='container flex flex-col items-center justify-center gap-12 px-4 py-16 '>
+          <div className='items-center justify-center sm:w-96 sm:h-96 h-60 w-60'>
+            <Image
+              src={irisLogo}
+              alt='IRIS Logo'
+            />
+          </div>
           <h1 className='text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]'>
             Welcome to
             <span className='text-[#39b54a]'> Iris</span>

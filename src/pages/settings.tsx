@@ -30,27 +30,22 @@ const Page: NextPage = () => {
       <Head>Settings</Head>
       <HomeButton />
       <main className='flex flex-col h-screen items-center justify-center'>
-        <h1 className='md:text-6xl font-extrabold text-white py-4'>
-          Settings
-        </h1>
+        <h1 className='md:text-6xl font-extrabold text-white py-4'>Settings</h1>
         <form
           className='flex flex-col p-2 justify-items-end'
           onSubmit={(e) => {
             e.preventDefault()
             if (!user) return
             else if (
-              (first === 'Unnamed' && last === 'User')
-              || (first === null && last === null)
+              (first === 'Unnamed' && last === 'User') ||
+              (first === null && last === null)
             ) {
               mutate({ CurrentWpm: currentWpm as number })
-            }
-            else if (first === 'Unnamed' || first === null) {
+            } else if (first === 'Unnamed' || first === null) {
               mutate({ ...user, CurrentWpm: currentWpm as number })
-            }
-            else if (last === 'User' || last === null) {
+            } else if (last === 'User' || last === null) {
               mutate({ CurrentWpm: currentWpm as number })
-            }
-            else {
+            } else {
               mutate({
                 FirstName: first,
                 LastName: last,

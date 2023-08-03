@@ -1,12 +1,30 @@
 import { useRef, useEffect, useState } from 'react'
 import useInterval from './useInterval'
+import { Url } from 'next/dist/shared/lib/router/router'
+import { useRouter } from 'next/router'
 
-function useSwitcher<T>(initialValue: T, endValue: T, duration: number) {
+function useSwitcher<T>(
+  initialValue: T,
+  endValue: T,
+  duration: number,
+  cleanup?: () => void,
+  cleanupDelay?: number,
+  next?: string | Url,
+) {
   const [value, setValue] = useState<T>(initialValue)
+  const router = useRouter()
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setValue(endValue)
+      if (cleanup) {
+        setTimeout(() => {
+          cleanup()
+          if (next) {
+            router.replace(next).catch((err) => console.log(err))
+          }
+        }, cleanupDelay ?? 500)
+      }
     }, duration)
 
     return () => clearTimeout(timeout)

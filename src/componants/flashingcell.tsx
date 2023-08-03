@@ -12,7 +12,9 @@ import axios from 'axios'
 import { useIsVisible } from '~/hooks/useIsVisible'
 import { useRouter } from 'next/router'
 import { useUserStore } from '~/stores/userStore'
+import { api } from '~/utils/api'
 import type { User } from '~/utils/types'
+import { formatDate } from '~/utils/helpers'
 
 const counterContext = createContext<number>(0)
 
@@ -150,7 +152,7 @@ export const createCells = ({
   loadCheck: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const cells: ReactElement[] = []
-  if (!words) throw new Error('Words not found')
+  if (!words) return 
   words.forEach((word, index) => {
     cells.push(
       <Cell
@@ -176,33 +178,51 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const user = useUserStore((state) => state.user)
   const router = useRouter()
+  const { mutate } = api.user.setUser.useMutation()
 
   const setSpeed = (user: User | undefined) => {
-    if (!user) throw new Error('User not found')
+    if (!user) return 60_000/200 
     return 60_000 / user.CurrentWpm
   }
+
+  const markComplete = () => {
+    if (!user) return 
+    if (layout === FlasherLayout.ONE_BY_ONE) {
+      mutate({ LastOneByOne: formatDate(new Date()) })
+    }
+    if (layout === FlasherLayout.ONE_BY_TWO) {
+      mutate({ LastOneByTwo: formatDate(new Date()) })
+    }
+    if (layout === FlasherLayout.FOUR_BY_ONE) {
+      mutate({ LastFourByOne: formatDate(new Date()) })
+    }
+    if (layout === FlasherLayout.TWO_BY_TWO) {
+      mutate({ LastTwoByTwo: formatDate(new Date()) })
+    }
+    if (layout === FlasherLayout.TWO_BY_ONE) {
+      mutate({ LastTwoByOne: formatDate(new Date()) })
+    }
+  }
+
   const tearDown = () => {
-    if (next) {
-      //TODO impliment data collection here
-      return router.push(next).catch((err) => console.log(err))
-    } else router.push('/nav').catch((err) => console.log(err))
+    //TODO impliment data collection here
+    markComplete()
+    return router.push('/next').catch((err) => console.log(err))
   }
 
   useEffect(() => {
-    if (!user) throw new Error('User not found')
+    if (!user) return 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const setup = (async () => {
-      const wordsArry = await getWords(wordsPerCell * user.CurrentWpm * rows)
+      const wordsArry = await getWords(wordsPerCell * user.CurrentWpm)
       words.current = partitionWords(
         wordsArry,
         wordsArry.length / wordsPerCell,
         rows * width,
       )
-      setGrid(
-        createCells({ words: words.current[0], loadCheck: setIsVisible }),
-      )
+      setGrid(createCells({ words: words.current[0], loadCheck: setIsVisible }))
     })()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useInterval(() => {

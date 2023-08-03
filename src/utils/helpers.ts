@@ -1,5 +1,5 @@
 import type { Overlay, User, Exercise } from './types'
-import { Exercise as ex} from './types'
+import { Exercise as ex } from './types'
 
 export const overlayToHex = (overlay: Overlay) => {
   switch (overlay) {
@@ -27,12 +27,12 @@ export const overlayToHex = (overlay: Overlay) => {
 }
 /**
  * getNextExercise takes a user object and returns the next exercise to be displayed.
- * First the function checks if the user has already done a speed test that day. 
-  * If not, it returnsthe speed test exercise.
+ * First the function checks if the user has already done a speed test that day.
+ * If not, it returnsthe speed test exercise.
  * The function checks if the user has already done the other exercises today and if so,
-  * it removes it from the list of available exercises.
-  * If the user has done all the exercises, the function returns null.
-**/
+ * it removes it from the list of available exercises.
+ * If the user has done all the exercises, the function returns null.
+ **/
 export const getNextExercise = (user: User) => {
   const available: Exercise[] = []
 
@@ -41,33 +41,58 @@ export const getNextExercise = (user: User) => {
     exercise: Exercise
   }
 
-  const isSameDay = (date1: Date, date2: Date) => {
-    return (
-      date1.getFullYear() === date2.getFullYear() &&
-      date1.getMonth() === date2.getMonth() &&
-      date1.getDate() === date2.getDate()
-    )
+  const isToday = (date2: string | undefined) => {
+    if (!date2) return false
+    const today = formatDate(new Date())
+    const date2Formatted = date2
+
+    console.log('today:', today)
+    console.log('date2:', date2Formatted)
+
+    const result = today === date2Formatted
+    console.log('result:', result)
+    return result
   }
 
-  if (!isSameDay(user.LastSpeedTest, new Date())) return 'SPEED_TEST'
+  if (!isToday(user.LastSpeedTest)) return 'SPEED_TEST'
 
-  const isAlreadyDone = ({user, exercise}: Is_already_done_params) => {
+  let check
+  const isAlreadyDone = ({ user, exercise }: Is_already_done_params) => {
     switch (exercise) {
       case 'FOUR_BY_ONE':
-        return isSameDay(user.LastFourByOne, new Date())
+        check = isToday(user.LastFourByOne)
+        console.log('check 4X1:', check)
+        return check
       case 'ONE_BY_TWO':
-        return isSameDay(user.LastOneByTwo, new Date())
+        check = isToday(user.LastOneByTwo)
+        console.log('check 1X2:', check)
+        return check
       case 'TWO_BY_TWO':
-        return isSameDay(user.LastTwoByTwo, new Date())
+        check = isToday(user.LastTwoByTwo)
+        console.log('check 2X2:', check)
+        return check
       case 'ONE_BY_ONE':
-        return isSameDay(user.LastOneByOne, new Date())
+        check = isToday(user.LastOneByOne)
+        console.log('check 1X1:', check)
+        return check
       case 'SCHULTE':
-        return isSameDay(user.LastSchulteSession, new Date())
+        check = isToday(user.LastSchulteSession)
+        console.log('check schulte:', check)
+        return check
+      case 'TWO_BY_ONE':
+        check = isToday(user.LastTwoByOne)
+        console.log('check 2X1:', check)
+        return check
       case 'EVEN_NUMBERS':
-        return isSameDay(user.LastEvenNumbers, new Date())
+        check = isToday(user.LastEvenNumbers)
+        console.log('check even:', check)
+        return check
       case 'SPEED_TEST':
-        return false
+        check = isToday(user.LastSpeedTest)
+        console.log('check speed:', check)
+        return true
     }
+    return false
   }
 
   ex.forEach((exercise: Exercise) => {
@@ -75,10 +100,28 @@ export const getNextExercise = (user: User) => {
       available.push(exercise)
     }
   })
-  
-  if (available.length === 0) {
+
+  if (available.length === 0 || available === undefined || !available) {
+    console.log('all done')
     return null
   }
+  console.log('available: ', available)
   const choice = available[Math.floor(Math.random() * available.length)]
   return choice
+}
+
+export const formatDate = (date: Date | undefined) => {
+  if (!date) date = new Date()
+  return date
+    .toString()
+    .replace(
+      /(\w{3}) (\w{3}) (\d{2}) (\d{4}).*/,
+      (
+        _: string,
+        dayOfWeek: string,
+        month: string,
+        day: string,
+        year: string,
+      ) => `${dayOfWeek} ${month} ${day} ${year}`,
+    )
 }

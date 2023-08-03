@@ -8,7 +8,6 @@ const userSchema = zodValidate.object({
   CurrentWpm: zodValidate.number(),
   CreatedAt: zodValidate.date(),
   UpdatedAt: zodValidate.date(),
-  DarkMode: zodValidate.boolean(),
   HighlightColor: zodValidate.union([
     zodValidate.literal('BLUE'),
     zodValidate.literal('BLUE_GREY'),
@@ -21,12 +20,14 @@ const userSchema = zodValidate.object({
     zodValidate.literal('TURQUOISE'),
     zodValidate.literal('YELLOW'),
   ]),
-  LastSchulteSession: zodValidate.date().optional(),
-  LastSpeedTest: zodValidate.date().optional(),
-  LastFourByOne: zodValidate.date().optional(),
-  LastOneByTwo: zodValidate.date().optional(),
-  LastTwoByTwo: zodValidate.date().optional(),
-  LastOneByOne: zodValidate.date().optional(),
+  LastSchulteSession: zodValidate.string().optional(),
+  LastSpeedTest: zodValidate.string().optional(),
+  LastFourByOne: zodValidate.string().optional(),
+  LastOneByTwo: zodValidate.string().optional(),
+  LastTwoByTwo: zodValidate.string().optional(),
+  LastOneByOne: zodValidate.string().optional(),
+  LastTwoByOne: zodValidate.string().optional(),
+  LastEvenNumbers: zodValidate.string().optional(),
 })
 
 const speedTestSchema = zodValidate.object({
@@ -45,7 +46,7 @@ export const schemas = {
   speedTest: speedTestSchema,
 }
 
-const randomWordInputs = zodValidate.object({ 
+const randomWordInputs = zodValidate.object({
   number: zodValidate.number(),
   language: zodValidate.union([
     zodValidate.literal('ENGLISH'),

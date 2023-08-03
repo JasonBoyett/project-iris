@@ -7,6 +7,9 @@ import Image from 'next/image'
 import { api } from '~/utils/api'
 import HomeButton from '~/componants/homebutton'
 import SettingsButton from '~/componants/settingsbutton'
+import { useUserStore } from '~/stores/userStore'
+import { useRouter } from 'next/router'
+import { formatDate } from '~/utils/helpers'
 
 const Page: NextPage = () => {
   const [currentNumber, setCurrentNumber] = useState(1)
@@ -14,6 +17,8 @@ const Page: NextPage = () => {
   const [doneString, setDoneString] = useState(' ')
   const [sideLength, setSideLength] = useState(5)
   const [currentErrors, setCurrentErrors] = useState(0)
+  const router = useRouter()
+  const { mutate } = api.user.setUser.useMutation()
 
   const shuffledNumbers = (last: number): number[] => {
     const arr: number[] | undefined[] = []
@@ -22,7 +27,7 @@ const Page: NextPage = () => {
     }
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
-        ;[arr[i], arr[j]] = [arr[j], arr[i]]
+      ;[arr[i], arr[j]] = [arr[j], arr[i]]
     }
     return arr as number[]
   }
@@ -44,16 +49,13 @@ const Page: NextPage = () => {
 
   const teardown = () => {
     //log info here
-    changeNumbers(shuffledNumbers(sideLength * sideLength))
-    setCurrentNumber(1)
-    localNumber = 1
-    setCurrentErrors(0)
-    setDoneString(' ')
+    mutate({ LastSchulteSession: formatDate(new Date()) })
+    router.push('/next').catch((err) => console.log(err))
   }
 
   const Cell = (content: number): JSX.Element => {
     const className =
-      'h-16 w-16 lg:h-22 lg:w-22 flex items-center justify-center hover:border hover:border-white hover:border-2 rounded bg-gray-900 sm:h-20 sm:w-20'
+      'h-16 w-16 lg:h-22 lg:w-22 flex items-center justify-center hover:border-white hover:border-2 rounded bg-gray-900 sm:h-20 sm:w-20'
     return (
       <button
         className={className}
@@ -94,6 +96,7 @@ const Page: NextPage = () => {
     ) {
       setCurrentNumber(0)
       setDoneString('Done!')
+      teardown()
     }
   }, [currentNumber, currentErrors, localNumber, doneString])
 

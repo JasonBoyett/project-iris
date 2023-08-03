@@ -35,14 +35,14 @@ model User {
   WordGridFlasherSessions WordGridFlasherSession[]
   WordFlasherSessions     WordFlasherSession[]
   HighlightColor          Overlay
-  DarkMode                Boolean                  @default(false)
-  LastSchulteSession      DateTime                 @default("1900-01-01T00:00:00.000Z")
-  LastSpeedTest           DateTime                 @default("1900-01-01T00:00:00.000Z")
-  LastFourByOne           DateTime                 @default("1900-01-01T00:00:00.000Z")
-  LastOneByTwo            DateTime                 @default("1900-01-01T00:00:00.000Z")
-  LastTwoByTwo            DateTime                 @default("1900-01-01T00:00:00.000Z")
-  LastOneByOne            DateTime                 @default("1900-01-01T00:00:00.000Z")
-  LastEvenNumber          DateTime                 @default("1900-01-01T00:00:00.000Z")
+  LastSchulteSession      String                   @default(" ")
+  LastSpeedTest           String                   @default(" ")
+  LastFourByOne           String                   @default(" ")
+  LastOneByTwo            String                   @default(" ")
+  LastTwoByTwo            String                   @default(" ")
+  LastOneByOne            String                   @default(" ")
+  LastTwoByOne            String                   @default(" ")
+  LastEvenNumbers         String                   @default(" ")
 
   @@index([Id])
 }
