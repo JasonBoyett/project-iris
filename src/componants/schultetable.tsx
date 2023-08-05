@@ -1,10 +1,12 @@
-import React, { useState, useRef } from 'react'
+import { formatDate } from '~/utils/helpers'
+import React, { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { v4 } from 'uuid'
+import { useRouter } from 'next/router'
+import { api } from '~/utils/api'
 
 type SchulteTableProps = {
-  length: number
-  width: number
+  sideLength: 3 | 5 | 7
 }
 
 const Cell = ({
@@ -22,8 +24,8 @@ const Cell = ({
 }) => {
   const [clicked, setClicked] = useState(false)
   const style: string = clicked
-    ? 'h-16 w-16 text-white lg:h-22 lg:w-22 flex items-center justify-center rounded bg-gray-900 sm:h-20 sm:w-20 opacity-50'
-    : 'h-16 w-16 text-white lg:h-22 lg:w-22 flex items-center justify-center hover:border hover:border-white hover:border-2 rounded bg-gray-900 sm:h-20 sm:w-20'
+    ? 'h-12 w-12 text-white text-lg md:text-2xl flex items-center justify-center rounded bg-white/10 md:h-20 md:w-20 opacity-50 hover:border hover:border-white hover:border-2'
+    : 'h-12 w-12 text-white text-lg md:text-2xl flex items-center justify-center hover:border hover:border-white hover:border-2 rounded bg-white/20 md:h-20 md:w-20'
 
   const handleClick = () => {
     if (innerValue !== counter && !clicked) errorSetter(errorCounter++)
@@ -31,7 +33,6 @@ const Cell = ({
       setClicked(true)
       counterSetter((prev) => prev + 1)
     }
-    console.log(counter)
   }
 
   return (
@@ -45,16 +46,35 @@ const Cell = ({
   )
 }
 
-const SchulteTable = ({ length, width }: SchulteTableProps) => {
+const SchulteTable = ({sideLength}: SchulteTableProps) => {
   const [counter, setCount] = useState(1)
   const errors = useRef(0)
-  const classString = `flex grid grid-cols-${width} gap-1`
+  const router = useRouter()
+  const { mutate } = api.user.setUser.useMutation()
+  const totalCells = Math.pow(sideLength, 2) 
+  const [classString, setClassString]= useState('')
   const incrementErrors = (number: number) => (errors.current = number)
   const numbers = useRef(
-    Array.from({ length: length * width }, (_, i) => i + 1).sort(
+    Array.from({ length: totalCells}, (_, i) => i + 1).sort(
       () => Math.random() - 0.5,
     ),
   )
+  
+  const teardown = () => {
+    //log info here
+    switch (sideLength) {
+      case 3:
+        mutate({ LastSchulteByThree: formatDate(new Date()) })
+        break
+      case 5:
+        mutate({ LastSchulteByFive: formatDate(new Date()) })
+        break
+      case 7:
+        mutate({ LastSchulteBySeven: formatDate(new Date()) })
+        break
+    }
+    router.replace('/next').catch((err) => console.log(err))
+  }
   const table = numbers.current.map((number) => (
     <>
       <motion.div
@@ -74,13 +94,25 @@ const SchulteTable = ({ length, width }: SchulteTableProps) => {
       </motion.div>
     </>
   ))
-  const done = <div className='text-4xl text-green-400'>Done!</div>
-
+  useEffect(() => {
+    if (counter === totalCells + 1) {
+      teardown()
+    }
+  }, [counter])
+  useEffect(() => {
+    if(sideLength === 3) setClassString('grid grid-cols-3 gap-1')
+    if(sideLength === 5) setClassString('grid grid-cols-5 gap-1')
+    if(sideLength === 7) setClassString('grid grid-cols-7 gap-1')
+  }, [])
   return (
     <>
       <div className={classString}>
-        {counter === length * width + 1 ? done : table}
+        {table}
+        </div>
+      <div className='md:text-4xl text-white'>
+        Find: <span className='text-yellow-200'>{counter}</span>
       </div>
+
     </>
   )
 }

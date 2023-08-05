@@ -20,30 +20,30 @@ const Page: NextPage = () => {
   const router = useRouter()
 
   const opentTest = () => {
-    router.replace('/speedtest').catch((err) => console.log(err))
+    router.replace('/exercises/speedtest').catch((err) => console.log(err))
   }
 
   const schulteOpen = () => {
-    router.replace('/schulte').catch((err) => console.log(err))
+    router.replace('/exercises/schulte').catch((err) => console.log(err))
   }
 
   const openFlashFourByOne = () => {
-    router.replace('/flashfourbyone').catch((err) => console.log(err))
+    router.replace('/exercises/flashfourbyone').catch((err) => console.log(err))
   }
 
   const openOneByTwo = () => {
-    router.replace('/flashonebytwo').catch((err) => console.log(err))
+    router.replace('/exercises/flashonebytwo').catch((err) => console.log(err))
   }
 
   const openTwoByTwo = () => {
-    router.replace('/flashtwobytwo').catch((err) => console.log(err))
+    router.replace('/exercises/flashtwobytwo').catch((err) => console.log(err))
   }
 
   const openOneByOne = () => {
-    router.replace('/flashonebyone').catch((err) => console.log(err))
+    router.replace('/exercises/flashonebyone').catch((err) => console.log(err))
   }
   const openEvensAndOdds = () => {
-    router.replace('/evennumbers').catch((err) => console.log(err))
+    router.replace('/exercises/evennumbers').catch((err) => console.log(err))
   }
 
   useEffect(() => {

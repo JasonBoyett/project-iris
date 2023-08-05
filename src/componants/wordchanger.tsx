@@ -5,7 +5,7 @@ import {
   Dispatch,
   SetStateAction,
 } from 'react'
-import useInterval from '~/hooks/useInterval'
+import useInterval from '@/hooks/useInterval'
 import axios from 'axios'
 import { api } from '~/utils/api'
 import { NextPage } from 'next/types'

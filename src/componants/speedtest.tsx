@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import useInterval from '../hooks/useInterval'
+import useInterval from '@/hooks/useInterval'
 import type { SpeedQuestion } from '@prisma/client'
 import type { User } from '~/utils/types'
 import { api } from '~/utils/api'

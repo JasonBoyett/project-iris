@@ -30,7 +30,9 @@ export type User = {
   CreatedAt: Date
   CurrentWpm: number
   MaxWpm: number
-  LastSchulteSession?: string
+  LastSchulteByThree?: string
+  LastSchulteByFive?: string
+  LastSchulteBySeven?: string
   LastSpeedTest?: string
   LastFourByOne?: string
   LastOneByTwo?: string
@@ -49,7 +51,9 @@ export const Exercise = [
   'ONE_BY_TWO',
   'TWO_BY_TWO',
   'ONE_BY_ONE',
-  'SCHULTE',
+  'SCHULTE_BY_THREE',
+  'SCHULTE_BY_FIVE',
+  'SCHULTE_BY_SEVEN',
   'TWO_BY_ONE',
   'SPEED_TEST',
   'EVEN_NUMBERS',

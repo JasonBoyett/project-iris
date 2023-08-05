@@ -1,12 +1,10 @@
-import { NextPage } from 'next'
+import type { NextPage } from 'next'
 import Head from 'next/head'
 import HomeButton from '~/componants/homebutton'
-import { Router, useRouter } from 'next/router'
-import useUserStore from '~/stores/userStore'
-import useMutateUser from '~/stores/useMutateUser'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { api } from '~/utils/api'
-import { User } from '~/utils/types'
+import type { User } from '~/utils/types'
 
 const Page: NextPage = () => {
   const user: User | undefined = api.user.getUnique.useQuery<User>().data
@@ -101,7 +99,7 @@ const Page: NextPage = () => {
               ▼
             </button>
           </label>
-          <button className='bg-white/20 rounded-full p-4 h-16 py-5 text-black font-normal'>
+          <button className='bg-white/20 rounded-full p-4 h-16 py-5 text-white font-normal'>
             Save
           </button>
         </form>

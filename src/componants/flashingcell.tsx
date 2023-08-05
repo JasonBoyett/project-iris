@@ -6,10 +6,10 @@ import React, {
   useState,
 } from 'react'
 import type { ReactElement } from 'react'
-import useInterval from '../hooks/useInterval'
+import useInterval from '@/hooks/useInterval'
 import { v4 as uuid } from 'uuid'
 import axios from 'axios'
-import { useIsVisible } from '~/hooks/useIsVisible'
+import { useIsVisible } from '@/hooks/useIsVisible'
 import { useRouter } from 'next/router'
 import { useUserStore } from '~/stores/userStore'
 import { api } from '~/utils/api'
@@ -207,7 +207,7 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
   const tearDown = () => {
     //TODO impliment data collection here
     markComplete()
-    return router.push('/next').catch((err) => console.log(err))
+    return router.replace('/next').catch((err) => console.log(err))
   }
 
   useEffect(() => {

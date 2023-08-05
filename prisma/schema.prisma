@@ -35,7 +35,9 @@ model User {
   WordGridFlasherSessions WordGridFlasherSession[]
   WordFlasherSessions     WordFlasherSession[]
   HighlightColor          Overlay
-  LastSchulteSession      String                   @default(" ")
+  LastSchulteByFive       String                   @default(" ")
+  LastSchulteByThree      String                   @default(" ")
+  LastSchulteBySeven      String                   @default(" ")
   LastSpeedTest           String                   @default(" ")
   LastFourByOne           String                   @default(" ")
   LastOneByTwo            String                   @default(" ")

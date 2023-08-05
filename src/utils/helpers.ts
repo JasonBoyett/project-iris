@@ -61,35 +61,33 @@ export const getNextExercise = (user: User) => {
     switch (exercise) {
       case 'FOUR_BY_ONE':
         check = isToday(user.LastFourByOne)
-        console.log('check 4X1:', check)
         return check
       case 'ONE_BY_TWO':
         check = isToday(user.LastOneByTwo)
-        console.log('check 1X2:', check)
         return check
       case 'TWO_BY_TWO':
         check = isToday(user.LastTwoByTwo)
-        console.log('check 2X2:', check)
         return check
       case 'ONE_BY_ONE':
         check = isToday(user.LastOneByOne)
-        console.log('check 1X1:', check)
         return check
-      case 'SCHULTE':
-        check = isToday(user.LastSchulteSession)
-        console.log('check schulte:', check)
+      case 'SCHULTE_BY_THREE':
+        check = isToday(user.LastSchulteByThree)
+        return check
+      case 'SCHULTE_BY_FIVE':
+        check = isToday(user.LastSchulteByFive)
+        return check
+      case 'SCHULTE_BY_SEVEN':
+        check = isToday(user.LastSchulteBySeven)
         return check
       case 'TWO_BY_ONE':
         check = isToday(user.LastTwoByOne)
-        console.log('check 2X1:', check)
         return check
       case 'EVEN_NUMBERS':
         check = isToday(user.LastEvenNumbers)
-        console.log('check even:', check)
         return check
       case 'SPEED_TEST':
         check = isToday(user.LastSpeedTest)
-        console.log('check speed:', check)
         return true
     }
     return false

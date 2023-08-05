@@ -20,7 +20,7 @@ const Page: NextPage = () => {
   const router = useRouter()
 
   const start = () => {
-    router.push('/loadnext').catch((err) => console.log(err))
+    router.replace('/loadnext').catch((err) => console.log(err))
   }
 
   useEffect(() => {

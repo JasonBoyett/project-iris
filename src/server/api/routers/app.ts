@@ -7,7 +7,6 @@ import type { SpeedQuestion } from '@prisma/client'
 import { User } from '~/utils/types'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { schemas, inputs } from '~/utils/validators'
-import { formatDate } from '~/utils/helpers'
 
 export const userRouter = createTRPCRouter({
   getUnique: publicProcedure
@@ -26,8 +25,8 @@ export const userRouter = createTRPCRouter({
         const newUser = await ctx.prisma.user.create({
           data: {
             Id: ctx.auth.userId?.toString(),
-            FirstName: ctx.auth.user?.firstName ?? 'Source',
-            LastName: ctx.auth.user?.lastName ?? 'tRPC',
+            FirstName: ctx.auth.user?.firstName ?? '',
+            LastName: ctx.auth.user?.lastName ?? '',
             MaxWpm: 250,
             CurrentWpm: 100,
             CreatedAt: new Date(),
@@ -55,8 +54,10 @@ export const userRouter = createTRPCRouter({
           CurrentWpm: input.CurrentWpm,
           CreatedAt: input.CreatedAt,
           UpdatedAt: input.UpdatedAt,
+          LastSchulteByThree: input.LastSchulteByThree,
           HighlightColor: input.HighlightColor,
-          LastSchulteSession: input.LastSchulteSession,
+          LastSchulteByFive: input.LastSchulteByFive,
+          LastSchulteBySeven: input.LastSchulteBySeven,
           LastSpeedTest: input.LastSpeedTest,
           LastFourByOne: input.LastFourByOne,
           LastOneByTwo: input.LastOneByTwo,
