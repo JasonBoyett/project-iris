@@ -99,7 +99,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps){
   // let done = false
   const { data } = api.getExcerciseProps.getRandomWords.useQuery({
     number: (() => {
-      if(!userStore.user) return
+      if(!userStore.user) return 0
       return userStore.user.CurrentWpm * 4
     })(),
     language: 'ENGLISH'
@@ -176,6 +176,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps){
     setDisplayedcubes(formattedCubes.current[0])
     setCounter(0)
     store.reset()
+    if(data.length === 0) router.reload()
   }, [userStore.user, data])
 
   useInterval(() => {
