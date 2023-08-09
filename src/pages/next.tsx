@@ -7,6 +7,8 @@ import Butterfly from 'public/flying-butterfly.gif'
 import { useEffect, useState } from 'react'
 import { document } from 'postcss'
 import LoadingSpinner from '~/componants/loadingspinner'
+import HomeButton from '~/componants/homebutton'
+import SettingsButton from '~/componants/settingsbutton'
 
 const Page: NextPage = () => {
   const router = useRouter()
@@ -31,6 +33,8 @@ const Page: NextPage = () => {
   return (
     <>
       <Head>Next Excercise</Head>
+      <HomeButton />
+      <SettingsButton />
       <main className='flex grid-cols-1 justify-center items-center min-h-screen mt-8'>
         <div className='grid justify-center items-center'>
           <div className='flex justify-center items-center'>

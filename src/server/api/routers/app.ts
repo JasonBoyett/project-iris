@@ -65,6 +65,8 @@ export const userRouter = createTRPCRouter({
           LastOneByOne: input.LastOneByOne,
           LastTwoByOne: input.LastTwoByOne,
           LastEvenNumbers: input.LastEvenNumbers,
+          LastCubeByTwo: input.LastCubeByTwo,
+          LastCubeByThree: input.LastCubeByThree,
         },
       })
     }),

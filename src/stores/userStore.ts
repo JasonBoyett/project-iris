@@ -1,5 +1,6 @@
 import type { User } from '~/utils/types'
 import { create } from 'zustand'
+import { persist, createJSONStorage } from 'zustand/middleware'
 
 /**
  * use this hook to manage the state of the user object in the user
@@ -8,20 +9,21 @@ import { create } from 'zustand'
  * there also exists a helper function called useMutateUser that will mutate the user object in the database and in the client at the same time
  */
 export const useUserStore = create<{
-  /**
-   * The single source of truth for the user object
-   */
   user: User | undefined
-  /**
-   * use this function to set the user object in the store
-   * @param userFromClient - the new version of the user object
-   */
-  setUser: (user: User | undefined) => void
-}>((set) => ({
-  user: undefined,
-  setUser: (userFromClient: User | undefined) => {
-    return set((state) => ({ ...state, user: userFromClient }))
-  },
-}))
+  setUser: (user: User) => void
+}>()(
+  persist((set) => ({
+    user: undefined,
+    setUser: (userFromClient: User) => {
+      return set((state) => ({ ...state, user: userFromClient }));
+    },
+  }), {
+    name: 'user-storage',
+    storage: createJSONStorage(() => sessionStorage),
+  }
+  )
+)
+
+
 
 export default useUserStore

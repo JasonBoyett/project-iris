@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
+import { StyledCell } from '~/cva/flashingStyles'
 import type { ReactElement } from 'react'
 import useInterval from '@/hooks/useInterval'
 import { v4 as uuid } from 'uuid'
@@ -15,6 +16,7 @@ import { useUserStore } from '~/stores/userStore'
 import { api } from '~/utils/api'
 import type { User } from '~/utils/types'
 import { formatDate } from '~/utils/helpers'
+import { user } from '~/utils/schema'
 
 const counterContext = createContext<number>(0)
 
@@ -35,6 +37,7 @@ export enum FlasherLayout {
 type CellProps = {
   content: string
   location: number
+  user: User
   loadCheck: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -65,6 +68,22 @@ const layoutManager = (layout: FlasherLayout) => {
     case FlasherLayout.FOUR_BY_ONE:
       return [4, 1]
   }
+}
+
+const colorSelector = (user: User) => {
+  switch(user.HighlightColor) {
+    case 'BLUE': return 'blue'
+    case 'BLUE_GREY': return 'blueGrey'
+    case 'GREEN': return 'green'
+    case 'GREY': return 'grey'
+    case 'ORANGE': return 'orange'
+    case 'PEACH': return 'peach'
+    case 'PURPLE': return 'purple'
+    case 'RED': return 'red'
+    case 'TURQUOISE': return 'turquoise'
+    case 'YELLOW': return 'yellow'
+  }
+  return 'none'
 }
 
 export const getWords = async (number: number) => {
@@ -104,26 +123,44 @@ export const partitionWords = (
   for (let i = 0; i < wordJoiner.length; i += frames) {
     partitionedWords.push(wordJoiner.slice(i, i + frames))
   }
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   return partitionedWords
 }
 
-const Cell = ({ content, location, loadCheck }: CellProps) => {
-  const FLASH =
-    'flex text-white text-xl justify-center p-4 bg-gray-500 rounded-md gap-1'
-  const NO_FLASH = 'flex text-white text-xl justify-center p-4'
-  const [className, setClassName] = useState(NO_FLASH)
+const Cell = ({ content, location, loadCheck, user }: CellProps) => {
+  const [intent, setIntent] = useState<'noFlash' | 'flash' | null | undefined>
+  (
+    'noFlash',
+  )
+  const [color, setColor] = useState<
+    | 'none'
+    | 'blue'
+    | 'green'
+    | 'grey'
+    | 'orange'
+    | 'peach'
+    | 'purple'
+    | 'red'
+    | 'turquoise'
+    | 'yellow'
+    | 'blueGrey'
+    | null
+    | undefined
+  >(
+    'none'
+  )
   const counter = useContext(counterContext)
   const ref = useRef<HTMLDivElement>(null)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isVisible = useIsVisible(ref)
 
   const highlight = () => {
-    setClassName(FLASH)
+    setIntent('flash')
+    setColor(colorSelector(user))
   }
 
   const toDefault = () => {
-    setClassName(NO_FLASH)
+    setIntent('noFlash')
+    setColor('none')
   }
 
   useEffect(() => {
@@ -135,11 +172,16 @@ const Cell = ({ content, location, loadCheck }: CellProps) => {
 
   return (
     <div
-      className={className}
-      key={uuid()}
+      className='flex items-center justify-center'
       ref={ref}
     >
+    <StyledCell
+      intent={intent}
+      flashColor={color}
+      key={uuid()}
+    >
       {content}
+    </StyledCell>
     </div>
   )
 }
@@ -147,8 +189,10 @@ const Cell = ({ content, location, loadCheck }: CellProps) => {
 export const createCells = ({
   words,
   loadCheck,
+  user,
 }: {
   words: string[] | undefined
+  user: User
   loadCheck: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const cells: ReactElement[] = []
@@ -159,6 +203,7 @@ export const createCells = ({
         location={index}
         content={word}
         loadCheck={loadCheck}
+        user={user}
         key={uuid()}
       />,
     )
@@ -173,10 +218,13 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
   const [wordsPerCell, width]: [number, number] | number[] =
     layoutManager(layout)
   const [grid, setGrid] = useState<JSX.Element[]>()
-  const returnClass = useState<string>(`grid grid-cols-${width} gap-2`)[0]
+  const returnClass = useState<string>(
+    `grid grid-cols-${width} gap-2 bg-white p-12 rounded-lg shadow-md h-auto w-2/5 items-center`,
+  )[0]
   const ref = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState<boolean>(false)
-  const user = useUserStore((state) => state.user)
+  const store = useUserStore((state) => state)
+  const user = store.user 
   const router = useRouter()
   const { mutate } = api.user.setUser.useMutation()
 
@@ -189,18 +237,23 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
     if (!user) return 
     if (layout === FlasherLayout.ONE_BY_ONE) {
       mutate({ LastOneByOne: formatDate(new Date()) })
+      store.setUser({ ...user, LastOneByOne: formatDate(new Date()) }) 
     }
     if (layout === FlasherLayout.ONE_BY_TWO) {
       mutate({ LastOneByTwo: formatDate(new Date()) })
+      store.setUser({ ...user, LastOneByTwo: formatDate(new Date()) })
     }
     if (layout === FlasherLayout.FOUR_BY_ONE) {
       mutate({ LastFourByOne: formatDate(new Date()) })
+      store.setUser({ ...user, LastFourByOne: formatDate(new Date()) })
     }
     if (layout === FlasherLayout.TWO_BY_TWO) {
       mutate({ LastTwoByTwo: formatDate(new Date()) })
+      store.setUser({ ...user, LastTwoByTwo: formatDate(new Date()) })
     }
     if (layout === FlasherLayout.TWO_BY_ONE) {
       mutate({ LastTwoByOne: formatDate(new Date()) })
+      store.setUser({ ...user, LastTwoByOne: formatDate(new Date()) })
     }
   }
 
@@ -220,7 +273,11 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
         wordsArry.length / wordsPerCell,
         rows * width,
       )
-      setGrid(createCells({ words: words.current[0], loadCheck: setIsVisible }))
+      setGrid(createCells({ 
+        words: words.current[0], 
+        loadCheck: setIsVisible,
+        user: user
+      }))
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -238,9 +295,11 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
     }
     if (cellCounter >= rows * width) {
       section.current++
+      if(!user) return
       setGrid(
         createCells({
           words: words.current[section.current],
+          user: user,
           loadCheck: setIsVisible,
         }),
       )

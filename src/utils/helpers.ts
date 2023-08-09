@@ -1,8 +1,9 @@
-import type { Overlay, User, Exercise } from './types'
+import type { User, Exercise } from './types'
+
 import { Exercise as ex } from './types'
 
-export const overlayToHex = (overlay: Overlay) => {
-  switch (overlay) {
+export const userHilightToHex = (user: User) => {
+  switch (user.HighlightColor) {
     case 'BLUE':
       return '#96adfc'
     case 'BLUE_GREY':
@@ -88,9 +89,14 @@ export const getNextExercise = (user: User) => {
         return check
       case 'SPEED_TEST':
         check = isToday(user.LastSpeedTest)
-        return true
+        return check
+      case 'CUBE_BY_TWO':
+        check = isToday(user.LastCubeByTwo)
+        return check
+      case 'CUBE_BY_THREE':
+        check = isToday(user.LastCubeByThree)
+        return check
     }
-    return false
   }
 
   ex.forEach((exercise: Exercise) => {
@@ -100,7 +106,6 @@ export const getNextExercise = (user: User) => {
   })
 
   if (available.length === 0 || available === undefined || !available) {
-    console.log('all done')
     return null
   }
   console.log('available: ', available)

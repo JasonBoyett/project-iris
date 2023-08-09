@@ -12,8 +12,7 @@ export const Overlay = [
 ] as const
 
 /**
- * Overlay is a type that represents the different overlay colors
- * available for the flasher exercises.
+ * Overlay is a type that represents the different overlay colors available for the flasher exercises.
  **/
 export type Overlay = (typeof Overlay)[number]
 
@@ -29,6 +28,7 @@ export type User = {
   UpdatedAt: Date
   CreatedAt: Date
   CurrentWpm: number
+  HighlightColor: Overlay
   MaxWpm: number
   LastSchulteByThree?: string
   LastSchulteByFive?: string
@@ -40,6 +40,9 @@ export type User = {
   LastOneByOne?: string
   LastTwoByOne?: string
   LastEvenNumbers?: string
+  LastCubeByTwo?: string
+  LastCubeByThree?: string
+  
 }
 
 const Language = ['ENGLISH', 'SPANISH'] as const
@@ -57,6 +60,8 @@ export const Exercise = [
   'TWO_BY_ONE',
   'SPEED_TEST',
   'EVEN_NUMBERS',
+  'CUBE_BY_TWO',
+  'CUBE_BY_THREE',
 ] as const
 
 /**

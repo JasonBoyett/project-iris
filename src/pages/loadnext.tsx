@@ -4,14 +4,14 @@ import { useEffect } from 'react'
 import useUserStore from '~/stores/userStore'
 import { getNextExercise } from '~/utils/helpers'
 import LoadingSpinner from 'src/componants/loadingspinner'
-import { Exercise } from '~/utils/types'
+import type { Exercise } from '~/utils/types'
 import { api } from '~/utils/api'
 
 const LoadNext: NextPage = () => {
   const router = useRouter()
-  const user = api.user.getUnique.useQuery().data
+  const dbUser = api.user.getUnique.useQuery().data
   const store = useUserStore()
-  const setUserStore = useUserStore((state) => state.setUser)
+  const user = store.user
   const selectedExercise = (nextExercise: Exercise | undefined | null) => {
   if (!nextExercise) {
       router.replace('/done').catch((err) => console.log(err))
@@ -51,6 +51,15 @@ const LoadNext: NextPage = () => {
       case 'EVEN_NUMBERS':
         router.replace('/exercises/evennumbers').catch((err) => console.log(err))
         break
+      case 'CUBE_BY_TWO':
+        router.replace('/exercises/cubebytwo').catch((err) => console.log(err))
+        break
+      case 'CUBE_BY_THREE':
+        router.replace('/exercises/cubebythree').catch((err) => console.log(err))
+        break
+      default:
+        router.replace('/done').catch((err) => console.log(err))
+        break
     }
   }
 
@@ -61,10 +70,11 @@ const LoadNext: NextPage = () => {
       return
     }
     const nextExercise: Exercise | null | undefined = getNextExercise(user)
-    if (user.FirstName !== '' || user.LastName !== ''){
-      setUserStore(user)
-      selectedExercise(nextExercise)
-      return
+    if(dbUser){
+      if (dbUser.FirstName !== '' || dbUser.LastName !== ''){
+        selectedExercise(nextExercise)
+        return
+      }
     }
     else if(store.user?.FirstName !== '' || store.user?.LastName !== ''){
       selectedExercise(nextExercise)

@@ -30,6 +30,8 @@ const userSchema = zodValidate.object({
   LastOneByOne: zodValidate.string().optional(),
   LastTwoByOne: zodValidate.string().optional(),
   LastEvenNumbers: zodValidate.string().optional(),
+  LastCubeByThree: zodValidate.string().optional(),
+  LastCubeByTwo: zodValidate.string().optional(),
 })
 
 const speedTestSchema = zodValidate.object({

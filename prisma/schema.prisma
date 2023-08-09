@@ -45,6 +45,8 @@ model User {
   LastOneByOne            String                   @default(" ")
   LastTwoByOne            String                   @default(" ")
   LastEvenNumbers         String                   @default(" ")
+  LastCubeByTwo           String                   @default(" ")
+  LastCubeByThree         String                   @default(" ")
 
   @@index([Id])
 }

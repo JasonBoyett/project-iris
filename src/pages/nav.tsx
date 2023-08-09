@@ -25,6 +25,7 @@ const Page: NextPage = () => {
 
   useEffect(() => {
     console.log(user)
+    if(!user) return 
     setUserStore(user)
   }, [user, isLoading, data, setUserStore])
 

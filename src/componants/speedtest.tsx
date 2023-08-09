@@ -52,7 +52,7 @@ const AnswerView = ({
   user: User | undefined
 }) => {
   const { mutate } = api.user.setUser.useMutation()
-  const setUserStore = useUserStore((state) => state.setUser)
+  const store = useUserStore()
   const router = useRouter()
   const [correctOrNot, setCorrectOrNot] = useState(
     <>
@@ -79,6 +79,16 @@ const AnswerView = ({
       )
       if (!user) return 
       mutate({
+        MaxWpm: user.MaxWpm + 10,
+        CurrentWpm: (() => {
+          const roundedCurrentWpm =
+            Math.round(((user.MaxWpm + 10) * 0.9) / 10) * 10
+          return roundedCurrentWpm
+        })(),
+        LastSpeedTest: formatDate(new Date()),
+      })
+      store.setUser({
+        ...user,
         MaxWpm: user.MaxWpm + 10,
         CurrentWpm: (() => {
           const roundedCurrentWpm =
