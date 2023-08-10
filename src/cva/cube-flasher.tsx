@@ -25,7 +25,7 @@ export const cornersCell = cva([
 })
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLDivElement>,
+  extends React.HTMLAttributes<HTMLDivElement>,
   VariantProps<typeof cornersCell> { }
 
 export const StyledCube: React.FC<ButtonProps> = ({

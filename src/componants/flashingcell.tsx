@@ -16,7 +16,7 @@ import { useUserStore } from '~/stores/userStore'
 import { api } from '~/utils/api'
 import type { User } from '~/utils/types'
 import { formatDate } from '~/utils/helpers'
-import { user } from '~/utils/schema'
+import FontProvider from '~/cva/fontProvider'
 
 const counterContext = createContext<number>(0)
 
@@ -311,12 +311,13 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
 
   return (
     <counterContext.Provider value={cellCounter}>
-      <div
+      <FontProvider
+        font='sans'
         className={returnClass}
         ref={ref}
       >
         {grid}
-      </div>
+      </FontProvider>
     </counterContext.Provider>
   ) as GridType
 }

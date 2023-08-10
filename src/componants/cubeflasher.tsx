@@ -7,14 +7,6 @@ import useInterval from '~/hooks/useInterval'
 import { formatDate } from '~/utils/helpers'
 import { useRouter } from 'next/router'
 
-const formatWords = (words: string[], wordsPerCell: number) => {
-const wordJoiner: string[] = []
-for (let i = 0; i < words.length / wordsPerCell; i += wordsPerCell) {
-  wordJoiner.push(words.slice(i, i + wordsPerCell).join(' '))
-}
-return wordJoiner
-}
-
 export const partitionWords = (
   words: string[],
   sections: number,
@@ -31,6 +23,7 @@ export const partitionWords = (
   }
   return partitionedWords
 }
+
 type CornerFlasherCellProps = {
   number: number
   wordsArray: string[]
@@ -106,7 +99,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps){
   })
   const cubes = useRef<JSX.Element[]>([])
   const formattedCubes = useRef<JSX.Element[][]>([])
-  const [displayedCubes, setDisplayedcubes] = useState<JSX.Element[] | undefined>([])
+  const [displayedCubes, setDisplayedCubes] = useState<JSX.Element[] | undefined>([])
 
   const getRate = () => {
     if(!userStore.user) return 60_000 / 200
@@ -123,6 +116,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps){
           ...userStore.user,
           LastCubeByTwo: formatDate(new Date())
         })
+        break
       case 3:
         mutate({LastCubeByThree: formatDate(new Date())})
         if(!userStore.user) return
@@ -130,8 +124,9 @@ export default function CornerFlasher({ number }: CornerFlasherProps){
           ...userStore.user,
           LastCubeByThree: formatDate(new Date())
         })
-      router.replace('/next').catch(console.error)
+        break
     }
+    router.replace('/next').catch(console.error)
   }
 
   useEffect(() => {
@@ -173,7 +168,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps){
       else holderTwo.push(cube)
     })
     if(!formattedCubes.current[0]) return
-    setDisplayedcubes(formattedCubes.current[0])
+    setDisplayedCubes(formattedCubes.current[0])
     setCounter(0)
     store.reset()
     if(data.length === 0) router.reload()
@@ -190,7 +185,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps){
     }
     else{
       if(!formattedCubes.current[section]) return
-      setDisplayedcubes(formattedCubes.current[section])
+      setDisplayedCubes(formattedCubes.current[section])
       setSection(section + 1)
       store.reset()
     }
