@@ -27,13 +27,15 @@ const Page: NextPage = () => {
     console.log('ran')
     exerciseStore.setResponse(answer)
     exerciseStore.incrementResponseCount()
-    if(exerciseStore.current.correctAnswer === answer){
+    if (exerciseStore.current.correctAnswer === answer) {
       exerciseStore.incrementCorrect()
     }
-    if (exerciseStore.totalResponses < TESTS_PER_DAY - 1){
+    if (exerciseStore.totalResponses < TESTS_PER_DAY - 1) {
       router.replace('/exercises/speedtest').catch((err) => console.log(err))
-    }else{
-      router.replace('/exercises/speedtest/result').catch((err) => console.log(err))
+    } else {
+      router
+        .replace('/exercises/speedtest/result')
+        .catch((err) => console.log(err))
     }
   }
 

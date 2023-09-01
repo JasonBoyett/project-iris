@@ -84,7 +84,7 @@ const Page: NextPage = () => {
   const userStore = useUserStore()
   const [font, setFont] = useState<SelectFont>('sans')
   const router = useRouter()
-  const option = router.query.id as string
+  const option = '4by1'
 
   useEffect(() => {
     if (!userStore.user) return

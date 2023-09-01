@@ -34,21 +34,21 @@ export const useSpeedTestStore = create<{
           current: {
             ...speedTest,
           },
-            correctResponses: state.correctResponses,
-            totalResponses: state.totalResponses
+          correctResponses: state.correctResponses,
+          totalResponses: state.totalResponses,
         })),
       setResponse: (answer) =>
         set((state) => ({ ...state, userAnswer: answer })),
       incrementResponseCount: () =>
         set((state) => {
-          console.log("I was called")
+          console.log('I was called')
           console.log(state.totalResponses)
           const res = {
             current: state.current,
             correctResponses: state.correctResponses,
             totalResponses: state.totalResponses + 1,
           }
-          console.log("new", res)
+          console.log('new', res)
           return res
         }),
       incrementCorrect: () =>
@@ -58,14 +58,15 @@ export const useSpeedTestStore = create<{
             correctResponses: state.correctResponses + 1,
             totalResponses: state.totalResponses,
           }
-          console.log("new", res)
+          console.log('new', res)
           return res
         }),
-      clear: () => set(() => ({ 
-        current: emptySpeedTest,
-        totalResponses: 0,
-        correctResponses: 0,
-      })),
+      clear: () =>
+        set(() => ({
+          current: emptySpeedTest,
+          totalResponses: 0,
+          correctResponses: 0,
+        })),
     }),
     {
       name: 'speed-test-store',

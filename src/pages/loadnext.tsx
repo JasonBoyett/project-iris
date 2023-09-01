@@ -23,22 +23,27 @@ const LoadNext: NextPage = () => {
         break
       case 'FOUR_BY_ONE':
         router
-          .replace('/instructions/flashingwords/4by1')
+          .replace('/instructions/flashingwords/fourbyone')
           .catch((err) => console.log(err))
         break
       case 'ONE_BY_TWO':
         router
-          .replace('/exercises/flashonebytwo')
+          .replace('/instructions/flashingwords/onebytwo')
           .catch((err) => console.log(err))
         break
       case 'TWO_BY_TWO':
         router
-          .replace('/exercises/flashtwobytwo')
+          .replace('/instructions/flashingwords/twobytwo')
           .catch((err) => console.log(err))
         break
       case 'ONE_BY_ONE':
         router
-          .replace('/exercises/flashonebyone')
+          .replace('/instructions/flashingwords/onebyone')
+          .catch((err) => console.log(err))
+        break
+      case 'TWO_BY_ONE':
+        router
+          .replace('/instructions/flashingwords/twobyone')
           .catch((err) => console.log(err))
         break
       case 'SCHULTE_BY_THREE':
@@ -49,11 +54,6 @@ const LoadNext: NextPage = () => {
         break
       case 'SCHULTE_BY_SEVEN':
         router.replace('exercises/schulteby7').catch((err) => console.log(err))
-        break
-      case 'TWO_BY_ONE':
-        router
-          .replace('/exercises/flashtwobyone')
-          .catch((err) => console.log(err))
         break
       case 'SPEED_TEST':
         router.replace('/exercises/speedtest').catch((err) => console.log(err))

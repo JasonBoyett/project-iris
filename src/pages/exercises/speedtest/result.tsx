@@ -26,19 +26,20 @@ const Result: NextPage = () => {
   }
 
   const saveCompletionAndRaiseWpm = () => {
-    //I know this function does two things. 
+    //I know this function does two things.
     //I just don't want to make two api calls when I can make just one.
     if (!userStore.user) return
-    mutate({ ...userStore.user, 
+    mutate({
+      ...userStore.user,
       LastSpeedTest: formatDate(new Date()),
       CurrentWpm: userStore.user.MaxWpm + 20,
-      MaxWpm: Math.floor((userStore.user.MaxWpm / 0.9) / 10) * 10,
+      MaxWpm: Math.floor(userStore.user.MaxWpm / 0.9 / 10) * 10,
     })
     userStore.setUser({
       ...userStore.user,
       LastSpeedTest: formatDate(new Date()),
       CurrentWpm: userStore.user.MaxWpm + 20,
-      MaxWpm: Math.floor((userStore.user.MaxWpm / 0.9) / 10) * 10,
+      MaxWpm: Math.floor(userStore.user.MaxWpm / 0.9 / 10) * 10,
     })
   }
   const saveCompletion = () => {
@@ -51,9 +52,9 @@ const Result: NextPage = () => {
   }
 
   const saveUser = () => {
-    if(!speedTestStore) return
-    if(!userStore.user) return
-    if((speedTestStore.correctResponses / TESTS_PER_DAY) >= 0.9){
+    if (!speedTestStore) return
+    if (!userStore.user) return
+    if (speedTestStore.correctResponses / TESTS_PER_DAY >= 0.9) {
       saveCompletionAndRaiseWpm()
     } else {
       saveCompletion()
@@ -71,13 +72,6 @@ const Result: NextPage = () => {
     if (!userStore.user) return
     if (!speedTestStore.current) return
 
-    if(
-      !userStore.user.isAdmin
-      && speedTestStore.totalResponses !== TESTS_PER_DAY
-    ){
-     router.replace('/loadnext').catch(console.error);
-    }
-
     setCorrect(() => {
       if (!speedTestStore.current) return 0
       return speedTestStore.correctResponses
@@ -89,16 +83,19 @@ const Result: NextPage = () => {
       <SettingsButton />
       <HomeButton />
       <Head>Test Results</Head>
-      <FontProvider 
+      <FontProvider
         className='flex flex-col gap-4 items-center justify-center min-h-screen'
-        font={font}>
+        font={font}
+      >
         <p className='text-white text-4xl'>
           You got {correct}/{TESTS_PER_DAY}.
         </p>
         <p className='text-white text-4xl'>
-          Click <span className='text-[#39b54a]'>start</span> to move on to todays exercises.
+          Click <span className='text-[#39b54a]'>start</span> to move on to
+          todays exercises.
         </p>
-        <button onClick={() => handleClick()}
+        <button
+          onClick={() => handleClick()}
           className='bg-white/20 rounded-full p-4 h-12 py-2 font-normal text-white text-3xl'
         >
           Start
