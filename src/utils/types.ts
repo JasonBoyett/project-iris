@@ -1,3 +1,7 @@
+import type { z as zodValidate } from 'zod'
+import type { userSchema } from '~/utils/validators'
+import type { speedTestSchema } from '~/utils/validators'
+
 export const Overlay = [
   'BLUE',
   'BLUE_GREY',
@@ -21,29 +25,9 @@ export type Overlay = (typeof Overlay)[number]
  * but it is defined here to make it easier for
  * TypeScript to infer the type of user objects.
  **/
-export type User = {
-  Id: string
-  FirstName: string
-  LastName: string
-  UpdatedAt: Date
-  CreatedAt: Date
-  CurrentWpm: number
-  HighlightColor: Overlay
-  MaxWpm: number
-  LastSchulteByThree?: string
-  LastSchulteByFive?: string
-  LastSchulteBySeven?: string
-  LastSpeedTest?: string
-  LastFourByOne?: string
-  LastOneByTwo?: string
-  LastTwoByTwo?: string
-  LastOneByOne?: string
-  LastTwoByOne?: string
-  LastEvenNumbers?: string
-  LastCubeByTwo?: string
-  LastCubeByThree?: string
-  
-}
+export type User = zodValidate.infer<typeof userSchema>
+
+export type SpeedTest = zodValidate.infer<typeof speedTestSchema>
 
 const Language = ['ENGLISH', 'SPANISH'] as const
 
@@ -70,3 +54,18 @@ export const Exercise = [
  * which ones have been performed in the past day.
  **/
 export type Exercise = (typeof Exercise)[number]
+
+export const Font = [
+  'sans',
+  'mono',
+  'serif',
+  'robotoMono',
+  'rem',
+  'kanit',
+  'preahvihear',
+  'bebasNeue',
+  'chakraPetch',
+  'ibmPlexMono',
+] as const
+export type SelectFont = (typeof Font)[number]| null | undefined
+

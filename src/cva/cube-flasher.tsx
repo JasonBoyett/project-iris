@@ -24,11 +24,11 @@ export const cornersCell = cva([
   },
 })
 
-export interface ButtonProps
+export interface FlasherProps
   extends React.HTMLAttributes<HTMLDivElement>,
   VariantProps<typeof cornersCell> { }
 
-export const StyledCube: React.FC<ButtonProps> = ({
+export const StyledCube: React.FC<FlasherProps> = ({
   className,
   intent,
   ...props

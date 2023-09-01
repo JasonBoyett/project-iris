@@ -1,16 +1,14 @@
 import axios from 'axios'
 import { Prisma } from '@prisma/client'
-import type { Overlay } from '@prisma/client'
 import { z as zodValidate } from 'zod'
 import type { SpeedQuestion } from '@prisma/client'
-//import { User } from '~/utils/types'
-import { User } from '~/utils/types'
+import type { User } from '~/utils/types'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { schemas, inputs } from '~/utils/validators'
 
 export const userRouter = createTRPCRouter({
   getUnique: publicProcedure
-    //.output(schemas.user.partial())
+    .output(schemas.user)
     .query<User>(async ({ ctx }) => {
       const userId = ctx.auth.userId
       if (userId === null || userId === undefined) throw new Error('No user')
@@ -32,6 +30,7 @@ export const userRouter = createTRPCRouter({
             CreatedAt: new Date(),
             UpdatedAt: new Date(),
             HighlightColor: 'GREY',
+            Font: 'SANS',
           },
         })
         return newUser
@@ -67,6 +66,7 @@ export const userRouter = createTRPCRouter({
           LastEvenNumbers: input.LastEvenNumbers,
           LastCubeByTwo: input.LastCubeByTwo,
           LastCubeByThree: input.LastCubeByThree,
+          Font: input.Font,
         },
       })
     }),
@@ -86,7 +86,9 @@ export const userRouter = createTRPCRouter({
 })
 
 export const excercisesPropsRouter = createTRPCRouter({
-  getSingleSpeedTestProps: publicProcedure.query(async ({ ctx }) => {
+  getSingleSpeedTestProps: publicProcedure
+  .output(schemas.speedTest.partial())
+  .query(async ({ ctx }) => {
     const numberOfTables = await ctx.prisma.speedQuestion.count()
     const random = Math.floor(Math.random() * numberOfTables)
     const result = await ctx.prisma.speedQuestion.findUnique({

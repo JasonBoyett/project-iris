@@ -21,6 +21,19 @@ enum Overlay {
   YELLOW
 }
 
+enum Font {
+  SANS
+  SERIF
+  MONO
+  RROBOTO_MONO
+  REM
+  KANIT
+  PREAHVIHEAR
+  BEBAS_NEUE
+  CHAKRA_PETCH
+  IBM_PLEX_MONO
+}
+
 model User {
   Id                      String                   @id @unique 
   CreatedAt               DateTime                 @default(now())
@@ -47,6 +60,7 @@ model User {
   LastEvenNumbers         String                   @default(" ")
   LastCubeByTwo           String                   @default(" ")
   LastCubeByThree         String                   @default(" ")
+  Font                    Font                     @default(SANS)
 
   @@index([Id])
 }

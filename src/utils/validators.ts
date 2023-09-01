@@ -1,6 +1,6 @@
 import { z as zodValidate } from 'zod'
 
-const userSchema = zodValidate.object({
+export const userSchema = zodValidate.object({
   Id: zodValidate.string(),
   FirstName: zodValidate.string(),
   LastName: zodValidate.string(),
@@ -19,6 +19,18 @@ const userSchema = zodValidate.object({
     zodValidate.literal('RED'),
     zodValidate.literal('TURQUOISE'),
     zodValidate.literal('YELLOW'),
+  ]).optional(),
+  Font: zodValidate.union([
+    zodValidate.literal('SANS'),
+    zodValidate.literal('SERIF'),
+    zodValidate.literal('MONO'),
+    zodValidate.literal('RROBOTO_MONO'),
+    zodValidate.literal('REM'),
+    zodValidate.literal('KANIT'),
+    zodValidate.literal('PREAHVIHEAR'),
+    zodValidate.literal('BEBAS_NEUE'),
+    zodValidate.literal('CHAKRA_PETCH'),
+    zodValidate.literal('IBM_PLEX_MONO'),
   ]),
   LastSchulteByThree: zodValidate.string().optional(),
   LastSchulteByFive: zodValidate.string().optional(),
@@ -34,7 +46,7 @@ const userSchema = zodValidate.object({
   LastCubeByTwo: zodValidate.string().optional(),
 })
 
-const speedTestSchema = zodValidate.object({
+export const speedTestSchema = zodValidate.object({
   Id: zodValidate.number(),
   question: zodValidate.string(),
   passage: zodValidate.string(),
@@ -43,6 +55,10 @@ const speedTestSchema = zodValidate.object({
   answerC: zodValidate.string(),
   answerD: zodValidate.string(),
   correctAnswer: zodValidate.string(),
+  userResponse: zodValidate.string().optional(),
+  correctResponses: zodValidate.number().default(0).optional(),
+  incorrectResponses: zodValidate.number().default(0).optional(),
+  responseCount: zodValidate.number().default(0).optional(),
 })
 
 export const schemas = {

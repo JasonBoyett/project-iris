@@ -1,0 +1,75 @@
+"filename", "language", "TypeScript JSX", "TypeScript", "JavaScript", "CSS", "JSON with Comments", "JSON", "Markdown", "Prisma", "comment", "blank", "total"
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/.eslintrc.cjs", "JavaScript", 0, 0, 33, 0, 0, 0, 0, 0, 2, 3, 38
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/README.md", "Markdown", 0, 0, 0, 0, 0, 0, 3, 0, 0, 3, 6
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/bable.config.js", "JavaScript", 0, 0, 4, 0, 0, 0, 0, 0, 0, 1, 5
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/next.config.mjs", "JavaScript", 0, 0, 10, 0, 0, 0, 0, 0, 11, 3, 24
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/package-lock.json", "JSON", 0, 0, 0, 0, 0, 9293, 0, 0, 0, 1, 9294
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/package.json", "JSON", 0, 0, 0, 0, 0, 81, 0, 0, 0, 1, 82
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/postcss.config.cjs", "JavaScript", 0, 0, 7, 0, 0, 0, 0, 0, 0, 2, 9
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/prettier.config.cjs", "JavaScript", 0, 0, 16, 0, 0, 0, 0, 0, 1, 2, 19
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/prisma/schema.prisma", "Prisma", 0, 0, 0, 0, 0, 0, 0, 138, 0, 23, 161
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/cubeflasher.tsx", "TypeScript JSX", 210, 0, 0, 0, 0, 0, 0, 0, 2, 12, 224
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/evensandodds.tsx", "TypeScript JSX", 190, 0, 0, 0, 0, 0, 0, 0, 0, 18, 208
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/flashingcell.tsx", "TypeScript JSX", 308, 0, 0, 0, 0, 0, 0, 0, 4, 26, 338
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/globals.d.ts", "TypeScript", 0, 29, 0, 0, 0, 0, 0, 0, 0, 4, 33
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/homebutton.tsx", "TypeScript JSX", 19, 0, 0, 0, 0, 0, 0, 0, 0, 3, 22
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/loadingspinner.tsx", "TypeScript JSX", 24, 0, 0, 0, 0, 0, 0, 0, 0, 1, 25
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/schultetable.tsx", "TypeScript JSX", 162, 0, 0, 0, 0, 0, 0, 0, 1, 8, 171
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/settingsbutton.tsx", "TypeScript JSX", 19, 0, 0, 0, 0, 0, 0, 0, 0, 2, 21
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/speedtest.tsx", "TypeScript JSX", 195, 0, 0, 0, 0, 0, 0, 0, 0, 8, 203
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/tests/evensandodds.test.ts", "TypeScript", 0, 92, 0, 0, 0, 0, 0, 0, 0, 5, 97
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/wordchanger.tsx", "TypeScript JSX", 76, 0, 0, 0, 0, 0, 0, 0, 1, 10, 87
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/cva/cube-flasher.tsx", "TypeScript JSX", 32, 0, 0, 0, 0, 0, 0, 0, 0, 5, 37
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/cva/flashingStyles.tsx", "TypeScript JSX", 38, 0, 0, 0, 0, 0, 0, 0, 0, 5, 43
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/cva/fontProvider.tsx", "TypeScript JSX", 36, 0, 0, 0, 0, 0, 0, 0, 0, 5, 41
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/cva/highlightSelectorButton.tsx", "TypeScript JSX", 66, 0, 0, 0, 0, 0, 0, 0, 0, 6, 72
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/env.mjs", "JavaScript", 0, 0, 41, 0, 0, 0, 0, 0, 23, 13, 77
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/hooks/useInterval.ts", "TypeScript", 0, 19, 0, 0, 0, 0, 0, 0, 2, 4, 25
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/hooks/useIsVisible.ts", "TypeScript", 0, 16, 0, 0, 0, 0, 0, 0, 0, 4, 20
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/hooks/useSwitcher.ts", "TypeScript", 0, 94, 0, 0, 0, 0, 0, 0, 0, 10, 104
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/middleware.ts", "TypeScript", 0, 8, 0, 0, 0, 0, 0, 0, 0, 3, 11
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/_app.tsx", "TypeScript JSX", 14, 0, 0, 0, 0, 0, 0, 0, 0, 3, 17
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/api/trpc/[trpc].ts", "TypeScript", 0, 16, 0, 0, 0, 0, 0, 0, 1, 3, 20
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/done.tsx", "TypeScript JSX", 28, 0, 0, 0, 0, 0, 0, 0, 0, 2, 30
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/cubebythree.tsx", "TypeScript JSX", 16, 0, 0, 0, 0, 0, 0, 0, 0, 2, 18
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/cubebytwo.tsx", "TypeScript JSX", 16, 0, 0, 0, 0, 0, 0, 0, 0, 2, 18
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/evennumbers.tsx", "TypeScript JSX", 73, 0, 0, 0, 0, 0, 0, 0, 1, 3, 77
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashfourbyone.tsx", "TypeScript JSX", 24, 0, 0, 0, 0, 0, 0, 0, 0, 4, 28
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashonebyone.tsx", "TypeScript JSX", 27, 0, 0, 0, 0, 0, 0, 0, 0, 4, 31
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashonebytwo.tsx", "TypeScript JSX", 24, 0, 0, 0, 0, 0, 0, 0, 0, 4, 28
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashtwobyone.tsx", "TypeScript JSX", 24, 0, 0, 0, 0, 0, 0, 0, 0, 4, 28
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashtwobytwo.tsx", "TypeScript JSX", 24, 0, 0, 0, 0, 0, 0, 0, 0, 4, 28
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/schulteby3.tsx", "TypeScript JSX", 24, 0, 0, 0, 0, 0, 0, 0, 0, 3, 27
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/schulteby5.tsx", "TypeScript JSX", 24, 0, 0, 0, 0, 0, 0, 0, 0, 3, 27
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/schulteby7.tsx", "TypeScript JSX", 24, 0, 0, 0, 0, 0, 0, 0, 0, 3, 27
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/speedtest.tsx", "TypeScript JSX", 38, 0, 0, 0, 0, 0, 0, 0, 0, 4, 42
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/wordchange.tsx", "TypeScript JSX", 25, 0, 0, 0, 0, 0, 0, 0, 0, 4, 29
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/index.tsx", "TypeScript JSX", 64, 0, 0, 0, 0, 0, 0, 0, 0, 3, 67
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/loadnext.tsx", "TypeScript JSX", 93, 0, 0, 0, 0, 0, 0, 0, 0, 6, 99
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/nav.tsx", "TypeScript JSX", 56, 0, 0, 0, 0, 0, 0, 0, 0, 7, 63
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/next.tsx", "TypeScript JSX", 54, 0, 0, 0, 0, 0, 0, 0, 1, 2, 57
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/settings.tsx", "TypeScript JSX", 320, 0, 0, 0, 0, 0, 0, 0, 0, 3, 323
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/setup.tsx", "TypeScript JSX", 87, 0, 0, 0, 0, 0, 0, 0, 0, 3, 90
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/signin.tsx", "TypeScript JSX", 24, 0, 0, 0, 0, 0, 0, 0, 0, 2, 26
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/signup.tsx", "TypeScript JSX", 28, 0, 0, 0, 0, 0, 0, 0, 0, 4, 32
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/context.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 22, 1, 23
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/root.ts", "TypeScript", 0, 12, 0, 0, 0, 0, 0, 0, 6, 3, 21
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/routers/app.ts", "TypeScript", 0, 123, 0, 0, 0, 0, 0, 0, 0, 7, 130
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/routers/example.ts", "TypeScript", 0, 17, 0, 0, 0, 0, 0, 0, 0, 3, 20
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/trpc.ts", "TypeScript", 0, 43, 0, 0, 0, 0, 0, 0, 56, 11, 110
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/db.ts", "TypeScript", 0, 10, 0, 0, 0, 0, 0, 0, 0, 5, 15
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/stores/useCubeStore.ts", "TypeScript", 0, 18, 0, 0, 0, 0, 0, 0, 0, 5, 23
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/stores/useMutateUser.ts", "TypeScript", 0, 17, 0, 0, 0, 0, 0, 0, 0, 3, 20
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/stores/userStore.ts", "TypeScript", 0, 19, 0, 0, 0, 0, 0, 0, 6, 5, 30
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/styles/globals.css", "CSS", 0, 0, 0, 17, 0, 0, 0, 0, 0, 11, 28
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/api.ts", "TypeScript", 0, 30, 0, 0, 0, 0, 0, 0, 32, 7, 69
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/helpers.ts", "TypeScript", 0, 136, 0, 0, 0, 0, 0, 0, 8, 13, 157
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/schema.ts", "TypeScript", 0, 16, 0, 0, 0, 0, 0, 0, 0, 3, 19
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/types.ts", "TypeScript", 0, 33, 0, 0, 0, 0, 0, 0, 13, 7, 53
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/validators.ts", "TypeScript", 0, 70, 0, 0, 0, 0, 0, 0, 0, 6, 76
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/tailwind.config.cjs", "JavaScript", 0, 0, 18, 0, 0, 0, 0, 0, 1, 2, 21
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/tsconfig.json", "JSON with Comments", 0, 0, 0, 0, 29, 0, 0, 0, 6, 1, 36
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/turbo.json", "JSON", 0, 0, 0, 0, 0, 6, 0, 0, 5, 0, 11
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/vite.config.ts", "TypeScript", 0, 5, 0, 0, 0, 0, 0, 0, 0, 2, 7
+"/Users/jasonboyett/Documents/Coding/GitHub/speedread/vitest.config.ts", "TypeScript", 0, 10, 0, 0, 0, 0, 0, 0, 0, 2, 12
+"Total", "-", 2506, 833, 129, 17, 29, 9380, 3, 138, 205, 370, 13610

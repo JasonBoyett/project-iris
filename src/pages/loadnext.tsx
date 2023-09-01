@@ -22,7 +22,7 @@ const LoadNext: NextPage = () => {
         router.replace('/nav').catch((err) => console.log(err))
         break
       case 'FOUR_BY_ONE':
-        router.replace('/exercises/flashfourbyone').catch((err) => console.log(err))
+        router.replace('/instructions/flashingwords/4by1').catch((err) => console.log(err))
         break
       case 'ONE_BY_TWO':
         router.replace('/exercises/flashonebytwo').catch((err) => console.log(err))

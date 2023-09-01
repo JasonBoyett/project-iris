@@ -30,7 +30,7 @@ export const cell = cva(['flex', 'text-black', 'text-xl', 'p-8', 'justify-center
 })
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLDivElement>,
+  extends React.HTMLAttributes<HTMLDivElement>,
   VariantProps<typeof cell> { }
 
 export const StyledCell: React.FC<ButtonProps> = ({

@@ -1,10 +1,12 @@
-import { formatDate } from '~/utils/helpers'
+import { fontSelector, formatDate } from '~/utils/helpers'
 import React, { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { v4 } from 'uuid'
 import { useRouter } from 'next/router'
 import { api } from '~/utils/api'
 import useUserStore from '~/stores/userStore'
+import { FontProvider } from '~/cva/fontProvider'
+import { SelectFont } from '~/utils/types'
 
 type SchulteTableProps = {
   sideLength: 3 | 5 | 7
@@ -24,9 +26,8 @@ const Cell = ({
   errorCounter: number
 }) => {
   const [clicked, setClicked] = useState(false)
-  const style: string = clicked
-    ? 'h-12 w-12 text-white text-lg md:text-2xl flex items-center justify-center rounded bg-white/10 md:h-20 md:w-20 opacity-50 hover:border hover:border-white hover:border-2'
-    : 'h-12 w-12 text-white text-lg md:text-2xl flex items-center justify-center hover:border hover:border-white hover:border-2 rounded bg-white/20 md:h-20 md:w-20'
+  const store = useUserStore()
+  const [font, setFont] = useState<SelectFont>('sans')
 
   const handleClick = () => {
     if (innerValue !== counter && !clicked) errorSetter(errorCounter++)
@@ -36,19 +37,39 @@ const Cell = ({
     }
   }
 
+  useEffect(() => {
+    if(!store.user) return
+    setFont(fontSelector(store.user))
+  }, [store])
+
   return (
-    <div
-      className={style}
+    <FontProvider
+      font={font}
+      className= 'h12 w-12 text-white text-lg md:text-2xl flex items-center justify-center rounded-md bg-white/20 md:h-20 md:w-20'
       onClick={handleClick}
       id={v4()}
     >
       {innerValue}
-    </div>
+    </FontProvider>
   )
 }
 
 const SchulteTable = ({ sideLength }: SchulteTableProps) => {
   const [counter, setCount] = useState(1)
+  const [font, setFont] = useState<
+    | 'sans'
+    | 'mono'
+    | 'serif'
+    | 'robotoMono'
+    | 'rem'
+    | 'kanit'
+    | 'preahvihear'
+    | 'bebasNeue'
+    | 'chakraPetch'
+    | 'ibmPlexMono'
+    | null
+    | undefined
+  >('sans')
   const errors = useRef(0)
   const router = useRouter()
   const { mutate } = api.user.setUser.useMutation()
@@ -113,14 +134,20 @@ const SchulteTable = ({ sideLength }: SchulteTableProps) => {
     if (sideLength === 5) setClassString('grid grid-cols-5 gap-1')
     if (sideLength === 7) setClassString('grid grid-cols-7 gap-1')
   }, [])
+  useEffect(() => {
+    if(!store.user) return
+    setFont(fontSelector(store.user))
+  }, [store])
   return (
     <>
       <div className={classString}>
         {table}
       </div>
-      <div className='md:text-4xl text-white'>
+      <FontProvider
+        font={font}
+        className='md:text-4xl text-white'>
         Find: <span className='text-yellow-200'>{counter}</span>
-      </div>
+      </FontProvider>
 
     </>
   )

@@ -1,0 +1,126 @@
+Date : 2023-08-11 18:56:14
+Directory : /Users/jasonboyett/Documents/Coding/GitHub/speedread
+Total : 73 files,  13035 codes, 205 comments, 370 blanks, all 13610 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JSON               |          3 |      9,380 |          5 |          2 |      9,387 |
+| TypeScript JSX     |         36 |      2,506 |         10 |        188 |      2,704 |
+| TypeScript         |         23 |        833 |        146 |        116 |      1,095 |
+| Prisma             |          1 |        138 |          0 |         23 |        161 |
+| JavaScript         |          7 |        129 |         38 |         26 |        193 |
+| JSON with Comments |          1 |         29 |          6 |          1 |         36 |
+| CSS                |          1 |         17 |          0 |         11 |         28 |
+| Markdown           |          1 |          3 |          0 |          3 |          6 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                           | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                              |         73 |     13,035 |        205 |        370 |     13,610 |
+| . (Files)                                                                                      |         13 |      9,515 |         26 |         23 |      9,564 |
+| prisma                                                                                         |          1 |        138 |          0 |         23 |        161 |
+| src                                                                                            |         59 |      3,382 |        179 |        324 |      3,885 |
+| src (Files)                                                                                    |          2 |         49 |         23 |         16 |         88 |
+| src/componants                                                                                 |         11 |      1,324 |          8 |         97 |      1,429 |
+| src/componants (Files)                                                                         |         10 |      1,232 |          8 |         92 |      1,332 |
+| src/componants/tests                                                                           |          1 |         92 |          0 |          5 |         97 |
+| src/cva                                                                                        |          4 |        172 |          0 |         21 |        193 |
+| src/hooks                                                                                      |          3 |        129 |          2 |         18 |        149 |
+| src/pages                                                                                      |         24 |      1,147 |          3 |         82 |      1,232 |
+| src/pages (Files)                                                                              |         10 |        768 |          1 |         35 |        804 |
+| src/pages/api                                                                                  |          1 |         16 |          1 |          3 |         20 |
+| src/pages/api/trpc                                                                             |          1 |         16 |          1 |          3 |         20 |
+| src/pages/exercises                                                                            |         13 |        363 |          1 |         44 |        408 |
+| src/server                                                                                     |          6 |        205 |         84 |         30 |        319 |
+| src/server (Files)                                                                             |          1 |         10 |          0 |          5 |         15 |
+| src/server/api                                                                                 |          5 |        195 |         84 |         25 |        304 |
+| src/server/api (Files)                                                                         |          3 |         55 |         84 |         15 |        154 |
+| src/server/api/routers                                                                         |          2 |        140 |          0 |         10 |        150 |
+| src/stores                                                                                     |          3 |         54 |          6 |         13 |         73 |
+| src/styles                                                                                     |          1 |         17 |          0 |         11 |         28 |
+| src/utils                                                                                      |          5 |        285 |         53 |         36 |        374 |
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                       | language           | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/.eslintrc.cjs                             | JavaScript         |         33 |          2 |          3 |         38 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/README.md                                 | Markdown           |          3 |          0 |          3 |          6 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/bable.config.js                           | JavaScript         |          4 |          0 |          1 |          5 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/next.config.mjs                           | JavaScript         |         10 |         11 |          3 |         24 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/package-lock.json                         | JSON               |      9,293 |          0 |          1 |      9,294 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/package.json                              | JSON               |         81 |          0 |          1 |         82 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/postcss.config.cjs                        | JavaScript         |          7 |          0 |          2 |          9 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/prettier.config.cjs                       | JavaScript         |         16 |          1 |          2 |         19 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/prisma/schema.prisma                      | Prisma             |        138 |          0 |         23 |        161 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/cubeflasher.tsx            | TypeScript JSX     |        210 |          2 |         12 |        224 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/evensandodds.tsx           | TypeScript JSX     |        190 |          0 |         18 |        208 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/flashingcell.tsx           | TypeScript JSX     |        308 |          4 |         26 |        338 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/globals.d.ts               | TypeScript         |         29 |          0 |          4 |         33 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/homebutton.tsx             | TypeScript JSX     |         19 |          0 |          3 |         22 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/loadingspinner.tsx         | TypeScript JSX     |         24 |          0 |          1 |         25 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/schultetable.tsx           | TypeScript JSX     |        162 |          1 |          8 |        171 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/settingsbutton.tsx         | TypeScript JSX     |         19 |          0 |          2 |         21 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/speedtest.tsx              | TypeScript JSX     |        195 |          0 |          8 |        203 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/tests/evensandodds.test.ts | TypeScript         |         92 |          0 |          5 |         97 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/wordchanger.tsx            | TypeScript JSX     |         76 |          1 |         10 |         87 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/cva/cube-flasher.tsx                  | TypeScript JSX     |         32 |          0 |          5 |         37 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/cva/flashingStyles.tsx                | TypeScript JSX     |         38 |          0 |          5 |         43 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/cva/fontProvider.tsx                  | TypeScript JSX     |         36 |          0 |          5 |         41 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/cva/highlightSelectorButton.tsx       | TypeScript JSX     |         66 |          0 |          6 |         72 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/env.mjs                               | JavaScript         |         41 |         23 |         13 |         77 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/hooks/useInterval.ts                  | TypeScript         |         19 |          2 |          4 |         25 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/hooks/useIsVisible.ts                 | TypeScript         |         16 |          0 |          4 |         20 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/hooks/useSwitcher.ts                  | TypeScript         |         94 |          0 |         10 |        104 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/middleware.ts                         | TypeScript         |          8 |          0 |          3 |         11 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/_app.tsx                        | TypeScript JSX     |         14 |          0 |          3 |         17 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/api/trpc/[trpc].ts              | TypeScript         |         16 |          1 |          3 |         20 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/done.tsx                        | TypeScript JSX     |         28 |          0 |          2 |         30 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/cubebythree.tsx       | TypeScript JSX     |         16 |          0 |          2 |         18 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/cubebytwo.tsx         | TypeScript JSX     |         16 |          0 |          2 |         18 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/evennumbers.tsx       | TypeScript JSX     |         73 |          1 |          3 |         77 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashfourbyone.tsx    | TypeScript JSX     |         24 |          0 |          4 |         28 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashonebyone.tsx     | TypeScript JSX     |         27 |          0 |          4 |         31 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashonebytwo.tsx     | TypeScript JSX     |         24 |          0 |          4 |         28 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashtwobyone.tsx     | TypeScript JSX     |         24 |          0 |          4 |         28 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashtwobytwo.tsx     | TypeScript JSX     |         24 |          0 |          4 |         28 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/schulteby3.tsx        | TypeScript JSX     |         24 |          0 |          3 |         27 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/schulteby5.tsx        | TypeScript JSX     |         24 |          0 |          3 |         27 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/schulteby7.tsx        | TypeScript JSX     |         24 |          0 |          3 |         27 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/speedtest.tsx         | TypeScript JSX     |         38 |          0 |          4 |         42 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/wordchange.tsx        | TypeScript JSX     |         25 |          0 |          4 |         29 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/index.tsx                       | TypeScript JSX     |         64 |          0 |          3 |         67 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/loadnext.tsx                    | TypeScript JSX     |         93 |          0 |          6 |         99 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/nav.tsx                         | TypeScript JSX     |         56 |          0 |          7 |         63 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/next.tsx                        | TypeScript JSX     |         54 |          1 |          2 |         57 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/settings.tsx                    | TypeScript JSX     |        320 |          0 |          3 |        323 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/setup.tsx                       | TypeScript JSX     |         87 |          0 |          3 |         90 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/signin.tsx                      | TypeScript JSX     |         24 |          0 |          2 |         26 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/signup.tsx                      | TypeScript JSX     |         28 |          0 |          4 |         32 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/context.ts                 | TypeScript         |          0 |         22 |          1 |         23 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/root.ts                    | TypeScript         |         12 |          6 |          3 |         21 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/routers/app.ts             | TypeScript         |        123 |          0 |          7 |        130 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/routers/example.ts         | TypeScript         |         17 |          0 |          3 |         20 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/trpc.ts                    | TypeScript         |         43 |         56 |         11 |        110 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/db.ts                          | TypeScript         |         10 |          0 |          5 |         15 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/stores/useCubeStore.ts                | TypeScript         |         18 |          0 |          5 |         23 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/stores/useMutateUser.ts               | TypeScript         |         17 |          0 |          3 |         20 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/stores/userStore.ts                   | TypeScript         |         19 |          6 |          5 |         30 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/styles/globals.css                    | CSS                |         17 |          0 |         11 |         28 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/api.ts                          | TypeScript         |         30 |         32 |          7 |         69 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/helpers.ts                      | TypeScript         |        136 |          8 |         13 |        157 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/schema.ts                       | TypeScript         |         16 |          0 |          3 |         19 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/types.ts                        | TypeScript         |         33 |         13 |          7 |         53 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/validators.ts                   | TypeScript         |         70 |          0 |          6 |         76 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/tailwind.config.cjs                       | JavaScript         |         18 |          1 |          2 |         21 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/tsconfig.json                             | JSON with Comments |         29 |          6 |          1 |         36 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/turbo.json                                | JSON               |          6 |          5 |          0 |         11 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/vite.config.ts                            | TypeScript         |          5 |          0 |          2 |          7 |
+| /Users/jasonboyett/Documents/Coding/GitHub/speedread/vitest.config.ts                          | TypeScript         |         10 |          0 |          2 |         12 |
+| Total                                                                                          |                    |     13,035 |        205 |        370 |     13,610 |
++------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

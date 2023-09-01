@@ -4,8 +4,9 @@ import { StyledCube } from '~/cva/cube-flasher'
 import { useCubeStore } from '~/stores/useCubeStore'
 import useUserStore from '~/stores/userStore'
 import useInterval from '~/hooks/useInterval'
-import { formatDate } from '~/utils/helpers'
+import { fontSelector, formatDate } from '~/utils/helpers'
 import { useRouter } from 'next/router'
+import { FontProvider } from '~/cva/fontProvider'
 
 export const partitionWords = (
   words: string[],
@@ -84,6 +85,20 @@ type CornerFlasherProps = {
 
 export default function CornerFlasher({ number }: CornerFlasherProps){
   const store = useCubeStore() 
+  const [font, setFont] = useState<
+    | 'sans'
+    | 'mono'
+    | 'serif'
+    | 'robotoMono'
+    | 'rem'
+    | 'kanit'
+    | 'preahvihear'
+    | 'bebasNeue'
+    | 'chakraPetch'
+    | 'ibmPlexMono'
+    | null
+    | undefined
+  >('sans')
   const userStore = useUserStore() 
   const { mutate } = api.user.setUser.useMutation()
   const [section, setSection] = useState<number>(0)
@@ -171,6 +186,8 @@ export default function CornerFlasher({ number }: CornerFlasherProps){
     setDisplayedCubes(formattedCubes.current[0])
     setCounter(0)
     store.reset()
+    if(!userStore.user) return
+    setFont(fontSelector(userStore.user))
     if(data.length === 0) router.reload()
   }, [userStore.user, data])
 
@@ -195,9 +212,12 @@ export default function CornerFlasher({ number }: CornerFlasherProps){
 
   return(
   <>
-    <div className='grid gap-2 p-2'>
+    <FontProvider 
+        font={font}
+        className='grid gap-2 p-2'
+      >
       {displayedCubes}
-    </div>
+    </FontProvider>
   </>
   )
 }

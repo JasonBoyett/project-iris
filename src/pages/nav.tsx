@@ -13,7 +13,7 @@ const Page: NextPage = () => {
   const buttonStyle =
     'text-white md:text-3xl bg-white/10 rounded-full p-4 h-16 hover:bg-white/20'
 
-  const user = api.user.getUnique.useQuery<User>().data
+  const user = api.user.getUnique.useQuery().data
   const setUserStore = useUserStore((state) => state.setUser)
   const { data, isLoading } = api.user.getUnique.useQuery()
 

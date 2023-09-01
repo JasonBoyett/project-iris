@@ -14,9 +14,9 @@ import { useIsVisible } from '@/hooks/useIsVisible'
 import { useRouter } from 'next/router'
 import { useUserStore } from '~/stores/userStore'
 import { api } from '~/utils/api'
-import type { User } from '~/utils/types'
-import { formatDate } from '~/utils/helpers'
-import FontProvider from '~/cva/fontProvider'
+import type { SelectFont, User } from '~/utils/types'
+import { fontSelector, formatDate } from '~/utils/helpers'
+import { FontProvider } from '~/cva/fontProvider'
 
 const counterContext = createContext<number>(0)
 
@@ -224,6 +224,7 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
   const ref = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const store = useUserStore((state) => state)
+  const [font, setFont] = useState<SelectFont>('sans')
   const user = store.user 
   const router = useRouter()
   const { mutate } = api.user.setUser.useMutation()
@@ -265,7 +266,6 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
 
   useEffect(() => {
     if (!user) return 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const setup = (async () => {
       const wordsArry = await getWords(wordsPerCell * user.CurrentWpm)
       words.current = partitionWords(
@@ -278,8 +278,8 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
         loadCheck: setIsVisible,
         user: user
       }))
+      setFont(fontSelector(user))
     })()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useInterval(() => {
@@ -312,9 +312,8 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
   return (
     <counterContext.Provider value={cellCounter}>
       <FontProvider
-        font='sans'
+        font={font}
         className={returnClass}
-        ref={ref}
       >
         {grid}
       </FontProvider>

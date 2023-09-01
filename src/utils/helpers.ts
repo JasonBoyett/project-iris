@@ -128,3 +128,29 @@ export const formatDate = (date: Date | undefined) => {
       ) => `${dayOfWeek} ${month} ${day} ${year}`,
     )
 }
+
+export const fontSelector = (user: User) => {
+  switch (user.Font) {
+    case 'REM':
+     return 'rem'
+      case 'MONO':
+        return 'mono'
+      case 'SANS':
+        return 'sans'
+      case 'SERIF':
+        return 'serif'
+      case 'KANIT':
+        return 'kanit'
+      case 'RROBOTO_MONO':
+        return 'robotoMono'
+      case 'BEBAS_NEUE':
+        return 'bebasNeue'
+      case 'PREAHVIHEAR':
+        return 'preahvihear'
+      case 'CHAKRA_PETCH':
+        return 'chakraPetch'
+      case 'IBM_PLEX_MONO':
+        return 'ibmPlexMono'
+  }
+  return 'sans'
+}

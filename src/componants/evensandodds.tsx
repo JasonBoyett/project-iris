@@ -1,7 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { FontProviderButton } from '~/cva/fontProvider'
 import type { Dispatch, FC, ReactElement, SetStateAction } from 'react'
 import { uuid } from 'uuidv4'
 import { motion } from 'framer-motion'
+import { FontProvider } from '~/cva/fontProvider'
+import useUserStore from '~/stores/userStore'
+import { fontSelector } from '~/utils/helpers'
+import { SelectFont } from '~/utils/types'
 const DEFAULT =
   'flex text-white text-xl justify-center p-4 border-2 border-slate-700 gap-0 bg-white/20'
 const HILIGHT =
@@ -61,7 +66,10 @@ const generateNumbers = (props: EvenOddProps) => {
 
 const Cell = (props: CellProps) => {
   const [currentClass, setCurrentClass] = useState(props.defaultClass)
+  const userStore = useUserStore()
+  const [font, setFont] = useState<SelectFont>('sans')
   const [disabled, setDisabled] = useState(false)
+  
   const handleClick = () => {
     if (props.id % 2 === 0 && !disabled) {
       setCurrentClass(props.hilightClass)
@@ -79,8 +87,14 @@ const Cell = (props: CellProps) => {
     }
   }, [props.id])
 
+  useEffect(() => {
+    if(!userStore.user) return
+    setFont(fontSelector(userStore.user))
+  }, [userStore.user])
+
   return (
-    <button
+    <FontProviderButton
+      font={font}
       className={currentClass}
       key={uuid()}
       onClick={() => handleClick()}
@@ -88,7 +102,7 @@ const Cell = (props: CellProps) => {
       disabled={disabled}
     >
       {props.id}
-    </button>
+    </FontProviderButton>
   ) as ReactElement
 }
 
@@ -155,6 +169,7 @@ const EvensAndOdds = (props: EvenOddProps) => {
     setGrid(newGrid)
   }, [])
 
+
   return (
     <>
       <motion.div
@@ -162,8 +177,16 @@ const EvensAndOdds = (props: EvenOddProps) => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <div className={GRID_CLASS}>{grid}</div>
-        <div className='white text-sm'>frames cleared: {cleared}</div>
+        <div
+          className={GRID_CLASS}
+        >
+          {grid}
+        </div>
+        <div
+          className='white text-md'
+        >
+          frames cleared: <span className='text-yellow-400'>{cleared}</span>
+        </div>
       </motion.div>
     </>
   )

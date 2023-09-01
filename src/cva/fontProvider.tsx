@@ -3,32 +3,40 @@ import { cva } from 'class-variance-authority';
 import type { VariantProps } from "class-variance-authority"
 
 export const fontProvider = cva([
-  'rounded-full', 
-  'text-white', 
-  'flex',
-  'justify-center',
-  'items-center',
-  'w-12',
-  'h-12',
-  'p-4',
 ], {
   variants: {
     font: {
-        primary: 'font-primary', 
-        sans: 'font-sans',
+        sans: 'font-sans', 
         mono: 'font-mono',
         serif: 'font-serif',
+        robotoMono: 'font-robotoMono',
+        rem: 'font-rem',
+        kanit: 'font-kanit',
+        preahvihear: 'font-preahvihear', 
+        bebasNeue: 'font-bebasNeue', 
+        chakraPetch: 'font-chakraPetch',
+        ibmPlexMono: 'font-ibmPlexMono',
     }
   },
 })
 
-export interface ButtonProps
+export interface ProviderProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof fontProvider> {}
 
-export const FontProvider: React.FC<ButtonProps> = ({
+export const FontProvider: React.FC<ProviderProps> = ({
   className,
   font,
   ...props
 }) => <div className={fontProvider({ font, className })} {...props} />
+  
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof fontProvider> {}
+
+export const FontProviderButton: React.FC<ButtonProps> = ({
+  className,
+  font,
+  ...props
+}) => <button className={fontProvider({ font, className })} {...props} />
   
