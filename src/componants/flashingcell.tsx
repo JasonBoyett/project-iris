@@ -71,17 +71,27 @@ const layoutManager = (layout: FlasherLayout) => {
 }
 
 const colorSelector = (user: User) => {
-  switch(user.HighlightColor) {
-    case 'BLUE': return 'blue'
-    case 'BLUE_GREY': return 'blueGrey'
-    case 'GREEN': return 'green'
-    case 'GREY': return 'grey'
-    case 'ORANGE': return 'orange'
-    case 'PEACH': return 'peach'
-    case 'PURPLE': return 'purple'
-    case 'RED': return 'red'
-    case 'TURQUOISE': return 'turquoise'
-    case 'YELLOW': return 'yellow'
+  switch (user.HighlightColor) {
+    case 'BLUE':
+      return 'blue'
+    case 'BLUE_GREY':
+      return 'blueGrey'
+    case 'GREEN':
+      return 'green'
+    case 'GREY':
+      return 'grey'
+    case 'ORANGE':
+      return 'orange'
+    case 'PEACH':
+      return 'peach'
+    case 'PURPLE':
+      return 'purple'
+    case 'RED':
+      return 'red'
+    case 'TURQUOISE':
+      return 'turquoise'
+    case 'YELLOW':
+      return 'yellow'
   }
   return 'none'
 }
@@ -127,8 +137,7 @@ export const partitionWords = (
 }
 
 const Cell = ({ content, location, loadCheck, user }: CellProps) => {
-  const [intent, setIntent] = useState<'noFlash' | 'flash' | null | undefined>
-  (
+  const [intent, setIntent] = useState<'noFlash' | 'flash' | null | undefined>(
     'noFlash',
   )
   const [color, setColor] = useState<
@@ -145,9 +154,7 @@ const Cell = ({ content, location, loadCheck, user }: CellProps) => {
     | 'blueGrey'
     | null
     | undefined
-  >(
-    'none'
-  )
+  >('none')
   const counter = useContext(counterContext)
   const ref = useRef<HTMLDivElement>(null)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -175,13 +182,13 @@ const Cell = ({ content, location, loadCheck, user }: CellProps) => {
       className='flex items-center justify-center'
       ref={ref}
     >
-    <StyledCell
-      intent={intent}
-      flashColor={color}
-      key={uuid()}
-    >
-      {content}
-    </StyledCell>
+      <StyledCell
+        intent={intent}
+        flashColor={color}
+        key={uuid()}
+      >
+        {content}
+      </StyledCell>
     </div>
   )
 }
@@ -196,7 +203,7 @@ export const createCells = ({
   loadCheck: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const cells: ReactElement[] = []
-  if (!words) return 
+  if (!words) return
   words.forEach((word, index) => {
     cells.push(
       <Cell
@@ -225,20 +232,20 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const store = useUserStore((state) => state)
   const [font, setFont] = useState<SelectFont>('sans')
-  const user = store.user 
+  const user = store.user
   const router = useRouter()
   const { mutate } = api.user.setUser.useMutation()
 
   const setSpeed = (user: User | undefined) => {
-    if (!user) return 60_000/200 
+    if (!user) return 60_000 / 200
     return 60_000 / user.CurrentWpm
   }
 
   const markComplete = () => {
-    if (!user) return 
+    if (!user) return
     if (layout === FlasherLayout.ONE_BY_ONE) {
       mutate({ LastOneByOne: formatDate(new Date()) })
-      store.setUser({ ...user, LastOneByOne: formatDate(new Date()) }) 
+      store.setUser({ ...user, LastOneByOne: formatDate(new Date()) })
     }
     if (layout === FlasherLayout.ONE_BY_TWO) {
       mutate({ LastOneByTwo: formatDate(new Date()) })
@@ -265,7 +272,7 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
   }
 
   useEffect(() => {
-    if (!user) return 
+    if (!user) return
     const setup = (async () => {
       const wordsArry = await getWords(wordsPerCell * user.CurrentWpm)
       words.current = partitionWords(
@@ -273,11 +280,13 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
         wordsArry.length / wordsPerCell,
         rows * width,
       )
-      setGrid(createCells({ 
-        words: words.current[0], 
-        loadCheck: setIsVisible,
-        user: user
-      }))
+      setGrid(
+        createCells({
+          words: words.current[0],
+          loadCheck: setIsVisible,
+          user: user,
+        }),
+      )
       setFont(fontSelector(user))
     })()
   }, [])
@@ -295,7 +304,7 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
     }
     if (cellCounter >= rows * width) {
       section.current++
-      if(!user) return
+      if (!user) return
       setGrid(
         createCells({
           words: words.current[section.current],

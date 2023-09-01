@@ -28,7 +28,7 @@ const QuestionView = ({
   }
 
   useInterval(() => {
-    if (!user) console.log('User not found') 
+    if (!user) console.log('User not found')
     if (isVisivle) setItteration((prev) => prev + 1)
     if (itteration >= formattedQuestion.length) {
       doneSignal()
@@ -77,7 +77,7 @@ const AnswerView = ({
           </div>
         </>,
       )
-      if (!user) return 
+      if (!user) return
       mutate({
         MaxWpm: user.MaxWpm + 10,
         CurrentWpm: (() => {
@@ -105,7 +105,7 @@ const AnswerView = ({
           </div>
         </>,
       )
-      if (!user) return 
+      if (!user) return
       mutate({
         CurrentWpm: user.CurrentWpm - 10,
         LastSpeedTest: formatDate(new Date()),

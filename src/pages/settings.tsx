@@ -20,10 +20,12 @@ const Page: NextPage = () => {
   const store = useUserStore()
   const [hideFont, setHideFont] = useState(true)
   const [currentHilight, setCurrentHilight] = useState<Overlay>(
-    user?.HighlightColor as Overlay ?? store.user?.HighlightColor as Overlay ?? 'GREY'
+    (user?.HighlightColor as Overlay) ??
+      (store.user?.HighlightColor as Overlay) ??
+      'GREY',
   )
   const [currentFont, setCurrentFont] = useState<Font>(
-    user?.Font as Font ?? store.user?.Font as Font ?? 'SANS'
+    (user?.Font as Font) ?? (store.user?.Font as Font) ?? 'SANS',
   )
   const inputStyle =
     'rounded-full p-4 h-16 py-5 bg-white/20 text-black font-normal'
@@ -36,8 +38,7 @@ const Page: NextPage = () => {
       setCurrentWpm(user.CurrentWpm)
       setCurrentHilight(user.HighlightColor as Overlay)
       setCurrentFont(user.Font as Font)
-    }
-    else if(store.user){
+    } else if (store.user) {
       setFirst(store.user.FirstName)
       setLast(store.user.LastName)
       setCurrentWpm(store.user.CurrentWpm)
@@ -60,38 +61,41 @@ const Page: NextPage = () => {
               (first === 'Unnamed' && last === 'User') ||
               (first === null && last === null)
             ) {
-              mutate({ 
+              mutate({
                 HighlightColor: currentHilight,
                 Font: currentFont,
-                CurrentWpm: currentWpm })
+                CurrentWpm: currentWpm,
+              })
               store.setUser({
                 ...user,
                 CurrentWpm: currentWpm as number,
                 HighlightColor: currentHilight,
-                Font: currentFont
+                Font: currentFont,
               })
             } else if (first === 'Unnamed' || first === null) {
-              mutate({ ...user, 
+              mutate({
+                ...user,
                 CurrentWpm: currentWpm,
                 HighlightColor: currentHilight,
-                Font: currentFont
+                Font: currentFont,
               })
               store.setUser({
                 ...user,
                 CurrentWpm: currentWpm as number,
-                HighlightColor: currentHilight,
-                Font: currentFont
-              })
-            } else if (last === 'User' || last === null) {
-              mutate({ 
                 HighlightColor: currentHilight,
                 Font: currentFont,
-                CurrentWpm: currentWpm })
+              })
+            } else if (last === 'User' || last === null) {
+              mutate({
+                HighlightColor: currentHilight,
+                Font: currentFont,
+                CurrentWpm: currentWpm,
+              })
               store.setUser({
                 ...user,
                 CurrentWpm: currentWpm as number,
                 HighlightColor: currentHilight,
-                Font: currentFont
+                Font: currentFont,
               })
             } else {
               mutate({
@@ -99,7 +103,7 @@ const Page: NextPage = () => {
                 LastName: last,
                 CurrentWpm: currentWpm,
                 HighlightColor: currentHilight,
-                Font: currentFont
+                Font: currentFont,
               })
               store.setUser({
                 ...user,
@@ -107,7 +111,7 @@ const Page: NextPage = () => {
                 LastName: last as string,
                 CurrentWpm: currentWpm as number,
                 HighlightColor: currentHilight,
-                Font: currentFont
+                Font: currentFont,
               })
             }
             router.replace('/nav').catch((e) => console.log(e))
@@ -143,9 +147,9 @@ const Page: NextPage = () => {
             <button
               type='button'
               onClick={() => {
-                if(!user) return
-                if(!currentWpm) return
-                if(currentWpm <= user.CurrentWpm - 10) 
+                if (!user) return
+                if (!currentWpm) return
+                if (currentWpm <= user.CurrentWpm - 10)
                   setCurrentWpm((prev) => (prev as number) + 10)
               }}
               className='bg-white/20 rounded-full p-4 h-12 py-2 font-normal'
@@ -155,8 +159,9 @@ const Page: NextPage = () => {
             <button
               type='button'
               onClick={() => {
-                if(!currentWpm) return
-                if(currentWpm > 70) setCurrentWpm((prev) => (prev as number) - 10)
+                if (!currentWpm) return
+                if (currentWpm > 70)
+                  setCurrentWpm((prev) => (prev as number) - 10)
               }}
               className='bg-white/20 rounded-full p-4 h-12 py-2 font-normal'
             >
@@ -169,229 +174,224 @@ const Page: NextPage = () => {
               intent='blue'
               type='button'
               onClick={() => setCurrentHilight('BLUE')}
-              >
-              {currentHilight === 'BLUE' ?'✓' : ''} 
+            >
+              {currentHilight === 'BLUE' ? '✓' : ''}
             </HighlightButton>
             <HighlightButton
               type='button'
               intent='blueGrey'
               onClick={() => setCurrentHilight('BLUE_GREY')}
-              >
-              {currentHilight === 'BLUE_GREY' ?'✓' : ''}
-              </HighlightButton>
+            >
+              {currentHilight === 'BLUE_GREY' ? '✓' : ''}
+            </HighlightButton>
             <HighlightButton
               type='button'
               intent='green'
               onClick={() => setCurrentHilight('GREEN')}
-              >
-              {currentHilight === 'GREEN' ?'✓' : ''}
+            >
+              {currentHilight === 'GREEN' ? '✓' : ''}
             </HighlightButton>
             <HighlightButton
               type='button'
               intent='grey'
               onClick={() => setCurrentHilight('GREY')}
-              >
-              {currentHilight === 'GREY' ?'✓' : ''}
+            >
+              {currentHilight === 'GREY' ? '✓' : ''}
             </HighlightButton>
             <HighlightButton
               type='button'
               intent='orange'
               onClick={() => setCurrentHilight('ORANGE')}
-              >
-              {currentHilight === 'ORANGE' ?'✓' : ''}
+            >
+              {currentHilight === 'ORANGE' ? '✓' : ''}
             </HighlightButton>
             <HighlightButton
               type='button'
               intent='peach'
               onClick={() => setCurrentHilight('PEACH')}
-              >
-              {currentHilight === 'PEACH' ?'✓' : ''}
+            >
+              {currentHilight === 'PEACH' ? '✓' : ''}
             </HighlightButton>
             <HighlightButton
               type='button'
               intent='purple'
               onClick={() => setCurrentHilight('PURPLE')}
-              >
-              {currentHilight === 'PURPLE' ?'✓' : ''}
+            >
+              {currentHilight === 'PURPLE' ? '✓' : ''}
             </HighlightButton>
             <HighlightButton
               type='button'
               intent='red'
               onClick={() => setCurrentHilight('RED')}
-              >
-              {currentHilight === 'RED' ?'✓' : ''}
+            >
+              {currentHilight === 'RED' ? '✓' : ''}
             </HighlightButton>
             <HighlightButton
               type='button'
               intent='turquoise'
               onClick={() => setCurrentHilight('TURQUOISE')}
-              >
-              {currentHilight === 'TURQUOISE' ?'✓' : ''}
+            >
+              {currentHilight === 'TURQUOISE' ? '✓' : ''}
             </HighlightButton>
             <HighlightButton
               type='button'
               intent='yellow'
               onClick={() => setCurrentHilight('YELLOW')}
-              >
-              {currentHilight === 'YELLOW' ?'✓' : ''}
+            >
+              {currentHilight === 'YELLOW' ? '✓' : ''}
             </HighlightButton>
           </label>
-          <button 
+          <button
             type='button'
             onClick={() => setHideFont(!hideFont)}
-            className='bg-white/20 rounded-full p-4 h-12 w-40 py-2 text-2xl text-white font-bold'>
+            className='bg-white/20 rounded-full p-4 h-12 w-40 py-2 text-2xl text-white font-bold'
+          >
             Set Font
           </button>
-          <label 
-            className={!hideFont 
-              ?'grid items-center py-4 text-white text-2xl font-bold p-2 gap-2'
-              : 'hidden'
-              }>
-            <FontProvider
-              font='sans'
-            >
-              <button 
+          <label
+            className={
+              !hideFont
+                ? 'grid items-center py-4 text-white text-2xl font-bold p-2 gap-2'
+                : 'hidden'
+            }
+          >
+            <FontProvider font='sans'>
+              <button
                 className='bg-white/20 rounded-full p-4 h-12 py-2'
                 type='button'
                 onClick={() => setCurrentFont('SANS')}
               >
                 Sans
               </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'SANS' ? '✓' : ''
-                }</span>
+              <span className='text-5xl text-green-400'>
+                {currentFont === 'SANS' ? '✓' : ''}
+              </span>
             </FontProvider>
-            <FontProvider
-              font='serif'
-            >
-              <button 
+            <FontProvider font='serif'>
+              <button
                 className='bg-white/20 rounded-full p-4 h-12 py-2'
                 type='button'
                 onClick={() => setCurrentFont('SERIF')}
               >
                 Serif
               </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'SERIF' ? '✓' : ''
-                }</span>
+              <span className='text-5xl text-green-400'>
+                {currentFont === 'SERIF' ? '✓' : ''}
+              </span>
             </FontProvider>
-            <FontProvider
-              font='mono'
-            >
-              <button 
+            <FontProvider font='mono'>
+              <button
                 className='bg-white/20 rounded-full p-4 h-12 py-2'
                 type='button'
                 onClick={() => setCurrentFont('MONO')}
               >
                 Mono
               </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'MONO' ? '✓' : ''
-                }</span>
+              <span className='text-5xl text-green-400'>
+                {currentFont === 'MONO' ? '✓' : ''}
+              </span>
             </FontProvider>
-            <FontProvider
-              font='rem'
-            >
-              <button 
+            <FontProvider font='rem'>
+              <button
                 className='bg-white/20 rounded-full p-4 h-12 py-2'
                 type='button'
                 onClick={() => setCurrentFont('REM')}
               >
                 Rem
               </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'REM' ? '✓' : ''
-                }</span>
+              <span className='text-5xl text-green-400'>
+                {currentFont === 'REM' ? '✓' : ''}
+              </span>
             </FontProvider>
             <FontProvider
               font='ibmPlexMono'
               className='text-2xl'
             >
-              <button 
+              <button
                 className='bg-white/20 rounded-full p-4 h-12 py-2'
                 type='button'
                 onClick={() => setCurrentFont('IBM_PLEX_MONO')}
               >
                 IBM
               </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'IBM_PLEX_MONO' ? '✓' : ''
-                }</span>
+              <span className='text-5xl text-green-400'>
+                {currentFont === 'IBM_PLEX_MONO' ? '✓' : ''}
+              </span>
             </FontProvider>
             <FontProvider
               font='robotoMono'
               className='text-2xl'
             >
-              <button 
+              <button
                 className='bg-white/20 rounded-full p-4 h-12 py-2'
                 type='button'
                 onClick={() => setCurrentFont('RROBOTO_MONO')}
               >
                 Roboto
               </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'RROBOTO_MONO' ? '✓' : ''
-                }</span>
+              <span className='text-5xl text-green-400'>
+                {currentFont === 'RROBOTO_MONO' ? '✓' : ''}
+              </span>
             </FontProvider>
             <FontProvider
               font='kanit'
               className='text-2xl'
             >
-              <button 
+              <button
                 className='bg-white/20 rounded-full p-4 h-12 py-2'
                 type='button'
                 onClick={() => setCurrentFont('KANIT')}
               >
                 Kanit
               </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'KANIT' ? '✓' : ''
-                }</span>
+              <span className='text-5xl text-green-400'>
+                {currentFont === 'KANIT' ? '✓' : ''}
+              </span>
             </FontProvider>
             <FontProvider
               font='preahvihear'
               className='text-2xl'
             >
-              <button 
+              <button
                 className='bg-white/20 rounded-full p-4 h-12 py-2'
                 type='button'
                 onClick={() => setCurrentFont('PREAHVIHEAR')}
               >
                 Preahvihear
               </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'PREAHVIHEAR' ? '✓' : ''
-                }</span>
+              <span className='text-5xl text-green-400'>
+                {currentFont === 'PREAHVIHEAR' ? '✓' : ''}
+              </span>
             </FontProvider>
             <FontProvider
               font='bebasNeue'
               className='text-2xl'
             >
-              <button 
+              <button
                 className='bg-white/20 rounded-full p-4 h-12 py-2'
                 type='button'
                 onClick={() => setCurrentFont('BEBAS_NEUE')}
               >
                 Bebas
               </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'BEBAS_NEUE' ? '✓' : ''
-                }</span>
+              <span className='text-5xl text-green-400'>
+                {currentFont === 'BEBAS_NEUE' ? '✓' : ''}
+              </span>
             </FontProvider>
             <FontProvider
               font='chakraPetch'
               className='text-2xl'
             >
-              <button 
+              <button
                 className='bg-white/20 rounded-full p-4 h-12 py-2'
                 type='button'
                 onClick={() => setCurrentFont('CHAKRA_PETCH')}
               >
                 Chakra
               </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'CHAKRA_PETCH' ? '✓' : ''
-                }</span>
+              <span className='text-5xl text-green-400'>
+                {currentFont === 'CHAKRA_PETCH' ? '✓' : ''}
+              </span>
             </FontProvider>
           </label>
           <button className='bg-white/20 rounded-full p-4 h-16 py-5 text-white font-normal'>

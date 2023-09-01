@@ -12,7 +12,7 @@ const Display = () => {
   const question = api.getExcerciseProps.getSingleSpeedTestProps.useQuery().data
   const user: User | undefined = useUserStore((state) => state.user)
   if (question === undefined || user === undefined) {
-    <LoadingSpinner />
+    ;<LoadingSpinner />
   } else {
     return (
       <SpeedTest

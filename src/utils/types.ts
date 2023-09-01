@@ -67,5 +67,4 @@ export const Font = [
   'chakraPetch',
   'ibmPlexMono',
 ] as const
-export type SelectFont = (typeof Font)[number]| null | undefined
-
+export type SelectFont = (typeof Font)[number] | null | undefined

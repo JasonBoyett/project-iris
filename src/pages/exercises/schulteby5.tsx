@@ -11,13 +11,11 @@ const Page: NextPage = () => {
         <title>Speed Read</title>
       </Head>
       <body className='grid min-h-screen'>
-      <HomeButton />
-      <SettingsButton />
-      <div className='flex flex-col items-center justify-center'>
-        <SchulteTable
-          sideLength={5}
-        />
-      </div>
+        <HomeButton />
+        <SettingsButton />
+        <div className='flex flex-col items-center justify-center'>
+          <SchulteTable sideLength={5} />
+        </div>
       </body>
     </>
   )

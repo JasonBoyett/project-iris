@@ -30,45 +30,39 @@ type CornerFlasherCellProps = {
   wordsArray: string[]
 }
 
-const CornerFlasherCell = ({ number, wordsArray}: CornerFlasherCellProps) => {
+const CornerFlasherCell = ({ number, wordsArray }: CornerFlasherCellProps) => {
   const store = useCubeStore()
   const [visible, setVisible] = useState<boolean>(false)
   useEffect(() => {
-    if(store.current === number) setVisible(true)
+    if (store.current === number) setVisible(true)
     else setVisible(false)
   }, [])
   useEffect(() => {
-    if(store.current === number) setVisible(true)
+    if (store.current === number) setVisible(true)
     else setVisible(false)
   }, [store.current])
-  return(
+  return (
     <>
-      <StyledCube
-        intent={
-          store.current === number
-            ? 'flash'
-            : 'noFlash'
-        }
-      >
-        <div 
+      <StyledCube intent={store.current === number ? 'flash' : 'noFlash'}>
+        <div
           className='absolute bottom-0 left-0 p-2'
           hidden={!visible}
         >
           {wordsArray[0]}
         </div>
-        <div 
+        <div
           className='absolute bottom-0 right-0 p-2'
           hidden={!visible}
         >
           {wordsArray[1]}
         </div>
-        <div 
+        <div
           className='absolute top-0 right-0 p-2'
           hidden={!visible}
         >
           {wordsArray[2]}
         </div>
-        <div 
+        <div
           className='absolute top-0 left-0 p-2'
           hidden={!visible}
         >
@@ -83,8 +77,8 @@ type CornerFlasherProps = {
   number: 2 | 3
 }
 
-export default function CornerFlasher({ number }: CornerFlasherProps){
-  const store = useCubeStore() 
+export default function CornerFlasher({ number }: CornerFlasherProps) {
+  const store = useCubeStore()
   const [font, setFont] = useState<
     | 'sans'
     | 'mono'
@@ -99,7 +93,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps){
     | null
     | undefined
   >('sans')
-  const userStore = useUserStore() 
+  const userStore = useUserStore()
   const { mutate } = api.user.setUser.useMutation()
   const [section, setSection] = useState<number>(0)
   const [counter, setCounter] = useState<number>(0)
@@ -107,37 +101,39 @@ export default function CornerFlasher({ number }: CornerFlasherProps){
   // let done = false
   const { data } = api.getExcerciseProps.getRandomWords.useQuery({
     number: (() => {
-      if(!userStore.user) return 0
+      if (!userStore.user) return 0
       return userStore.user.CurrentWpm * 4
     })(),
-    language: 'ENGLISH'
+    language: 'ENGLISH',
   })
   const cubes = useRef<JSX.Element[]>([])
   const formattedCubes = useRef<JSX.Element[][]>([])
-  const [displayedCubes, setDisplayedCubes] = useState<JSX.Element[] | undefined>([])
+  const [displayedCubes, setDisplayedCubes] = useState<
+    JSX.Element[] | undefined
+  >([])
 
   const getRate = () => {
-    if(!userStore.user) return 60_000 / 200
+    if (!userStore.user) return 60_000 / 200
     return 60_000 / userStore.user.CurrentWpm
   }
 
   const tearDown = () => {
     //TODO write data collection
-    switch(number){
+    switch (number) {
       case 2:
-        mutate({LastCubeByTwo: formatDate(new Date())})
-        if(!userStore.user) return
+        mutate({ LastCubeByTwo: formatDate(new Date()) })
+        if (!userStore.user) return
         userStore.setUser({
           ...userStore.user,
-          LastCubeByTwo: formatDate(new Date())
+          LastCubeByTwo: formatDate(new Date()),
         })
         break
       case 3:
-        mutate({LastCubeByThree: formatDate(new Date())})
-        if(!userStore.user) return
+        mutate({ LastCubeByThree: formatDate(new Date()) })
+        if (!userStore.user) return
         userStore.setUser({
           ...userStore.user,
-          LastCubeByThree: formatDate(new Date())
+          LastCubeByThree: formatDate(new Date()),
         })
         break
     }
@@ -145,23 +141,22 @@ export default function CornerFlasher({ number }: CornerFlasherProps){
   }
 
   useEffect(() => {
-    if(!data) return
+    if (!data) return
     let cubeNumber = 0
     const formattedArray = (() => {
       let holder: string[] = []
       const holderArray: string[][] = []
       data.forEach((words, index) => {
-        if(index % 4 === 0 && index !== 0){
+        if (index % 4 === 0 && index !== 0) {
           holder.push(words)
           holderArray.push(holder)
           holder = []
-        }
-        else holder.push(words)
+        } else holder.push(words)
       })
       return holderArray
     })()
     cubes.current = formattedArray.map((wordsArray, index) => {
-      if(cubeNumber >= number ) cubeNumber = 0
+      if (cubeNumber >= number) cubeNumber = 0
       const cube = (
         <CornerFlasherCell
           key={index}
@@ -174,50 +169,46 @@ export default function CornerFlasher({ number }: CornerFlasherProps){
     })
     let holderTwo: ReactElement[] = []
     cubes.current.forEach((cube, index) => {
-      if(index % number === 0){
+      if (index % number === 0) {
         holderTwo.push(cube)
-        if(holderTwo.length === number)
-          formattedCubes.current.push(holderTwo)
+        if (holderTwo.length === number) formattedCubes.current.push(holderTwo)
         holderTwo = []
-      }
-      else holderTwo.push(cube)
+      } else holderTwo.push(cube)
     })
-    if(!formattedCubes.current[0]) return
+    if (!formattedCubes.current[0]) return
     setDisplayedCubes(formattedCubes.current[0])
     setCounter(0)
     store.reset()
-    if(!userStore.user) return
+    if (!userStore.user) return
     setFont(fontSelector(userStore.user))
-    if(data.length === 0) router.reload()
+    if (data.length === 0) router.reload()
   }, [userStore.user, data])
 
   useInterval(() => {
-    if(!displayedCubes) return
-    if(!data) return
-    if(!userStore.user) return
-    if(displayedCubes.length !== number) return
-    if(counter >= cubes.current.length) tearDown()
-    if(store.current < number - 1) {
+    if (!displayedCubes) return
+    if (!data) return
+    if (!userStore.user) return
+    if (displayedCubes.length !== number) return
+    if (counter >= cubes.current.length) tearDown()
+    if (store.current < number - 1) {
       store.increment()
-    }
-    else{
-      if(!formattedCubes.current[section]) return
+    } else {
+      if (!formattedCubes.current[section]) return
       setDisplayedCubes(formattedCubes.current[section])
       setSection(section + 1)
       store.reset()
     }
     setCounter(counter + 1)
   }, getRate())
-  
 
-  return(
-  <>
-    <FontProvider 
+  return (
+    <>
+      <FontProvider
         font={font}
         className='grid gap-2 p-2'
       >
-      {displayedCubes}
-    </FontProvider>
-  </>
+        {displayedCubes}
+      </FontProvider>
+    </>
   )
 }

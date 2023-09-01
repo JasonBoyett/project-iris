@@ -69,7 +69,7 @@ const Cell = (props: CellProps) => {
   const userStore = useUserStore()
   const [font, setFont] = useState<SelectFont>('sans')
   const [disabled, setDisabled] = useState(false)
-  
+
   const handleClick = () => {
     if (props.id % 2 === 0 && !disabled) {
       setCurrentClass(props.hilightClass)
@@ -88,7 +88,7 @@ const Cell = (props: CellProps) => {
   }, [props.id])
 
   useEffect(() => {
-    if(!userStore.user) return
+    if (!userStore.user) return
     setFont(fontSelector(userStore.user))
   }, [userStore.user])
 
@@ -169,7 +169,6 @@ const EvensAndOdds = (props: EvenOddProps) => {
     setGrid(newGrid)
   }, [])
 
-
   return (
     <>
       <motion.div
@@ -177,14 +176,8 @@ const EvensAndOdds = (props: EvenOddProps) => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <div
-          className={GRID_CLASS}
-        >
-          {grid}
-        </div>
-        <div
-          className='white text-md'
-        >
+        <div className={GRID_CLASS}>{grid}</div>
+        <div className='white text-md'>
           frames cleared: <span className='text-yellow-400'>{cleared}</span>
         </div>
       </motion.div>

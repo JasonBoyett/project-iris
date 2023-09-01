@@ -12,18 +12,18 @@ export const useUserStore = create<{
   user: User | undefined
   setUser: (user: User) => void
 }>()(
-  persist((set) => ({
-    user: undefined,
-    setUser: (userFromClient: User) => {
-      return set((state) => ({ ...state, user: userFromClient }));
+  persist(
+    (set) => ({
+      user: undefined,
+      setUser: (userFromClient: User) => {
+        return set((state) => ({ ...state, user: userFromClient }))
+      },
+    }),
+    {
+      name: 'user-storage',
+      storage: createJSONStorage(() => sessionStorage),
     },
-  }), {
-    name: 'user-storage',
-    storage: createJSONStorage(() => sessionStorage),
-  }
-  )
+  ),
 )
-
-
 
 export default useUserStore

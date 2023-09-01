@@ -87,18 +87,18 @@ export const userRouter = createTRPCRouter({
 
 export const excercisesPropsRouter = createTRPCRouter({
   getSingleSpeedTestProps: publicProcedure
-  .output(schemas.speedTest.partial())
-  .query(async ({ ctx }) => {
-    const numberOfTables = await ctx.prisma.speedQuestion.count()
-    const random = Math.floor(Math.random() * numberOfTables)
-    const result = await ctx.prisma.speedQuestion.findUnique({
-      where: {
-        Id: random,
-      },
-    })
-    if (result === null || result === undefined) throw new Error('No result')
-    return result
-  }),
+    .output(schemas.speedTest.partial())
+    .query(async ({ ctx }) => {
+      const numberOfTables = await ctx.prisma.speedQuestion.count()
+      const random = Math.floor(Math.random() * numberOfTables)
+      const result = await ctx.prisma.speedQuestion.findUnique({
+        where: {
+          Id: random,
+        },
+      })
+      if (result === null || result === undefined) throw new Error('No result')
+      return result
+    }),
 
   getMultipleSpeedTestProps: publicProcedure
     .output(zodValidate.array(schemas.speedTest))

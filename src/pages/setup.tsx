@@ -28,8 +28,12 @@ const Page: NextPage = () => {
       <Head>Let&#39;s Get Started!</Head>
       <HomeButton />
       <main className='flex flex-col h-screen items-center justify-center'>
-        <h1 className='md:text-6xl font-extrabold text-white py-4'>Let&#39;s Get Started!</h1>
-        <h2 className='md:text-4xl font-extrabold text-white py-4'>Please tell us your name</h2>
+        <h1 className='md:text-6xl font-extrabold text-white py-4'>
+          Let&#39;s Get Started!
+        </h1>
+        <h2 className='md:text-4xl font-extrabold text-white py-4'>
+          Please tell us your name
+        </h2>
         <form
           className='flex flex-col p-2 justify-items-end'
           onSubmit={(e) => {
@@ -46,7 +50,7 @@ const Page: NextPage = () => {
             } else if (last === 'User' || last === null || last === '') {
               console.warn('Plase enter your last name')
             } else {
-              if(!last || !first) return
+              if (!last || !first) return
               mutate({
                 FirstName: first,
                 LastName: last,

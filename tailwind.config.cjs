@@ -11,7 +11,7 @@ const config = {
         bebasNeue: ['Bebas Neue', 'sans-serif'],
         chakraPetch: ['Chakra Petch', 'sans-serif'],
         ibmPlexMono: ['IBM Plex Mono', 'sans-serif'],
-      }
+      },
     },
   },
   plugins: [],

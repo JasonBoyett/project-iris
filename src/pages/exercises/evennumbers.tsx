@@ -32,8 +32,8 @@ const Page: NextPage = () => {
   const user = store.user
   const tearDown = () => {
     mutate({ LastEvenNumbers: formatDate(new Date()) })
-    if(!user) return
-    else store.setUser({...user, LastEvenNumbers: formatDate(new Date()) })
+    if (!user) return
+    else store.setUser({ ...user, LastEvenNumbers: formatDate(new Date()) })
     router.replace('/next').catch((err) => console.log(err))
   }
   const display = useSwitcher(
@@ -52,10 +52,12 @@ const Page: NextPage = () => {
             ? 'You cleared 1 frame'
             : `You cleared ${framesCleared} frames`}
         </div>
-        <button 
+        <button
           onClick={() => tearDown()}
           className='text-white md:text-4xl text-3xl bg-white/10 flex items-center justify-center rounded-full p-4 hover:bg-white/20'
-        >Next Exercise</button>
+        >
+          Next Exercise
+        </button>
       </div>
     </>,
     MINUTE_TO_MILLIS,

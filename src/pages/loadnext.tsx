@@ -13,7 +13,7 @@ const LoadNext: NextPage = () => {
   const store = useUserStore()
   const user = store.user
   const selectedExercise = (nextExercise: Exercise | undefined | null) => {
-  if (!nextExercise) {
+    if (!nextExercise) {
       router.replace('/done').catch((err) => console.log(err))
       return
     }
@@ -22,16 +22,24 @@ const LoadNext: NextPage = () => {
         router.replace('/nav').catch((err) => console.log(err))
         break
       case 'FOUR_BY_ONE':
-        router.replace('/instructions/flashingwords/4by1').catch((err) => console.log(err))
+        router
+          .replace('/instructions/flashingwords/4by1')
+          .catch((err) => console.log(err))
         break
       case 'ONE_BY_TWO':
-        router.replace('/exercises/flashonebytwo').catch((err) => console.log(err))
+        router
+          .replace('/exercises/flashonebytwo')
+          .catch((err) => console.log(err))
         break
       case 'TWO_BY_TWO':
-        router.replace('/exercises/flashtwobytwo').catch((err) => console.log(err))
+        router
+          .replace('/exercises/flashtwobytwo')
+          .catch((err) => console.log(err))
         break
       case 'ONE_BY_ONE':
-        router.replace('/exercises/flashonebyone').catch((err) => console.log(err))
+        router
+          .replace('/exercises/flashonebyone')
+          .catch((err) => console.log(err))
         break
       case 'SCHULTE_BY_THREE':
         router.replace('exercises/schulteby3').catch((err) => console.log(err))
@@ -43,19 +51,25 @@ const LoadNext: NextPage = () => {
         router.replace('exercises/schulteby7').catch((err) => console.log(err))
         break
       case 'TWO_BY_ONE':
-        router.replace('/exercises/flashtwobyone').catch((err) => console.log(err))
+        router
+          .replace('/exercises/flashtwobyone')
+          .catch((err) => console.log(err))
         break
       case 'SPEED_TEST':
         router.replace('/exercises/speedtest').catch((err) => console.log(err))
         break
       case 'EVEN_NUMBERS':
-        router.replace('/exercises/evennumbers').catch((err) => console.log(err))
+        router
+          .replace('/exercises/evennumbers')
+          .catch((err) => console.log(err))
         break
       case 'CUBE_BY_TWO':
         router.replace('/exercises/cubebytwo').catch((err) => console.log(err))
         break
       case 'CUBE_BY_THREE':
-        router.replace('/exercises/cubebythree').catch((err) => console.log(err))
+        router
+          .replace('/exercises/cubebythree')
+          .catch((err) => console.log(err))
         break
       default:
         router.replace('/done').catch((err) => console.log(err))
@@ -63,28 +77,24 @@ const LoadNext: NextPage = () => {
     }
   }
 
-
   useEffect(() => {
     if (!user) {
       router.replace('/nav').catch((err) => console.log(err))
       return
     }
     const nextExercise: Exercise | null | undefined = getNextExercise(user)
-    if(dbUser){
-      if (dbUser.FirstName !== '' || dbUser.LastName !== ''){
+    if (dbUser) {
+      if (dbUser.FirstName !== '' || dbUser.LastName !== '') {
         selectedExercise(nextExercise)
         return
       }
-    }
-    else if(store.user?.FirstName !== '' || store.user?.LastName !== ''){
+    } else if (store.user?.FirstName !== '' || store.user?.LastName !== '') {
       selectedExercise(nextExercise)
       return
-    }
-    else {
+    } else {
       router.replace('/setup').catch((err) => console.log(err))
       return
     }
-
   }, [])
 
   return (

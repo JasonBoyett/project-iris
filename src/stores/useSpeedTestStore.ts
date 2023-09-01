@@ -11,68 +11,67 @@ const emptySpeedTest: SpeedTest = {
   answerC: '',
   answerD: '',
   correctAnswer: '',
-  correctResponses: 0,
-  incorrectResponses: 0,
-  responseCount: 0,
 }
 
 export const useSpeedTestStore = create<{
   current: SpeedTest
+  correctResponses: number
+  totalResponses: number
   setUp: (speedTest: SpeedTest) => void
   setResponse: (anser: string) => void
   incrementResponseCount: () => void
   incrementCorrect: () => void
-  incrementIncorrect: () => void
+  clear: () => void
 }>()(
-  persist((set) => ({
-    current: emptySpeedTest,
-    setUp: (speedTest) => set((state) => ({...state,
-      current: {
-        ...speedTest,
-        correctResponses: state.current.correctResponses,
-        incorrectResponses: state.current.incorrectResponses,
-        responseCount: state.current.responseCount,
-      }
-    })),
-    setResponse: (answer) => set((state) => ({...state,
-      userAnswer: answer
-    })),
-    incrementResponseCount: () => set((state) => {
-      if (!state.current.responseCount) 
-        return {...state, current: {...state.current, 
-          responseCount: 1
-        }
-      }
-      return {...state,
-        responseCount: state.current.responseCount + 1
-      }
+  persist(
+    (set) => ({
+      current: emptySpeedTest,
+      correctResponses: 0,
+      totalResponses: 0,
+      setUp: (speedTest) =>
+        set((state) => ({
+          ...state,
+          current: {
+            ...speedTest,
+          },
+            correctResponses: state.correctResponses,
+            totalResponses: state.totalResponses
+        })),
+      setResponse: (answer) =>
+        set((state) => ({ ...state, userAnswer: answer })),
+      incrementResponseCount: () =>
+        set((state) => {
+          console.log("I was called")
+          console.log(state.totalResponses)
+          const res = {
+            current: state.current,
+            correctResponses: state.correctResponses,
+            totalResponses: state.totalResponses + 1,
+          }
+          console.log("new", res)
+          return res
+        }),
+      incrementCorrect: () =>
+        set((state) => {
+          const res = {
+            current: state.current,
+            correctResponses: state.correctResponses + 1,
+            totalResponses: state.totalResponses,
+          }
+          console.log("new", res)
+          return res
+        }),
+      clear: () => set(() => ({ 
+        current: emptySpeedTest,
+        totalResponses: 0,
+        correctResponses: 0,
+      })),
     }),
-    incrementCorrect: () => set((state) => {
-      if (!state.current.correctResponses) 
-        return {...state, 
-        correctResponses: 1
-      }
-      return {...state,
-        responseCount: state.current.correctResponses+ 1
-      }
-    }),
-    incrementIncorrect: () => set((state) => {
-      if (!state.current.incorrectResponses) 
-        return {...state,
-        incorrectResponses: 1
-      }
-      return {...state,
-        responseCount: state.current.incorrectResponses + 1
-      }
-    }),
-
-  }), {
-    name: 'speed-test-store',
-    storage: createJSONStorage(() => sessionStorage),
-  }
-  )
+    {
+      name: 'speed-test-store',
+      storage: createJSONStorage(() => sessionStorage),
+    },
+  ),
 )
-
-
 
 export default useSpeedTestStore

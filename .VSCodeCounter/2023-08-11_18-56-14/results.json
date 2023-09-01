@@ -1,1 +1,440 @@
-{"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/signin.tsx":{"language":"TypeScript JSX","code":24,"comment":0,"blank":2},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/done.tsx":{"language":"TypeScript JSX","code":28,"comment":0,"blank":2},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/next.tsx":{"language":"TypeScript JSX","code":54,"comment":1,"blank":2},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/api/trpc/%5Btrpc%5D.ts":{"language":"TypeScript","code":16,"comment":1,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/_app.tsx":{"language":"TypeScript JSX","code":14,"comment":0,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/wordchange.tsx":{"language":"TypeScript JSX","code":25,"comment":0,"blank":4},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/cubebytwo.tsx":{"language":"TypeScript JSX","code":16,"comment":0,"blank":2},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashonebyone.tsx":{"language":"TypeScript JSX","code":27,"comment":0,"blank":4},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/evennumbers.tsx":{"language":"TypeScript JSX","code":73,"comment":1,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashtwobyone.tsx":{"language":"TypeScript JSX","code":24,"comment":0,"blank":4},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashtwobytwo.tsx":{"language":"TypeScript JSX","code":24,"comment":0,"blank":4},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashfourbyone.tsx":{"language":"TypeScript JSX","code":24,"comment":0,"blank":4},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/speedtest.tsx":{"language":"TypeScript JSX","code":38,"comment":0,"blank":4},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/schulteby5.tsx":{"language":"TypeScript JSX","code":24,"comment":0,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/schulteby7.tsx":{"language":"TypeScript JSX","code":24,"comment":0,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/cubebythree.tsx":{"language":"TypeScript JSX","code":16,"comment":0,"blank":2},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/schulteby3.tsx":{"language":"TypeScript JSX","code":24,"comment":0,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashonebytwo.tsx":{"language":"TypeScript JSX","code":24,"comment":0,"blank":4},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/setup.tsx":{"language":"TypeScript JSX","code":87,"comment":0,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/signup.tsx":{"language":"TypeScript JSX","code":28,"comment":0,"blank":4},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/loadnext.tsx":{"language":"TypeScript JSX","code":93,"comment":0,"blank":6},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/nav.tsx":{"language":"TypeScript JSX","code":56,"comment":0,"blank":7},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/index.tsx":{"language":"TypeScript JSX","code":64,"comment":0,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/settings.tsx":{"language":"TypeScript JSX","code":320,"comment":0,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/env.mjs":{"language":"JavaScript","code":41,"comment":23,"blank":13},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/cva/fontProvider.tsx":{"language":"TypeScript JSX","code":36,"comment":0,"blank":5},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/cva/flashingStyles.tsx":{"language":"TypeScript JSX","code":38,"comment":0,"blank":5},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/cva/cube-flasher.tsx":{"language":"TypeScript JSX","code":32,"comment":0,"blank":5},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/cva/highlightSelectorButton.tsx":{"language":"TypeScript JSX","code":66,"comment":0,"blank":6},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/hooks/useIsVisible.ts":{"language":"TypeScript","code":16,"comment":0,"blank":4},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/hooks/useInterval.ts":{"language":"TypeScript","code":19,"comment":2,"blank":4},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/hooks/useSwitcher.ts":{"language":"TypeScript","code":94,"comment":0,"blank":10},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/wordchanger.tsx":{"language":"TypeScript JSX","code":76,"comment":1,"blank":10},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/schultetable.tsx":{"language":"TypeScript JSX","code":162,"comment":1,"blank":8},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/settingsbutton.tsx":{"language":"TypeScript JSX","code":19,"comment":0,"blank":2},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/evensandodds.tsx":{"language":"TypeScript JSX","code":190,"comment":0,"blank":18},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/loadingspinner.tsx":{"language":"TypeScript JSX","code":24,"comment":0,"blank":1},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/homebutton.tsx":{"language":"TypeScript JSX","code":19,"comment":0,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/tests/evensandodds.test.ts":{"language":"TypeScript","code":92,"comment":0,"blank":5},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/cubeflasher.tsx":{"language":"TypeScript JSX","code":210,"comment":2,"blank":12},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/speedtest.tsx":{"language":"TypeScript JSX","code":195,"comment":0,"blank":8},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/flashingcell.tsx":{"language":"TypeScript JSX","code":308,"comment":4,"blank":26},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/globals.d.ts":{"language":"TypeScript","code":29,"comment":0,"blank":4},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/validators.ts":{"language":"TypeScript","code":70,"comment":0,"blank":6},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/api.ts":{"language":"TypeScript","code":30,"comment":32,"blank":7},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/types.ts":{"language":"TypeScript","code":33,"comment":13,"blank":7},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/helpers.ts":{"language":"TypeScript","code":136,"comment":8,"blank":13},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/schema.ts":{"language":"TypeScript","code":16,"comment":0,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/db.ts":{"language":"TypeScript","code":10,"comment":0,"blank":5},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/context.ts":{"language":"TypeScript","code":0,"comment":22,"blank":1},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/styles/globals.css":{"language":"CSS","code":17,"comment":0,"blank":11},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/root.ts":{"language":"TypeScript","code":12,"comment":6,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/trpc.ts":{"language":"TypeScript","code":43,"comment":56,"blank":11},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/routers/example.ts":{"language":"TypeScript","code":17,"comment":0,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/stores/useCubeStore.ts":{"language":"TypeScript","code":18,"comment":0,"blank":5},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/stores/userStore.ts":{"language":"TypeScript","code":19,"comment":6,"blank":5},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/stores/useMutateUser.ts":{"language":"TypeScript","code":17,"comment":0,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/middleware.ts":{"language":"TypeScript","code":8,"comment":0,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/vite.config.ts":{"language":"TypeScript","code":5,"comment":0,"blank":2},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/tsconfig.json":{"language":"JSON with Comments","code":29,"comment":6,"blank":1},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/prettier.config.cjs":{"language":"JavaScript","code":16,"comment":1,"blank":2},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/vitest.config.ts":{"language":"TypeScript","code":10,"comment":0,"blank":2},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/package.json":{"language":"JSON","code":81,"comment":0,"blank":1},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/tailwind.config.cjs":{"language":"JavaScript","code":18,"comment":1,"blank":2},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/routers/app.ts":{"language":"TypeScript","code":123,"comment":0,"blank":7},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/.eslintrc.cjs":{"language":"JavaScript","code":33,"comment":2,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/bable.config.js":{"language":"JavaScript","code":4,"comment":0,"blank":1},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/postcss.config.cjs":{"language":"JavaScript","code":7,"comment":0,"blank":2},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/next.config.mjs":{"language":"JavaScript","code":10,"comment":11,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/README.md":{"language":"Markdown","code":3,"comment":0,"blank":3},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/prisma/schema.prisma":{"language":"Prisma","code":138,"comment":0,"blank":23},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/turbo.json":{"language":"JSON","code":6,"comment":5,"blank":0},"file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/package-lock.json":{"language":"JSON","code":9293,"comment":0,"blank":1}}
+{
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/signin.tsx": {
+    "language": "TypeScript JSX",
+    "code": 24,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/done.tsx": {
+    "language": "TypeScript JSX",
+    "code": 28,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/next.tsx": {
+    "language": "TypeScript JSX",
+    "code": 54,
+    "comment": 1,
+    "blank": 2
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/api/trpc/%5Btrpc%5D.ts": {
+    "language": "TypeScript",
+    "code": 16,
+    "comment": 1,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/_app.tsx": {
+    "language": "TypeScript JSX",
+    "code": 14,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/wordchange.tsx": {
+    "language": "TypeScript JSX",
+    "code": 25,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/cubebytwo.tsx": {
+    "language": "TypeScript JSX",
+    "code": 16,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashonebyone.tsx": {
+    "language": "TypeScript JSX",
+    "code": 27,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/evennumbers.tsx": {
+    "language": "TypeScript JSX",
+    "code": 73,
+    "comment": 1,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashtwobyone.tsx": {
+    "language": "TypeScript JSX",
+    "code": 24,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashtwobytwo.tsx": {
+    "language": "TypeScript JSX",
+    "code": 24,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashfourbyone.tsx": {
+    "language": "TypeScript JSX",
+    "code": 24,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/speedtest.tsx": {
+    "language": "TypeScript JSX",
+    "code": 38,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/schulteby5.tsx": {
+    "language": "TypeScript JSX",
+    "code": 24,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/schulteby7.tsx": {
+    "language": "TypeScript JSX",
+    "code": 24,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/cubebythree.tsx": {
+    "language": "TypeScript JSX",
+    "code": 16,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/schulteby3.tsx": {
+    "language": "TypeScript JSX",
+    "code": 24,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/exercises/flashonebytwo.tsx": {
+    "language": "TypeScript JSX",
+    "code": 24,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/setup.tsx": {
+    "language": "TypeScript JSX",
+    "code": 87,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/signup.tsx": {
+    "language": "TypeScript JSX",
+    "code": 28,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/loadnext.tsx": {
+    "language": "TypeScript JSX",
+    "code": 93,
+    "comment": 0,
+    "blank": 6
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/nav.tsx": {
+    "language": "TypeScript JSX",
+    "code": 56,
+    "comment": 0,
+    "blank": 7
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/index.tsx": {
+    "language": "TypeScript JSX",
+    "code": 64,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/pages/settings.tsx": {
+    "language": "TypeScript JSX",
+    "code": 320,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/env.mjs": {
+    "language": "JavaScript",
+    "code": 41,
+    "comment": 23,
+    "blank": 13
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/cva/fontProvider.tsx": {
+    "language": "TypeScript JSX",
+    "code": 36,
+    "comment": 0,
+    "blank": 5
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/cva/flashingStyles.tsx": {
+    "language": "TypeScript JSX",
+    "code": 38,
+    "comment": 0,
+    "blank": 5
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/cva/cube-flasher.tsx": {
+    "language": "TypeScript JSX",
+    "code": 32,
+    "comment": 0,
+    "blank": 5
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/cva/highlightSelectorButton.tsx": {
+    "language": "TypeScript JSX",
+    "code": 66,
+    "comment": 0,
+    "blank": 6
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/hooks/useIsVisible.ts": {
+    "language": "TypeScript",
+    "code": 16,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/hooks/useInterval.ts": {
+    "language": "TypeScript",
+    "code": 19,
+    "comment": 2,
+    "blank": 4
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/hooks/useSwitcher.ts": {
+    "language": "TypeScript",
+    "code": 94,
+    "comment": 0,
+    "blank": 10
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/wordchanger.tsx": {
+    "language": "TypeScript JSX",
+    "code": 76,
+    "comment": 1,
+    "blank": 10
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/schultetable.tsx": {
+    "language": "TypeScript JSX",
+    "code": 162,
+    "comment": 1,
+    "blank": 8
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/settingsbutton.tsx": {
+    "language": "TypeScript JSX",
+    "code": 19,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/evensandodds.tsx": {
+    "language": "TypeScript JSX",
+    "code": 190,
+    "comment": 0,
+    "blank": 18
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/loadingspinner.tsx": {
+    "language": "TypeScript JSX",
+    "code": 24,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/homebutton.tsx": {
+    "language": "TypeScript JSX",
+    "code": 19,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/tests/evensandodds.test.ts": {
+    "language": "TypeScript",
+    "code": 92,
+    "comment": 0,
+    "blank": 5
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/cubeflasher.tsx": {
+    "language": "TypeScript JSX",
+    "code": 210,
+    "comment": 2,
+    "blank": 12
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/speedtest.tsx": {
+    "language": "TypeScript JSX",
+    "code": 195,
+    "comment": 0,
+    "blank": 8
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/flashingcell.tsx": {
+    "language": "TypeScript JSX",
+    "code": 308,
+    "comment": 4,
+    "blank": 26
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/globals.d.ts": {
+    "language": "TypeScript",
+    "code": 29,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/validators.ts": {
+    "language": "TypeScript",
+    "code": 70,
+    "comment": 0,
+    "blank": 6
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/api.ts": {
+    "language": "TypeScript",
+    "code": 30,
+    "comment": 32,
+    "blank": 7
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/types.ts": {
+    "language": "TypeScript",
+    "code": 33,
+    "comment": 13,
+    "blank": 7
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/helpers.ts": {
+    "language": "TypeScript",
+    "code": 136,
+    "comment": 8,
+    "blank": 13
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/utils/schema.ts": {
+    "language": "TypeScript",
+    "code": 16,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/db.ts": {
+    "language": "TypeScript",
+    "code": 10,
+    "comment": 0,
+    "blank": 5
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/context.ts": {
+    "language": "TypeScript",
+    "code": 0,
+    "comment": 22,
+    "blank": 1
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/styles/globals.css": {
+    "language": "CSS",
+    "code": 17,
+    "comment": 0,
+    "blank": 11
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/root.ts": {
+    "language": "TypeScript",
+    "code": 12,
+    "comment": 6,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/trpc.ts": {
+    "language": "TypeScript",
+    "code": 43,
+    "comment": 56,
+    "blank": 11
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/routers/example.ts": {
+    "language": "TypeScript",
+    "code": 17,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/stores/useCubeStore.ts": {
+    "language": "TypeScript",
+    "code": 18,
+    "comment": 0,
+    "blank": 5
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/stores/userStore.ts": {
+    "language": "TypeScript",
+    "code": 19,
+    "comment": 6,
+    "blank": 5
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/stores/useMutateUser.ts": {
+    "language": "TypeScript",
+    "code": 17,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/middleware.ts": {
+    "language": "TypeScript",
+    "code": 8,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/vite.config.ts": {
+    "language": "TypeScript",
+    "code": 5,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/tsconfig.json": {
+    "language": "JSON with Comments",
+    "code": 29,
+    "comment": 6,
+    "blank": 1
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/prettier.config.cjs": {
+    "language": "JavaScript",
+    "code": 16,
+    "comment": 1,
+    "blank": 2
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/vitest.config.ts": {
+    "language": "TypeScript",
+    "code": 10,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/package.json": {
+    "language": "JSON",
+    "code": 81,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/tailwind.config.cjs": {
+    "language": "JavaScript",
+    "code": 18,
+    "comment": 1,
+    "blank": 2
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/server/api/routers/app.ts": {
+    "language": "TypeScript",
+    "code": 123,
+    "comment": 0,
+    "blank": 7
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/.eslintrc.cjs": {
+    "language": "JavaScript",
+    "code": 33,
+    "comment": 2,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/bable.config.js": {
+    "language": "JavaScript",
+    "code": 4,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/postcss.config.cjs": {
+    "language": "JavaScript",
+    "code": 7,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/next.config.mjs": {
+    "language": "JavaScript",
+    "code": 10,
+    "comment": 11,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/README.md": {
+    "language": "Markdown",
+    "code": 3,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/prisma/schema.prisma": {
+    "language": "Prisma",
+    "code": 138,
+    "comment": 0,
+    "blank": 23
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/turbo.json": {
+    "language": "JSON",
+    "code": 6,
+    "comment": 5,
+    "blank": 0
+  },
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/package-lock.json": {
+    "language": "JSON",
+    "code": 9293,
+    "comment": 0,
+    "blank": 1
+  }
+}

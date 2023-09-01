@@ -6,17 +6,17 @@ export const useCubeStore = create<{
   increment: () => void
   reset: () => void
 }>()(
-  persist((set) => ({
-    current: 1,
-    increment: () => set((state) => ({ current: state.current + 1 })),
-    reset: () => set({ current: 0 }),
-  }), {
-    name: 'cube-state',
-    storage: createJSONStorage(() => sessionStorage),
-  }
-  )
+  persist(
+    (set) => ({
+      current: 1,
+      increment: () => set((state) => ({ current: state.current + 1 })),
+      reset: () => set({ current: 0 }),
+    }),
+    {
+      name: 'cube-state',
+      storage: createJSONStorage(() => sessionStorage),
+    },
+  ),
 )
-
-
 
 export default useCubeStore

@@ -8,18 +8,20 @@ export const userSchema = zodValidate.object({
   CurrentWpm: zodValidate.number(),
   CreatedAt: zodValidate.date(),
   UpdatedAt: zodValidate.date(),
-  HighlightColor: zodValidate.union([
-    zodValidate.literal('BLUE'),
-    zodValidate.literal('BLUE_GREY'),
-    zodValidate.literal('GREEN'),
-    zodValidate.literal('GREY'),
-    zodValidate.literal('ORANGE'),
-    zodValidate.literal('PEACH'),
-    zodValidate.literal('PURPLE'),
-    zodValidate.literal('RED'),
-    zodValidate.literal('TURQUOISE'),
-    zodValidate.literal('YELLOW'),
-  ]).optional(),
+  HighlightColor: zodValidate
+    .union([
+      zodValidate.literal('BLUE'),
+      zodValidate.literal('BLUE_GREY'),
+      zodValidate.literal('GREEN'),
+      zodValidate.literal('GREY'),
+      zodValidate.literal('ORANGE'),
+      zodValidate.literal('PEACH'),
+      zodValidate.literal('PURPLE'),
+      zodValidate.literal('RED'),
+      zodValidate.literal('TURQUOISE'),
+      zodValidate.literal('YELLOW'),
+    ])
+    .optional(),
   Font: zodValidate.union([
     zodValidate.literal('SANS'),
     zodValidate.literal('SERIF'),
@@ -44,6 +46,7 @@ export const userSchema = zodValidate.object({
   LastEvenNumbers: zodValidate.string().optional(),
   LastCubeByThree: zodValidate.string().optional(),
   LastCubeByTwo: zodValidate.string().optional(),
+  isAdmin: zodValidate.boolean().default(false),
 })
 
 export const speedTestSchema = zodValidate.object({
@@ -55,10 +58,6 @@ export const speedTestSchema = zodValidate.object({
   answerC: zodValidate.string(),
   answerD: zodValidate.string(),
   correctAnswer: zodValidate.string(),
-  userResponse: zodValidate.string().optional(),
-  correctResponses: zodValidate.number().default(0).optional(),
-  incorrectResponses: zodValidate.number().default(0).optional(),
-  responseCount: zodValidate.number().default(0).optional(),
 })
 
 export const schemas = {

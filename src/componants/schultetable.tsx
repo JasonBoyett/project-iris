@@ -38,14 +38,14 @@ const Cell = ({
   }
 
   useEffect(() => {
-    if(!store.user) return
+    if (!store.user) return
     setFont(fontSelector(store.user))
   }, [store])
 
   return (
     <FontProvider
       font={font}
-      className= 'h12 w-12 text-white text-lg md:text-2xl flex items-center justify-center rounded-md bg-white/20 md:h-20 md:w-20'
+      className='h12 w-12 text-white text-lg md:text-2xl flex items-center justify-center rounded-md bg-white/20 md:h-20 md:w-20'
       onClick={handleClick}
       id={v4()}
     >
@@ -89,18 +89,21 @@ const SchulteTable = ({ sideLength }: SchulteTableProps) => {
     switch (sideLength) {
       case 3:
         mutate({ LastSchulteByThree: formatDate(new Date()) })
-        if(!user) return
-        else store.setUser({...user, LastSchulteByThree: formatDate(new Date()) })
+        if (!user) return
+        else
+          store.setUser({ ...user, LastSchulteByThree: formatDate(new Date()) })
         break
       case 5:
         mutate({ LastSchulteByFive: formatDate(new Date()) })
-        if(!user) return
-        else store.setUser({...user, LastSchulteByFive: formatDate(new Date()) })
+        if (!user) return
+        else
+          store.setUser({ ...user, LastSchulteByFive: formatDate(new Date()) })
         break
       case 7:
         mutate({ LastSchulteBySeven: formatDate(new Date()) })
-        if(!user) return
-        else store.setUser({...user, LastSchulteBySeven: formatDate(new Date()) })
+        if (!user) return
+        else
+          store.setUser({ ...user, LastSchulteBySeven: formatDate(new Date()) })
         break
     }
     router.replace('/next').catch((err) => console.log(err))
@@ -135,20 +138,18 @@ const SchulteTable = ({ sideLength }: SchulteTableProps) => {
     if (sideLength === 7) setClassString('grid grid-cols-7 gap-1')
   }, [])
   useEffect(() => {
-    if(!store.user) return
+    if (!store.user) return
     setFont(fontSelector(store.user))
   }, [store])
   return (
     <>
-      <div className={classString}>
-        {table}
-      </div>
+      <div className={classString}>{table}</div>
       <FontProvider
         font={font}
-        className='md:text-4xl text-white'>
+        className='md:text-4xl text-white'
+      >
         Find: <span className='text-yellow-200'>{counter}</span>
       </FontProvider>
-
     </>
   )
 }

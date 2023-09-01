@@ -1,9 +1,9 @@
 import { formatDate } from '~/utils/helpers'
 import {
-sqliteTable as table,
-text, 
-integer,
-uniqueIndex,
+  sqliteTable as table,
+  text,
+  integer,
+  uniqueIndex,
 } from 'drizzle-orm/sqlite-core'
 
 export const user = table('user', {
@@ -14,5 +14,4 @@ export const user = table('user', {
   LastName: text('User'),
   MaxWpm: integer('real'),
   CurrentWpm: integer('real'),
-   
 })
