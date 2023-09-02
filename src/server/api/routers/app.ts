@@ -87,7 +87,7 @@ export const userRouter = createTRPCRouter({
 
 export const excercisesPropsRouter = createTRPCRouter({
   getSingleSpeedTestProps: publicProcedure
-  .output(schemas.speedTest.partial())
+  .output(schemas.speedTest)
   .query(async ({ ctx }) => {
     const numberOfTables = await ctx.prisma.speedQuestion.count()
     const random = Math.floor(Math.random() * numberOfTables)

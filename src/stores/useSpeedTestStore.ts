@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 import type { SpeedTest } from '~/utils/types'
 
 const emptySpeedTest: SpeedTest = {
-  Id: 0,
+  id: 0,
   question: '',
   passage: '',
   answerA: '',
