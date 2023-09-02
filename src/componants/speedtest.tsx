@@ -79,20 +79,20 @@ const AnswerView = ({
       )
       if (!user) return
       mutate({
-        MaxWpm: user.MaxWpm + 10,
+        maxWpm: user.maxWpm + 10,
         currentWpm: (() => {
           const roundedCurrentWpm =
-            Math.round(((user.MaxWpm + 10) * 0.9) / 10) * 10
+            Math.round(((user.maxWpm + 10) * 0.9) / 10) * 10
           return roundedCurrentWpm
         })(),
         lastSpeedTest: formatDate(new Date()),
       })
       store.setUser({
         ...user,
-        MaxWpm: user.MaxWpm + 10,
+        maxWpm: user.maxWpm + 10,
         currentWpm: (() => {
           const roundedCurrentWpm =
-            Math.round(((user.MaxWpm + 10) * 0.9) / 10) * 10
+            Math.round(((user.maxWpm + 10) * 0.9) / 10) * 10
           return roundedCurrentWpm
         })(),
         lastSpeedTest: formatDate(new Date()),
