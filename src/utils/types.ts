@@ -29,7 +29,7 @@ export type User = zodValidate.infer<typeof userSchema>
 
 export type SpeedTest = zodValidate.infer<typeof speedTestSchema>
 
-const Language = ['ENGLISH', 'SPANISH'] as const
+const Language = ['english', 'spanish'] as const
 
 export type Language = (typeof Language)[number]
 

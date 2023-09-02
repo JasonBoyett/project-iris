@@ -88,24 +88,12 @@ const SchulteTable = ({ sideLength }: SchulteTableProps) => {
     //log info here
     switch (sideLength) {
       case 3:
-        mutate({ LastSchulteByThree: formatDate(new Date()) })
+        mutate({ lastSchulteByThree: formatDate(new Date()) })
         if (!user) return
         else
-          store.setUser({ ...user, LastSchulteByThree: formatDate(new Date()) })
+          store.setUser({ ...user, lastSchulteByThree: formatDate(new Date()) })
         break
       case 5:
-<<<<<<< HEAD
-        mutate({ LastSchulteByFive: formatDate(new Date()) })
-        if (!user) return
-        else
-          store.setUser({ ...user, LastSchulteByFive: formatDate(new Date()) })
-        break
-      case 7:
-        mutate({ LastSchulteBySeven: formatDate(new Date()) })
-        if (!user) return
-        else
-          store.setUser({ ...user, LastSchulteBySeven: formatDate(new Date()) })
-=======
         mutate({ lastSchulteByFive: formatDate(new Date()) })
         if(!user) return
         else store.setUser({...user, lastSchulteByFive: formatDate(new Date()) })
@@ -114,7 +102,6 @@ const SchulteTable = ({ sideLength }: SchulteTableProps) => {
         mutate({ lastSchulteBySeven: formatDate(new Date()) })
         if(!user) return
         else store.setUser({...user, lastSchulteBySeven: formatDate(new Date()) })
->>>>>>> 8556d45 ("beginning large refactor")
         break
     }
     router.replace('/next').catch((err) => console.log(err))
@@ -150,7 +137,7 @@ const SchulteTable = ({ sideLength }: SchulteTableProps) => {
   }, [])
   useEffect(() => {
     if (!store.user) return
-    setFont(fontSelector(store.user))
+    setFont(store.user.font)
   }, [store])
   return (
     <>

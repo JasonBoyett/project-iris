@@ -20,19 +20,10 @@ const Page: NextPage = () => {
   const store = useUserStore()
   const [hideFont, setHideFont] = useState(true)
   const [currentHilight, setCurrentHilight] = useState<Overlay>(
-<<<<<<< HEAD
-    (user?.HighlightColor as Overlay) ??
-      (store.user?.HighlightColor as Overlay) ??
-      'GREY',
-  )
-  const [currentFont, setCurrentFont] = useState<Font>(
-    (user?.Font as Font) ?? (store.user?.Font as Font) ?? 'SANS',
-=======
     user?.highlightColor as Overlay ?? store.user?.highlightColor as Overlay ?? 'GREY'
   )
   const [currentFont, setCurrentFont] = useState<Font>(
     user?.font as Font ?? store.user?.font as Font ?? 'sans'
->>>>>>> 8556d45 ("beginning large refactor")
   )
   const inputStyle =
     'rounded-full p-4 h-16 py-5 bg-white/20 text-black font-normal'
@@ -40,19 +31,6 @@ const Page: NextPage = () => {
 
   useEffect(() => {
     if (user) {
-<<<<<<< HEAD
-      setFirst(user.FirstName)
-      setLast(user.LastName)
-      setCurrentWpm(user.CurrentWpm)
-      setCurrentHilight(user.HighlightColor as Overlay)
-      setCurrentFont(user.Font as Font)
-    } else if (store.user) {
-      setFirst(store.user.FirstName)
-      setLast(store.user.LastName)
-      setCurrentWpm(store.user.CurrentWpm)
-      setCurrentHilight(store.user.HighlightColor as Overlay)
-      setCurrentFont(store.user.Font as Font)
-=======
       setFirst(user.firstName)
       setLast(user.lastName)
       setCurrentWpm(user.currentWpm)
@@ -65,7 +43,6 @@ const Page: NextPage = () => {
       setCurrentWpm(store.user.currentWpm)
       setCurrentHilight(store.user.highlightColor as Overlay)
       setCurrentFont(store.user.font as Font)
->>>>>>> 8556d45 ("beginning large refactor")
     }
   }, [])
   return (
@@ -83,59 +60,6 @@ const Page: NextPage = () => {
               (first === 'Unnamed' && last === 'User') ||
               (first === null && last === null)
             ) {
-<<<<<<< HEAD
-              mutate({
-                HighlightColor: currentHilight,
-                Font: currentFont,
-                CurrentWpm: currentWpm,
-              })
-              store.setUser({
-                ...user,
-                CurrentWpm: currentWpm as number,
-                HighlightColor: currentHilight,
-                Font: currentFont,
-              })
-            } else if (first === 'Unnamed' || first === null) {
-              mutate({
-                ...user,
-                CurrentWpm: currentWpm,
-                HighlightColor: currentHilight,
-                Font: currentFont,
-              })
-              store.setUser({
-                ...user,
-                CurrentWpm: currentWpm as number,
-                HighlightColor: currentHilight,
-                Font: currentFont,
-              })
-            } else if (last === 'User' || last === null) {
-              mutate({
-                HighlightColor: currentHilight,
-                Font: currentFont,
-                CurrentWpm: currentWpm,
-              })
-              store.setUser({
-                ...user,
-                CurrentWpm: currentWpm as number,
-                HighlightColor: currentHilight,
-                Font: currentFont,
-              })
-            } else {
-              mutate({
-                FirstName: first,
-                LastName: last,
-                CurrentWpm: currentWpm,
-                HighlightColor: currentHilight,
-                Font: currentFont,
-              })
-              store.setUser({
-                ...user,
-                FirstName: first as string,
-                LastName: last as string,
-                CurrentWpm: currentWpm as number,
-                HighlightColor: currentHilight,
-                Font: currentFont,
-=======
               mutate({ 
                 highlightColor: currentHilight,
                 font: currentFont,
@@ -184,7 +108,6 @@ const Page: NextPage = () => {
                 currentWpm: currentWpm as number,
                 highlightColor: currentHilight,
                 font: currentFont
->>>>>>> 8556d45 ("beginning large refactor")
               })
             }
             router.replace('/nav').catch((e) => console.log(e))
@@ -220,15 +143,6 @@ const Page: NextPage = () => {
             <button
               type='button'
               onClick={() => {
-<<<<<<< HEAD
-                if (!user) return
-                if (!currentWpm) return
-                if (currentWpm <= user.CurrentWpm - 10)
-=======
-                if(!user) return
-                if(!currentWpm) return
-                if(currentWpm <= user.currentWpm - 10) 
->>>>>>> 8556d45 ("beginning large refactor")
                   setCurrentWpm((prev) => (prev as number) + 10)
               }}
               className='bg-white/20 rounded-full p-4 h-12 py-2 font-normal'
@@ -342,15 +256,9 @@ const Page: NextPage = () => {
               >
                 Sans
               </button>
-<<<<<<< HEAD
-              <span className='text-5xl text-green-400'>
-                {currentFont === 'SANS' ? '✓' : ''}
-              </span>
-=======
                 <span className='text-5xl text-green-400'>{
                   currentFont === 'sans' ? '✓' : ''
                 }</span>
->>>>>>> 8556d45 ("beginning large refactor")
             </FontProvider>
             <FontProvider font='serif'>
               <button
@@ -360,15 +268,9 @@ const Page: NextPage = () => {
               >
                 Serif
               </button>
-<<<<<<< HEAD
-              <span className='text-5xl text-green-400'>
-                {currentFont === 'SERIF' ? '✓' : ''}
-              </span>
-=======
                 <span className='text-5xl text-green-400'>{
                   currentFont === 'serif' ? '✓' : ''
                 }</span>
->>>>>>> 8556d45 ("beginning large refactor")
             </FontProvider>
             <FontProvider font='mono'>
               <button
@@ -378,15 +280,9 @@ const Page: NextPage = () => {
               >
                 Mono
               </button>
-<<<<<<< HEAD
-              <span className='text-5xl text-green-400'>
-                {currentFont === 'MONO' ? '✓' : ''}
-              </span>
-=======
                 <span className='text-5xl text-green-400'>{
                   currentFont === 'mono' ? '✓' : ''
                 }</span>
->>>>>>> 8556d45 ("beginning large refactor")
             </FontProvider>
             <FontProvider font='rem'>
               <button
@@ -396,15 +292,9 @@ const Page: NextPage = () => {
               >
                 Rem
               </button>
-<<<<<<< HEAD
-              <span className='text-5xl text-green-400'>
-                {currentFont === 'REM' ? '✓' : ''}
-              </span>
-=======
                 <span className='text-5xl text-green-400'>{
                   currentFont === 'rem' ? '✓' : ''
                 }</span>
->>>>>>> 8556d45 ("beginning large refactor")
             </FontProvider>
             <FontProvider
               font='ibmPlexMono'
@@ -417,15 +307,9 @@ const Page: NextPage = () => {
               >
                 IBM
               </button>
-<<<<<<< HEAD
-              <span className='text-5xl text-green-400'>
-                {currentFont === 'IBM_PLEX_MONO' ? '✓' : ''}
-              </span>
-=======
                 <span className='text-5xl text-green-400'>{
                   currentFont === 'ibmPlexMono' ? '✓' : ''
                 }</span>
->>>>>>> 8556d45 ("beginning large refactor")
             </FontProvider>
             <FontProvider
               font='robotoMono'
@@ -438,15 +322,9 @@ const Page: NextPage = () => {
               >
                 Roboto
               </button>
-<<<<<<< HEAD
-              <span className='text-5xl text-green-400'>
-                {currentFont === 'RROBOTO_MONO' ? '✓' : ''}
-              </span>
-=======
                 <span className='text-5xl text-green-400'>{
                   currentFont === 'robotoMono' ? '✓' : ''
                 }</span>
->>>>>>> 8556d45 ("beginning large refactor")
             </FontProvider>
             <FontProvider
               font='kanit'
@@ -459,15 +337,9 @@ const Page: NextPage = () => {
               >
                 Kanit
               </button>
-<<<<<<< HEAD
-              <span className='text-5xl text-green-400'>
-                {currentFont === 'KANIT' ? '✓' : ''}
-              </span>
-=======
                 <span className='text-5xl text-green-400'>{
                   currentFont === 'kanit' ? '✓' : ''
                 }</span>
->>>>>>> 8556d45 ("beginning large refactor")
             </FontProvider>
             <FontProvider
               font='preahvihear'
@@ -480,15 +352,9 @@ const Page: NextPage = () => {
               >
                 Preahvihear
               </button>
-<<<<<<< HEAD
-              <span className='text-5xl text-green-400'>
-                {currentFont === 'PREAHVIHEAR' ? '✓' : ''}
-              </span>
-=======
                 <span className='text-5xl text-green-400'>{
                   currentFont === 'preahvihear' ? '✓' : ''
                 }</span>
->>>>>>> 8556d45 ("beginning large refactor")
             </FontProvider>
             <FontProvider
               font='bebasNeue'
@@ -501,15 +367,9 @@ const Page: NextPage = () => {
               >
                 Bebas
               </button>
-<<<<<<< HEAD
-              <span className='text-5xl text-green-400'>
-                {currentFont === 'BEBAS_NEUE' ? '✓' : ''}
-              </span>
-=======
                 <span className='text-5xl text-green-400'>{
                   currentFont === 'bebasNeue' ? '✓' : ''
                 }</span>
->>>>>>> 8556d45 ("beginning large refactor")
             </FontProvider>
             <FontProvider
               font='chakraPetch'
@@ -522,15 +382,9 @@ const Page: NextPage = () => {
               >
                 Chakra
               </button>
-<<<<<<< HEAD
-              <span className='text-5xl text-green-400'>
-                {currentFont === 'CHAKRA_PETCH' ? '✓' : ''}
-              </span>
-=======
                 <span className='text-5xl text-green-400'>{
                   currentFont === 'chakraPetch' ? '✓' : ''
                 }</span>
->>>>>>> 8556d45 ("beginning large refactor")
             </FontProvider>
           </label>
           <button className='bg-white/20 rounded-full p-4 h-16 py-5 text-white font-normal'>

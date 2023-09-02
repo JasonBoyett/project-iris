@@ -4,7 +4,7 @@ import { StyledCube } from '~/cva/cube-flasher'
 import { useCubeStore } from '~/stores/useCubeStore'
 import useUserStore from '~/stores/userStore'
 import useInterval from '~/hooks/useInterval'
-import { fontSelector, formatDate } from '~/utils/helpers'
+import { formatDate } from '~/utils/helpers'
 import { useRouter } from 'next/router'
 import { FontProvider } from '~/cva/fontProvider'
 
@@ -101,15 +101,10 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
   // let done = false
   const { data } = api.getExcerciseProps.getRandomWords.useQuery({
     number: (() => {
-<<<<<<< HEAD
-      if (!userStore.user) return 0
-      return userStore.user.CurrentWpm * 4
-=======
       if(!userStore.user) return 0
       return userStore.user.currentWpm * 4
->>>>>>> 8556d45 ("beginning large refactor")
     })(),
-    language: 'ENGLISH',
+    language: 'english',
   })
   const cubes = useRef<JSX.Element[]>([])
   const formattedCubes = useRef<JSX.Element[][]>([])
@@ -118,34 +113,14 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
   >([])
 
   const getRate = () => {
-<<<<<<< HEAD
-    if (!userStore.user) return 60_000 / 200
-    return 60_000 / userStore.user.CurrentWpm
-=======
     if(!userStore.user) return 60_000 / 200
     return 60_000 / userStore.user.currentWpm
->>>>>>> 8556d45 ("beginning large refactor")
   }
 
   const tearDown = () => {
     //TODO write data collection
     switch (number) {
       case 2:
-<<<<<<< HEAD
-        mutate({ LastCubeByTwo: formatDate(new Date()) })
-        if (!userStore.user) return
-        userStore.setUser({
-          ...userStore.user,
-          LastCubeByTwo: formatDate(new Date()),
-        })
-        break
-      case 3:
-        mutate({ LastCubeByThree: formatDate(new Date()) })
-        if (!userStore.user) return
-        userStore.setUser({
-          ...userStore.user,
-          LastCubeByThree: formatDate(new Date()),
-=======
         mutate({lastCubeByTwo: formatDate(new Date())})
         if(!userStore.user) return
         userStore.setUser({
@@ -159,7 +134,6 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
         userStore.setUser({
           ...userStore.user,
           lastCubeByThree: formatDate(new Date())
->>>>>>> 8556d45 ("beginning large refactor")
         })
         break
     }
@@ -206,7 +180,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
     setCounter(0)
     store.reset()
     if (!userStore.user) return
-    setFont(fontSelector(userStore.user))
+    setFont(userStore.user.font)
     if (data.length === 0) router.reload()
   }, [userStore.user, data])
 

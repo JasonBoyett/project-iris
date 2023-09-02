@@ -35,35 +35,6 @@ enum Font {
 }
 
 model User {
-<<<<<<< HEAD
-  Id                      String                   @id @unique 
-  CreatedAt               DateTime                 @default(now())
-  UpdatedAt               DateTime                 @updatedAt
-  FirstName               String                   @db.VarChar(255)@default("Defaul")
-  LastName                String                   @db.VarChar(255)@default("User")
-  MaxWpm                  Int                      @db.SmallInt
-  CurrentWpm              Int                      @db.SmallInt
-  TimeTests               TimeTest[]
-  ShulteSessions          ShulteSession[]
-  EvenNumberSessions      EvenNumberSession[]
-  WordGridFlasherSessions WordGridFlasherSession[]
-  WordFlasherSessions     WordFlasherSession[]
-  HighlightColor          Overlay
-  LastSchulteByFive       String                   @default(" ")
-  LastSchulteByThree      String                   @default(" ")
-  LastSchulteBySeven      String                   @default(" ")
-  LastSpeedTest           String                   @default(" ")
-  LastFourByOne           String                   @default(" ")
-  LastOneByTwo            String                   @default(" ")
-  LastTwoByTwo            String                   @default(" ")
-  LastOneByOne            String                   @default(" ")
-  LastTwoByOne            String                   @default(" ")
-  LastEvenNumbers         String                   @default(" ")
-  LastCubeByTwo           String                   @default(" ")
-  LastCubeByThree         String                   @default(" ")
-  Font                    Font                     @default(SANS)
-  IsAdmin                 Boolean                  @default(false)
-=======
   id                      String                   @id @unique 
   createdAt               DateTime                 @default(now())
   updatedAt               DateTime                 @updatedAt
@@ -90,7 +61,6 @@ model User {
   lastCubeByTwo           String                   @default(" ")
   lastCubeByThree         String                   @default(" ")
   font                    Font                     @default(sans)
->>>>>>> 8556d45 ("beginning large refactor")
 
   @@index([id])
 }
