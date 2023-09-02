@@ -19,7 +19,7 @@ const Page: NextPage = () => {
 
   useEffect(() => {
     if (user) {
-      setFirst(user.FirstName)
+      setFirst(user.firstName)
       setLast(user.lastName)
     }
   }, [])
@@ -52,12 +52,12 @@ const Page: NextPage = () => {
             } else {
               if (!last || !first) return
               mutate({
-                FirstName: first,
+                firstName: first,
                 lastName: last,
               })
               store.setUser({
                 ...user,
-                FirstName: first,
+                firstName: first,
                 lastName: last,
               })
             }

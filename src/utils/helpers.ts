@@ -68,9 +68,10 @@ export const getNextExercise = (user: User) => {
       case 'SCHULTE_BY_SEVEN': return isToday(user.lastSchulteBySeven)
       case 'TWO_BY_ONE': return isToday(user.lastTwoByOne)
       case 'EVEN_NUMBERS': return isToday(user.lastEvenNumbers)
-      case 'SPEED_TEST': return isToday(user.lastSpeedTest)
+      // case 'SPEED_TEST': return isToday(user.lastSpeedTest)
       case 'CUBE_BY_TWO': return isToday(user.lastCubeByTwo)
       case 'CUBE_BY_THREE': return isToday(user.lastCubeByThree)
+      default: return null
     }
   }
 

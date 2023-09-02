@@ -4,7 +4,6 @@ import Head from 'next/head'
 import LoadingSpinner from '~/componants/loadingspinner'
 import { useUserStore } from '~/stores/userStore'
 import type { SelectFont } from '~/utils/types'
-import { fontSelector } from '~/utils/helpers'
 import { useRouter } from 'next/router'
 import { FontProvider } from '~/cva/fontProvider'
 import SettingsButton from '~/componants/settingsbutton'
@@ -88,7 +87,7 @@ const Page: NextPage = () => {
 
   useEffect(() => {
     if (!userStore.user) return
-    setFont(fontSelector(userStore.user))
+    setFont(userStore.user.font)
   }, [userStore.user])
 
   return (

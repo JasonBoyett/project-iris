@@ -31,23 +31,23 @@ const Result: NextPage = () => {
     if (!userStore.user) return
     mutate({
       ...userStore.user,
-      LastSpeedTest: formatDate(new Date()),
-      CurrentWpm: userStore.user.MaxWpm + 20,
-      MaxWpm: Math.floor(userStore.user.MaxWpm / 0.9 / 10) * 10,
+      lastSpeedTest: formatDate(new Date()),
+      currentWpm: userStore.user.maxWpm + 20,
+      maxWpm: Math.floor(userStore.user.maxWpm / 0.9 / 10) * 10,
     })
     userStore.setUser({
       ...userStore.user,
-      LastSpeedTest: formatDate(new Date()),
-      CurrentWpm: userStore.user.MaxWpm + 20,
-      MaxWpm: Math.floor(userStore.user.MaxWpm / 0.9 / 10) * 10,
+      lastSpeedTest: formatDate(new Date()),
+      currentWpm: userStore.user.maxWpm + 20,
+      maxWpm: Math.floor(userStore.user.maxWpm / 0.9 / 10) * 10,
     })
   }
   const saveCompletion = () => {
     if (!userStore.user) return
-    mutate({ ...userStore.user, LastSpeedTest: formatDate(new Date()) })
+    mutate({ ...userStore.user, lastSpeedTest: formatDate(new Date()) })
     userStore.setUser({
       ...userStore.user,
-      LastSpeedTest: formatDate(new Date()),
+      lastSpeedTest: formatDate(new Date()),
     })
   }
 

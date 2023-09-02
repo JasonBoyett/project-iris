@@ -127,6 +127,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
           ...userStore.user,
           lastCubeByTwo: formatDate(new Date())
         })
+        router.replace('/next').catch(console.error)
         break
       case 3:
         mutate({lastCubeByThree: formatDate(new Date())})
@@ -135,6 +136,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
           ...userStore.user,
           lastCubeByThree: formatDate(new Date())
         })
+        router.replace('/next').catch(console.error)
         break
     }
     router.replace('/next').catch(console.error)

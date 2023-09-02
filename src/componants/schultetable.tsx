@@ -1,4 +1,4 @@
-import { fontSelector, formatDate } from '~/utils/helpers'
+import { formatDate } from '~/utils/helpers'
 import React, { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { v4 } from 'uuid'
@@ -39,7 +39,7 @@ const Cell = ({
 
   useEffect(() => {
     if (!store.user) return
-    setFont(fontSelector(store.user))
+    setFont(store.user.font)
   }, [store])
 
   return (

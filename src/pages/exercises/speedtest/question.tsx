@@ -9,7 +9,6 @@ import type { SpeedTest, SelectFont } from '~/utils/types'
 import { TESTS_PER_DAY } from './index'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { fontSelector } from '~/utils/helpers'
 
 const Page: NextPage = () => {
   const exerciseStore = useSpeedTestStore((state) => state)
@@ -47,7 +46,7 @@ const Page: NextPage = () => {
     setAnswerB(exerciseStore.current.answerB)
     setAnswerC(exerciseStore.current.answerC)
     setAnswerD(exerciseStore.current.answerD)
-    setFont(fontSelector(userStore.user))
+    setFont(userStore.user.font)
   }, [exerciseStore, userStore.user])
 
   return (

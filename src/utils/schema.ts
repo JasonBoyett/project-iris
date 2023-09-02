@@ -7,11 +7,11 @@ import {
 } from 'drizzle-orm/sqlite-core'
 
 export const user = table('user', {
-  Id: text('').primaryKey(),
-  CreatedAt: text('').default(formatDate(new Date())),
-  UpdatedAt: text('').default(formatDate(new Date())),
-  FirstName: text('Unnamed'),
-  LastName: text('User'),
-  MaxWpm: integer('real'),
-  CurrentWpm: integer('real'),
+  id: text('').primaryKey(),
+  createdAt: text('').default(formatDate(new Date())),
+  updatedAt: text('').default(formatDate(new Date())),
+  firstName: text('Unnamed'),
+  lastName: text('User'),
+  maxWpm: integer('real'),
+  currentWpm: integer('real'),
 })

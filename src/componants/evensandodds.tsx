@@ -5,7 +5,6 @@ import { uuid } from 'uuidv4'
 import { motion } from 'framer-motion'
 import { FontProvider } from '~/cva/fontProvider'
 import useUserStore from '~/stores/userStore'
-import { fontSelector } from '~/utils/helpers'
 import { SelectFont } from '~/utils/types'
 const DEFAULT =
   'flex text-white text-xl justify-center p-4 border-2 border-slate-700 gap-0 bg-white/20'
@@ -89,7 +88,7 @@ const Cell = (props: CellProps) => {
 
   useEffect(() => {
     if (!userStore.user) return
-    setFont(fontSelector(userStore.user))
+    setFont(userStore.user.font)
   }, [userStore.user])
 
   return (
