@@ -15,7 +15,7 @@ import { useRouter } from 'next/router'
 import { useUserStore } from '~/stores/userStore'
 import { api } from '~/utils/api'
 import type { SelectFont, User } from '~/utils/types'
-import { fontSelector, formatDate } from '~/utils/helpers'
+import { formatDate } from '~/utils/helpers'
 import { FontProvider } from '~/cva/fontProvider'
 
 const counterContext = createContext<number>(0)
@@ -71,6 +71,7 @@ const layoutManager = (layout: FlasherLayout) => {
 }
 
 const colorSelector = (user: User) => {
+<<<<<<< HEAD
   switch (user.HighlightColor) {
     case 'BLUE':
       return 'blue'
@@ -92,6 +93,19 @@ const colorSelector = (user: User) => {
       return 'turquoise'
     case 'YELLOW':
       return 'yellow'
+=======
+  switch(user.highlightColor) {
+    case 'BLUE': return 'blue'
+    case 'BLUE_GREY': return 'blueGrey'
+    case 'GREEN': return 'green'
+    case 'GREY': return 'grey'
+    case 'ORANGE': return 'orange'
+    case 'PEACH': return 'peach'
+    case 'PURPLE': return 'purple'
+    case 'RED': return 'red'
+    case 'TURQUOISE': return 'turquoise'
+    case 'YELLOW': return 'yellow'
+>>>>>>> 8556d45 ("beginning large refactor")
   }
   return 'none'
 }
@@ -237,31 +251,41 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
   const { mutate } = api.user.setUser.useMutation()
 
   const setSpeed = (user: User | undefined) => {
+<<<<<<< HEAD
     if (!user) return 60_000 / 200
     return 60_000 / user.CurrentWpm
+=======
+    if (!user) return 60_000/200 
+    return 60_000 / user.currentWpm
+>>>>>>> 8556d45 ("beginning large refactor")
   }
 
   const markComplete = () => {
     if (!user) return
     if (layout === FlasherLayout.ONE_BY_ONE) {
+<<<<<<< HEAD
       mutate({ LastOneByOne: formatDate(new Date()) })
       store.setUser({ ...user, LastOneByOne: formatDate(new Date()) })
+=======
+      mutate({ lastOneByOne: formatDate(new Date()) })
+      store.setUser({ ...user, lastOneByOne: formatDate(new Date()) }) 
+>>>>>>> 8556d45 ("beginning large refactor")
     }
     if (layout === FlasherLayout.ONE_BY_TWO) {
-      mutate({ LastOneByTwo: formatDate(new Date()) })
-      store.setUser({ ...user, LastOneByTwo: formatDate(new Date()) })
+      mutate({ lastOneByTwo: formatDate(new Date()) })
+      store.setUser({ ...user, lastOneByTwo: formatDate(new Date()) })
     }
     if (layout === FlasherLayout.FOUR_BY_ONE) {
-      mutate({ LastFourByOne: formatDate(new Date()) })
-      store.setUser({ ...user, LastFourByOne: formatDate(new Date()) })
+      mutate({ lastFourByOne: formatDate(new Date()) })
+      store.setUser({ ...user, lastFourByOne: formatDate(new Date()) })
     }
     if (layout === FlasherLayout.TWO_BY_TWO) {
-      mutate({ LastTwoByTwo: formatDate(new Date()) })
-      store.setUser({ ...user, LastTwoByTwo: formatDate(new Date()) })
+      mutate({ lastTwoByTwo: formatDate(new Date()) })
+      store.setUser({ ...user, lastTwoByTwo: formatDate(new Date()) })
     }
     if (layout === FlasherLayout.TWO_BY_ONE) {
-      mutate({ LastTwoByOne: formatDate(new Date()) })
-      store.setUser({ ...user, LastTwoByOne: formatDate(new Date()) })
+      mutate({ lastTwoByOne: formatDate(new Date()) })
+      store.setUser({ ...user, lastTwoByOne: formatDate(new Date()) })
     }
   }
 
@@ -274,12 +298,13 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
   useEffect(() => {
     if (!user) return
     const setup = (async () => {
-      const wordsArry = await getWords(wordsPerCell * user.CurrentWpm)
+      const wordsArry = await getWords(wordsPerCell * user.currentWpm)
       words.current = partitionWords(
         wordsArry,
         wordsArry.length / wordsPerCell,
         rows * width,
       )
+<<<<<<< HEAD
       setGrid(
         createCells({
           words: words.current[0],
@@ -288,6 +313,14 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
         }),
       )
       setFont(fontSelector(user))
+=======
+      setGrid(createCells({ 
+        words: words.current[0], 
+        loadCheck: setIsVisible,
+        user: user
+      }))
+      setFont(user.font)
+>>>>>>> 8556d45 ("beginning large refactor")
     })()
   }, [])
 

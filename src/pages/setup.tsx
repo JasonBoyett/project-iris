@@ -20,7 +20,7 @@ const Page: NextPage = () => {
   useEffect(() => {
     if (user) {
       setFirst(user.FirstName)
-      setLast(user.LastName)
+      setLast(user.lastName)
     }
   }, [])
   return (
@@ -53,12 +53,12 @@ const Page: NextPage = () => {
               if (!last || !first) return
               mutate({
                 FirstName: first,
-                LastName: last,
+                lastName: last,
               })
               store.setUser({
                 ...user,
                 FirstName: first,
-                LastName: last,
+                lastName: last,
               })
             }
             router.replace('/loadnext').catch((e) => console.log(e))

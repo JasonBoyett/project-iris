@@ -6,7 +6,6 @@ import useUserStore from '~/stores/userStore'
 import useSpeedTestStore from '~/stores/useSpeedTestStore'
 import { useRouter } from 'next/router'
 import { api } from '~/utils/api'
-import { fontSelector } from '~/utils/helpers'
 import Head from 'next/head'
 import { FontProvider } from '~/cva/fontProvider'
 import HomeButton from '~/componants/homebutton'
@@ -37,6 +36,7 @@ const Page: NextPage = () => {
   }
 
   useEffect(() => {
+<<<<<<< HEAD
     if (!data) return
     if (!data.Id) return
     if (!userStore.user) return
@@ -51,6 +51,22 @@ const Page: NextPage = () => {
     setTime(wpmToMiliseconds(userStore.user.CurrentWpm))
   }, [data, userStore.user])
 
+=======
+    if(!data) return
+    if(!data.id) return
+    if(!userStore.user) return
+    if(!data.passage) return
+    setWords(() => {
+      if(!data.passage) return ['']
+      return data.passage.split(' ')
+    })
+    setFont(userStore.user.font)
+    exerciseStore.setUp(data)
+    setLoading(() => false)
+    setTime(wpmToMiliseconds(userStore.user.currentWpm))
+  },[data, userStore.user])
+  
+>>>>>>> 8556d45 ("beginning large refactor")
   useInterval(() => {
     if (!!loading) return
     if (counter === words.length) return navigateToQuestion()

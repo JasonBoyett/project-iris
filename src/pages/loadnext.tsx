@@ -83,12 +83,22 @@ const LoadNext: NextPage = () => {
       return
     }
     const nextExercise: Exercise | null | undefined = getNextExercise(user)
+<<<<<<< HEAD
     if (dbUser) {
       if (dbUser.FirstName !== '' || dbUser.LastName !== '') {
         selectedExercise(nextExercise)
         return
       }
     } else if (store.user?.FirstName !== '' || store.user?.LastName !== '') {
+=======
+    if(dbUser){
+      if (dbUser.firstName !== '' || dbUser.lastName !== ''){
+        selectedExercise(nextExercise)
+        return
+      }
+    }
+    else if(store.user?.firstName !== '' || store.user?.lastName !== ''){
+>>>>>>> 8556d45 ("beginning large refactor")
       selectedExercise(nextExercise)
       return
     } else {

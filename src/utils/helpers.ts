@@ -3,7 +3,7 @@ import type { User, Exercise } from './types'
 import { Exercise as ex } from './types'
 
 export const userHilightToHex = (user: User) => {
-  switch (user.HighlightColor) {
+  switch (user.highlightColor) {
     case 'BLUE':
       return '#96adfc'
     case 'BLUE_GREY':
@@ -55,47 +55,22 @@ export const getNextExercise = (user: User) => {
     return result
   }
 
-  if (!isToday(user.LastSpeedTest)) return 'SPEED_TEST'
+  // if (!isToday(user.lastSpeedTest)) return 'SPEED_TEST'
 
-  let check
   const isAlreadyDone = ({ user, exercise }: Is_already_done_params) => {
     switch (exercise) {
-      case 'FOUR_BY_ONE':
-        check = isToday(user.LastFourByOne)
-        return check
-      case 'ONE_BY_TWO':
-        check = isToday(user.LastOneByTwo)
-        return check
-      case 'TWO_BY_TWO':
-        check = isToday(user.LastTwoByTwo)
-        return check
-      case 'ONE_BY_ONE':
-        check = isToday(user.LastOneByOne)
-        return check
-      case 'SCHULTE_BY_THREE':
-        check = isToday(user.LastSchulteByThree)
-        return check
-      case 'SCHULTE_BY_FIVE':
-        check = isToday(user.LastSchulteByFive)
-        return check
-      case 'SCHULTE_BY_SEVEN':
-        check = isToday(user.LastSchulteBySeven)
-        return check
-      case 'TWO_BY_ONE':
-        check = isToday(user.LastTwoByOne)
-        return check
-      case 'EVEN_NUMBERS':
-        check = isToday(user.LastEvenNumbers)
-        return check
-      case 'SPEED_TEST':
-        check = isToday(user.LastSpeedTest)
-        return check
-      case 'CUBE_BY_TWO':
-        check = isToday(user.LastCubeByTwo)
-        return check
-      case 'CUBE_BY_THREE':
-        check = isToday(user.LastCubeByThree)
-        return check
+      case 'FOUR_BY_ONE': return isToday(user.lastFourByOne)
+      case 'ONE_BY_TWO': return isToday(user.lastOneByTwo)
+      case 'TWO_BY_TWO': return isToday(user.lastTwoByTwo)
+      case 'ONE_BY_ONE': return isToday(user.lastOneByOne)
+      case 'SCHULTE_BY_THREE': return isToday(user.lastSchulteByThree)
+      case 'SCHULTE_BY_FIVE': return isToday(user.lastSchulteByFive)
+      case 'SCHULTE_BY_SEVEN': return isToday(user.lastSchulteBySeven)
+      case 'TWO_BY_ONE': return isToday(user.lastTwoByOne)
+      case 'EVEN_NUMBERS': return isToday(user.lastEvenNumbers)
+      case 'SPEED_TEST': return isToday(user.lastSpeedTest)
+      case 'CUBE_BY_TWO': return isToday(user.lastCubeByTwo)
+      case 'CUBE_BY_THREE': return isToday(user.lastCubeByThree)
     }
   }
 
@@ -129,6 +104,7 @@ export const formatDate = (date: Date | undefined) => {
     )
 }
 
+<<<<<<< HEAD
 export const fontSelector = (user: User) => {
   switch (user.Font) {
     case 'REM':
@@ -154,3 +130,5 @@ export const fontSelector = (user: User) => {
   }
   return 'sans'
 }
+=======
+>>>>>>> 8556d45 ("beginning large refactor")

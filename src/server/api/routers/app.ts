@@ -14,7 +14,7 @@ export const userRouter = createTRPCRouter({
       if (userId === null || userId === undefined) throw new Error('No user')
       const user = await ctx.prisma.user.findUnique({
         where: {
-          Id: userId,
+          id: userId,
         },
       })
       if (ctx.auth.userId === null || ctx.auth.userId === undefined)
@@ -22,15 +22,15 @@ export const userRouter = createTRPCRouter({
       if (user === null || user === undefined) {
         const newUser = await ctx.prisma.user.create({
           data: {
-            Id: ctx.auth.userId?.toString(),
-            FirstName: ctx.auth.user?.firstName ?? '',
-            LastName: ctx.auth.user?.lastName ?? '',
-            MaxWpm: 250,
-            CurrentWpm: 100,
-            CreatedAt: new Date(),
-            UpdatedAt: new Date(),
-            HighlightColor: 'GREY',
-            Font: 'SANS',
+            id: ctx.auth.userId?.toString(),
+            firstName: ctx.auth.user?.firstName ?? '',
+            lastName: ctx.auth.user?.lastName ?? '',
+            maxWpm: 250,
+            currentWpm: 100,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            highlightColor: 'GREY',
+            font: 'sans',
           },
         })
         return newUser
@@ -44,49 +44,50 @@ export const userRouter = createTRPCRouter({
     .mutation<User>(({ ctx, input }) => {
       return ctx.prisma.user.update({
         where: {
-          Id: ctx.auth.userId ?? input.Id,
+          id: ctx.auth.userId ?? input.id,
         },
         data: {
-          FirstName: input.FirstName,
-          LastName: input.LastName,
-          MaxWpm: input.MaxWpm,
-          CurrentWpm: input.CurrentWpm,
-          CreatedAt: input.CreatedAt,
-          UpdatedAt: input.UpdatedAt,
-          LastSchulteByThree: input.LastSchulteByThree,
-          HighlightColor: input.HighlightColor,
-          LastSchulteByFive: input.LastSchulteByFive,
-          LastSchulteBySeven: input.LastSchulteBySeven,
-          LastSpeedTest: input.LastSpeedTest,
-          LastFourByOne: input.LastFourByOne,
-          LastOneByTwo: input.LastOneByTwo,
-          LastTwoByTwo: input.LastTwoByTwo,
-          LastOneByOne: input.LastOneByOne,
-          LastTwoByOne: input.LastTwoByOne,
-          LastEvenNumbers: input.LastEvenNumbers,
-          LastCubeByTwo: input.LastCubeByTwo,
-          LastCubeByThree: input.LastCubeByThree,
-          Font: input.Font,
+          firstName: input.firstName,
+          lastName: input.lastName,
+          maxWpm: input.maxWpm,
+          currentWpm: input.currentWpm,
+          createdAt: input.createdAt,
+          updatedAt: input.updatedAt,
+          lastSchulteByThree: input.lastSchulteByThree,
+          highlightColor: input.highlightColor,
+          lastSchulteByFive: input.lastSchulteByFive,
+          lastSchulteBySeven: input.lastSchulteBySeven,
+          lastSpeedTest: input.lastSpeedTest,
+          lastFourByOne: input.lastFourByOne,
+          lastOneByTwo: input.lastOneByTwo,
+          lastTwoByTwo: input.lastTwoByTwo,
+          lastOneByOne: input.lastOneByOne,
+          lastTwoByOne: input.lastTwoByOne,
+          lastEvenNumbers: input.lastEvenNumbers,
+          lastCubeByThree: input.lastCubeByThree,
+          lastCubeByTwo: input.lastCubeByTwo,
+          font: input.font,
         },
       })
     }),
 
   getDebug: publicProcedure.output(schemas.user.partial()).query<User>(() => {
     return {
-      Id: 'test',
-      FirstName: 'test',
-      LastName: 'User',
-      MaxWpm: 250,
-      CurrentWpm: 100,
-      CreatedAt: new Date(),
-      UpdatedAt: new Date(),
-      HighlightColor: 'GREY',
+      id: 'test',
+      firstName: 'test',
+      lastName: 'User',
+      maxWpm: 250,
+      currentWpm: 100,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      highlightColor: 'GREY',
     }
   }),
 })
 
 export const excercisesPropsRouter = createTRPCRouter({
   getSingleSpeedTestProps: publicProcedure
+<<<<<<< HEAD
     .output(schemas.speedTest.partial())
     .query(async ({ ctx }) => {
       const numberOfTables = await ctx.prisma.speedQuestion.count()
@@ -99,6 +100,20 @@ export const excercisesPropsRouter = createTRPCRouter({
       if (result === null || result === undefined) throw new Error('No result')
       return result
     }),
+=======
+  .output(schemas.speedTest.partial())
+  .query(async ({ ctx }) => {
+    const numberOfTables = await ctx.prisma.speedQuestion.count()
+    const random = Math.floor(Math.random() * numberOfTables)
+    const result = await ctx.prisma.speedQuestion.findUnique({
+      where: {
+        id: random,
+      },
+    })
+    if (result === null || result === undefined) throw new Error('No result')
+    return result
+  }),
+>>>>>>> 8556d45 ("beginning large refactor")
 
   getMultipleSpeedTestProps: publicProcedure
     .output(zodValidate.array(schemas.speedTest))
@@ -115,13 +130,13 @@ export const excercisesPropsRouter = createTRPCRouter({
     .input(inputs.randomWords)
     .output(zodValidate.array(zodValidate.string()).or(zodValidate.undefined()))
     .query<string[] | undefined>(async ({ input }) => {
-      if (input.language === 'SPANISH') {
+      if (input.language === 'spanish') {
         const response = await axios.get<string[]>(
           `https://random-word-api.herokuapp.com/word?lang=es&number=${input.number}`,
         )
         return response.data
       }
-      if (input.language === 'ENGLISH') {
+      if (input.language === 'english') {
         const response = await axios.get<string[]>(
           `https://random-word-api.herokuapp.com/word?number=${input.number}`,
         )

@@ -22,19 +22,20 @@ enum Overlay {
 }
 
 enum Font {
-  SANS
-  SERIF
-  MONO
-  RROBOTO_MONO
-  REM
-  KANIT
-  PREAHVIHEAR
-  BEBAS_NEUE
-  CHAKRA_PETCH
-  IBM_PLEX_MONO
+  sans
+  serif
+  mono
+  robotoMono
+  rem
+  kanit
+  preahvihear
+  bebasNeue
+  chakraPetch
+  ibmPlexMono
 }
 
 model User {
+<<<<<<< HEAD
   Id                      String                   @id @unique 
   CreatedAt               DateTime                 @default(now())
   UpdatedAt               DateTime                 @updatedAt
@@ -62,80 +63,108 @@ model User {
   LastCubeByThree         String                   @default(" ")
   Font                    Font                     @default(SANS)
   IsAdmin                 Boolean                  @default(false)
+=======
+  id                      String                   @id @unique 
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+  firstName               String                   @db.VarChar(255)@default("Defaul")
+  lastName                String                   @db.VarChar(255)@default("User")
+  maxWpm                  Int                      @db.SmallInt
+  currentWpm              Int                      @db.SmallInt
+  timeTests               TimeTest[]
+  shulteSessions          ShulteSession[]
+  evenNumberSessions      EvenNumberSession[]
+  wordGridFlasherSessions WordGridFlasherSession[]
+  wordFlasherSessions     WordFlasherSession[]
+  highlightColor          Overlay
+  lastSchulteByFive       String                   @default(" ")
+  lastSchulteByThree      String                   @default(" ")
+  lastSchulteBySeven      String                   @default(" ")
+  lastSpeedTest           String                   @default(" ")
+  lastFourByOne           String                   @default(" ")
+  lastOneByTwo            String                   @default(" ")
+  lastTwoByTwo            String                   @default(" ")
+  lastOneByOne            String                   @default(" ")
+  lastTwoByOne            String                   @default(" ")
+  lastEvenNumbers         String                   @default(" ")
+  lastCubeByTwo           String                   @default(" ")
+  lastCubeByThree         String                   @default(" ")
+  font                    Font                     @default(sans)
+>>>>>>> 8556d45 ("beginning large refactor")
 
-  @@index([Id])
+  @@index([id])
 }
 
 model TimeTest {
-  Id        String   @unique
+  id        String   @unique
   userId    String
-  user      User     @relation(fields: [userId], references: [Id])
+  user      User     @relation(fields: [userId], references: [id])
   sessionId String   @id @default(cuid())
   CreatedAt DateTime @default(now())
   highScore Int      @db.SmallInt
   lowScore  Int      @db.SmallInt
   accuracy  Int      @db.SmallInt
 
-  @@index([Id])
+  @@index([id])
 }
 
 model ShulteSession {
-  Id         String   @unique
-  user       User     @relation(fields: [UserId], references: [Id])
-  SideLength Int      @db.TinyInt
-  StartTime  DateTime @db.DateTime
-  EndTime    DateTime @db.DateTime
-  ErrorCount Int      @db.SmallInt
-  UserId     String   @db.VarChar(255)
+  id         String   @unique
+  user       User     @relation(fields: [userId], references: [id])
+  sideLength Int      @db.TinyInt
+  startTime  DateTime @db.DateTime
+  endTime    DateTime @db.DateTime
+  errorCount Int      @db.SmallInt
+  userId     String   @db.VarChar(255)
 
-  @@index([Id])
+  @@index([id])
 }
 
 model EvenNumberSession {
-  Id            String   @unique
-  UserId        String
-  user          User     @relation(fields: [UserId], references: [Id])
-  ErrorCount    Int      @db.SmallInt
+  id            String   @unique
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  errorCount    Int      @db.SmallInt
   numberCleared Int      @db.SmallInt
   date          DateTime @db.DateTime
 
-  @@index([Id])
+  @@index([id])
 }
 
 model WordGridFlasherSession {
-  Id     String   @unique
-  UserId String
-  user   User     @relation(fields: [UserId], references: [Id])
+  id     String   @unique
+  userId String
+  user   User     @relation(fields: [userId], references: [id])
   speed  Int      @db.SmallInt
   date   DateTime @db.DateTime
   type   String   @db.VarChar(255)
 
-  @@index([Id])
+  @@index([id])
 }
 
 model WordFlasherSession {
-  Id     String   @unique
-  UserId String
-  user   User     @relation(fields: [UserId], references: [Id])
+  id     String   @unique
+  userId String
+  user   User     @relation(fields: [userId], references: [id])
   speed  Int      @db.SmallInt
   date   DateTime @db.DateTime
   type   String   @db.VarChar(255)
 
-  @@index([Id])
+  @@index([id])
 }
 
 model SatPassage {
-  Id          String        @unique
+  id          String        @unique
   passageText String
   questions   SatQuestion[]
 
-  @@index([Id])
+  @@index([id])
 }
 
 model SatQuestion {
-  Id            String     @unique
-  PassageId     String
-  passage       SatPassage @relation(fields: [PassageId], references: [Id])
+  id            String     @unique
+  passageId     String
+  passage       SatPassage @relation(fields: [passageId], references: [id])
   question      String
   answerA       String     @db.VarChar(255)
   answerB       String     @db.VarChar(255)
@@ -143,11 +172,11 @@ model SatQuestion {
   answerD       String     @db.VarChar(255)
   correctAnswer String     @db.Char(1)
 
-  @@index([Id])
+  @@index([id])
 }
 
 model SpeedQuestion{
-  Id            Int        @unique@id@default(autoincrement())
+  id            Int        @unique@id@default(autoincrement())
   passage       String     @db.Text
   question      String     @db.Text
   answerA       String     
@@ -156,6 +185,6 @@ model SpeedQuestion{
   answerD       String  
   correctAnswer String 
 
-  @@index([Id])
+  @@index([id])
 }
 

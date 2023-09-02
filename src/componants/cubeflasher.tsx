@@ -101,8 +101,13 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
   // let done = false
   const { data } = api.getExcerciseProps.getRandomWords.useQuery({
     number: (() => {
+<<<<<<< HEAD
       if (!userStore.user) return 0
       return userStore.user.CurrentWpm * 4
+=======
+      if(!userStore.user) return 0
+      return userStore.user.currentWpm * 4
+>>>>>>> 8556d45 ("beginning large refactor")
     })(),
     language: 'ENGLISH',
   })
@@ -113,14 +118,20 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
   >([])
 
   const getRate = () => {
+<<<<<<< HEAD
     if (!userStore.user) return 60_000 / 200
     return 60_000 / userStore.user.CurrentWpm
+=======
+    if(!userStore.user) return 60_000 / 200
+    return 60_000 / userStore.user.currentWpm
+>>>>>>> 8556d45 ("beginning large refactor")
   }
 
   const tearDown = () => {
     //TODO write data collection
     switch (number) {
       case 2:
+<<<<<<< HEAD
         mutate({ LastCubeByTwo: formatDate(new Date()) })
         if (!userStore.user) return
         userStore.setUser({
@@ -134,6 +145,21 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
         userStore.setUser({
           ...userStore.user,
           LastCubeByThree: formatDate(new Date()),
+=======
+        mutate({lastCubeByTwo: formatDate(new Date())})
+        if(!userStore.user) return
+        userStore.setUser({
+          ...userStore.user,
+          lastCubeByTwo: formatDate(new Date())
+        })
+        break
+      case 3:
+        mutate({lastCubeByThree: formatDate(new Date())})
+        if(!userStore.user) return
+        userStore.setUser({
+          ...userStore.user,
+          lastCubeByThree: formatDate(new Date())
+>>>>>>> 8556d45 ("beginning large refactor")
         })
         break
     }

@@ -4,11 +4,18 @@ import Head from 'next/head'
 import LoadingSpinner from '~/componants/loadingspinner'
 import { useUserStore } from '~/stores/userStore'
 import type { SelectFont } from '~/utils/types'
+<<<<<<< HEAD
 import { fontSelector } from '~/utils/helpers'
 import { useRouter } from 'next/router'
 import { FontProvider } from '~/cva/fontProvider'
 import SettingsButton from '~/componants/settingsbutton'
 import HomeButton from '~/componants/homebutton'
+=======
+import { useRouter } from "next/router";
+import { FontProvider } from "~/cva/fontProvider";
+import SettingsButton from "~/componants/settingsbutton";
+import HomeButton from "~/componants/homebutton";
+>>>>>>> 8556d45 ("beginning large refactor")
 
 const MINUTE_IN_MILLISECONDS = 60_000
 
@@ -56,8 +63,13 @@ const Page: NextPage = () => {
   const userStore = useUserStore()
   const [font, setFont] = useState<SelectFont>('sans')
   useEffect(() => {
+<<<<<<< HEAD
     if (!userStore.user) return
     setFont(fontSelector(userStore.user))
+=======
+    if(!userStore.user) return
+    setFont(userStore.user.font)
+>>>>>>> 8556d45 ("beginning large refactor")
   })
 
   return (

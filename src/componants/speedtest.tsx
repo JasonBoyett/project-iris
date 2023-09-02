@@ -24,7 +24,7 @@ const QuestionView = ({
 
   const setSpeed = () => {
     if (!user) return 60_000 / 200
-    return 60_000 / user.CurrentWpm
+    return 60_000 / user.currentWpm
   }
 
   useInterval(() => {
@@ -80,22 +80,22 @@ const AnswerView = ({
       if (!user) return
       mutate({
         MaxWpm: user.MaxWpm + 10,
-        CurrentWpm: (() => {
+        currentWpm: (() => {
           const roundedCurrentWpm =
             Math.round(((user.MaxWpm + 10) * 0.9) / 10) * 10
           return roundedCurrentWpm
         })(),
-        LastSpeedTest: formatDate(new Date()),
+        lastSpeedTest: formatDate(new Date()),
       })
       store.setUser({
         ...user,
         MaxWpm: user.MaxWpm + 10,
-        CurrentWpm: (() => {
+        currentWpm: (() => {
           const roundedCurrentWpm =
             Math.round(((user.MaxWpm + 10) * 0.9) / 10) * 10
           return roundedCurrentWpm
         })(),
-        LastSpeedTest: formatDate(new Date()),
+        lastSpeedTest: formatDate(new Date()),
       })
     } else {
       setCorrectOrNot(
@@ -107,8 +107,8 @@ const AnswerView = ({
       )
       if (!user) return
       mutate({
-        CurrentWpm: user.CurrentWpm - 10,
-        LastSpeedTest: formatDate(new Date()),
+        currentWpm: user.currentWpm - 10,
+        lastSpeedTest: formatDate(new Date()),
       })
     }
     setTimeout(() => {

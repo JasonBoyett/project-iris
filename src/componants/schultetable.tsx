@@ -94,6 +94,7 @@ const SchulteTable = ({ sideLength }: SchulteTableProps) => {
           store.setUser({ ...user, LastSchulteByThree: formatDate(new Date()) })
         break
       case 5:
+<<<<<<< HEAD
         mutate({ LastSchulteByFive: formatDate(new Date()) })
         if (!user) return
         else
@@ -104,6 +105,16 @@ const SchulteTable = ({ sideLength }: SchulteTableProps) => {
         if (!user) return
         else
           store.setUser({ ...user, LastSchulteBySeven: formatDate(new Date()) })
+=======
+        mutate({ lastSchulteByFive: formatDate(new Date()) })
+        if(!user) return
+        else store.setUser({...user, lastSchulteByFive: formatDate(new Date()) })
+        break
+      case 7:
+        mutate({ lastSchulteBySeven: formatDate(new Date()) })
+        if(!user) return
+        else store.setUser({...user, lastSchulteBySeven: formatDate(new Date()) })
+>>>>>>> 8556d45 ("beginning large refactor")
         break
     }
     router.replace('/next').catch((err) => console.log(err))
