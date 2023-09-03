@@ -15,7 +15,7 @@ import type { Language } from "~/utils/types"
 const Page: NextPage = () => {
   const user: User | undefined = api.user.getUnique.useQuery<User>().data
   const [first, setFirst] = useState<string>()
-  const [currentLanguage, setCurrentLanguage] = useState<Language>()
+  const [currentLanguage, setCurrentLanguage] = useState<Language>('english')
   const [last, setLast] = useState<string>()
   const [currentWpm, setCurrentWpm] = useState<number>()
   const { mutate } = api.user.setUser.useMutation()
@@ -37,7 +37,7 @@ const Page: NextPage = () => {
       setLast(user.lastName)
       setCurrentWpm(user.currentWpm)
       setCurrentHilight(user.highlightColor as Overlay)
-      setCurrentFont(user.font as Font)
+      setCurrentFont(user.font)
       setCurrentLanguage(user.language)
     }
     else if(store.user){
