@@ -9,11 +9,13 @@ import useUserStore from '~/stores/userStore'
 import type { Overlay } from '~/utils/types'
 import { HighlightButton } from '~/cva/highlightSelectorButton'
 import { FontProvider } from '~/cva/fontProvider'
-import { Font } from '@prisma/client'
+import type { Font } from '@prisma/client'
+import type { Language } from "~/utils/types"
 
 const Page: NextPage = () => {
   const user: User | undefined = api.user.getUnique.useQuery<User>().data
   const [first, setFirst] = useState<string>()
+  const [currentLanguage, setCurrentLanguage] = useState<Language>()
   const [last, setLast] = useState<string>()
   const [currentWpm, setCurrentWpm] = useState<number>()
   const { mutate } = api.user.setUser.useMutation()
@@ -36,6 +38,7 @@ const Page: NextPage = () => {
       setCurrentWpm(user.currentWpm)
       setCurrentHilight(user.highlightColor as Overlay)
       setCurrentFont(user.font as Font)
+      setCurrentLanguage(user.language)
     }
     else if(store.user){
       setFirst(store.user.firstName)
@@ -43,6 +46,7 @@ const Page: NextPage = () => {
       setCurrentWpm(store.user.currentWpm)
       setCurrentHilight(store.user.highlightColor as Overlay)
       setCurrentFont(store.user.font as Font)
+      setCurrentLanguage(store.user.language)
     }
   }, [])
   return (
@@ -63,35 +67,43 @@ const Page: NextPage = () => {
               mutate({ 
                 highlightColor: currentHilight,
                 font: currentFont,
-                currentWpm: currentWpm })
+                currentWpm: currentWpm,
+                language: currentLanguage
+              })
               store.setUser({
                 ...user,
                 currentWpm: currentWpm as number,
                 highlightColor: currentHilight,
-                font: currentFont
+                font: currentFont,
+                language: currentLanguage
               })
             } else if (first === 'Unnamed' || first === null) {
               mutate({ ...user, 
                 currentWpm: currentWpm,
                 highlightColor: currentHilight,
-                font: currentFont
+                font: currentFont,
+                language: currentLanguage
               })
               store.setUser({
                 ...user,
                 currentWpm: currentWpm as number,
                 highlightColor: currentHilight,
-                font: currentFont
+                font: currentFont,
+                language: currentLanguage
               })
             } else if (last === 'User' || last === null) {
               mutate({ 
                 highlightColor: currentHilight,
                 font: currentFont,
-                currentWpm: currentWpm })
+                currentWpm: currentWpm,
+                language: currentLanguage
+              })
               store.setUser({
                 ...user,
                 currentWpm: currentWpm as number,
                 highlightColor: currentHilight,
-                font: currentFont
+                font: currentFont,
+                language: currentLanguage
               })
             } else {
               mutate({
@@ -99,7 +111,8 @@ const Page: NextPage = () => {
                 lastName: last,
                 currentWpm: currentWpm,
                 highlightColor: currentHilight,
-                font: currentFont
+                font: currentFont,
+                language: currentLanguage
               })
               store.setUser({
                 ...user,
@@ -107,7 +120,9 @@ const Page: NextPage = () => {
                 lastName: last as string,
                 currentWpm: currentWpm as number,
                 highlightColor: currentHilight,
-                font: currentFont
+                font: currentFont,
+                language: currentLanguage
+
               })
             }
             router.replace('/nav').catch((e) => console.log(e))
@@ -234,6 +249,23 @@ const Page: NextPage = () => {
               {currentHilight === 'YELLOW' ? '✓' : ''}
             </HighlightButton>
           </label>
+          <label className='py-4 text-white text-2xl font-bold'>
+            Random Word Language:{' '}
+          </label>
+          <button
+            className='bg-white/20 rounded-full p-4 h-12 w-40 py-2 text-2xl text-white font-bold'
+            type='button'
+            onClick={() => setCurrentLanguage('english')}
+          >
+            English {currentLanguage === 'english' ? '✓' : ''}
+          </button>
+          <button
+            className='bg-white/20 rounded-full p-4 h-12 w-40 py-2 text-2xl text-white font-bold'
+            type='button'
+            onClick={() => setCurrentLanguage('spanish')}
+          >
+            Español {currentLanguage === 'spanish' ? '✓' : ''}
+          </button>
           <button
             type='button'
             onClick={() => setHideFont(!hideFont)}

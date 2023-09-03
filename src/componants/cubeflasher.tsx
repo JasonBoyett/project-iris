@@ -99,13 +99,13 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
   const [counter, setCounter] = useState<number>(0)
   const router = useRouter()
   // let done = false
-  const { data } = api.getExcerciseProps.getRandomWords.useQuery({
-    number: (() => {
-      if(!userStore.user) return 0
-      return userStore.user.currentWpm * 4
-    })(),
-    language: 'english',
-  })
+  const { data } = api.getExcerciseProps.getRandomWords.useQuery(
+    {
+    number: userStore.user?.currentWpm as number * 4,
+    language: userStore.user?.language as 'english' | 'spanish',
+  },
+  { enabled: !!userStore }
+  )
   const cubes = useRef<JSX.Element[]>([])
   const formattedCubes = useRef<JSX.Element[][]>([])
   const [displayedCubes, setDisplayedCubes] = useState<
@@ -119,6 +119,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
 
   const tearDown = () => {
     //TODO write data collection
+    console.log('done')
     switch (number) {
       case 2:
         mutate({lastCubeByTwo: formatDate(new Date())})
@@ -191,7 +192,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
     if (!data) return
     if (!userStore.user) return
     if (displayedCubes.length !== number) return
-    if (counter >= cubes.current.length) tearDown()
+    if (counter >= cubes.current.length - 1) tearDown()
     if (store.current < number - 1) {
       store.increment()
     } else {

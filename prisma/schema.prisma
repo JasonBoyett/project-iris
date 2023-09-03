@@ -34,6 +34,11 @@ enum Font {
   ibmPlexMono
 }
 
+enum Language {
+  english
+  spanish
+}
+
 model User {
   id                      String                   @id @unique 
   createdAt               DateTime                 @default(now())
@@ -62,6 +67,7 @@ model User {
   lastCubeByThree         String                   @default(" ")
   font                    Font                     @default(sans)
   isAdmin                 Boolean                  @default(false)
+  language                Language                 @default(english)
 
   @@index([id])
 }

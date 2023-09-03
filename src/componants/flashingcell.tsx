@@ -86,29 +86,6 @@ const colorSelector = (user: User) => {
   return 'none'
 }
 
-export const getWords = async (number: number) => {
-  try {
-    if (number > 500) {
-      //random words api won't return more than 500 words at a time so here's a hacky workaround
-      const holder: string[] = []
-      for (let i = 0; i < number / 500 + 1; i++) {
-        const response = await axios.get(
-          `https://random-word-api.vercel.app/api?words=500`,
-        )
-        holder.push(...(response.data as string[]))
-      }
-      return holder.slice(0, number)
-    } else {
-      const response = await axios.get(
-        `https://random-word-api.vercel.app/api?words=${number}`,
-      )
-      return response.data as string[]
-    }
-  } catch (error) {
-    return ['error']
-  }
-}
-
 export const partitionWords = (
   words: string[],
   sections: number,
@@ -210,6 +187,8 @@ export const createCells = ({
 
 const Grid = ({ rows = 5, layout, next }: GridProps) => {
   const [cellCounter, setCounter] = useState<number>(0)
+  const [fetched, setFetched] = useState<string[]>([])
+  const fetchWords = api.getExcerciseProps.getRandomWords
   const words = useRef<string[][]>([])
   const section = useRef<number>(0)
   const [wordsPerCell, width]: [number, number] | number[] =
@@ -225,6 +204,13 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
   const user = store.user
   const router = useRouter()
   const { mutate } = api.user.setUser.useMutation()
+  const buff = api.getExcerciseProps.getRandomWords.useQuery(
+    {
+    number: wordsPerCell * (user?.currentWpm as number),
+    language: user?.language as "english" | "spanish",
+    },
+    {enabled: !!user}
+  )
 
   const setSpeed = (user: User | undefined) => {
     if (!user) return 60_000/200 
@@ -261,10 +247,26 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
     return router.replace('/next').catch((err) => console.log(err))
   }
 
+  // useEffect(() => {
+  //   if (!user) return
+  //   (() => {
+  //     const wordsArry = fetchWords.useQuery({
+  //       number: wordsPerCell * user.currentWpm,
+  //       language: user.language,
+  //     }).data
+  //     setBuff(wordsArry as string[])
+  //   })()
+  // },[user])
+
+  useEffect(() => {
+    if(!buff.data) return
+    setFetched(buff.data) 
+  }, [buff])
+
   useEffect(() => {
     if (!user) return
-    const setup = (async () => {
-      const wordsArry = await getWords(wordsPerCell * user.currentWpm)
+    (() => {
+      const wordsArry = fetched 
       words.current = partitionWords(
         wordsArry,
         wordsArry.length / wordsPerCell,
@@ -277,7 +279,7 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
       }))
       setFont(user.font)
     })()
-  }, [])
+  }, [fetched])
 
   useInterval(() => {
     if (!isVisible) {

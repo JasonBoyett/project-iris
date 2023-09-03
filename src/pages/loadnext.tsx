@@ -55,9 +55,9 @@ const LoadNext: NextPage = () => {
       case 'SCHULTE_BY_SEVEN':
         router.replace('exercises/schulteby7').catch((err) => console.log(err))
         break
-      case 'SPEED_TEST':
-        router.replace('/exercises/speedtest').catch((err) => console.log(err))
-        break
+      // case 'SPEED_TEST':
+      //   router.replace('/exercises/speedtest').catch((err) => console.log(err))
+      //   break
       case 'EVEN_NUMBERS':
         router
           .replace('/exercises/evennumbers')

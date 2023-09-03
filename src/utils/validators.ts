@@ -1,63 +1,71 @@
-import { z as zodValidate } from 'zod'
+import { z } from 'zod'
+//zod is a library for data validation and parsing
+//in this code base z represents the zod validation library and its members
 
-export const userSchema = zodValidate.object({
-  id: zodValidate.string(),
-  firstName: zodValidate.string(),
-  lastName: zodValidate.string(),
-  maxWpm: zodValidate.number(),
-  currentWpm: zodValidate.number(),
-  createdAt: zodValidate.date(),
-  updatedAt: zodValidate.date(),
-  highlightColor: zodValidate
+export const userSchema = z.object({
+  id: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
+  maxWpm: z.number(),
+  currentWpm: z.number(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  highlightColor: z
     .union([
-      zodValidate.literal('BLUE'),
-      zodValidate.literal('BLUE_GREY'),
-      zodValidate.literal('GREEN'),
-      zodValidate.literal('GREY'),
-      zodValidate.literal('ORANGE'),
-      zodValidate.literal('PEACH'),
-      zodValidate.literal('PURPLE'),
-      zodValidate.literal('RED'),
-      zodValidate.literal('TURQUOISE'),
-      zodValidate.literal('YELLOW'),
+      z.literal('BLUE'),
+      z.literal('BLUE_GREY'),
+      z.literal('GREEN'),
+      z.literal('GREY'),
+      z.literal('ORANGE'),
+      z.literal('PEACH'),
+      z.literal('PURPLE'),
+      z.literal('RED'),
+      z.literal('TURQUOISE'),
+      z.literal('YELLOW'),
     ])
     .optional(),
-  font: zodValidate.union([
-    zodValidate.literal('sans'),
-    zodValidate.literal('serif'),
-    zodValidate.literal('mono'),
-    zodValidate.literal('robotoMono'),
-    zodValidate.literal('rem'),
-    zodValidate.literal('kanit'),
-    zodValidate.literal('preahvihear'),
-    zodValidate.literal('bebasNeue'),
-    zodValidate.literal('chakraPetch'),
-    zodValidate.literal('ibmPlexMono'),
-  ]),
-  lastSchulteByThree: zodValidate.string().optional(),
-  lastSchulteByFive: zodValidate.string().optional(),
-  lastSchulteBySeven: zodValidate.string().optional(),
-  lastSpeedTest: zodValidate.string().optional(),
-  lastFourByOne: zodValidate.string().optional(),
-  lastOneByTwo: zodValidate.string().optional(),
-  lastTwoByTwo: zodValidate.string().optional(),
-  lastOneByOne: zodValidate.string().optional(),
-  lastTwoByOne: zodValidate.string().optional(),
-  lastEvenNumbers: zodValidate.string().optional(),
-  lastCubeByThree: zodValidate.string().optional(),
-  lastCubeByTwo: zodValidate.string().optional(),
-  isAdmin: zodValidate.boolean().default(false),
+  font: z.union([
+    z.literal('sans'),
+    z.literal('serif'),
+    z.literal('mono'),
+    z.literal('robotoMono'),
+    z.literal('rem'),
+    z.literal('kanit'),
+    z.literal('preahvihear'),
+    z.literal('bebasNeue'),
+    z.literal('chakraPetch'),
+    z.literal('ibmPlexMono'),
+  ])
+   .default('sans'),
+  language: z.union([
+    z.literal('english'),
+    z.literal('spanish'),
+  ])
+    .default('english'),
+  lastSchulteByThree: z.string().optional(),
+  lastSchulteByFive: z.string().optional(),
+  lastSchulteBySeven: z.string().optional(),
+  lastSpeedTest: z.string().optional(),
+  lastFourByOne: z.string().optional(),
+  lastOneByTwo: z.string().optional(),
+  lastTwoByTwo: z.string().optional(),
+  lastOneByOne: z.string().optional(),
+  lastTwoByOne: z.string().optional(),
+  lastEvenNumbers: z.string().optional(),
+  lastCubeByThree: z.string().optional(),
+  lastCubeByTwo: z.string().optional(),
+  isAdmin: z.boolean().default(false),
 })
 
-export const speedTestSchema = zodValidate.object({
-  id: zodValidate.number(),
-  question: zodValidate.string(),
-  passage: zodValidate.string(),
-  answerA: zodValidate.string(),
-  answerB: zodValidate.string(),
-  answerC: zodValidate.string(),
-  answerD: zodValidate.string(),
-  correctAnswer: zodValidate.string(),
+export const speedTestSchema = z.object({
+  id: z.number(),
+  question: z.string(),
+  passage: z.string(),
+  answerA: z.string(),
+  answerB: z.string(),
+  answerC: z.string(),
+  answerD: z.string(),
+  correctAnswer: z.string(),
 })
 
 export const schemas = {
@@ -65,11 +73,11 @@ export const schemas = {
   speedTest: speedTestSchema,
 }
 
-const randomWordInputs = zodValidate.object({
-  number: zodValidate.number(),
-  language: zodValidate.union([
-    zodValidate.literal('english'),
-    zodValidate.literal('spanish'),
+const randomWordInputs = z.object({
+  number: z.number(),
+  language: z.union([
+    z.literal('english'),
+    z.literal('spanish'),
   ]),
 })
 
