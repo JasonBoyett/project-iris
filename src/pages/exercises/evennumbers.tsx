@@ -31,9 +31,9 @@ const Page: NextPage = () => {
   const store = useUserStore()
   const user = store.user
   const tearDown = () => {
-    mutate({ LastEvenNumbers: formatDate(new Date()) })
+    mutate({ lastEvenNumbers: formatDate(new Date()) })
     if (!user) return
-    else store.setUser({ ...user, LastEvenNumbers: formatDate(new Date()) })
+    else store.setUser({ ...user, lastEvenNumbers: formatDate(new Date()) })
     router.replace('/next').catch((err) => console.log(err))
   }
   const display = useSwitcher(
