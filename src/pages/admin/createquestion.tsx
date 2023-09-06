@@ -1,14 +1,9 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
 import HomeButton from '~/componants/homebutton'
 import SettingsButton from '~/componants/settingsbutton'
 import { useRouter } from 'next/router'
-import { use, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { api } from '~/utils/api'
 import type { Answer } from '~/utils/types'
-import type { User } from '~/utils/types'
-import { FontProvider } from '~/cva/fontProvider'
-import type { Font } from '@prisma/client'
 
 function Loading(){
   return(
