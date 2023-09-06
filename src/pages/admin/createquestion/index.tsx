@@ -26,6 +26,7 @@ function QuestionForm(){
   const [answerD, setAnswerD] = useState('')
   const { mutate } = api.createSpeedTest.createSpeedTest.useMutation()
   const [correctAnswer, setCorrectAnswer] = useState<Answer>('A')
+  const router = useRouter()
 
   function submit(){
     if(
@@ -49,7 +50,8 @@ function QuestionForm(){
       correctAnswer
     }
     mutate(body)
-    alert('Question Submitted')
+    router.push('/admin/createquestion/done').catch((err) => console.log(err))
+
   }
 
   return (
