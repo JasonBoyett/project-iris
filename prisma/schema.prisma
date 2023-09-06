@@ -153,7 +153,7 @@ model SatQuestion {
 }
 
 model SpeedQuestion{
-  id            Int        @unique@id@default(autoincrement())
+  id            Int        @unique@id
   passage       String     @db.Text
   question      String     @db.Text
   answerA       String     

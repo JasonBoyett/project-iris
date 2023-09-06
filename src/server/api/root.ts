@@ -1,6 +1,7 @@
 import { createTRPCRouter } from '~/server/api/trpc'
 import { exampleRouter } from '~/server/api/routers/example'
 import {
+    createSpeedTestRouter,
   excercisesPropsRouter as excercisePropsRouter,
   userRouter,
 } from '~/server/api/routers/app'
@@ -14,6 +15,7 @@ export const appRouter = createTRPCRouter({
   example: exampleRouter,
   user: userRouter,
   getExcerciseProps: excercisePropsRouter,
+  createSpeedTest: createSpeedTestRouter,
 })
 
 // export type definition of API

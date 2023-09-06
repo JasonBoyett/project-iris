@@ -58,7 +58,7 @@ export const userSchema = z.object({
 })
 
 export const speedTestSchema = z.object({
-  id: z.number(),
+  id: z.number().optional(),
   question: z.string(),
   passage: z.string(),
   answerA: z.string(),
