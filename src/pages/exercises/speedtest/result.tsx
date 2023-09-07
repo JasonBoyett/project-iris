@@ -76,6 +76,7 @@ const Result: NextPage = () => {
       if (!speedTestStore.current) return 0
       return speedTestStore.correctResponses
     })
+    setFont(userStore.user.font)
   }, [userStore, speedTestStore])
 
   return (

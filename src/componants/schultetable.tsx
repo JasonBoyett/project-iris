@@ -6,32 +6,37 @@ import { useRouter } from 'next/router'
 import { api } from '~/utils/api'
 import useUserStore from '~/stores/userStore'
 import { FontProvider } from '~/cva/fontProvider'
-import { SelectFont } from '~/utils/types'
+import type { SelectFont } from '~/utils/types'
+import Timer from '~/utils/timer'
 
 type SchulteTableProps = {
   sideLength: 3 | 5 | 7
 }
 
-const Cell = ({
-  innerValue,
-  counterSetter,
-  errorSetter,
-  counter,
-  errorCounter,
-}: {
+type CellProps = {
   innerValue: number
   counterSetter: React.Dispatch<React.SetStateAction<number>>
   errorSetter: (number: number) => void
   counter: number
   errorCounter: number
-}) => {
+}
+
+function Cell({
+  innerValue,
+  counterSetter,
+  errorSetter,
+  counter,
+  errorCounter,
+}: CellProps) {
   const [clicked, setClicked] = useState(false)
   const store = useUserStore()
   const [font, setFont] = useState<SelectFont>('sans')
 
-  const handleClick = () => {
-    if (innerValue !== counter && !clicked) errorSetter(errorCounter++)
-    else if (!clicked) {
+  function handleClick(){
+    if(innerValue !== counter && !clicked){  
+      errorSetter(errorCounter + 1)
+      setClicked(true)
+    }    else if (!clicked) {
       setClicked(true)
       counterSetter((prev) => prev + 1)
     }
@@ -54,22 +59,9 @@ const Cell = ({
   )
 }
 
-const SchulteTable = ({ sideLength }: SchulteTableProps) => {
+export default function SchulteTable({ sideLength }: SchulteTableProps){
   const [counter, setCount] = useState(1)
-  const [font, setFont] = useState<
-    | 'sans'
-    | 'mono'
-    | 'serif'
-    | 'robotoMono'
-    | 'rem'
-    | 'kanit'
-    | 'preahvihear'
-    | 'bebasNeue'
-    | 'chakraPetch'
-    | 'ibmPlexMono'
-    | null
-    | undefined
-  >('sans')
+  const [font, setFont] = useState<SelectFont>('sans')
   const errors = useRef(0)
   const router = useRouter()
   const { mutate } = api.user.setUser.useMutation()
@@ -77,14 +69,19 @@ const SchulteTable = ({ sideLength }: SchulteTableProps) => {
   const user = store.user
   const totalCells = Math.pow(sideLength, 2)
   const [classString, setClassString] = useState('')
-  const incrementErrors = (number: number) => (errors.current = number)
+  const timer = new Timer()
   const numbers = useRef(
     Array.from({ length: totalCells }, (_, i) => i + 1).sort(
       () => Math.random() - 0.5,
     ),
   )
 
-  const teardown = () => {
+  function setErrors(number: number){
+    errors.current = number
+  }
+
+  function teardown(){
+    timer.end()
     //log info here
     switch (sideLength) {
       case 3:
@@ -106,42 +103,57 @@ const SchulteTable = ({ sideLength }: SchulteTableProps) => {
     }
     router.replace('/next').catch((err) => console.log(err))
   }
-  const table = numbers.current.map((number) => (
-    <>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 1 }}
-      >
-        <Cell
-          innerValue={number}
-          counterSetter={setCount}
-          errorSetter={incrementErrors}
-          counter={counter}
-          key={v4()}
-          errorCounter={errors.current}
-        />
-      </motion.div>
-    </>
-  ))
+
+  function Table({ classString } : { classString: string}){
+    const cells = numbers.current.map(
+      (number) => (
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <Cell
+              innerValue={number}
+              counterSetter={setCount}
+              errorSetter={setErrors}
+              counter={counter}
+              key={v4()}
+              errorCounter={errors.current}
+            />
+          </motion.div>
+        </>
+      )
+    )
+    return(
+      <div className={classString}>
+        {cells}
+      </div>
+    )
+  }
+
   useEffect(() => {
     if (counter === totalCells + 1) {
       teardown()
     }
   }, [counter])
+
   useEffect(() => {
     if (sideLength === 3) setClassString('grid grid-cols-3 gap-1')
     if (sideLength === 5) setClassString('grid grid-cols-5 gap-1')
     if (sideLength === 7) setClassString('grid grid-cols-7 gap-1')
+    timer.start()
   }, [])
+
   useEffect(() => {
     if (!store.user) return
     setFont(store.user.font)
   }, [store])
+
   return (
     <>
-      <div className={classString}>{table}</div>
+      <Table classString={classString}/>
       <FontProvider
         font={font}
         className='md:text-4xl text-white'
@@ -151,4 +163,3 @@ const SchulteTable = ({ sideLength }: SchulteTableProps) => {
     </>
   )
 }
-export default SchulteTable

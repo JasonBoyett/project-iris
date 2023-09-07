@@ -7,8 +7,6 @@ import { SignOutButton } from '@clerk/nextjs'
 import { SignedIn, SignedOut } from '@clerk/clerk-react'
 import { SignIn } from '@clerk/clerk-react'
 import { useUserStore } from '~/stores/userStore'
-import type { User } from '~/utils/types'
-import { boolean } from 'zod'
 
 const Page: NextPage = () => {
   const buttonStyle =
@@ -61,7 +59,7 @@ const Page: NextPage = () => {
             Sign Out
           </button>
         </SignOutButton>
-        <main className='grid-col-2 flex grid min-h-screen flex-col items-center justify-center py-16'>
+        <main className='grid-col-2 flex min-h-screen flex-col items-center justify-center py-16'>
           <div className='container flex flex-col items-center justify-center gap-5 px-4'>
             <button
               className={buttonStyle}
