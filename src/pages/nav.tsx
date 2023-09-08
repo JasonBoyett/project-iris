@@ -7,6 +7,7 @@ import { SignOutButton } from '@clerk/nextjs'
 import { SignedIn, SignedOut } from '@clerk/clerk-react'
 import { SignIn } from '@clerk/clerk-react'
 import { useUserStore } from '~/stores/userStore'
+import SettingsButton from '~/componants/settingsbutton'
 
 const Page: NextPage = () => {
   const buttonStyle =
@@ -51,8 +52,9 @@ const Page: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Select a game</title>
+        <title>Home</title>
       </Head>
+      <SettingsButton />
       <SignedIn>
         <SignOutButton>
           <button className='text-white bg-black border-2 rounded-full p-2 hover:border-3 hover:bg-gray-500'>

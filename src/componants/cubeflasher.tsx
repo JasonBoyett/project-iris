@@ -7,12 +7,13 @@ import useInterval from '~/hooks/useInterval'
 import { formatDate } from '~/utils/helpers'
 import { useRouter } from 'next/router'
 import { FontProvider } from '~/cva/fontProvider'
+import { SelectFont } from '~/utils/types'
 
-export const partitionWords = (
+export function partitionWords(
   words: string[],
   sections: number,
   frames: number,
-) => {
+){
   const partitionedWords: string[][] = []
   const wordJoiner: string[] = []
   const wordsPerCell = words.length / sections
@@ -30,7 +31,7 @@ type CornerFlasherCellProps = {
   wordsArray: string[]
 }
 
-const CornerFlasherCell = ({ number, wordsArray }: CornerFlasherCellProps) => {
+function CornerFlasherCell({ number, wordsArray }: CornerFlasherCellProps){
   const store = useCubeStore()
   const [visible, setVisible] = useState<boolean>(false)
   useEffect(() => {
@@ -77,22 +78,9 @@ type CornerFlasherProps = {
   number: 2 | 3
 }
 
-export default function CornerFlasher({ number }: CornerFlasherProps) {
+export default function CornerFlasher({ number }: CornerFlasherProps){
   const store = useCubeStore()
-  const [font, setFont] = useState<
-    | 'sans'
-    | 'mono'
-    | 'serif'
-    | 'robotoMono'
-    | 'rem'
-    | 'kanit'
-    | 'preahvihear'
-    | 'bebasNeue'
-    | 'chakraPetch'
-    | 'ibmPlexMono'
-    | null
-    | undefined
-  >('sans')
+  const [font, setFont] = useState<SelectFont>('sans')
   const userStore = useUserStore()
   const { mutate } = api.user.setUser.useMutation()
   const [section, setSection] = useState<number>(0)
@@ -101,23 +89,21 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
   // let done = false
   const { data } = api.getExcerciseProps.getRandomWords.useQuery(
     {
-    number: userStore.user?.currentWpm as number * 4,
-    language: userStore.user?.language as 'english' | 'spanish',
-  },
-  { enabled: !!userStore }
+      number: userStore.user?.currentWpm as number * 4,
+      language: userStore.user?.language as 'english' | 'spanish',
+    },
+    { enabled: !!userStore }
   )
   const cubes = useRef<JSX.Element[]>([])
   const formattedCubes = useRef<JSX.Element[][]>([])
-  const [displayedCubes, setDisplayedCubes] = useState<
-    JSX.Element[] | undefined
-  >([])
+  const [displayedCubes, setDisplayedCubes] = useState<JSX.Element[] | undefined>([])
 
   const getRate = () => {
     if(!userStore.user) return 60_000 / 200
     return 60_000 / userStore.user.currentWpm
   }
 
-  const tearDown = () => {
+  function tearDown(){
     //TODO write data collection
     console.log('done')
     switch (number) {

@@ -8,7 +8,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Speed Reading</title>
+        <title>Project Iris</title>
         <meta
           name='description'
           content='Schreiner University Speed Reading Study'

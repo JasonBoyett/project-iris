@@ -1,14 +1,7 @@
-import {
-  useEffect,
-  useState,
-  ReactElement,
-  Dispatch,
-  SetStateAction,
-} from 'react'
+import { useEffect, useState } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 import useInterval from '@/hooks/useInterval'
 import axios from 'axios'
-import { api } from '~/utils/api'
-import { NextPage } from 'next/types'
 
 export type ChangerProps = {
   wordsPerCell: number
@@ -17,7 +10,7 @@ export type ChangerProps = {
 
 const MILISECONDS_IN_A_MINUTE = 60000
 
-const fetchWords = async (number: number) => {
+async function fetchWords(number: number){
   try {
     if (number > 500) {
       //random words api won't return more than 500 words at a time so here's a hacky workaround
@@ -41,7 +34,7 @@ const fetchWords = async (number: number) => {
   }
 }
 
-const formatWords = (words: string[], wordsPerCell: number) => {
+function formatWords(words: string[], wordsPerCell: number){
   const wordJoiner: string[] = []
   for (let i = 0; i < words.length / wordsPerCell; i += wordsPerCell) {
     wordJoiner.push(words.slice(i, i + wordsPerCell).join(' '))
@@ -49,7 +42,7 @@ const formatWords = (words: string[], wordsPerCell: number) => {
   return wordJoiner
 }
 
-const fetch = async (props: ChangerProps) => {
+async function fetch(props: ChangerProps){
   const words = await fetchWords(props.wordsPerCell * props.wpm)
   const formattedWords = formatWords(words, props.wordsPerCell)
   return formattedWords
@@ -59,8 +52,7 @@ export default function Changer(props: ChangerProps) {
   const [words, setWords] = useState<string[]>([])
   const [wordIndex, setWordIndex] = useState<number>(0)
   const [fetched, setFetched] = useState<boolean>(false)
-  const [current, setCurrent]: [string, Dispatch<SetStateAction<string>>] =
-    useState<string>('')
+  const [current, setCurrent] = useState<string>('')
 
   useEffect(() => {
     const load = async () => {

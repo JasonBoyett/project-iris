@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { useEffect } from 'react'
 
 type Block = {
   props: { x: string; y: string }[]
@@ -35,7 +34,7 @@ const drawLine = {
   },
 }
 
-const DrawBlock = ({ x, y }: { x: string; y: string }) => {
+function DrawBlock({ x, y }: { x: string; y: string }){
   return (
     <motion.rect
       width='70'
@@ -50,7 +49,7 @@ const DrawBlock = ({ x, y }: { x: string; y: string }) => {
   )
 }
 
-const DrawSchulte = ({ path }: { path: string }) => {
+function DrawSchulte({ path }: { path: string }){
   const blocks: Block = {
     props: [
       //row 1
@@ -113,19 +112,19 @@ const DrawSchulte = ({ path }: { path: string }) => {
   )
 }
 
-const Beginner = () => {
+function Beginner(){
   const path =
     'M 230 250 l 100 100 l -100 -50 l 40 100 L 210 100 l 50 120 L 50 250 L 250 250 L 400 250 l -300 200 L 400 50'
   return <DrawSchulte path={path} />
 }
 
-const Intermediate = () => {
+function Intermediate(){
   const path =
     'M 250 250 l 70 70 l -100 -20 L 370 250 l -230 -10 l 100 100 l -20 -200 l -70 200 l 200 -200 L 230 200 l -100 -20 L 200 250'
   return <DrawSchulte path={path} />
 }
 
-const Ideal = () => {
+function Ideal(){
   const path =
     'M 250 250 l 30 30 l -10 -50 l -70 30 l 30 -50 l 10 80 l 20 -90 l -60 90 l 0 -70 L 250 255'
   return <DrawSchulte path={path} />

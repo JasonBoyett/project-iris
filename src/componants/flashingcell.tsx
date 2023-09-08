@@ -9,7 +9,6 @@ import { StyledCell } from '~/cva/flashingStyles'
 import type { ReactElement } from 'react'
 import useInterval from '@/hooks/useInterval'
 import { v4 as uuid } from 'uuid'
-import axios from 'axios'
 import { useIsVisible } from '@/hooks/useIsVisible'
 import { useRouter } from 'next/router'
 import { useUserStore } from '~/stores/userStore'
@@ -70,7 +69,7 @@ const layoutManager = (layout: FlasherLayout) => {
   }
 }
 
-const colorSelector = (user: User) => {
+function colorSelector(user: User){
   switch(user.highlightColor) {
     case 'BLUE': return 'blue'
     case 'BLUE_GREY': return 'blueGrey'
@@ -86,11 +85,11 @@ const colorSelector = (user: User) => {
   return 'none'
 }
 
-export const partitionWords = (
+export function partitionWords(
   words: string[],
   sections: number,
   frames: number,
-) => {
+){
   const partitionedWords: string[][] = []
   const wordJoiner: string[] = []
   const wordsPerCell = words.length / sections
@@ -103,7 +102,7 @@ export const partitionWords = (
   return partitionedWords
 }
 
-const Cell = ({ content, location, loadCheck, user }: CellProps) => {
+function Cell({ content, location, loadCheck, user }: CellProps){
   const [intent, setIntent] = useState<'noFlash' | 'flash' | null | undefined>(
     'noFlash',
   )
@@ -160,7 +159,7 @@ const Cell = ({ content, location, loadCheck, user }: CellProps) => {
   )
 }
 
-export const createCells = ({
+export function createCells({
   words,
   loadCheck,
   user,
@@ -168,7 +167,7 @@ export const createCells = ({
   words: string[] | undefined
   user: User
   loadCheck: React.Dispatch<React.SetStateAction<boolean>>
-}) => {
+}){
   const cells: ReactElement[] = []
   if (!words) return
   words.forEach((word, index) => {
@@ -185,7 +184,7 @@ export const createCells = ({
   return cells
 }
 
-const Grid = ({ rows = 5, layout, next }: GridProps) => {
+function Grid({ rows = 5, layout, next }: GridProps){
   const [cellCounter, setCounter] = useState<number>(0)
   const [fetched, setFetched] = useState<string[]>([])
   const fetchWords = api.getExcerciseProps.getRandomWords
@@ -212,12 +211,12 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
     {enabled: !!user}
   )
 
-  const setSpeed = (user: User | undefined) => {
+  function setSpeed(user: User | undefined){
     if (!user) return 60_000/200 
     return 60_000 / user.currentWpm
   }
 
-  const markComplete = () => {
+  function markComplete(){
     if (!user) return
     if (layout === FlasherLayout.ONE_BY_ONE) {
       mutate({ lastOneByOne: formatDate(new Date()) })
@@ -241,22 +240,11 @@ const Grid = ({ rows = 5, layout, next }: GridProps) => {
     }
   }
 
-  const tearDown = () => {
+  function tearDown(){
     //TODO impliment data collection here
     markComplete()
     return router.replace('/next').catch((err) => console.log(err))
   }
-
-  // useEffect(() => {
-  //   if (!user) return
-  //   (() => {
-  //     const wordsArry = fetchWords.useQuery({
-  //       number: wordsPerCell * user.currentWpm,
-  //       language: user.language,
-  //     }).data
-  //     setBuff(wordsArry as string[])
-  //   })()
-  // },[user])
 
   useEffect(() => {
     if(!buff.data) return

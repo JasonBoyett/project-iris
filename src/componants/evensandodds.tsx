@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { FontProviderButton } from '~/cva/fontProvider'
-import type { Dispatch, FC, ReactElement, SetStateAction } from 'react'
-import { uuid } from 'uuidv4'
+import type { Dispatch, SetStateAction } from 'react'
 import { motion } from 'framer-motion'
-import { FontProvider } from '~/cva/fontProvider'
 import useUserStore from '~/stores/userStore'
-import { SelectFont } from '~/utils/types'
+import type { SelectFont } from '~/utils/types'
+import Timer from '~/utils/timer'
+import { useRouter } from 'next/router'
+import { api } from '~/utils/api'
+import { formatDate } from '~/utils/helpers'
 const DEFAULT =
-  'flex text-white text-xl justify-center p-4 border-2 border-slate-700 gap-0 bg-white/20'
+  'flex text-white md:text-3xl text-2xl justify-center p-4 border-2 border-slate-700 gap-0 bg-white/20'
 const HILIGHT =
-  'flex text-white text-xl justify-center p-4 bg-blue-500 border-2 border-slate-700 gap-0 bg-slate-700/40'
+  'flex text-white md:text-3xl text-2xl justify-center p-4 bg-blue-500 border-2 border-slate-700 gap-0 bg-slate-700/40'
 
 type EvenOddProps = {
   segFigs: number
@@ -28,7 +30,13 @@ type CellProps = {
   oddEvent: () => void
 }
 
-const randomNumber = (segFigs: number, isEven: boolean) => {
+type GenerateorProps = {
+  props: EvenOddProps,
+  evenEvent: () => void,
+  oddEvent: () => void,
+}
+
+function randomNumber(segFigs: number, isEven: boolean){
   const min = Math.pow(10, segFigs - 1)
   const max = Math.pow(10, segFigs) - 1
   const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min
@@ -53,23 +61,24 @@ const randomNumber = (segFigs: number, isEven: boolean) => {
   }
 }
 
-const generateNumbers = (props: EvenOddProps) => {
+function generateNumbers(props: EvenOddProps): number[]{
   const count = props.cols * props.rows
   const numbers: number[] = []
 
   for (let i = 0; i < count; i++) {
     numbers.push(randomNumber(props.segFigs, i < props.evens ? true : false))
   }
+  console.log(numbers)
   return numbers.sort(() => Math.random() - 0.5)
 }
 
-const Cell = (props: CellProps) => {
+function Cell(props: CellProps){
   const [currentClass, setCurrentClass] = useState(props.defaultClass)
   const userStore = useUserStore()
   const [font, setFont] = useState<SelectFont>('sans')
   const [disabled, setDisabled] = useState(false)
 
-  const handleClick = () => {
+  function handleClick(){
     if (props.id % 2 === 0 && !disabled) {
       setCurrentClass(props.hilightClass)
       setDisabled(true)
@@ -95,67 +104,53 @@ const Cell = (props: CellProps) => {
     <FontProviderButton
       font={font}
       className={currentClass}
-      key={uuid()}
+      key={props.id}
       onClick={() => handleClick()}
       id={props.id.toString()}
       disabled={disabled}
     >
       {props.id}
     </FontProviderButton>
-  ) as ReactElement
+  ) 
 }
 
-const generateComponants = (
-  props: EvenOddProps,
-  evenEvent: () => void,
-  oddEvent: () => void,
-) => {
-  const componants: ReactElement[] = []
-  const numbers = generateNumbers(props)
-
-  for (const num of numbers) {
-    const attributes: CellProps = {
-      id: num,
-      defaultClass: DEFAULT,
-      hilightClass: HILIGHT,
-      evenEvent: evenEvent,
-      oddEvent: oddEvent,
-    }
-    componants.push(
+function Grid({ props, evenEvent,oddEvent } : GenerateorProps){
+  return generateNumbers(props).map((num, i) => (
       <Cell
         id={num}
+        key={i}
         defaultClass={DEFAULT}
         hilightClass={HILIGHT}
         evenEvent={() => evenEvent()}
         oddEvent={() => oddEvent()}
-      />,
+      />
     )
-  }
-  return componants
+  )
 }
 
-const EvensAndOdds = (props: EvenOddProps) => {
-  const [grid, setGrid]: [
-    ReactElement[],
-    Dispatch<SetStateAction<ReactElement[]>>,
-  ] = useState<ReactElement[]>([])
-  const [cleared, setCleared]: [number, Dispatch<SetStateAction<number>>] =
-    useState<number>(0)
+export default function EvensAndOdds(props: EvenOddProps){
   const evenCount = useRef(0)
   const errorCount = useRef(0)
   const GRID_CLASS = useState(`grid grid-cols-${props.cols}`)[0]
+  const timer = new Timer
+  const router = useRouter()
+  const { mutate } = api.user.setUser.useMutation()
+  const user = api.user.getUnique.useQuery().data
+  const userStore = useUserStore()
+
+  function tearDown(){
+    //TODO add data to db
+    if(!user) return
+    timer.end()
+    mutate({...user, lastEvenNumbers: formatDate(new Date())})
+    userStore.setUser({...user, lastEvenNumbers: formatDate(new Date())})
+    router.replace('/next').catch((err) => console.log(err))
+  }
 
   const pressEven = () => {
     evenCount.current++
     if (evenCount.current === props.evens && props.frameSetter) {
-      setGrid(generateComponants(props, pressEven, pressOdd))
-      evenCount.current = 0
-      props.frameSetter((prev) => prev + 1)
-      setCleared((prev) => prev + 1)
-    } else if (evenCount.current === props.evens && !props.frameSetter) {
-      setGrid(generateComponants(props, pressEven, pressOdd))
-      evenCount.current = 0
-      setCleared((prev) => prev + 1)
+      tearDown()
     }
   }
 
@@ -164,8 +159,7 @@ const EvensAndOdds = (props: EvenOddProps) => {
   }
 
   useEffect(() => {
-    const newGrid = generateComponants(props, pressEven, pressOdd)
-    setGrid(newGrid)
+    timer.start()
   }, [])
 
   return (
@@ -175,15 +169,17 @@ const EvensAndOdds = (props: EvenOddProps) => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <div className={GRID_CLASS}>{grid}</div>
-        <div className='white text-md'>
-          frames cleared: <span className='text-yellow-400'>{cleared}</span>
+        <div className={GRID_CLASS}>
+          <Grid
+            props={props}
+            evenEvent={() => pressEven()}
+            oddEvent={() => pressOdd()}
+          />
         </div>
       </motion.div>
     </>
   )
 }
 
-export { EvensAndOdds, generateNumbers }
+export { generateNumbers }
 export type { EvenOddProps }
-module.exports = { EvensAndOdds, generateNumbers }

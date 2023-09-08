@@ -12,11 +12,11 @@ type QuestionViewProps = {
   user: User | undefined
   doneSignal: () => void
 }
-const QuestionView = ({
+function QuestionView({
   speedQuestion,
   user,
   doneSignal,
-}: QuestionViewProps) => {
+}: QuestionViewProps){
   const formattedQuestion = speedQuestion.passage.split(' ')
   const [currentWord, setCurrentWord] = useState(formattedQuestion[0])
   const isVisivle = true
@@ -44,13 +44,13 @@ const QuestionView = ({
   )
 }
 
-const AnswerView = ({
+function AnswerView({
   speedQuestion,
   user,
 }: {
   speedQuestion: SpeedQuestion
   user: User | undefined
-}) => {
+}){
   const { mutate } = api.user.setUser.useMutation()
   const store = useUserStore()
   const router = useRouter()
@@ -68,7 +68,7 @@ const AnswerView = ({
     D = 'D',
   }
 
-  const selectAnswer = (answer: Answers) => {
+  function selectAnswer(answer: Answers){
     if (answer === speedQuestion.correctAnswer.toUpperCase()) {
       setCorrectOrNot(
         <>
@@ -174,13 +174,13 @@ const AnswerView = ({
   )
 }
 
-const SpeedTest = ({
+export default function SpeedTest({
   user,
   speedQuestion,
 }: {
   user: User | undefined
   speedQuestion: SpeedQuestion
-}) => {
+}){
   const [isAnswerTime, setIsAnswerTime] = useState(false)
   return (
     <>
@@ -199,4 +199,3 @@ const SpeedTest = ({
     </>
   )
 }
-export default SpeedTest

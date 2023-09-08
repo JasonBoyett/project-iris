@@ -4,7 +4,7 @@ import LoadingSpinner from './loadingspinner'
 
 const MINUTE_IN_MILLISECONDS = 60_000
 
-const StartButton = ({ option }: { option: string }) => {
+export default function StartButton({ option }: { option: string }){
   const [time, setTime] = useState(false)
   const router = useRouter()
 
@@ -55,4 +55,3 @@ const StartButton = ({ option }: { option: string }) => {
     <LoadingSpinner />
   )
 }
-export default StartButton
