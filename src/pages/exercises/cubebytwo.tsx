@@ -1,9 +1,8 @@
 import CornerFlasher from '~/componants/cubeflasher'
-import type { NextPage } from 'next/types'
 import HomeButton from '~/componants/homebutton'
 import SettingsButton from '~/componants/settingsbutton'
 
-const Page: NextPage = () => {
+export default function Page(){
   return (
     <>
       <HomeButton />
@@ -14,4 +13,3 @@ const Page: NextPage = () => {
     </>
   )
 }
-export default Page

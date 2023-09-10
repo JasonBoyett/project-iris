@@ -1,15 +1,11 @@
-import { NextPage } from 'next'
 import Head from 'next/head'
 import FlashingGrid from 'src/componants/flashingcell'
 import { FlasherLayout } from 'src/componants/flashingcell'
 import HomeButton from '~/componants/homebutton'
 import SettingsButton from '~/componants/settingsbutton'
 
-interface PageProps {
-  grid?: JSX.Element
-}
 
-const Page: NextPage<PageProps> = () => {
+export default function Page(){
   return (
     <>
       <Head>
@@ -23,5 +19,3 @@ const Page: NextPage<PageProps> = () => {
     </>
   )
 }
-
-export default Page

@@ -1,7 +1,6 @@
 import useInterval from '~/hooks/useInterval'
 import { useState, useEffect } from 'react'
-import type { NextPage } from 'next'
-import type { SelectFont, SpeedTest } from '~/utils/types'
+import type { SelectFont } from '~/utils/types'
 import useUserStore from '~/stores/userStore'
 import useSpeedTestStore from '~/stores/useSpeedTestStore'
 import { useRouter } from 'next/router'
@@ -13,7 +12,7 @@ import SettingsButton from '~/componants/settingsbutton'
 
 export const TESTS_PER_DAY = 10
 
-const Page: NextPage = () => {
+export default function Page(){
   const [counter, setCounter] = useState(0)
   const [words, setWords] = useState<string[]>([''])
   const [font, setFont] = useState<SelectFont>('sans')
@@ -25,7 +24,7 @@ const Page: NextPage = () => {
   const { data } = api.getExcerciseProps.getSingleSpeedTestProps.useQuery()
   const router = useRouter()
 
-  const navigateToQuestion = () => {
+  function navigateToQuestion(){
     router
       .replace('/exercises/speedtest/question')
       .catch((err) => console.log(err))
@@ -78,4 +77,3 @@ const Page: NextPage = () => {
     </>
   )
 }
-export default Page

@@ -1,10 +1,9 @@
 import HomeButton from '~/componants/homebutton'
 import SchulteTable from '~/componants/schultetable'
-import type { NextPage } from 'next'
 import Head from 'next/head'
 import SettingsButton from '~/componants/settingsbutton'
 
-const Page: NextPage = () => {
+export default function Page(){
   return (
     <>
       <Head>
@@ -20,5 +19,3 @@ const Page: NextPage = () => {
     </>
   )
 }
-
-export default Page

@@ -1,4 +1,3 @@
-import { type NextPage } from 'next'
 import Head from 'next/head'
 import React, { useState } from 'react'
 import EvensAndOdds from 'src/componants/evensandodds'
@@ -16,7 +15,7 @@ export const framesContext = React.createContext<framesContextType>({
   },
 })
 
-const Page: NextPage = () => {
+export default function Page(){
   const [framesCleared, setFramesCleared] = useState<number>(0)
   return (
     <>
@@ -38,4 +37,3 @@ const Page: NextPage = () => {
     </>
   )
 }
-export default Page

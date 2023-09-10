@@ -4,13 +4,12 @@ import { useUserStore } from '~/stores/userStore'
 import { useSpeedTestStore } from '~/stores/useSpeedTestStore'
 import SettingsButton from '~/componants/settingsbutton'
 import HomeButton from '~/componants/homebutton'
-import type { NextPage } from 'next'
-import type { SpeedTest, SelectFont } from '~/utils/types'
+import type { SelectFont } from '~/utils/types'
 import { TESTS_PER_DAY } from './index'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
-const Page: NextPage = () => {
+export default function Page(){
   const exerciseStore = useSpeedTestStore((state) => state)
   const userStore = useUserStore((state) => state)
   const [answerA, setAnswerA] = useState('Loading..')
@@ -21,7 +20,7 @@ const Page: NextPage = () => {
   const [font, setFont] = useState<SelectFont>('sans')
   const router = useRouter()
 
-  const handleClick = (answer: string) => {
+  function handleClick(answer: string){
     console.log('registered click')
     console.log('ran')
     exerciseStore.setResponse(answer)
@@ -52,6 +51,8 @@ const Page: NextPage = () => {
   return (
     <>
       <Head>Speed Test</Head>
+      <SettingsButton />
+      <HomeButton />
       <main className='flex items-center justify-center h-screen text-white'>
         <FontProvider
           className='flex flex-col gap-4 items-center justify-center'
@@ -101,4 +102,3 @@ const Page: NextPage = () => {
     </>
   )
 }
-export default Page

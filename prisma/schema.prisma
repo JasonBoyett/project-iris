@@ -68,6 +68,7 @@ model User {
   font                    Font                     @default(sans)
   isAdmin                 Boolean                  @default(false)
   language                Language                 @default(english)
+  tested                  Boolean                  @default(false)
 
   @@index([id])
 }

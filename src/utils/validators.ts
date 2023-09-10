@@ -55,6 +55,7 @@ export const userSchema = z.object({
   lastCubeByThree: z.string().optional(),
   lastCubeByTwo: z.string().optional(),
   isAdmin: z.boolean().default(false),
+  tested: z.boolean().default(false),
 })
 
 export const speedTestSchema = z.object({

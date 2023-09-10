@@ -2,7 +2,7 @@ import type { User, Exercise } from './types'
 
 import { Exercise as ex } from './types'
 
-export const userHilightToHex = (user: User) => {
+export function userHilightToHex(user: User){
   switch (user.highlightColor) {
     case 'BLUE':
       return '#96adfc'
@@ -34,7 +34,7 @@ export const userHilightToHex = (user: User) => {
  * it removes it from the list of available exercises.
  * If the user has done all the exercises, the function returns null.
  **/
-export const getNextExercise = (user: User) => {
+export function getNextExercise(user: User){
   const available: Exercise[] = []
 
   type Is_already_done_params = {
@@ -42,7 +42,7 @@ export const getNextExercise = (user: User) => {
     exercise: Exercise
   }
 
-  const isToday = (date2: string | undefined) => {
+  function isToday(date2: string | undefined){
     if (!date2) return false
     const today = formatDate(new Date())
     const date2Formatted = date2
@@ -55,7 +55,7 @@ export const getNextExercise = (user: User) => {
     return result
   }
 
-  // if (!isToday(user.lastSpeedTest)) return 'SPEED_TEST'
+  if (!user.tested) return 'SPEED_TEST'
 
   const isAlreadyDone = ({ user, exercise }: Is_already_done_params) => {
     switch (exercise) {

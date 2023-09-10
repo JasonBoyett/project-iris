@@ -12,7 +12,7 @@ import HomeButton from '~/componants/homebutton'
 import { api } from '~/utils/api'
 import { formatDate } from '~/utils/helpers'
 
-const Result: NextPage = () => {
+export default function Result(){
   const [correct, setCorrect] = useState(0)
   const [font, setFont] = useState<SelectFont>('sans')
   const router = useRouter()
@@ -20,12 +20,12 @@ const Result: NextPage = () => {
   const speedTestStore = useSpeedTestStore()
   const { mutate } = api.user.setUser.useMutation()
 
-  const saveData = () => {
+  function saveData(){
     //TODO create a data saving function in TRPC
     console.log('saving data')
   }
 
-  const saveCompletionAndRaiseWpm = () => {
+  function saveCompletionAndRaiseWpm(){
     //I know this function does two things.
     //I just don't want to make two api calls when I can make just one.
     if (!userStore.user) return
@@ -34,24 +34,28 @@ const Result: NextPage = () => {
       lastSpeedTest: formatDate(new Date()),
       currentWpm: userStore.user.maxWpm + 20,
       maxWpm: Math.floor(userStore.user.maxWpm / 0.9 / 10) * 10,
+      tested: true,
     })
     userStore.setUser({
       ...userStore.user,
       lastSpeedTest: formatDate(new Date()),
       currentWpm: userStore.user.maxWpm + 20,
       maxWpm: Math.floor(userStore.user.maxWpm / 0.9 / 10) * 10,
+      tested: true,
     })
   }
-  const saveCompletion = () => {
+
+  function saveCompletion(){
     if (!userStore.user) return
     mutate({ ...userStore.user, lastSpeedTest: formatDate(new Date()) })
     userStore.setUser({
       ...userStore.user,
       lastSpeedTest: formatDate(new Date()),
+      tested: true,
     })
   }
 
-  const saveUser = () => {
+  function saveUser(){
     if (!speedTestStore) return
     if (!userStore.user) return
     if (speedTestStore.correctResponses / TESTS_PER_DAY >= 0.9) {
@@ -61,7 +65,7 @@ const Result: NextPage = () => {
     }
   }
 
-  const handleClick = () => {
+  function handleClick(){
     saveData()
     saveUser()
     speedTestStore.clear()
@@ -105,4 +109,3 @@ const Result: NextPage = () => {
     </>
   )
 }
-export default Result

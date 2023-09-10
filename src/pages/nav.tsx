@@ -63,18 +63,25 @@ const Page: NextPage = () => {
         </SignOutButton>
         <main className='grid-col-2 flex min-h-screen flex-col items-center justify-center py-16'>
           <div className='container flex flex-col items-center justify-center gap-5 px-4'>
-            <button
-              className={buttonStyle}
-              onClick={() => start()}
-            >
-              Get Started
-            </button>
-            <button
-              className={buttonStyle}
-              onClick={() => startTest()}
-            >
-              Test your progress 
-            </button>
+            {
+              user?.tested
+                ?(
+                  <button
+                    className={buttonStyle}
+                    onClick={() => start()}
+                  >
+                    Get Started
+                  </button>
+                )
+                :(
+                  <button
+                    className={buttonStyle}
+                    onClick={() => startTest()}
+                  >
+                    Test your progress 
+                  </button>
+                )
+            }
             {
               isAdmin ? (<AdminButton />) : (<></>)
             }
