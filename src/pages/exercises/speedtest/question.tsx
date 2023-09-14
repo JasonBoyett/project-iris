@@ -52,6 +52,8 @@ const Page: NextPage = () => {
   return (
     <>
       <Head>Speed Test</Head>
+      <HomeButton />
+      <SettingsButton />
       <main className='flex items-center justify-center h-screen text-white'>
         <FontProvider
           className='flex flex-col gap-4 items-center justify-center'
