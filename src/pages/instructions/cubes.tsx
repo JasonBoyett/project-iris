@@ -9,7 +9,7 @@ import { FontProvider } from "~/cva/fontProvider";
 import SettingsButton from "~/componants/settingsbutton";
 import HomeButton from "~/componants/homebutton";
 
-const MINUTE_IN_MILLISECONDS = 60_000
+const INSTRUCTION_DELAY = 5_000
 
 const Paragraph1 = () => {
   return (
@@ -27,7 +27,7 @@ const Paragraph1 = () => {
   )
 }
 
-const StartButton: React.FC = () => {
+function StartButton(){
   const [time, setTime] = useState(false)
   const router = useRouter()
 
@@ -36,7 +36,7 @@ const StartButton: React.FC = () => {
   }
 
   useEffect(() => {
-    setTimeout(() => setTime(true), MINUTE_IN_MILLISECONDS / 2)
+    setTimeout(() => setTime(true), INSTRUCTION_DELAY)
   }, [])
 
   return time ? (

@@ -9,7 +9,7 @@ import { FontProvider } from '~/cva/fontProvider'
 import SettingsButton from '~/componants/settingsbutton'
 import HomeButton from '~/componants/homebutton'
 
-const MINUTE_IN_MILLISECONDS = 60_000
+const INSTRUCTION_DELAY = 5_000
 
 const Paragraph1 = () => {
   return (
@@ -64,7 +64,7 @@ const StartButton = ({ option }: { option: string }) => {
   }
 
   useEffect(() => {
-    setTimeout(() => setTime(true), MINUTE_IN_MILLISECONDS / 2)
+    setTimeout(() => setTime(true), INSTRUCTION_DELAY)
   }, [])
 
   return time ? (

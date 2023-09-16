@@ -28,16 +28,16 @@ function Cell({
   counter,
   errorCounter,
 }: CellProps) {
-  const [clicked, setClicked] = useState(false)
+  const clicked = useRef(false)
   const store = useUserStore()
   const [font, setFont] = useState<SelectFont>('sans')
 
   function handleClick(){
-    if(innerValue !== counter && !clicked){  
+    if(innerValue !== counter && !clicked.current){  
       errorSetter(errorCounter + 1)
-      setClicked(true)
-    }    else if (!clicked) {
-      setClicked(true)
+      clicked.current = true 
+    }    else if (!clicked.current) {
+      clicked.current = true 
       counterSetter((prev) => prev + 1)
     }
   }
@@ -108,11 +108,7 @@ export default function SchulteTable({ sideLength }: SchulteTableProps){
     const cells = numbers.current.map(
       (number) => (
         <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
+          <div
           >
             <Cell
               innerValue={number}
@@ -122,7 +118,7 @@ export default function SchulteTable({ sideLength }: SchulteTableProps){
               key={v4()}
               errorCounter={errors.current}
             />
-          </motion.div>
+          </div>
         </>
       )
     )
