@@ -4,7 +4,7 @@ import type { Dispatch, SetStateAction } from 'react'
 import { motion } from 'framer-motion'
 import useUserStore from '~/stores/userStore'
 import type { SelectFont } from '~/utils/types'
-import Timer from '~/utils/timer'
+import { StopWatch } from '~/utils/timer'
 import { useRouter } from 'next/router'
 import { api } from '~/utils/api'
 import { formatDate } from '~/utils/helpers'
@@ -132,7 +132,7 @@ export default function EvensAndOdds(props: EvenOddProps){
   const evenCount = useRef(0)
   const errorCount = useRef(0)
   const GRID_CLASS = useState(`grid grid-cols-${props.cols}`)[0]
-  const timer = new Timer
+  const timer = new StopWatch
   const router = useRouter()
   const { mutate } = api.user.setUser.useMutation()
   const user = api.user.getUnique.useQuery().data

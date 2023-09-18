@@ -21,52 +21,54 @@ const LoadNext: NextPage = () => {
       case null || undefined:
         router.replace('/nav').catch((err) => console.log(err))
         break
-      case 'FOUR_BY_ONE':
+      case 'numberGuesser':
+        router
+          .replace('/exercises/numbermatcher')
+          .catch((err) => console.log(err))
+        break
+      case 'fourByOne':
         router
           .replace('/instructions/flashingwords/fourbyone')
           .catch((err) => console.log(err))
         break
-      case 'ONE_BY_TWO':
+      case 'oneByTwo':
         router
           .replace('/instructions/flashingwords/onebytwo')
           .catch((err) => console.log(err))
         break
-      case 'TWO_BY_TWO':
+      case 'twoByTwo':
         router
           .replace('/instructions/flashingwords/twobytwo')
           .catch((err) => console.log(err))
         break
-      case 'ONE_BY_ONE':
+      case 'oneByOne':
         router
           .replace('/instructions/flashingwords/onebyone')
           .catch((err) => console.log(err))
         break
-      case 'TWO_BY_ONE':
+      case 'twoByOne':
         router
           .replace('/instructions/flashingwords/twobyone')
           .catch((err) => console.log(err))
         break
-      case 'SCHULTE_BY_THREE':
+      case 'schulteByThree':
         router.replace('exercises/schulteby3').catch((err) => console.log(err))
         break
-      case 'SCHULTE_BY_FIVE':
+      case 'schulteByFive':
         router.replace('/exercises/schulteby5').catch((err) => console.log(err))
         break
-      case 'SCHULTE_BY_SEVEN':
+      case 'schulteBySeven':
         router.replace('exercises/schulteby7').catch((err) => console.log(err))
         break
-      // case 'SPEED_TEST':
-      //   router.replace('/exercises/speedtest').catch((err) => console.log(err))
-      //   break
-      case 'EVEN_NUMBERS':
+      case 'evenNumbers':
         router
           .replace('/exercises/evennumbers')
           .catch((err) => console.log(err))
         break
-      case 'CUBE_BY_TWO':
+      case 'cubeByTwo':
         router.replace('/exercises/cubebytwo').catch((err) => console.log(err))
         break
-      case 'CUBE_BY_THREE':
+      case 'cubeByThree':
         router
           .replace('/exercises/cubebythree')
           .catch((err) => console.log(err))

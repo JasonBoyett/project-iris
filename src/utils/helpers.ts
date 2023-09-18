@@ -1,6 +1,4 @@
-import type { User, Exercise } from './types'
-
-import { Exercise as ex } from './types'
+import { User, Exercise } from './types'
 
 export function userHilightToHex(user: User){
   switch (user.highlightColor) {
@@ -55,27 +53,27 @@ export function getNextExercise(user: User){
     return result
   }
 
-  if (!user.tested) return 'SPEED_TEST'
+  if (!user.tested) return 'speedTest'
 
   const isAlreadyDone = ({ user, exercise }: Is_already_done_params) => {
     switch (exercise) {
-      case 'FOUR_BY_ONE': return isToday(user.lastFourByOne)
-      case 'ONE_BY_TWO': return isToday(user.lastOneByTwo)
-      case 'TWO_BY_TWO': return isToday(user.lastTwoByTwo)
-      case 'ONE_BY_ONE': return isToday(user.lastOneByOne)
-      case 'SCHULTE_BY_THREE': return isToday(user.lastSchulteByThree)
-      case 'SCHULTE_BY_FIVE': return isToday(user.lastSchulteByFive)
-      case 'SCHULTE_BY_SEVEN': return isToday(user.lastSchulteBySeven)
-      case 'TWO_BY_ONE': return isToday(user.lastTwoByOne)
-      case 'EVEN_NUMBERS': return isToday(user.lastEvenNumbers)
-      // case 'SPEED_TEST': return isToday(user.lastSpeedTest)
-      case 'CUBE_BY_TWO': return isToday(user.lastCubeByTwo)
-      case 'CUBE_BY_THREE': return isToday(user.lastCubeByThree)
+      case 'fourByOne': return isToday(user.lastFourByOne)
+      case 'numberGuesser': return isToday(user.lastNumberGuesser)
+      case 'oneByTwo': return isToday(user.lastOneByTwo)
+      case 'twoByTwo': return isToday(user.lastTwoByTwo)
+      case 'oneByOne': return isToday(user.lastOneByOne)
+      case 'schulteByThree': return isToday(user.lastSchulteByThree)
+      case 'schulteByFive': return isToday(user.lastSchulteByFive)
+      case 'schulteBySeven': return isToday(user.lastSchulteBySeven)
+      case 'twoByOne': return isToday(user.lastTwoByOne)
+      case 'evenNumbers': return isToday(user.lastEvenNumbers)
+      case 'cubeByTwo': return isToday(user.lastCubeByTwo)
+      case 'cubeByThree': return isToday(user.lastCubeByThree)
       default: return null
     }
   }
 
-  ex.forEach((exercise: Exercise) => {
+  Exercise.forEach((exercise) => {
     if (!isAlreadyDone({ user, exercise })) {
       available.push(exercise)
     }

@@ -1,13 +1,12 @@
 import { formatDate } from '~/utils/helpers'
 import React, { useState, useRef, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import { v4 } from 'uuid'
 import { useRouter } from 'next/router'
 import { api } from '~/utils/api'
 import useUserStore from '~/stores/userStore'
 import { FontProvider } from '~/cva/fontProvider'
 import type { SelectFont } from '~/utils/types'
-import Timer from '~/utils/timer'
+import { StopWatch } from '~/utils/timer'
 
 type SchulteTableProps = {
   sideLength: 3 | 5 | 7
@@ -69,7 +68,7 @@ export default function SchulteTable({ sideLength }: SchulteTableProps){
   const user = store.user
   const totalCells = Math.pow(sideLength, 2)
   const [classString, setClassString] = useState('')
-  const timer = new Timer()
+  const stopWatch = new StopWatch()
   const numbers = useRef(
     Array.from({ length: totalCells }, (_, i) => i + 1).sort(
       () => Math.random() - 0.5,
@@ -81,7 +80,7 @@ export default function SchulteTable({ sideLength }: SchulteTableProps){
   }
 
   function teardown(){
-    timer.end()
+    stopWatch.end()
     //log info here
     switch (sideLength) {
       case 3:
@@ -139,7 +138,7 @@ export default function SchulteTable({ sideLength }: SchulteTableProps){
     if (sideLength === 3) setClassString('grid grid-cols-3 gap-1')
     if (sideLength === 5) setClassString('grid grid-cols-5 gap-1')
     if (sideLength === 7) setClassString('grid grid-cols-7 gap-1')
-    timer.start()
+    stopWatch.start()
   }, [])
 
   useEffect(() => {
