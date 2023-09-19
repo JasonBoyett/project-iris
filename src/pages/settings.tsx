@@ -9,7 +9,7 @@ import useUserStore from '~/stores/userStore'
 import type { Overlay } from '~/utils/types'
 import { HighlightButton } from '~/cva/highlightSelectorButton'
 import { FontProvider } from '~/cva/fontProvider'
-import type { Font } from '@prisma/client'
+import type { SelectFont as Font } from '~/utils/types'
 import type { Language } from "~/utils/types"
 
 const Page: NextPage = () => {
@@ -60,6 +60,7 @@ const Page: NextPage = () => {
           onSubmit={(e) => {
             e.preventDefault()
             if (!user) return
+            if (!currentFont) return 
             else if (
               (first === 'Unnamed' && last === 'User') ||
               (first === null && last === null)
