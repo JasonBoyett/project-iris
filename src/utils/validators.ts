@@ -6,8 +6,9 @@ export const userSchema = z.object({
   id: z.string(),
   firstName: z.string(),
   lastName: z.string(),
-  maxWpm: z.number(),
-  currentWpm: z.number(),
+  maxWpm: z.number().default(250),
+  currentWpm: z.number().default(230),
+  testSpeed: z.number().default(230),
   createdAt: z.date(),
   updatedAt: z.date(),
   highlightColor: z

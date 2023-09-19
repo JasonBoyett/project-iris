@@ -46,7 +46,7 @@ export default function Page(){
     setFont(userStore.user.font)
     exerciseStore.setUp(data)
     setLoading(() => false)
-    setTime(wpmToMiliseconds(userStore.user.currentWpm))
+    setTime(wpmToMiliseconds(userStore.user.testSpeed))
   },[data, userStore.user])
   
   useInterval(() => {

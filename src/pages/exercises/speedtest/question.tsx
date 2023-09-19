@@ -18,15 +18,27 @@ export default function Page(){
   const [answerD, setAnswerD] = useState('Loading..')
   const [question, setQuestion] = useState('Loading..')
   const [font, setFont] = useState<SelectFont>('sans')
+  const [rate, setRate] = useState(0)
   const router = useRouter()
 
   function handleClick(answer: string){
+    if (!userStore.user) return
     console.log('registered click')
     console.log('ran')
     exerciseStore.setResponse(answer)
     exerciseStore.incrementResponseCount()
     if (exerciseStore.current.correctAnswer === answer) {
-      exerciseStore.incrementCorrect()
+      exerciseStore.incrementCorrect(rate)
+      userStore.setUser({
+        ...userStore.user, 
+        testSpeed: rate + 10,
+      })
+    }
+    else{
+      userStore.setUser({
+        ...userStore.user, 
+        testSpeed: rate - 10,
+      })
     }
     if (exerciseStore.totalResponses < TESTS_PER_DAY - 1) {
       router.replace('/exercises/speedtest').catch((err) => console.log(err))
@@ -45,6 +57,7 @@ export default function Page(){
     setAnswerB(exerciseStore.current.answerB)
     setAnswerC(exerciseStore.current.answerC)
     setAnswerD(exerciseStore.current.answerD)
+    setRate(userStore.user.testSpeed)
     setFont(userStore.user.font)
   }, [exerciseStore, userStore.user])
 

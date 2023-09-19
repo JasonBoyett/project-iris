@@ -45,14 +45,15 @@ model User {
   updatedAt               DateTime                 @updatedAt
   firstName               String                   @default("Defaul") @db.VarChar(255)
   lastName                String                   @default("User") @db.VarChar(255)
-  maxWpm                  Int                      @db.SmallInt
-  currentWpm              Int                      @db.SmallInt
+  maxWpm                  Int                      @db.SmallInt @default(250)
+  testSpeed               Int                      @db.SmallInt @default(230)
+  currentWpm              Int                      @db.SmallInt @default(230)
   timeTests               TimeTest[]
   shulteSessions          ShulteSession[]
   evenNumberSessions      EvenNumberSession[]
   wordGridFlasherSessions WordGridFlasherSession[]
   wordFlasherSessions     WordFlasherSession[]
-  highlightColor          Overlay
+  highlightColor          Overlay                  @default(GREY)
   lastSchulteByFive       String                   @default(" ")
   lastSchulteByThree      String                   @default(" ")
   lastSchulteBySeven      String                   @default(" ")

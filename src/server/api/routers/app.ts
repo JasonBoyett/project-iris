@@ -25,12 +25,8 @@ export const userRouter = createTRPCRouter({
           id: ctx.auth.userId?.toString(),
           firstName: ctx.auth.user?.firstName ?? '',
           lastName: ctx.auth.user?.lastName ?? '',
-          maxWpm: 250,
-          currentWpm: 100,
           createdAt: new Date(),
           updatedAt: new Date(),
-          highlightColor: 'GREY',
-          font: 'sans',
         },
       })
       return newUser

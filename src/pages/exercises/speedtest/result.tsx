@@ -12,6 +12,9 @@ import HomeButton from '~/componants/homebutton'
 import { api } from '~/utils/api'
 import { formatDate } from '~/utils/helpers'
 
+const GOOD_GRADE = 8 //since the user will be seeing 10 questions this means they got a B
+const FAILING_GRADE = 5 //since the user will be seeing 10 questions this means they got a D
+
 export default function Result(){
   const [correct, setCorrect] = useState(0)
   const [font, setFont] = useState<SelectFont>('sans')
@@ -23,6 +26,33 @@ export default function Result(){
   function saveData(){
     //TODO create a data saving function in TRPC
     console.log('saving data')
+  }
+
+  function getAvg(nums: number[]){
+    return nums.reduce(
+      (previous, current) => (current += previous) / 2
+    )
+  }
+
+  function getNewSpeed(){
+    if(!userStore.user) return
+    if(!speedTestStore) return 
+    if(speedTestStore.correctResponses === 0) return null
+    if(speedTestStore.correctResponses >= GOOD_GRADE){
+      const avg = Math.floor(getAvg(speedTestStore.correctSpeeds) /10) * 10
+      return {
+        max: avg,
+        current: Math.floor(avg/ 0.9 / 10) * 10
+      }
+    }
+    else if(speedTestStore.correctResponses < FAILING_GRADE){
+      const maxSpeed = speedTestStore.correctSpeeds.sort().pop() as number
+      return {
+        max: maxSpeed,
+        //this will get the highest speed the user got correct
+        current: Math.floor(maxSpeed / 0.9 / 10) * 10
+      }
+    }
   }
 
   function saveCompletionAndRaiseWpm(){
@@ -47,11 +77,22 @@ export default function Result(){
 
   function saveCompletion(){
     if (!userStore.user) return
-    mutate({ ...userStore.user, lastSpeedTest: formatDate(new Date()) })
+    const newSpeed = getNewSpeed()
+    if(!newSpeed) return 
+    // this will force the user to retest if they get 0 correct
+    // by not updating the boolean that says they have tested
+    mutate({ ...userStore.user, 
+      lastSpeedTest: formatDate(new Date()),
+      tested: true,
+      maxWpm: newSpeed.max,
+      currentWpm: newSpeed.current,
+    })
     userStore.setUser({
       ...userStore.user,
       lastSpeedTest: formatDate(new Date()),
       tested: true,
+      maxWpm: newSpeed.max,
+      currentWpm: newSpeed.current,
     })
   }
 

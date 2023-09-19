@@ -1,7 +1,9 @@
 import HomeButton from '~/componants/homebutton'
-import SchulteTable from '~/componants/schultetable'
 import Head from 'next/head'
 import SettingsButton from '~/componants/settingsbutton'
+import dynamic from 'next/dynamic'
+
+const SchulteTable = dynamic(() => import('~/componants/schultetable'), { ssr: false })
 
 export default function Page(){
   return (
@@ -9,13 +11,13 @@ export default function Page(){
       <Head>
         <title>Speed Read</title>
       </Head>
-      <body className='grid min-h-screen'>
+      <div className='grid min-h-screen'>
         <HomeButton />
         <SettingsButton />
         <div className='flex flex-col items-center justify-center'>
           <SchulteTable sideLength={3} />
         </div>
-      </body>
+      </div>
     </>
   )
 }

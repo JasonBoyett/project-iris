@@ -107,14 +107,13 @@ export default function SchulteTable({ sideLength }: SchulteTableProps){
     const cells = numbers.current.map(
       (number) => (
         <>
-          <div
-          >
+          <div>
             <Cell
               innerValue={number}
               counterSetter={setCount}
               errorSetter={setErrors}
               counter={counter}
-              key={v4()}
+              key={number}
               errorCounter={errors.current}
             />
           </div>

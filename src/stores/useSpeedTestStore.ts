@@ -17,16 +17,18 @@ export const useSpeedTestStore = create<{
   current: SpeedTest
   correctResponses: number
   totalResponses: number
+  correctSpeeds: number[]
   setUp: (speedTest: SpeedTest) => void
   setResponse: (anser: string) => void
   incrementResponseCount: () => void
-  incrementCorrect: () => void
+  incrementCorrect: (speed: number) => void
   clear: () => void
 }>()(
   persist(
     (set) => ({
       current: emptySpeedTest,
       correctResponses: 0,
+      correctSpeeds: [],
       totalResponses: 0,
       setUp: (speedTest) =>
         set((state) => ({
@@ -50,8 +52,9 @@ export const useSpeedTestStore = create<{
           }
           return res
         }),
-      incrementCorrect: () =>
+      incrementCorrect: (speed: number) =>
         set((state) => {
+          state.correctSpeeds.push(speed)
           const res = {
             current: state.current,
             correctResponses: state.correctResponses + 1,
@@ -61,6 +64,7 @@ export const useSpeedTestStore = create<{
         }),
       clear: () =>
         set(() => ({
+          correctSpeeds: [],
           current: emptySpeedTest,
           totalResponses: 0,
           correctResponses: 0,

@@ -53,10 +53,10 @@ export function getNextExercise(user: User){
     return result
   }
 
-  if (!user.tested) return 'speedTest'
 
   const isAlreadyDone = ({ user, exercise }: Is_already_done_params) => {
     switch (exercise) {
+      case 'speedTest': return user.tested
       case 'fourByOne': return isToday(user.lastFourByOne)
       case 'numberGuesser': return isToday(user.lastNumberGuesser)
       case 'oneByTwo': return isToday(user.lastOneByTwo)
