@@ -8,8 +8,7 @@ import type { User } from '~/utils/types'
 import useUserStore from '~/stores/userStore'
 import type { Overlay } from '~/utils/types'
 import { HighlightButton } from '~/cva/highlightSelectorButton'
-import { FontProvider } from '~/cva/fontProvider'
-import type { Font } from '@prisma/client'
+import type { SelectFont } from '~/utils/types'
 import type { Language } from "~/utils/types"
 
 const Page: NextPage = () => {
@@ -20,13 +19,8 @@ const Page: NextPage = () => {
   const [currentWpm, setCurrentWpm] = useState<number>()
   const { mutate } = api.user.setUser.useMutation()
   const store = useUserStore()
-  const [hideFont, setHideFont] = useState(true)
-  const [currentHilight, setCurrentHilight] = useState<Overlay>(
-    user?.highlightColor as Overlay ?? store.user?.highlightColor as Overlay ?? 'GREY'
-  )
-  const [currentFont, setCurrentFont] = useState<Font>(
-    user?.font as Font ?? store.user?.font as Font ?? 'sans'
-  )
+  const [currentHilight, setCurrentHilight] = useState<Overlay>('GREY')
+  const [currentFont, setCurrentFont] = useState<SelectFont>('sans')
   const inputStyle =
     'rounded-full p-4 h-16 py-5 bg-white/20 text-black font-normal'
   const router = useRouter()
@@ -37,7 +31,7 @@ const Page: NextPage = () => {
       setLast(user.lastName)
       setCurrentWpm(user.currentWpm)
       setCurrentHilight(user.highlightColor as Overlay)
-      setCurrentFont(user.font)
+      setCurrentFont(user.font as SelectFont)
       setCurrentLanguage(user.language)
     }
     else if(store.user){
@@ -45,10 +39,10 @@ const Page: NextPage = () => {
       setLast(store.user.lastName)
       setCurrentWpm(store.user.currentWpm)
       setCurrentHilight(store.user.highlightColor as Overlay)
-      setCurrentFont(store.user.font as Font)
+      setCurrentFont(store.user.font as SelectFont)
       setCurrentLanguage(store.user.language)
     }
-  }, [])
+  }, [user, store])
   return (
     <>
       <Head>Settings</Head>
@@ -60,6 +54,7 @@ const Page: NextPage = () => {
           onSubmit={(e) => {
             e.preventDefault()
             if (!user) return
+            if(!currentFont) return 
             else if (
               (first === 'Unnamed' && last === 'User') ||
               (first === null && last === null)
@@ -251,7 +246,6 @@ const Page: NextPage = () => {
           </label>
           <label className='py-4 text-white text-2xl font-bold'>
             Random Word Language:{' '}
-          </label>
           <button
             className='bg-white/20 rounded-full p-4 h-12 w-40 py-2 text-2xl text-white font-bold'
             type='button'
@@ -266,158 +260,25 @@ const Page: NextPage = () => {
           >
             Español {currentLanguage === 'spanish' ? '✓' : ''}
           </button>
-          <button
-            type='button'
-            onClick={() => setHideFont(!hideFont)}
-            className='bg-white/20 rounded-full p-4 h-12 w-40 py-2 text-2xl text-white font-bold'
-          >
-            Set Font
-          </button>
-          <label
-            className={
-              !hideFont
-                ? 'grid items-center py-4 text-white text-2xl font-bold p-2 gap-2'
-                : 'hidden'
-            }
-          >
-            <FontProvider font='sans'>
-              <button
-                className='bg-white/20 rounded-full p-4 h-12 py-2'
-                type='button'
-                onClick={() => setCurrentFont('sans')}
-              >
-                Sans
-              </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'sans' ? '✓' : ''
-                }</span>
-            </FontProvider>
-            <FontProvider font='serif'>
-              <button
-                className='bg-white/20 rounded-full p-4 h-12 py-2'
-                type='button'
-                onClick={() => setCurrentFont('serif')}
-              >
-                Serif
-              </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'serif' ? '✓' : ''
-                }</span>
-            </FontProvider>
-            <FontProvider font='mono'>
-              <button
-                className='bg-white/20 rounded-full p-4 h-12 py-2'
-                type='button'
-                onClick={() => setCurrentFont('mono')}
-              >
-                Mono
-              </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'mono' ? '✓' : ''
-                }</span>
-            </FontProvider>
-            <FontProvider font='rem'>
-              <button
-                className='bg-white/20 rounded-full p-4 h-12 py-2'
-                type='button'
-                onClick={() => setCurrentFont('rem')}
-              >
-                Rem
-              </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'rem' ? '✓' : ''
-                }</span>
-            </FontProvider>
-            <FontProvider
-              font='ibmPlexMono'
-              className='text-2xl'
-            >
-              <button
-                className='bg-white/20 rounded-full p-4 h-12 py-2'
-                type='button'
-                onClick={() => setCurrentFont('ibmPlexMono')}
-              >
-                IBM
-              </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'ibmPlexMono' ? '✓' : ''
-                }</span>
-            </FontProvider>
-            <FontProvider
-              font='robotoMono'
-              className='text-2xl'
-            >
-              <button
-                className='bg-white/20 rounded-full p-4 h-12 py-2'
-                type='button'
-                onClick={() => setCurrentFont('robotoMono')}
-              >
-                Roboto
-              </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'robotoMono' ? '✓' : ''
-                }</span>
-            </FontProvider>
-            <FontProvider
-              font='kanit'
-              className='text-2xl'
-            >
-              <button
-                className='bg-white/20 rounded-full p-4 h-12 py-2'
-                type='button'
-                onClick={() => setCurrentFont('kanit')}
-              >
-                Kanit
-              </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'kanit' ? '✓' : ''
-                }</span>
-            </FontProvider>
-            <FontProvider
-              font='preahvihear'
-              className='text-2xl'
-            >
-              <button
-                className='bg-white/20 rounded-full p-4 h-12 py-2'
-                type='button'
-                onClick={() => setCurrentFont('preahvihear')}
-              >
-                Preahvihear
-              </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'preahvihear' ? '✓' : ''
-                }</span>
-            </FontProvider>
-            <FontProvider
-              font='bebasNeue'
-              className='text-2xl'
-            >
-              <button
-                className='bg-white/20 rounded-full p-4 h-12 py-2'
-                type='button'
-                onClick={() => setCurrentFont('bebasNeue')}
-              >
-                Bebas
-              </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'bebasNeue' ? '✓' : ''
-                }</span>
-            </FontProvider>
-            <FontProvider
-              font='chakraPetch'
-              className='text-2xl'
-            >
-              <button
-                className='bg-white/20 rounded-full p-4 h-12 py-2'
-                type='button'
-                onClick={() => setCurrentFont('chakraPetch')}
-              >
-                Chakra
-              </button>
-                <span className='text-5xl text-green-400'>{
-                  currentFont === 'chakraPetch' ? '✓' : ''
-                }</span>
-            </FontProvider>
+          </label>
+          <label className='py-4 text-white text-2xl font-bold'>
+            Font:{' '}
+            <select
+              id='fontPicker'
+              onChange={(e) => setCurrentFont(e.target.value as SelectFont)}
+              defaultValue={currentFont as string}
+              className='bg-white/20 text-white text-2xl rounded-lg w-40 p-2.5'>
+              <option value='sans' className='bg-slate-500 font-sans'>Sans</option>
+              <option value='mono' className='bg-slate-500 font-mono'>Mono</option>
+              <option value='serif' className='bg-slate-500 font-serif'>Serif</option>
+              <option value='robotoMono' className='bg-slate-500 font-robotoMono'>Roboto Mono</option>
+              <option value='rem' className='bg-slate-500 font-rem'>Rem</option>
+              <option value='kanti' className='bg-slate-500 font-kanit'>Kanti</option>
+              <option value='preahvihear' className='bg-slate-500 font-preahvihear'>Preahvihear</option>
+              <option value='bebasNeue' className='bg-slate-500 font-bebasNeue'>BebasNeue</option>
+              <option value='chakraPetch' className='bg-slate-500 font-chakraPetch'>Chakra Petch</option>
+              <option value='ibmPlexMono' className='bg-slate-500 font-ibmPlexMono'>Ibm Plex Mono</option>
+              </select>
           </label>
           <button className='bg-white/20 rounded-full p-4 h-16 py-5 text-white font-normal'>
             Save

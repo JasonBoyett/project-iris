@@ -29,7 +29,6 @@ function Cell({
 }: CellProps) {
   const clicked = useRef(false)
   const store = useUserStore()
-  const [font, setFont] = useState<SelectFont>('sans')
 
   function handleClick(){
     if(innerValue !== counter && !clicked.current){  
@@ -43,18 +42,16 @@ function Cell({
 
   useEffect(() => {
     if (!store.user) return
-    setFont(store.user.font)
   }, [store])
 
   return (
-    <FontProvider
-      font={font}
-      className='h12 w-12 text-white text-lg md:text-2xl flex items-center justify-center rounded-md bg-white/20 md:h-20 md:w-20'
+    <div
+      className='h-12 w-12 text-white text-lg md:text-2xl flex items-center justify-center rounded-md bg-white/20 md:h-20 md:w-20'
       onClick={handleClick}
       id={v4()}
     >
       {innerValue}
-    </FontProvider>
+    </div>
   )
 }
 
