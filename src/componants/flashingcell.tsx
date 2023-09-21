@@ -184,7 +184,7 @@ export function createCells({
   return cells
 }
 
-function Grid({ rows = 5, layout, next }: GridProps){
+function Grid({ rows = 4, layout, next }: GridProps){
   const [cellCounter, setCounter] = useState<number>(0)
   const [fetched, setFetched] = useState<string[]>([])
   const fetchWords = api.getExcerciseProps.getRandomWords
@@ -194,7 +194,7 @@ function Grid({ rows = 5, layout, next }: GridProps){
     layoutManager(layout)
   const [grid, setGrid] = useState<JSX.Element[]>()
   const returnClass = useState<string>(
-    `grid grid-cols-${width} gap-2 bg-white p-12 rounded-lg shadow-md h-auto w-2/5 items-center`,
+    `grid grid-cols-${width} gap-2 bg-white p-12 rounded-lg shadow-md md:h-auto h-min md:w-2/5 w-4/5 items-center`,
   )[0]
   const ref = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState<boolean>(false)
