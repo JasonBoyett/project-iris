@@ -1,10 +1,11 @@
 import axios from 'axios'
 import { Prisma } from '@prisma/client'
-import { z as zodValidate } from 'zod'
+import { z } from 'zod'
 import type { SpeedQuestion } from '@prisma/client'
 import type { User } from '~/utils/types'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { schemas, inputs } from '~/utils/validators'
+import { getNextExercise, getNextURL } from '~/utils/helpers'
 
 export const userRouter = createTRPCRouter({
   getUnique: publicProcedure
@@ -88,8 +89,8 @@ export const excercisesPropsRouter = createTRPCRouter({
   }),
 
   getMultipleSpeedTestProps: publicProcedure
-  .output(zodValidate.array(schemas.speedTest))
-  .input(zodValidate.number())
+  .output(z.array(schemas.speedTest))
+  .input(z.number())
   .query(async ({ input, ctx }) => {
     const result = await ctx.prisma.$queryRaw<Array<SpeedQuestion>>(
       Prisma.sql`SELECT * FROM SpeedQuestion ORDER BY RANDOM() LIMIT ${input}`,
@@ -100,7 +101,7 @@ export const excercisesPropsRouter = createTRPCRouter({
 
   getRandomWords: publicProcedure
   .input(inputs.randomWords)
-  .output(zodValidate.array(zodValidate.string()).or(zodValidate.undefined()))
+  .output(z.array(z.string()).or(z.undefined()))
   .query<string[] | undefined>(async ({ input }) => {
     if (input.language === 'spanish') {
       const response = await axios.get<string[]>(
@@ -135,5 +136,15 @@ export const createSpeedTestRouter = createTRPCRouter({
         correctAnswer: input.correctAnswer,
       },
     })
+  })
+})
+
+export const createNextExcerciseRouter = createTRPCRouter({
+  get: publicProcedure
+  .input(schemas.user)
+  .output(z.string())
+  .query(({ input }) =>{
+    const next = getNextExercise(input)
+    return getNextURL(next)
   })
 })
