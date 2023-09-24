@@ -72,11 +72,6 @@ export const speedTestSchema = z.object({
   correctAnswer: z.string(),
 })
 
-export const schemas = {
-  user: userSchema,
-  speedTest: speedTestSchema,
-}
-
 const randomWordInputs = z.object({
   number: z.number(),
   language: z.union([
@@ -84,6 +79,28 @@ const randomWordInputs = z.object({
     z.literal('spanish'),
   ]),
 })
+
+const exercise = z.union([
+  z.literal('fourByOne'),
+  z.literal('oneByTwo'),
+  z.literal('twoByTwo'),
+  z.literal('oneByOne'),
+  z.literal('twoByOne'),
+  z.literal('schulteByThree'),
+  z.literal('schulteByFive'),
+  z.literal('schulteBySeven'),
+  z.literal('speedTest'),
+  z.literal('evenNumbers'),
+  z.literal('cubeByTwo'),
+  z.literal('cubeByThree'),
+  z.literal('numberGuesser'),
+])
+
+export const schemas = {
+  user: userSchema,
+  speedTest: speedTestSchema,
+  exercise: exercise
+}
 
 export const inputs = {
   randomWords: randomWordInputs,

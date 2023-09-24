@@ -1,6 +1,6 @@
-import { User, Exercise } from './types'
+import { type User, Exercise } from './types'
 
-export function userHilightToHex(user: User){
+export function userHilightToHex(user: User) {
   switch (user.highlightColor) {
     case 'BLUE':
       return '#96adfc'
@@ -32,7 +32,10 @@ export function userHilightToHex(user: User){
  * it removes it from the list of available exercises.
  * If the user has done all the exercises, the function returns null.
  **/
-export function getNextExercise(user: User){
+export function getNextExercise(user: User | undefined | null) {
+
+  if (!user) return null
+
   const available: Exercise[] = []
 
   type Is_already_done_params = {
@@ -40,7 +43,7 @@ export function getNextExercise(user: User){
     exercise: Exercise
   }
 
-  function isToday(date2: string | undefined){
+  function isToday(date2: string | undefined) {
     if (!date2) return false
     const today = formatDate(new Date())
     const date2Formatted = date2
@@ -101,4 +104,40 @@ export const formatDate = (date: Date | undefined) => {
         year: string,
       ) => `${dayOfWeek} ${month} ${day} ${year}`,
     )
+}
+
+export function getNextURL(next: Exercise | undefined | null): string {
+  if (!next) {
+    return '/done'
+  }
+  switch (next) {
+    case null || undefined:
+      return '/nav'
+    case 'numberGuesser':
+        return '/exercises/numbermatcher'
+    case 'fourByOne':
+        return '/instructions/flashingwords/fourbyone'
+    case 'oneByTwo':
+        return '/instructions/flashingwords/onebytwo'
+    case 'twoByTwo':
+        return '/instructions/flashingwords/twobytwo'
+    case 'oneByOne':
+        return '/instructions/flashingwords/onebyone'
+    case 'twoByOne':
+      return '/instructions/flashingwords/twobyone'
+    case 'schulteByThree':
+      return 'exercises/schulteby3'
+    case 'schulteByFive':
+      return '/exercises/schulteby5'
+    case 'schulteBySeven':
+      return 'exercises/schulteby7'
+    case 'evenNumbers':
+        return '/exercises/evennumbers'
+    case 'cubeByTwo':
+      return '/exercises/cubebytwo'
+    case 'cubeByThree':
+        return '/exercises/cubebythree'
+    default:
+      return '/done'
+  }
 }
