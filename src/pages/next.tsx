@@ -5,12 +5,11 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import Butterfly from 'public/flying-butterfly.gif'
 import { useEffect, useState } from 'react'
-import { document } from 'postcss'
 import LoadingSpinner from '~/componants/loadingspinner'
 import HomeButton from '~/componants/homebutton'
 import SettingsButton from '~/componants/settingsbutton'
 
-const Page: NextPage = () => {
+export default function Page(){
   const router = useRouter()
   const empty = <LoadingSpinner />
   const [button, setButton] = useState(empty)
@@ -53,4 +52,3 @@ const Page: NextPage = () => {
     </>
   )
 }
-export default Page

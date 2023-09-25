@@ -4,22 +4,32 @@ import { useRouter } from 'next/router'
 import HomeButton from '~/componants/homebutton'
 import SettingsButton from '~/componants/settingsbutton'
 
-export default function Page(){
+export default function Page() {
   const router = useRouter()
   const [approved, setApproved] = useState(false)
   const user = api.user.getUnique.useQuery().data
-  
-  const navToCreatQuestion = () => {
+
+  function navToCreatQuestion() {
     router.push('/admin/createquestion').catch(err => console.log(err))
   }
 
+  function navToTestExercise() {
+    router.push('/admin/testexercise').catch(err => console.log(err))
+  }
 
-  function Display(){
-    return(
+
+  function Display() {
+    return (
       <>
         <HomeButton />
         <SettingsButton />
-        <div className="flex flex-col items-center justify-center min-h-screen py-2">
+        <div className="flex flex-col items-center justify-center min-h-screen py-2 gap-2">
+          <button
+            onClick={navToTestExercise}
+            className='flex bg-white/20 rounded-full items-center p-4 h-12 py-2 text-white text-4xl font-normal'
+          >
+            Test Exercise
+          </button>
           <button
             onClick={navToCreatQuestion}
             className='flex bg-white/20 rounded-full items-center p-4 h-12 py-2 text-white text-4xl font-normal'
@@ -31,8 +41,8 @@ export default function Page(){
     )
   }
 
-  function Loading(){
-    return(
+  function Loading() {
+    return (
       <>
         <HomeButton />
         <SettingsButton />
@@ -44,15 +54,15 @@ export default function Page(){
   }
 
   useEffect(() => {
-    if(!user) return
-    if(!user.isAdmin){
+    if (!user) return
+    if (!user.isAdmin) {
       router.push('/').catch(err => console.log(err))
     }
-    else{
+    else {
       setApproved(true)
     }
   }, [user])
 
-  return approved ? <Display /> : <Loading /> 
+  return approved ? <Display /> : <Loading />
 
 }

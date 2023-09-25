@@ -9,16 +9,21 @@ import { api } from '~/utils/api'
 const LoadNext: NextPage = () => {
   const router = useRouter()
   const store = useUserStore()
-  const nextURL = api.nextExercise.get.useQuery(store.user as User, {enabled: !!store.user})
-
-  const selectedExercise = () => {
-    if(!nextURL.data) return
-    router.replace(nextURL.data).catch((err) => console.log(err))
-  }
+  const nextURL = api.nextExercise.get.useQuery(
+    store.user as User, 
+    {enabled: !!store.user}
+  )
 
   useEffect(() => {
-    if(!nextURL) return
-    selectedExercise()
+    if(nextURL.data){  
+      router.replace(nextURL.data)
+        .catch((err) => console.log(err))
+    }  
+    else if(nextURL.error){
+      router.replace('/nav')
+        .catch((err) => console.log(err))
+    }
+    else return
   }, [nextURL])
 
   return (

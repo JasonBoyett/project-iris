@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import HomeButton from '~/componants/homebutton'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { api } from '~/utils/api'
 import type { User } from '~/utils/types'
 import useUserStore from '~/stores/userStore'
@@ -10,6 +10,7 @@ import type { Overlay } from '~/utils/types'
 import { HighlightButton } from '~/cva/highlightSelectorButton'
 import type { SelectFont } from '~/utils/types'
 import type { Language } from "~/utils/types"
+import LoadingSpinner from '~/componants/loadingspinner'
 
 const Page: NextPage = () => {
   const user: User | undefined = api.user.getUnique.useQuery<User>().data
@@ -261,12 +262,13 @@ const Page: NextPage = () => {
             Español {currentLanguage === 'spanish' ? '✓' : ''}
           </button>
           </label>
+          <Suspense fallback={ <LoadingSpinner/> }>
           <label className='py-4 text-white text-2xl font-bold'>
             Font:{' '}
             <select
               id='fontPicker'
               onChange={(e) => setCurrentFont(e.target.value as SelectFont)}
-              defaultValue={currentFont as string}
+              value={currentFont as string}
               className='bg-white/20 text-white text-2xl rounded-lg w-40 p-2.5'>
               <option value='sans' className='bg-slate-500 font-sans'>Sans</option>
               <option value='mono' className='bg-slate-500 font-mono'>Mono</option>
@@ -280,7 +282,9 @@ const Page: NextPage = () => {
               <option value='ibmPlexMono' className='bg-slate-500 font-ibmPlexMono'>Ibm Plex Mono</option>
               </select>
           </label>
+          </Suspense>
           <button className='bg-white/20 rounded-full p-4 h-16 py-5 text-white font-normal'>
+
             Save
           </button>
         </form>
