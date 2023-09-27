@@ -65,6 +65,8 @@ export const userRouter = createTRPCRouter({
         lastCubeByTwo: input.lastCubeByTwo,
         lastNumberGuesser: input.lastNumberGuesser,
         numberGuesserFigures: input.numberGuesserFigures,
+        isAdmin: input.isAdmin,
+        isStudySubject: input.isStudySubject,
         font: input.font,
         language: input.language,
         tested: input.tested,

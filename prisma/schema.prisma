@@ -70,6 +70,7 @@ model User {
   numberGuesserFigures    Int                      @default(4)
   font                    Font                     @default(sans)
   isAdmin                 Boolean                  @default(false)
+  isStudySubject          Boolean                  @default(false)
   language                Language                 @default(english)
   tested                  Boolean                  @default(false)
 

@@ -58,6 +58,7 @@ export const userSchema = z.object({
   lastCubeByTwo: z.string().default(' '),
   numberGuesserFigures: z.number().default(0),
   isAdmin: z.boolean().default(false),
+  isStudySubject: z.boolean().default(false),
   tested: z.boolean().default(false),
 })
 
