@@ -1,34 +1,13 @@
-//this page literally exists exclusively to give the database enough time to update between excercises LOL
-import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import Butterfly from 'public/flying-butterfly.gif'
-import { useEffect, useState } from 'react'
-import LoadingSpinner from '~/componants/loadingspinner'
 import HomeButton from '~/componants/homebutton'
 import SettingsButton from '~/componants/settingsbutton'
 
-export default function Page(){
+export default function Page() {
   const router = useRouter()
-  const empty = <LoadingSpinner />
-  const [button, setButton] = useState(empty)
-  const startButton = (
-    <button
-      name='start'
-      className='text-white md:text-5xl text-4xl bg-white/10 flex items-center justify-center rounded-full md:w-40 w-60 p-4 h-16 hover:bg-white/20'
-      onClick={() => {
-        router.replace('/loadnext').catch((err) => console.error(err))
-      }}
-    >
-      Start
-    </button>
-  )
-  useEffect(() => {
-    setTimeout(() => {
-      setButton(startButton)
-    }, 1500)
-  }, [])
+
   return (
     <>
       <Head>Next Excercise</Head>
@@ -46,7 +25,17 @@ export default function Page(){
           <p className='md:text-5xl text-4xl text-center text-white font-bold'>
             Click for your next exercise!
           </p>
-          <div className='flex items-center justify-center p-12'>{button}</div>
+          <div className='flex items-center justify-center p-12'>
+            <button
+              name='start'
+              className='text-white md:text-5xl text-4xl bg-white/10 flex items-center justify-center rounded-full md:w-40 w-60 p-4 h-16 hover:bg-white/20'
+              onClick={() => {
+                router.replace('/loadnext').catch((err) => console.error(err))
+              }}
+            >
+              Start
+            </button>
+          </div>
         </div>
       </main>
     </>

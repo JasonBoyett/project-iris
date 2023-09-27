@@ -8,8 +8,18 @@ import { SignedIn, SignedOut } from '@clerk/clerk-react'
 import { SignIn } from '@clerk/clerk-react'
 import { useUserStore } from '~/stores/userStore'
 import SettingsButton from '~/componants/settingsbutton'
+import type { Exercise, User} from '~/utils/types'
+import { isAlreadyDone } from '~/utils/helpers'
 
-const Page: NextPage = () => {
+function ExerciseView({ text, exercise, user }: { text: string, exercise: Exercise, user: User }) {
+  return (
+    <p className='text-white md:text-3xl text-2xl text-center'>
+      {text + (isAlreadyDone(user, exercise) ? ' ✓' : '')}
+    </p>
+  )
+}
+
+export default function Page(){
   const buttonStyle =
     'text-white md:text-3xl bg-white/10 rounded-full p-4 h-16 hover:bg-white/20'
 
@@ -96,4 +106,3 @@ const Page: NextPage = () => {
     </>
   )
 }
-export default Page

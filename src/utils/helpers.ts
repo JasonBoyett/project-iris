@@ -24,6 +24,39 @@ export function userHilightToHex(user: User) {
       return '#F8fd89'
   }
 }
+
+function isToday(date2: string | undefined) {
+  if (!date2) return false
+  const today = formatDate(new Date())
+  const date2Formatted = date2
+
+  console.log('today:', today)
+  console.log('date2:', date2Formatted)
+
+  const result = today === date2Formatted
+  console.log('result:', result)
+  return result
+}
+
+export function isAlreadyDone(user: User, exercise: Exercise) {
+  switch (exercise) {
+    case 'speedTest': return user.tested
+    case 'fourByOne': return isToday(user.lastFourByOne)
+    case 'numberGuesser': return isToday(user.lastNumberGuesser)
+    case 'oneByTwo': return isToday(user.lastOneByTwo)
+    case 'twoByTwo': return isToday(user.lastTwoByTwo)
+    case 'oneByOne': return isToday(user.lastOneByOne)
+    case 'schulteByThree': return isToday(user.lastSchulteByThree)
+    case 'schulteByFive': return isToday(user.lastSchulteByFive)
+    case 'schulteBySeven': return isToday(user.lastSchulteBySeven)
+    case 'twoByOne': return isToday(user.lastTwoByOne)
+    case 'evenNumbers': return isToday(user.lastEvenNumbers)
+    case 'cubeByTwo': return isToday(user.lastCubeByTwo)
+    case 'cubeByThree': return isToday(user.lastCubeByThree)
+    default: return null
+  }
+}
+
 /**
  * getNextExercise takes a user object and returns the next exercise to be displayed.
  * First the function checks if the user has already done a speed test that day.
@@ -38,46 +71,9 @@ export function getNextExercise(user: User | undefined | null) {
 
   const available: Exercise[] = []
 
-  type Is_already_done_params = {
-    user: User
-    exercise: Exercise
-  }
-
-  function isToday(date2: string | undefined) {
-    if (!date2) return false
-    const today = formatDate(new Date())
-    const date2Formatted = date2
-
-    console.log('today:', today)
-    console.log('date2:', date2Formatted)
-
-    const result = today === date2Formatted
-    console.log('result:', result)
-    return result
-  }
-
-
-  const isAlreadyDone = ({ user, exercise }: Is_already_done_params) => {
-    switch (exercise) {
-      case 'speedTest': return user.tested
-      case 'fourByOne': return isToday(user.lastFourByOne)
-      case 'numberGuesser': return isToday(user.lastNumberGuesser)
-      case 'oneByTwo': return isToday(user.lastOneByTwo)
-      case 'twoByTwo': return isToday(user.lastTwoByTwo)
-      case 'oneByOne': return isToday(user.lastOneByOne)
-      case 'schulteByThree': return isToday(user.lastSchulteByThree)
-      case 'schulteByFive': return isToday(user.lastSchulteByFive)
-      case 'schulteBySeven': return isToday(user.lastSchulteBySeven)
-      case 'twoByOne': return isToday(user.lastTwoByOne)
-      case 'evenNumbers': return isToday(user.lastEvenNumbers)
-      case 'cubeByTwo': return isToday(user.lastCubeByTwo)
-      case 'cubeByThree': return isToday(user.lastCubeByThree)
-      default: return null
-    }
-  }
 
   Exercise.forEach((exercise) => {
-    if (!isAlreadyDone({ user, exercise })) {
+    if (!isAlreadyDone(user, exercise)) {
       available.push(exercise)
     }
   })
@@ -114,15 +110,15 @@ export function getNextURL(next: Exercise | undefined | null): string {
     case null || undefined:
       return '/nav'
     case 'numberGuesser':
-        return '/exercises/numbermatcher'
+      return '/exercises/numbermatcher'
     case 'fourByOne':
-        return '/instructions/flashingwords/fourbyone'
+      return '/instructions/flashingwords/fourbyone'
     case 'oneByTwo':
-        return '/instructions/flashingwords/onebytwo'
+      return '/instructions/flashingwords/onebytwo'
     case 'twoByTwo':
-        return '/instructions/flashingwords/twobytwo'
+      return '/instructions/flashingwords/twobytwo'
     case 'oneByOne':
-        return '/instructions/flashingwords/onebyone'
+      return '/instructions/flashingwords/onebyone'
     case 'twoByOne':
       return '/instructions/flashingwords/twobyone'
     case 'schulteByThree':
@@ -132,11 +128,11 @@ export function getNextURL(next: Exercise | undefined | null): string {
     case 'schulteBySeven':
       return 'exercises/schulteby7'
     case 'evenNumbers':
-        return '/exercises/evennumbers'
+      return '/exercises/evennumbers'
     case 'cubeByTwo':
       return '/exercises/cubebytwo'
     case 'cubeByThree':
-        return '/exercises/cubebythree'
+      return '/exercises/cubebythree'
     default:
       return '/done'
   }
