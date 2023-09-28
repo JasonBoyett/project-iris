@@ -1,19 +1,15 @@
-import { Timer } from "~/utils/timer"
 import { useRef, useEffect, useState } from "react"
 import { api } from "~/utils/api"
 import { useRouter } from "next/router"
 import useUserStore from "~/stores/userStore"
 import { formatDate } from "~/utils/helpers"
+import useTimer from '~/hooks/useTimer'
 
 const CORRECT_INCREASE_SEGFIGS = 5
 const INCORRECT_DECREASE_SEGFIGS = 3
 
 function numberGen(segfigs: number) {
-  return Math.floor(Math.random() * (10 ** segfigs))
-}
-
-function wpmToSingleTick(wpm: number) {
-  return 60000 / wpm
+  return Math.floor(Math.random() * (10 ** segfigs)).toString()
 }
 
 type NumberButtonProps = {
@@ -39,6 +35,7 @@ function NumberButton({ number, callBack, className, disabled = false }: NumberB
 }
 
 export default function NumberMatcher() {
+  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   const [guess, setGuess] = useState('')
   const segFigs = useRef(0)
   const correctStreak = useRef(0)
@@ -49,24 +46,18 @@ export default function NumberMatcher() {
   const [showingTarget, setShowing] = useState(true)
   const user = api.user.getUnique.useQuery()
   const router = useRouter()
-  const timer = new Timer(
-    "milliseconds",
-    1000,
-    handleFlash
-  )
-  const componantTimer = new Timer(
+  // const timer = useTimer(
+  //   "seconds",
+  //   1,
+  //   handleFlash,
+  // )
+  const componantTimer = useTimer(
     "minutes",
     1,
-    teardown
+    teardown,
   )
-  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-  function handleFlash() {
-    setShowing(false)
-  }
 
   function handleCorrect() {
-    if (!timer) throw new Error('timer not defined')
     correctStreak.current += 1
     incorrectStreak.current = 0
     if (correctStreak.current >= CORRECT_INCREASE_SEGFIGS) {
@@ -76,7 +67,7 @@ export default function NumberMatcher() {
     setGuess('')
     setTarget(numberGen(segFigs.current).toString())
     setShowing(true)
-    timer.restart()
+    setTimeout(() => setShowing(false), 1000)
   }
 
   function handleIncorrect() {
@@ -87,7 +78,9 @@ export default function NumberMatcher() {
       incorrectStreak.current = 0
     }
     setGuess('')
-    timer.restart()
+    setTarget(numberGen(segFigs.current).toString())
+    setShowing(true)
+    setTimeout(() => setShowing(false), 1000)
   }
 
   function submit() {
@@ -100,20 +93,20 @@ export default function NumberMatcher() {
 
 
   function teardown() {
-    if (!user.data) return
-    console.log('teardown')
-    //TODO add session data tracking here
-    mutate({
-      ...user.data,
-      lastNumberGuesser: formatDate(new Date()),
-      numberGuesserFigures: segFigs.current,
-    })
-    userStore.setUser({
-      ...user.data,
-      lastNumberGuesser: formatDate(new Date()),
-      numberGuesserFigures: segFigs.current,
-    })
-    router.push('/loadnext').catch((err) => console.log(err))
+    if (user.data) {
+      //TODO add session data tracking here
+      mutate({
+        ...user.data,
+        lastNumberGuesser: formatDate(new Date()),
+        numberGuesserFigures: segFigs.current,
+      })
+      userStore.setUser({
+        ...user.data,
+        lastNumberGuesser: formatDate(new Date()),
+        numberGuesserFigures: segFigs.current,
+      })
+    }
+    router.push('/next').catch((err) => console.log(err))
   }
 
   useEffect(() => {
@@ -124,10 +117,14 @@ export default function NumberMatcher() {
     setTimeout(() => setTarget('GO!'), 3000)
     setTimeout(() => {
       segFigs.current = user.data.numberGuesserFigures
-      setTarget(numberGen(segFigs.current).toString())
+      setTarget(numberGen(segFigs.current))
+      console.log(target)
       componantTimer.start()
-      timer.start()
+      // timer.start()
     }, 4000)
+    setTimeout(() => {
+      setShowing(false)
+    }, 5000)
   }, [user.data])
 
   return (
