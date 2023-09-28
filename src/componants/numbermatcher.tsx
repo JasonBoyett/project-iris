@@ -8,7 +8,7 @@ import { formatDate } from "~/utils/helpers"
 const CORRECT_INCREASE_SEGFIGS = 5
 const INCORRECT_DECREASE_SEGFIGS = 3
 
-function numberGen(segfigs: number){
+function numberGen(segfigs: number) {
   return Math.floor(Math.random() * (10 ** segfigs))
 }
 
@@ -23,8 +23,8 @@ type NumberButtonProps = {
   callBack: (arg: string) => void
 }
 
-function NumberButton({ number, callBack, className, disabled=false }: NumberButtonProps) {
-  function handleClick() { 
+function NumberButton({ number, callBack, className, disabled = false }: NumberButtonProps) {
+  function handleClick() {
     callBack(number.toString())
   }
   return (
@@ -45,25 +45,31 @@ export default function NumberMatcher() {
   const incorrectStreak = useRef(0)
   const { mutate } = api.user.setUser.useMutation()
   const userStore = useUserStore()
-  const [target, setTarget] = useState(numberGen(segFigs.current).toString())
+  const [target, setTarget] = useState<string>()
   const [showingTarget, setShowing] = useState(true)
   const user = api.user.getUnique.useQuery()
   const router = useRouter()
-  let timer: Timer
-  let componantTimer: Timer
+  const timer = new Timer(
+    "milliseconds",
+    1000,
+    handleFlash
+  )
+  const componantTimer = new Timer(
+    "minutes",
+    1,
+    teardown
+  )
   const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-  function handleFlash(){
+  function handleFlash() {
     setShowing(false)
   }
 
-  function handleCorrect(){
-    console.log('correct') 
-    console.log("guess: " + guess, "target: " + target)
-    console.log("streak: ", correctStreak)
+  function handleCorrect() {
+    if (!timer) throw new Error('timer not defined')
     correctStreak.current += 1
     incorrectStreak.current = 0
-    if(correctStreak.current >= CORRECT_INCREASE_SEGFIGS){
+    if (correctStreak.current >= CORRECT_INCREASE_SEGFIGS) {
       segFigs.current += 1
       correctStreak.current = 0
     }
@@ -73,32 +79,29 @@ export default function NumberMatcher() {
     timer.restart()
   }
 
-  function handleIncorrect(){
-    console.log('incorrect')
-    console.log("guess: " + guess, "target: " + target)
-    console.log("streak: ", correctStreak)
+  function handleIncorrect() {
     incorrectStreak.current += 1
     correctStreak.current = 0
-    if(incorrectStreak.current >= INCORRECT_DECREASE_SEGFIGS){
+    if (incorrectStreak.current >= INCORRECT_DECREASE_SEGFIGS) {
       segFigs.current -= 1
       incorrectStreak.current = 0
     }
     setGuess('')
-    setTarget(numberGen(segFigs.current).toString())
-    setShowing(true)
     timer.restart()
   }
 
-  function submit(){
-    if(guess === target){
+  function submit() {
+    if (guess === target) {
       handleCorrect()
     } else {
       handleIncorrect()
     }
   }
 
-  function teardown(){
-    if(!user.data) return
+
+  function teardown() {
+    if (!user.data) return
+    console.log('teardown')
     //TODO add session data tracking here
     mutate({
       ...user.data,
@@ -114,63 +117,60 @@ export default function NumberMatcher() {
   }
 
   useEffect(() => {
-    if(!user.data) return 
-    segFigs.current = user.data.numberGuesserFigures
-    timer = new Timer(
-     "milliseconds",
-      wpmToSingleTick(user.data.currentWpm / 4),
-      handleFlash
-    )
-    componantTimer = new Timer(
-     "minutes",
-      1,
-      teardown
-    )
-    componantTimer.start()
-    timer.start()
-  }, [user])
+    if (!user.data) return
+    setTarget((3).toString())
+    setTimeout(() => setTarget((2).toString()), 1000)
+    setTimeout(() => setTarget((1).toString()), 2000)
+    setTimeout(() => setTarget('GO!'), 3000)
+    setTimeout(() => {
+      segFigs.current = user.data.numberGuesserFigures
+      setTarget(numberGen(segFigs.current).toString())
+      componantTimer.start()
+      timer.start()
+    }, 4000)
+  }, [user.data])
 
   return (
     <div className='grid grid-cols-1 gap-1'>
-    <div className='flex flex-col items-center justify-center min-h-screen gap-1'>
-    <div className='flex items-center justify-center rounded-lg bg-white/20 w-full md:h-24  text-4xl text-white'>
+      <div className='flex flex-col items-center justify-center min-h-screen gap-1'>
+        <div className='flex items-center justify-center rounded-lg bg-white/20 w-full md:h-24  text-4xl text-white'>
           {
-            showingTarget 
+            showingTarget
               ? target
               : guess
           }
-    </div>
-      <div className='grid grid-cols-1 gap-1'>
-        <div className="grid grid-cols-3 gap-1">
-          {numbers.map((number) => (
+        </div>
+        <div className='grid grid-cols-1 gap-1'>
+          <div className="grid grid-cols-3 gap-1">
+            {numbers.map((number) => (
+              <NumberButton
+                className='flex bg-white/20 items-center justify-center rounded-lg p-4 md:h-24 md:w-24 text-white text-4xl'
+                key={number}
+                disabled={showingTarget}
+                number={number}
+                callBack={(arg: string) => setGuess((prev) => prev + arg)}
+              />
+            ))}
+            <button
+              className='flex bg-white/20 items-center justify-center rounded-lg p-4 md:h-24 text-white text-4xl'
+              onClick={submit}
+            >
+              ✓
+            </button>
             <NumberButton
-              className='flex bg-white/20 items-center justify-center rounded-lg p-4 md:h-24 md:w-24 text-white text-4xl'
-              key={number}
-              disabled={showingTarget}
-              number={number}
-              callBack={ (arg: string) => setGuess((prev) => prev + arg) }
+              className='flex bg-white/20 items-center justify-center rounded-lg p-4 md:h-24 text-white text-4xl'
+              number={0}
+              callBack={(arg: string) => setGuess((prev) => prev + arg)}
             />
-          ))}
-          <button
-            className='flex bg-white/20 items-center justify-center rounded-lg p-4 md:h-24 text-white text-4xl'
-            onClick={submit}
-          >
-            ✓
-          </button>
-          <NumberButton
-            className='flex bg-white/20 items-center justify-center rounded-lg p-4 md:h-24 text-white text-4xl'
-            number={0}
-            callBack={ (arg: string) => setGuess((prev) => prev + arg) }
-          />
-          <button
-            className='flex bg-white/20 items-center justify-center rounded-lg p-4 md:h-24 text-white text-4xl'
-            onClick={() => setGuess((prev) => prev.slice(0, -1))}
-          >
-            ⌫
-          </button>
+            <button
+              className='flex bg-white/20 items-center justify-center rounded-lg p-4 md:h-24 text-white text-4xl'
+              onClick={() => setGuess((prev) => prev.slice(0, -1))}
+            >
+              ⌫
+            </button>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   )
 }

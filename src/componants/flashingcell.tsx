@@ -49,7 +49,6 @@ interface GridType extends ReactElement {
 type GridProps = {
   layout: FlasherLayout
   rows?: number
-  next?: string
 }
 
 const layoutManager = (layout: FlasherLayout) => {
@@ -184,10 +183,9 @@ export function createCells({
   return cells
 }
 
-function Grid({ rows = 4, layout, next }: GridProps){
+function Grid({ rows = 4, layout,  }: GridProps){
   const [cellCounter, setCounter] = useState<number>(0)
   const [fetched, setFetched] = useState<string[]>([])
-  const fetchWords = api.getExcerciseProps.getRandomWords
   const words = useRef<string[][]>([])
   const section = useRef<number>(0)
   const [wordsPerCell, width]: [number, number] | number[] =

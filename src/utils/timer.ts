@@ -98,6 +98,9 @@ export class Timer {
   }
 
   public start() {
+    if(this.ticker) {
+      clearInterval(this.ticker)
+    }
     this.running = true
     this.time = Date.now()
     this.ticker = setInterval(() => {
@@ -119,6 +122,7 @@ export class Timer {
   }
 
   public setCallback(callback: VoidFunction) {
+
     this.callback = callback
   }
 

@@ -16,11 +16,11 @@ const LoadNext: NextPage = () => {
 
   useEffect(() => {
     if(nextURL.data){  
-      router.replace(nextURL.data)
+      router.push(nextURL.data)
         .catch((err) => console.log(err))
     }  
     else if(nextURL.error){
-      router.replace('/nav')
+      router.push('/nav')
         .catch((err) => console.log(err))
     }
     else return

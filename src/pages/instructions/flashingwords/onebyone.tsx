@@ -82,7 +82,6 @@ const StartButton = ({ option }: { option: string }) => {
 const Page: NextPage = () => {
   const userStore = useUserStore()
   const [font, setFont] = useState<SelectFont>('sans')
-  const router = useRouter()
   const option = '1by1'
 
   useEffect(() => {
