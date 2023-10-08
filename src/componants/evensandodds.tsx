@@ -9,9 +9,9 @@ import { useRouter } from 'next/router'
 import { api } from '~/utils/api'
 import { formatDate } from '~/utils/helpers'
 const DEFAULT =
-  'flex text-white md:text-3xl text-2xl justify-center p-4 border-2 border-slate-700 gap-0 bg-white/20'
+  'flex text-white md:text-3xl text-2xl justify-center p-4 bg-white/10 rounded-md'
 const HILIGHT =
-  'flex text-white md:text-3xl text-2xl justify-center p-4 bg-blue-500 border-2 border-slate-700 gap-0 bg-slate-700/40'
+  'flex text-white md:text-3xl text-2xl justify-center p-4 bg-blue-500 gap-0 bg-slate-700/40 rounded-md'
 
 type EvenOddProps = {
   segFigs: number
@@ -131,7 +131,7 @@ function Grid({ props, evenEvent,oddEvent } : GenerateorProps){
 export default function EvensAndOdds(props: EvenOddProps){
   const evenCount = useRef(0)
   const errorCount = useRef(0)
-  const GRID_CLASS = useState(`grid grid-cols-${props.cols}`)[0]
+  const GRID_CLASS = useState(`grid grid-cols-${props.cols} gap-1`)[0]
   const timer = new StopWatch
   const router = useRouter()
   const { mutate } = api.user.setUser.useMutation()

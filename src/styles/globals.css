@@ -19,7 +19,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-gradient-to-br from-blue-800 to-sky-600;
+  @apply bg-gradient-to-b from-[#2e026d] to-[#15162c]
 }
 
 stdButton:global {

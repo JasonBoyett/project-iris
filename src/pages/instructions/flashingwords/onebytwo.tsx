@@ -27,7 +27,7 @@ const Paragraph1 = () => {
   )
 }
 
-const StartButton = ({ option }: { option: string }) => {
+function StartButton({ option }: { option: string }){
   const [time, setTime] = useState(false)
   const router = useRouter()
 

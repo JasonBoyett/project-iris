@@ -37,7 +37,7 @@ export const userSchema = z.object({
     z.literal('chakraPetch'),
     z.literal('ibmPlexMono'),
   ])
-   .default('sans'),
+    .default('sans'),
   language: z.union([
     z.literal('english'),
     z.literal('spanish'),

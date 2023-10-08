@@ -2,14 +2,17 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 
 type TimeMeasure = 'milliseconds' | 'seconds' | 'minutes'
 
-export default function useTimer(timeUnit: TimeMeasure, endTime: number, callback: VoidFunction) {
+export default function useTimer(
+  timeUnit: TimeMeasure, 
+  endTime: number, 
+  eventName: string) {
   const time = useRef(0)
   const running = useRef(false)
   const ticker = useRef<NodeJS.Timer>()
   const duration = useRef(0)
   const delay = useRef(0)
   const unit = useRef<TimeMeasure>(timeUnit)
-  const action = useCallback(callback, [])
+  const event = new Event(eventName)
   const end = (() => {
       switch (unit.current) {
         case 'milliseconds':
@@ -45,7 +48,7 @@ export default function useTimer(timeUnit: TimeMeasure, endTime: number, callbac
     duration.current = Date.now() - time.current
     if (duration.current >= end) {
       running.current = false
-      callback()
+      document.dispatchEvent(event)
       // clearInterval(ticker.current)
     }
   }, [])

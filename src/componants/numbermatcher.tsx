@@ -45,16 +45,12 @@ export default function NumberMatcher() {
   const [target, setTarget] = useState<string>()
   const [showingTarget, setShowing] = useState(true)
   const user = api.user.getUnique.useQuery()
+  const eventName = "teardown number matcher"
   const router = useRouter()
-  // const timer = useTimer(
-  //   "seconds",
-  //   1,
-  //   handleFlash,
-  // )
   const componantTimer = useTimer(
     "minutes",
     1,
-    teardown,
+    eventName,
   )
 
   function handleCorrect() {
@@ -109,6 +105,8 @@ export default function NumberMatcher() {
     router.push('/next').catch((err) => console.log(err))
   }
 
+  document.addEventListener(eventName, teardown)
+
   useEffect(() => {
     if (!user.data) return
     setTarget((3).toString())
@@ -120,7 +118,6 @@ export default function NumberMatcher() {
       setTarget(numberGen(segFigs.current))
       console.log(target)
       componantTimer.start()
-      // timer.start()
     }, 4000)
     setTimeout(() => {
       setShowing(false)
