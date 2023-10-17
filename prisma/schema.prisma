@@ -39,40 +39,61 @@ enum Language {
   spanish
 }
 
+enum HighlightType {
+  fourByOne
+  oneByTwo
+  twoByTwo
+  oneByOne
+  twoByOne
+}
+
+enum SchulteType {
+  three
+  five
+  seven
+}
+
+enum BoxType {
+  two
+  three
+}
+
 model User {
-  id                      String                   @id @unique
-  createdAt               DateTime                 @default(now())
-  updatedAt               DateTime                 @updatedAt
-  firstName               String                   @default("Defaul") @db.VarChar(255)
-  lastName                String                   @default("User") @db.VarChar(255)
-  maxWpm                  Int                      @db.SmallInt @default(250)
-  testSpeed               Int                      @db.SmallInt @default(230)
-  currentWpm              Int                      @db.SmallInt @default(230)
+  id                      String                 @id @unique
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @updatedAt
+  firstName               String                 @default("Defaul") @db.VarChar(255)
+  lastName                String                 @default("User") @db.VarChar(255)
+  maxWpm                  Int                    @default(250) @db.SmallInt
+  testSpeed               Int                    @default(230) @db.SmallInt
+  currentWpm              Int                    @default(230) @db.SmallInt
   timeTests               TimeTest[]
-  shulteSessions          ShulteSession[]
+  shulteSessions          SchulteSession[]
   evenNumberSessions      EvenNumberSession[]
-  wordGridFlasherSessions WordGridFlasherSession[]
+  wordGridFlasherSessions HighlightSession[]
   wordFlasherSessions     WordFlasherSession[]
-  highlightColor          Overlay                  @default(GREY)
-  lastSchulteByFive       String                   @default(" ")
-  lastSchulteByThree      String                   @default(" ")
-  lastSchulteBySeven      String                   @default(" ")
-  lastSpeedTest           String                   @default(" ")
-  lastFourByOne           String                   @default(" ")
-  lastOneByTwo            String                   @default(" ")
-  lastTwoByTwo            String                   @default(" ")
-  lastOneByOne            String                   @default(" ")
-  lastTwoByOne            String                   @default(" ")
-  lastEvenNumbers         String                   @default(" ")
-  lastCubeByTwo           String                   @default(" ")
-  lastCubeByThree         String                   @default(" ")
-  lastNumberGuesser       String                   @default(" ")
-  numberGuesserFigures    Int                      @default(4)
-  font                    Font                     @default(sans)
-  isAdmin                 Boolean                  @default(false)
-  isStudySubject          Boolean                  @default(false)
-  language                Language                 @default(english)
-  tested                  Boolean                  @default(false)
+  highlightColor          Overlay                @default(GREY)
+  lastSchulteByFive       String                 @default(" ")
+  lastSchulteByThree      String                 @default(" ")
+  lastSchulteBySeven      String                 @default(" ")
+  lastSpeedTest           String                 @default(" ")
+  lastFourByOne           String                 @default(" ")
+  lastOneByTwo            String                 @default(" ")
+  lastTwoByTwo            String                 @default(" ")
+  lastOneByOne            String                 @default(" ")
+  lastTwoByOne            String                 @default(" ")
+  lastEvenNumbers         String                 @default(" ")
+  lastCubeByTwo           String                 @default(" ")
+  lastCubeByThree         String                 @default(" ")
+  lastNumberGuesser       String                 @default(" ")
+  numberGuesserFigures    Int                    @default(4)
+  font                    Font                   @default(sans)
+  isAdmin                 Boolean                @default(false)
+  isStudySubject          Boolean                @default(false)
+  language                Language               @default(english)
+  tested                  Boolean                @default(false)
+  NumberGuesserSession    NumberGuesserSession[]
+  BoxFlasherSession       BoxFlasherSession[]
 
   @@index([id])
 }
@@ -90,36 +111,49 @@ model TimeTest {
   @@index([id])
 }
 
-model ShulteSession {
-  id         String   @unique
-  user       User     @relation(fields: [userId], references: [id])
-  sideLength Int      @db.TinyInt
-  startTime  DateTime @db.DateTime
-  endTime    DateTime @db.DateTime
-  errorCount Int      @db.SmallInt
-  userId     String   @db.VarChar(255)
+model SchulteSession {
+  id         String      @unique
+  user       User        @relation(fields: [userId], references: [id])
+  type       SchulteType
+  time       Int
+  errorCount Int         @db.SmallInt
+  userId     String      @db.VarChar(255)
 
   @@index([id])
 }
 
 model EvenNumberSession {
-  id            String   @unique
-  userId        String
-  user          User     @relation(fields: [userId], references: [id])
-  errorCount    Int      @db.SmallInt
-  numberCleared Int      @db.SmallInt
-  date          DateTime @db.DateTime
+  id         String   @unique
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  errorCount Int      @db.SmallInt
+  time       Int
+  date       DateTime @db.DateTime
 
   @@index([id])
 }
 
-model WordGridFlasherSession {
-  id     String   @unique
+model HighlightSession {
+  id     String        @unique
   userId String
-  user   User     @relation(fields: [userId], references: [id])
-  speed  Int      @db.SmallInt
-  date   DateTime @db.DateTime
-  type   String   @db.VarChar(255)
+  user   User          @relation(fields: [userId], references: [id])
+  speed  Int           @db.SmallInt
+  date   DateTime      @db.DateTime
+  type   HighlightType
+
+  @@index([id])
+}
+
+model NumberGuesserSession {
+  id             String   @unique
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  numberCorrect  Int
+  numberWrong    Int
+  longestStreak  Int
+  figuresAtStart Int
+  figuresAtEnd   Int
+  date           DateTime @db.DateTime
 
   @@index([id])
 }
@@ -131,6 +165,17 @@ model WordFlasherSession {
   speed  Int      @db.SmallInt
   date   DateTime @db.DateTime
   type   String   @db.VarChar(255)
+
+  @@index([id])
+}
+
+model BoxFlasherSession {
+  id     String   @unique
+  userId String
+  user   User     @relation(fields: [userId], references: [id])
+  speed  Int
+  date   DateTime @db.DateTime
+  type   BoxType
 
   @@index([id])
 }

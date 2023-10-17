@@ -97,6 +97,53 @@ const exercise = z.union([
   z.literal('numberGuesser'),
 ])
 
+export const highlightData = z.object({
+  type: z.union([
+    z.literal('fourByOne'),
+    z.literal('oneByTwo'),
+    z.literal('twoByTwo'),
+    z.literal('oneByOne'),
+    z.literal('twoByOne'),
+  ]),
+  userId: z.string(),
+  speed: z.number(),
+})
+
+export const schulteData = z.object({
+  userId: z.string(),
+  type: z.union([
+    z.literal('three'),
+    z.literal('five'),
+    z.literal('seven'),
+  ]),
+  time: z.number(),
+  errorCount: z.number(),
+})
+
+export const numberGuesserData = z.object({
+  userId: z.string(),
+  numberCorrect: z.number(),
+  numberWrong: z.number(),
+  longestStreak: z.number(),
+  figuresAtStart: z.number(),
+  figuresAtEnd: z.number(),
+})
+
+export const evenNumbersData = z.object({
+  userId: z.string(),
+  time: z.number(),
+  errorCount: z.number(),
+})
+
+export const boxFlasherData = z.object({
+  userId: z.string(),
+  type: z.union([
+    z.literal('two'),
+    z.literal('three'),
+  ]),
+  speed: z.number(),
+})
+
 export const schemas = {
   user: userSchema,
   speedTest: speedTestSchema,

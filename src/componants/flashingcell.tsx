@@ -16,21 +16,13 @@ import { api } from '~/utils/api'
 import type { SelectFont, User } from '~/utils/types'
 import { formatDate } from '~/utils/helpers'
 import { FontProvider } from '~/cva/fontProvider'
+import type { HighlightType } from '~/utils/types'
 
 const counterContext = createContext<number>(0)
 
 interface CellType extends ReactElement {
   display: JSX.Element
   flash: (current: number) => void
-}
-
-export enum FlasherLayout {
-  ONE_BY_ONE = 'ONE_BY_ONE',
-  ONE_BY_TWO = 'ONE_BY_TWO',
-  TWO_BY_ONE = 'TWO_BY_ONE',
-  TWO_BY_TWO = 'TWO_BY_TWO',
-  FOUR_BY_TWO = 'FOUR_BY_TWO',
-  FOUR_BY_ONE = 'FOUR_BY_ONE',
 }
 
 type CellProps = {
@@ -47,29 +39,27 @@ interface GridType extends ReactElement {
 }
 
 type GridProps = {
-  layout: FlasherLayout
+  type: HighlightType
   rows?: number
 }
 
-const layoutManager = (layout: FlasherLayout) => {
+const layoutManager = (layout: HighlightType) => {
   switch (layout) {
-    case FlasherLayout.ONE_BY_ONE:
+    case 'oneByOne':
       return [1, 1]
-    case FlasherLayout.ONE_BY_TWO:
+    case 'oneByTwo':
       return [1, 2]
-    case FlasherLayout.TWO_BY_ONE:
+    case 'twoByOne':
       return [2, 1]
-    case FlasherLayout.TWO_BY_TWO:
+    case 'twoByTwo':
       return [2, 2]
-    case FlasherLayout.FOUR_BY_TWO:
-      return [4, 2]
-    case FlasherLayout.FOUR_BY_ONE:
+    case 'fourByOne':
       return [4, 1]
   }
 }
 
-function colorSelector(user: User){
-  switch(user.highlightColor) {
+function colorSelector(user: User) {
+  switch (user.highlightColor) {
     case 'BLUE': return 'blue'
     case 'BLUE_GREY': return 'blueGrey'
     case 'GREEN': return 'green'
@@ -88,7 +78,7 @@ export function partitionWords(
   words: string[],
   sections: number,
   frames: number,
-){
+) {
   const partitionedWords: string[][] = []
   const wordJoiner: string[] = []
   const wordsPerCell = words.length / sections
@@ -101,7 +91,7 @@ export function partitionWords(
   return partitionedWords
 }
 
-function Cell({ content, location, loadCheck, user }: CellProps){
+function Cell({ content, location, loadCheck, user }: CellProps) {
   const [intent, setIntent] = useState<'noFlash' | 'flash' | null | undefined>(
     'noFlash',
   )
@@ -166,7 +156,7 @@ export function createCells({
   words: string[] | undefined
   user: User
   loadCheck: React.Dispatch<React.SetStateAction<boolean>>
-}){
+}) {
   const cells: ReactElement[] = []
   if (!words) return
   words.forEach((word, index) => {
@@ -183,13 +173,12 @@ export function createCells({
   return cells
 }
 
-function Grid({ rows = 4, layout,  }: GridProps){
+function Grid({ rows = 4, type, }: GridProps) {
   const [cellCounter, setCounter] = useState<number>(0)
   const [fetched, setFetched] = useState<string[]>([])
   const words = useRef<string[][]>([])
   const section = useRef<number>(0)
-  const [wordsPerCell, width]: [number, number] | number[] =
-    layoutManager(layout)
+  const [wordsPerCell, width]: [number, number] | number[] = layoutManager(type)
   const [grid, setGrid] = useState<JSX.Element[]>()
   const returnClass = useState<string>(
     `grid grid-cols-${width} gap-2 bg-white p-12 rounded-lg shadow-md md:h-auto h-min md:w-2/5 w-4/5 items-center`,
@@ -203,63 +192,71 @@ function Grid({ rows = 4, layout,  }: GridProps){
   const { mutate } = api.user.setUser.useMutation()
   const buff = api.getExcerciseProps.getRandomWords.useQuery(
     {
-    number: wordsPerCell * (user?.currentWpm as number),
-    language: user?.language as "english" | "spanish",
+      number: wordsPerCell * (user?.currentWpm as number),
+      language: user?.language as "english" | "spanish",
     },
-    {enabled: !!user}
+    { enabled: !!user }
   )
+  const collectData = api.highlightSession.setUnique.useMutation()
 
-  function setSpeed(user: User | undefined){
-    if (!user) return 60_000/200 
+  function setSpeed(user: User | undefined) {
+    if (!user) return 60_000 / 200
     return 60_000 / user.currentWpm
   }
 
-  function markComplete(){
+  function markComplete() {
     if (!user) return
-    if (layout === FlasherLayout.ONE_BY_ONE) {
+    if (type === 'oneByOne') {
       mutate({ lastOneByOne: formatDate(new Date()) })
-      store.setUser({ ...user, lastOneByOne: formatDate(new Date()) }) 
+      store.setUser({ ...user, lastOneByOne: formatDate(new Date()) })
     }
-    if (layout === FlasherLayout.ONE_BY_TWO) {
+    if (type === 'oneByTwo') {
       mutate({ lastOneByTwo: formatDate(new Date()) })
       store.setUser({ ...user, lastOneByTwo: formatDate(new Date()) })
     }
-    if (layout === FlasherLayout.FOUR_BY_ONE) {
+    if (type === 'fourByOne') {
       mutate({ lastFourByOne: formatDate(new Date()) })
       store.setUser({ ...user, lastFourByOne: formatDate(new Date()) })
     }
-    if (layout === FlasherLayout.TWO_BY_TWO) {
+    if (type === 'twoByTwo') {
       mutate({ lastTwoByTwo: formatDate(new Date()) })
       store.setUser({ ...user, lastTwoByTwo: formatDate(new Date()) })
     }
-    if (layout === FlasherLayout.TWO_BY_ONE) {
+    if (type === 'twoByOne') {
       mutate({ lastTwoByOne: formatDate(new Date()) })
       store.setUser({ ...user, lastTwoByOne: formatDate(new Date()) })
     }
   }
 
-  function tearDown(){
-    //TODO impliment data collection here
+  function tearDown() {
+    if (!user) return
+    if (user.isStudySubject) {
+      collectData.mutate({
+        userId: user.id,
+        type: type,
+        speed: user.currentWpm,
+      })
+    }
     markComplete()
     return router.replace('/next').catch((err) => console.log(err))
   }
 
   useEffect(() => {
-    if(!buff.data) return
-    setFetched(buff.data) 
+    if (!buff.data) return
+    setFetched(buff.data)
   }, [buff])
 
   useEffect(() => {
     if (!user) return
     (() => {
-      const wordsArry = fetched 
+      const wordsArry = fetched
       words.current = partitionWords(
         wordsArry,
         wordsArry.length / wordsPerCell,
         rows * width,
       )
-      setGrid(createCells({ 
-        words: words.current[0], 
+      setGrid(createCells({
+        words: words.current[0],
         loadCheck: setIsVisible,
         user: user
       }))

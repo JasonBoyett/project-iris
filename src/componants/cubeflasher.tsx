@@ -7,13 +7,14 @@ import useInterval from '~/hooks/useInterval'
 import { formatDate } from '~/utils/helpers'
 import { useRouter } from 'next/router'
 import { FontProvider } from '~/cva/fontProvider'
-import { SelectFont } from '~/utils/types'
+import type { SelectFont } from '~/utils/types'
+import { user } from '~/utils/schema'
 
 export function partitionWords(
   words: string[],
   sections: number,
   frames: number,
-){
+) {
   const partitionedWords: string[][] = []
   const wordJoiner: string[] = []
   const wordsPerCell = words.length / sections
@@ -31,7 +32,7 @@ type CornerFlasherCellProps = {
   wordsArray: string[]
 }
 
-function CornerFlasherCell({ number, wordsArray }: CornerFlasherCellProps){
+function CornerFlasherCell({ number, wordsArray }: CornerFlasherCellProps) {
   const store = useCubeStore()
   const [visible, setVisible] = useState<boolean>(false)
   useEffect(() => {
@@ -78,7 +79,7 @@ type CornerFlasherProps = {
   number: 2 | 3
 }
 
-export default function CornerFlasher({ number }: CornerFlasherProps){
+export default function CornerFlasher({ number }: CornerFlasherProps) {
   const store = useCubeStore()
   const [font, setFont] = useState<SelectFont>('sans')
   const userStore = useUserStore()
@@ -86,7 +87,6 @@ export default function CornerFlasher({ number }: CornerFlasherProps){
   const [section, setSection] = useState<number>(0)
   const [counter, setCounter] = useState<number>(0)
   const router = useRouter()
-  // let done = false
   const { data } = api.getExcerciseProps.getRandomWords.useQuery(
     {
       number: userStore.user?.currentWpm as number * 4,
@@ -97,19 +97,33 @@ export default function CornerFlasher({ number }: CornerFlasherProps){
   const cubes = useRef<JSX.Element[]>([])
   const formattedCubes = useRef<JSX.Element[][]>([])
   const [displayedCubes, setDisplayedCubes] = useState<JSX.Element[] | undefined>([])
+  const collectData = api.boxFlasherSession.setUnique.useMutation()
 
-  const getRate = () => {
-    if(!userStore.user) return 60_000 / 200
+  function getRate() {
+    if (!userStore.user) return 60_000 / 200
     return 60_000 / userStore.user.currentWpm
   }
 
-  function tearDown(){
-    //TODO write data collection
-    console.log('done')
+  function tearDown() {
+    if (!userStore.user) return
+    if (userStore.user.isStudySubject) {
+      collectData.mutate({
+        type: (() => {
+          switch (number) {
+            case 2: return 'two'
+            case 3: return 'three'
+            default: return 'two'
+          }
+        })(),
+        userId: userStore.user.id,
+        speed: userStore.user.currentWpm,
+
+      })
+    }
     switch (number) {
       case 2:
-        mutate({lastCubeByTwo: formatDate(new Date())})
-        if(!userStore.user) return
+        mutate({ lastCubeByTwo: formatDate(new Date()) })
+        if (!userStore.user) return
         userStore.setUser({
           ...userStore.user,
           lastCubeByTwo: formatDate(new Date())
@@ -117,8 +131,8 @@ export default function CornerFlasher({ number }: CornerFlasherProps){
         router.replace('/next').catch(console.error)
         break
       case 3:
-        mutate({lastCubeByThree: formatDate(new Date())})
-        if(!userStore.user) return
+        mutate({ lastCubeByThree: formatDate(new Date()) })
+        if (!userStore.user) return
         userStore.setUser({
           ...userStore.user,
           lastCubeByThree: formatDate(new Date())

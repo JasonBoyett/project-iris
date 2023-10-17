@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { FontProvider } from '~/cva/fontProvider'
 import SettingsButton from '~/componants/settingsbutton'
 import HomeButton from '~/componants/homebutton'
+import type { HighlightType } from '~/utils/types'
 
 const INSTRUCTION_DELAY = 5_000
 
@@ -27,33 +28,33 @@ const Paragraph1 = () => {
   )
 }
 
-function StartButton({ option }: { option: string }){
+function StartButton({ option }: { option: HighlightType }){
   const [time, setTime] = useState(false)
   const router = useRouter()
 
   const navigate = () => {
     switch (option) {
-      case '4by1':
+      case 'fourByOne':
         router
           .replace('/exercises/flashfourbyone')
           .catch((err) => console.log(err))
         break
-      case '1by2':
+      case 'oneByTwo':
         router
           .replace('/exercises/flashonebytwo')
           .catch((err) => console.log(err))
         break
-      case '2by2':
+      case 'twoByTwo':
         router
           .replace('/exercises/flashtwobytwo')
           .catch((err) => console.log(err))
         break
-      case '1by1':
+      case 'oneByOne':
         router
           .replace('/exercises/flashonebyone')
           .catch((err) => console.log(err))
         break
-      case '2by1':
+      case 'twoByOne':
         router
           .replace('/exercises/flashtwobyone')
           .catch((err) => console.log(err))
@@ -82,8 +83,7 @@ function StartButton({ option }: { option: string }){
 const Page: NextPage = () => {
   const userStore = useUserStore()
   const [font, setFont] = useState<SelectFont>('sans')
-  const router = useRouter()
-  const option = '1by2'
+  const option: HighlightType = 'oneByTwo'
 
   useEffect(() => {
     if (!userStore.user) return

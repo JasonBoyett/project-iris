@@ -136,11 +136,18 @@ export default function EvensAndOdds(props: EvenOddProps){
   const router = useRouter()
   const { mutate } = api.user.setUser.useMutation()
   const user = api.user.getUnique.useQuery().data
+  const collectData = api.evenNumbersSession.setUnique.useMutation()
   const userStore = useUserStore()
 
   function tearDown(){
-    //TODO add data to db
     if(!user) return
+    if(user.isStudySubject){
+      collectData.mutate({
+        userId: user.id,
+        time: timer.getDuration(), 
+        errorCount: errorCount.current,
+      })  
+    }
     timer.end()
     mutate({...user, lastEvenNumbers: formatDate(new Date())})
     userStore.setUser({...user, lastEvenNumbers: formatDate(new Date())})

@@ -1,7 +1,13 @@
 import { createTRPCRouter } from '~/server/api/trpc'
-import { exampleRouter } from '~/server/api/routers/example'
 import {
-    createSpeedTestRouter,
+  highlightSessionRouter,
+  numberGuesserRouter,
+  evenNumbersRouter,
+  boxFlasherRouter,
+  schulteSessionRouter,
+} from '~/server/api/routers/collector'
+import {
+  createSpeedTestRouter,
   excercisesPropsRouter as excercisePropsRouter,
   userRouter,
   createNextExcerciseRouter,
@@ -13,11 +19,15 @@ import {
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  example: exampleRouter,
   user: userRouter,
   getExcerciseProps: excercisePropsRouter,
   createSpeedTest: createSpeedTestRouter,
   nextExercise: createNextExcerciseRouter,
+  highlightSession: highlightSessionRouter,
+  schulteSession: schulteSessionRouter,
+  numberGuesserSession: numberGuesserRouter,
+  evenNumbersSession: evenNumbersRouter,
+  boxFlasherSession: boxFlasherRouter,
 })
 
 // export type definition of API

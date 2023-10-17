@@ -15,7 +15,7 @@ function numberGen(segfigs: number) {
 type NumberButtonProps = {
   number: number
   disabled?: boolean
-  className: string
+  className?: string
   callBack: (arg: string) => void
 }
 
@@ -37,8 +37,13 @@ function NumberButton({ number, callBack, className, disabled = false }: NumberB
 export default function NumberMatcher() {
   const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   const [guess, setGuess] = useState('')
+  const numberCorrect = useRef(0)
+  const numberIncorrect = useRef(0)
   const segFigs = useRef(0)
+  const segFigsAtStart = useRef(0)
+  const incrementCounter = useRef(0)
   const correctStreak = useRef(0)
+  const longestStreak = useRef(0)
   const incorrectStreak = useRef(0)
   const { mutate } = api.user.setUser.useMutation()
   const userStore = useUserStore()
@@ -47,6 +52,7 @@ export default function NumberMatcher() {
   const user = api.user.getUnique.useQuery()
   const eventName = "teardown number matcher"
   const router = useRouter()
+  const collectData = api.numberGuesserSession.setUnique.useMutation()
   const componantTimer = useTimer(
     "minutes",
     1,
@@ -54,11 +60,16 @@ export default function NumberMatcher() {
   )
 
   function handleCorrect() {
-    correctStreak.current += 1
+    incrementCounter.current += 1
     incorrectStreak.current = 0
-    if (correctStreak.current >= CORRECT_INCREASE_SEGFIGS) {
+    numberCorrect.current += 1
+    correctStreak.current += 1
+    if (correctStreak.current > longestStreak.current) {
+      longestStreak.current = correctStreak.current
+    }
+    if (incrementCounter.current >= CORRECT_INCREASE_SEGFIGS) {
       segFigs.current += 1
-      correctStreak.current = 0
+      incrementCounter.current = 0
     }
     setGuess('')
     setTarget(numberGen(segFigs.current).toString())
@@ -68,7 +79,9 @@ export default function NumberMatcher() {
 
   function handleIncorrect() {
     incorrectStreak.current += 1
+    incrementCounter.current = 0
     correctStreak.current = 0
+    numberIncorrect.current += 1
     if (incorrectStreak.current >= INCORRECT_DECREASE_SEGFIGS) {
       segFigs.current -= 1
       incorrectStreak.current = 0
@@ -90,7 +103,16 @@ export default function NumberMatcher() {
 
   function teardown() {
     if (user.data) {
-      //TODO add session data tracking here
+      if (user.data.isStudySubject){
+        collectData.mutate({
+          userId: user.data.id,
+          figuresAtStart: segFigsAtStart.current, 
+          figuresAtEnd: segFigs.current,
+          numberCorrect: numberCorrect.current,
+          numberWrong: numberIncorrect.current,
+          longestStreak: longestStreak.current,
+        })
+      }
       mutate({
         ...user.data,
         lastNumberGuesser: formatDate(new Date()),
@@ -105,7 +127,6 @@ export default function NumberMatcher() {
     router.push('/next').catch((err) => console.log(err))
   }
 
-  document.addEventListener(eventName, teardown)
 
   useEffect(() => {
     if (!user.data) return
@@ -115,6 +136,7 @@ export default function NumberMatcher() {
     setTimeout(() => setTarget('GO!'), 3000)
     setTimeout(() => {
       segFigs.current = user.data.numberGuesserFigures
+      segFigsAtStart.current = user.data.numberGuesserFigures
       setTarget(numberGen(segFigs.current))
       console.log(target)
       componantTimer.start()
@@ -123,6 +145,13 @@ export default function NumberMatcher() {
       setShowing(false)
     }, 5000)
   }, [user.data])
+
+  useEffect(() =>{
+    document.addEventListener(eventName, teardown)
+    return () => {
+      document.removeEventListener(eventName, teardown)
+    }
+  },[])
 
   return (
     <div className='grid grid-cols-1 gap-1'>

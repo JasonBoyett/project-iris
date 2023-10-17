@@ -30,12 +30,12 @@ function Cell({
   const clicked = useRef(false)
   const store = useUserStore()
 
-  function handleClick(){
-    if(innerValue !== counter && !clicked.current){  
+  function handleClick() {
+    if (innerValue !== counter && !clicked.current) {
       errorSetter(errorCounter + 1)
-      clicked.current = true 
-    }    else if (!clicked.current) {
-      clicked.current = true 
+      clicked.current = true
+    } else if (!clicked.current) {
+      clicked.current = true
       counterSetter((prev) => prev + 1)
     }
   }
@@ -55,7 +55,7 @@ function Cell({
   )
 }
 
-export default function SchulteTable({ sideLength }: SchulteTableProps){
+export default function SchulteTable({ sideLength }: SchulteTableProps) {
   const [counter, setCount] = useState(1)
   const [font, setFont] = useState<SelectFont>('sans')
   const errors = useRef(0)
@@ -66,19 +66,38 @@ export default function SchulteTable({ sideLength }: SchulteTableProps){
   const totalCells = Math.pow(sideLength, 2)
   const [classString, setClassString] = useState('')
   const stopWatch = new StopWatch()
+  const collectData = api.schulteSession.setUnique.useMutation()
   const numbers = useRef(
     Array.from({ length: totalCells }, (_, i) => i + 1).sort(
       () => Math.random() - 0.5,
     ),
   )
 
-  function setErrors(number: number){
+  function formatType(sideLength: number) {
+    switch (sideLength) {
+      case 3: return 'three'
+      case 5: return 'five'
+      case 7: return 'seven'
+      default: return 'five'
+    }
+  }
+
+  function setErrors(number: number) {
     errors.current = number
   }
 
-  function teardown(){
+  function teardown() {
     stopWatch.end()
-    //log info here
+    if (!user) return
+    if (user.isStudySubject) {
+      collectData.mutate({
+        userId: user.id,
+        type: formatType(sideLength),
+        time: stopWatch.getDuration(),
+        errorCount: errors.current,
+
+      })
+    }
     switch (sideLength) {
       case 3:
         mutate({ lastSchulteByThree: formatDate(new Date()) })
@@ -88,19 +107,19 @@ export default function SchulteTable({ sideLength }: SchulteTableProps){
         break
       case 5:
         mutate({ lastSchulteByFive: formatDate(new Date()) })
-        if(!user) return
-        else store.setUser({...user, lastSchulteByFive: formatDate(new Date()) })
+        if (!user) return
+        else store.setUser({ ...user, lastSchulteByFive: formatDate(new Date()) })
         break
       case 7:
         mutate({ lastSchulteBySeven: formatDate(new Date()) })
-        if(!user) return
-        else store.setUser({...user, lastSchulteBySeven: formatDate(new Date()) })
+        if (!user) return
+        else store.setUser({ ...user, lastSchulteBySeven: formatDate(new Date()) })
         break
     }
     router.replace('/next').catch((err) => console.log(err))
   }
 
-  function Table({ classString } : { classString: string}){
+  function Table({ classString }: { classString: string }) {
     const cells = numbers.current.map(
       (number) => (
         <>
@@ -117,7 +136,7 @@ export default function SchulteTable({ sideLength }: SchulteTableProps){
         </>
       )
     )
-    return(
+    return (
       <div className={classString}>
         {cells}
       </div>
@@ -144,7 +163,7 @@ export default function SchulteTable({ sideLength }: SchulteTableProps){
 
   return (
     <>
-      <Table classString={classString}/>
+      <Table classString={classString} />
       <FontProvider
         font={font}
         className='md:text-4xl text-white'
