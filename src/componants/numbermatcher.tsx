@@ -138,7 +138,6 @@ export default function NumberMatcher() {
       segFigs.current = user.data.numberGuesserFigures
       segFigsAtStart.current = user.data.numberGuesserFigures
       setTarget(numberGen(segFigs.current))
-      console.log(target)
       componantTimer.start()
     }, 4000)
     setTimeout(() => {

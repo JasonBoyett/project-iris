@@ -57,7 +57,6 @@ export default function Page(){
       return words.at(counter) as string
     })
     setCounter((prev) => prev + 1)
-    console.log(words.length)
   }, time)
 
   return (
