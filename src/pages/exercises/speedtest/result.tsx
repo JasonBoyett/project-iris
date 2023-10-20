@@ -15,7 +15,7 @@ import { formatDate } from '~/utils/helpers'
 const GOOD_GRADE = 8 //since the user will be seeing 10 questions this means they got a B
 const FAILING_GRADE = 5 //since the user will be seeing 10 questions this means they got a D
 
-export default function Result(){
+export default function Result() {
   const [correct, setCorrect] = useState(0)
   const [font, setFont] = useState<SelectFont>('sans')
   const router = useRouter()
@@ -23,29 +23,29 @@ export default function Result(){
   const speedTestStore = useSpeedTestStore()
   const { mutate } = api.user.setUser.useMutation()
 
-  function saveData(){
+  function saveData() {
     //TODO create a data saving function in TRPC
     console.log('saving data')
   }
 
-  function getAvg(nums: number[]){
+  function getAvg(nums: number[]) {
     return nums.reduce(
       (previous, current) => (current += previous) / 2
     )
   }
 
-  function getNewSpeed(){
-    if(!userStore.user) return
-    if(!speedTestStore) return 
-    if(speedTestStore.correctResponses === 0) return null
-    if(speedTestStore.correctResponses >= GOOD_GRADE){
-      const avg = Math.floor(getAvg(speedTestStore.correctSpeeds) /10) * 10
+  function getNewSpeed() {
+    if (!userStore.user) return
+    if (!speedTestStore) return
+    if (speedTestStore.correctResponses === 0) return null
+    if (speedTestStore.correctResponses >= GOOD_GRADE) {
+      const avg = Math.floor(getAvg(speedTestStore.correctSpeeds) / 10) * 10
       return {
         max: avg,
-        current: Math.floor(avg/ 0.9 / 10) * 10
+        current: Math.floor(avg / 0.9 / 10) * 10
       }
     }
-    else if(speedTestStore.correctResponses < FAILING_GRADE){
+    else if (speedTestStore.correctResponses < FAILING_GRADE) {
       const maxSpeed = speedTestStore.correctSpeeds.sort().pop() as number
       return {
         max: maxSpeed,
@@ -55,7 +55,7 @@ export default function Result(){
     }
   }
 
-  function saveCompletionAndRaiseWpm(){
+  function saveCompletionAndRaiseWpm() {
     //I know this function does two things.
     //I just don't want to make two api calls when I can make just one.
     if (!userStore.user) return
@@ -75,13 +75,14 @@ export default function Result(){
     })
   }
 
-  function saveCompletion(){
+  function saveCompletion() {
     if (!userStore.user) return
     const newSpeed = getNewSpeed()
-    if(!newSpeed) return 
+    if (!newSpeed) return
     // this will force the user to retest if they get 0 correct
     // by not updating the boolean that says they have tested
-    mutate({ ...userStore.user, 
+    mutate({
+      ...userStore.user,
       lastSpeedTest: formatDate(new Date()),
       tested: true,
       maxWpm: newSpeed.max,
@@ -96,7 +97,7 @@ export default function Result(){
     })
   }
 
-  function saveUser(){
+  function saveUser() {
     if (!speedTestStore) return
     if (!userStore.user) return
     if (speedTestStore.correctResponses / TESTS_PER_DAY >= 0.9) {
@@ -106,7 +107,7 @@ export default function Result(){
     }
   }
 
-  function handleClick(){
+  function handleClick() {
     saveData()
     saveUser()
     speedTestStore.clear()
