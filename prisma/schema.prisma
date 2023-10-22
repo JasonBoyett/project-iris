@@ -72,6 +72,7 @@ model User {
   evenNumberSessions      EvenNumberSession[]
   wordGridFlasherSessions HighlightSession[]
   wordFlasherSessions     WordFlasherSession[]
+  LetterMatcherSession    LetterMatcherSession[]
   highlightColor          Overlay                @default(GREY)
   lastSchulteByFive       String                 @default(" ")
   lastSchulteByThree      String                 @default(" ")
@@ -86,6 +87,7 @@ model User {
   lastCubeByTwo           String                 @default(" ")
   lastCubeByThree         String                 @default(" ")
   lastNumberGuesser       String                 @default(" ")
+  lastLetterMatcher       String                 @default(" ")
   numberGuesserFigures    Int                    @default(4)
   font                    Font                   @default(sans)
   isAdmin                 Boolean                @default(false)
@@ -153,6 +155,17 @@ model NumberGuesserSession {
   longestStreak  Int
   figuresAtStart Int
   figuresAtEnd   Int
+  date           DateTime @db.DateTime
+
+  @@index([id])
+}
+
+model LetterMatcherSession {
+  id             String   @unique
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  numberCorrect  Int
+  numberWrong    Int
   date           DateTime @db.DateTime
 
   @@index([id])

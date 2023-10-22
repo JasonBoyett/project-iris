@@ -7,7 +7,7 @@ import SettingsButton from '~/componants/settingsbutton'
 
 export default function Page() {
   const router = useRouter()
-
+  
   return (
     <>
       <Head>Next Excercise</Head>

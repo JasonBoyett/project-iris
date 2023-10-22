@@ -89,6 +89,7 @@ export default function Page() {
               <ExerciseView text='Hard Schulte Table' exercise='schulteBySeven' user={user as User} />
               <ExerciseView text='Even Number Game' exercise='evenNumbers' user={user as User} />
               <ExerciseView text='Number Memory Game' exercise='numberGuesser' user={user as User} />
+              <ExerciseView text='Matching Letter Game' exercise='letterMatcher' user={user as User} />
             </div>
             {
               user?.tested

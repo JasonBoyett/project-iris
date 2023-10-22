@@ -6,6 +6,7 @@ import {
   highlightData,
   numberGuesserData,
   schulteData,
+  letterMatcherData,
 } from '~/utils/validators'
 
 export const highlightSessionRouter = createTRPCRouter({
@@ -54,6 +55,22 @@ export const numberGuesserRouter = createTRPCRouter({
       longestStreak: input.longestStreak,
       figuresAtStart: input.figuresAtStart,
       figuresAtEnd: input.figuresAtEnd,
+      date: new Date(),
+    }
+    })
+  }),
+})
+
+export const letterMatcherRouter = createTRPCRouter({
+  setUnique: publicProcedure
+  .input(letterMatcherData)
+  .mutation(async ({ input, ctx }) => {
+    await ctx.prisma.letterMatcherSession.create({
+    data: {
+      id: uuid(),
+      userId: input.userId,
+      numberCorrect: input.numberCorrect,
+      numberWrong: input.numberWrong,
       date: new Date(),
     }
     })

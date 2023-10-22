@@ -53,6 +53,7 @@ export function isAlreadyDone(user: User, exercise: Exercise) {
     case 'evenNumbers': return isToday(user.lastEvenNumbers)
     case 'cubeByTwo': return isToday(user.lastCubeByTwo)
     case 'cubeByThree': return isToday(user.lastCubeByThree)
+    case 'letterMatcher': return isToday(user.lastLetterMatcher)
     default: return null
   }
 }
@@ -133,6 +134,8 @@ export function getNextURL(next: Exercise | undefined | null): string {
       return '/exercises/cubebytwo'
     case 'cubeByThree':
       return '/exercises/cubebythree'
+    case 'letterMatcher':
+      return '/exercises/lettermatcher'
     default:
       return '/done'
   }

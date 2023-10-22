@@ -56,6 +56,7 @@ export const userSchema = z.object({
   lastNumberGuesser: z.string().default(' '),
   lastCubeByThree: z.string().default(' '),
   lastCubeByTwo: z.string().default(' '),
+  lastLetterMatcher: z.string().default(' '),
   numberGuesserFigures: z.number().default(0),
   isAdmin: z.boolean().default(false),
   isStudySubject: z.boolean().default(false),
@@ -127,6 +128,12 @@ export const numberGuesserData = z.object({
   longestStreak: z.number(),
   figuresAtStart: z.number(),
   figuresAtEnd: z.number(),
+})
+
+export const letterMatcherData = z.object({
+  userId: z.string(),
+  numberCorrect: z.number(),
+  numberWrong: z.number(),
 })
 
 export const evenNumbersData = z.object({
