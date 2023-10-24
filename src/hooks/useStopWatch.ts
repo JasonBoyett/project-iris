@@ -1,3 +1,5 @@
+import { useRef } from "react"
+
 /**
  * @description A simple stop watch class to measure the time it takes
  * for ane exercise to be completed
@@ -8,7 +10,7 @@
  * Finally, call the getDuration method to get the duration of the exercise.
  * Keep in mind that the StopWatch will return the duration in milliseconds.
  * @example
- * const stopWatch = new StopWatch()
+ * const stopWatch = useStopWatch()
  * ...
  * useEffect(() => {
  *  stopWatch.start()
@@ -23,31 +25,35 @@
  * }
  *
  *
- * @throws Error if the stopWatch is not started and ended before getting duration
+ * @throws Error if the stopWatch is not started before getting duration
  *
  * @class StopWatch
 **/
-export class StopWatch {
-  private startTime: number
-  private endTime: number
-  public constructor() {
-    this.startTime = 0
-    this.endTime = 0
+export function useStopWatch(){
+  const startTime = useRef(0)
+  const endTime = useRef(0)
+
+  function start() {
+    startTime.current = Date.now()
   }
 
-  public start() {
-    this.startTime = Date.now()
+  function end() {
+    endTime.current = Date.now()
   }
 
-  public end() {
-    this.endTime = Date.now()
-  }
-
-  public getDuration() {
-    if (this.startTime === 0 || this.endTime === 0) {
-      throw new Error('StopWatch must be started and ended before getting duration')
+  function getDuration() {
+    if (startTime.current === 0 ) {
+      throw new Error('StopWatch must be started before getting duration')
     }
-    return this.endTime - this.startTime
+    if (endTime.current === 0) {
+      end()
+    }
+    return endTime.current - startTime.current
   }
-
+  
+  return {
+    start,
+    end,
+    getDuration
+  }
 }

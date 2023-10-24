@@ -6,7 +6,8 @@ import { api } from '~/utils/api'
 import useUserStore from '~/stores/userStore'
 import { FontProvider } from '~/cva/fontProvider'
 import type { SelectFont } from '~/utils/types'
-import { StopWatch } from '~/utils/timer'
+import { useStopWatch } from '~/hooks/useStopWatch'
+
 
 type SchulteTableProps = {
   sideLength: 3 | 5 | 7
@@ -65,7 +66,7 @@ export default function SchulteTable({ sideLength }: SchulteTableProps) {
   const user = store.user
   const totalCells = Math.pow(sideLength, 2)
   const [classString, setClassString] = useState('')
-  const stopWatch = new StopWatch()
+  const stopWatch = useStopWatch() 
   const collectData = api.schulteSession.setUnique.useMutation()
   const numbers = useRef(
     Array.from({ length: totalCells }, (_, i) => i + 1).sort(

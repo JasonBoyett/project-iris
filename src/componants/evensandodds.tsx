@@ -4,7 +4,7 @@ import type { Dispatch, SetStateAction } from 'react'
 import { motion } from 'framer-motion'
 import useUserStore from '~/stores/userStore'
 import type { SelectFont } from '~/utils/types'
-import { StopWatch } from '~/utils/timer'
+import { useStopWatch } from '~/hooks/useStopWatch'
 import { useRouter } from 'next/router'
 import { api } from '~/utils/api'
 import { formatDate } from '~/utils/helpers'
@@ -132,7 +132,7 @@ export default function EvensAndOdds(props: EvenOddProps){
   const evenCount = useRef(0)
   const errorCount = useRef(0)
   const GRID_CLASS = useState(`grid grid-cols-${props.cols} gap-1`)[0]
-  const timer = new StopWatch
+  const timer = useStopWatch()
   const router = useRouter()
   const { mutate } = api.user.setUser.useMutation()
   const user = api.user.getUnique.useQuery().data
@@ -142,13 +142,13 @@ export default function EvensAndOdds(props: EvenOddProps){
   function tearDown(){
     if(!user) return
     if(user.isStudySubject){
+      timer.end()
       collectData.mutate({
         userId: user.id,
-        time: timer.getDuration(), 
+        time: timer.getDuration(),
         errorCount: errorCount.current,
       })  
     }
-    timer.end()
     mutate({...user, lastEvenNumbers: formatDate(new Date())})
     userStore.setUser({...user, lastEvenNumbers: formatDate(new Date())})
     router.replace('/next').catch((err) => console.log(err))
