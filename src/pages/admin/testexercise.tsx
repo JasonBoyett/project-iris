@@ -12,7 +12,7 @@ export default function Page() {
   function NavButton({ path, text }: { path: string, text: string }) {
     return (
       <button onClick={() => nav(path)}
-        className='flex bg-white/20 rounded-full items-center p-4 h-12 py-2 text-white text-4xl font-normal'
+        className='flex bg-white/20 rounded-full items-center p-4 h-12 py-2 text-white text-2xl md:text-4xl font-normal'
       >
         {text}
       </button>
@@ -25,7 +25,7 @@ export default function Page() {
         <HomeButton />
         <SettingsButton />
         <div className='flex flex-col items-center justify-center min-h-screen py-2 gap-2'>
-          <NavButton path='exercises/speedtest' text='Test Exercise' />
+          <NavButton path='/exercises/speedtest' text='Speed Test' />
           <NavButton path='/exercises/cubebythree' text='Cube by 3' />
           <NavButton path='/exercises/cubebytwo' text='Cube by 2' />
           <NavButton path='/exercises/evennumbers' text='Even Numbers' />

@@ -26,13 +26,13 @@ export default function Page() {
         <div className="flex flex-col items-center justify-center min-h-screen py-2 gap-2">
           <button
             onClick={navToTestExercise}
-            className='flex bg-white/20 rounded-full items-center p-4 h-12 py-2 text-white text-4xl font-normal'
+            className='flex bg-white/20 rounded-full items-center p-4 h-12 py-2 text-white text-2xl md:text-4xl font-normal'
           >
             Test Exercise
           </button>
           <button
             onClick={navToCreatQuestion}
-            className='flex bg-white/20 rounded-full items-center p-4 h-12 py-2 text-white text-4xl font-normal'
+            className='flex bg-white/20 rounded-full items-center p-4 h-12 py-2 text-white text-2xl md:text-4xl font-normal'
           >
             Create Speed Test Question
           </button>
