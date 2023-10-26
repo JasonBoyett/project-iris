@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { api } from '~/utils/api'
 import { useRouter } from 'next/router'
-import HomeButton from '~/componants/homebutton'
-import SettingsButton from '~/componants/settingsbutton'
+import Sidebar from '~/componants/sidebar'
 
 export default function Page(){
   const router = useRouter()
@@ -20,8 +19,7 @@ export default function Page(){
   function Display(){
     return(
       <>
-        <HomeButton />
-        <SettingsButton />
+        <Sidebar />  
         <div className="flex flex-col items-center justify-center min-h-screen py-2 gap-4">
           <p className='text-white text-4xl font-normal'>Question created!</p>
           <button
@@ -44,8 +42,7 @@ export default function Page(){
   function Loading(){
     return(
       <>
-        <HomeButton />
-        <SettingsButton />
+        <Sidebar />  
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
           <p className='text-white text-4xl font-normal'>Loading...</p>
         </div>

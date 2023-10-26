@@ -6,8 +6,7 @@ import { useUserStore } from '~/stores/userStore'
 import type { SelectFont } from '~/utils/types'
 import { useRouter } from "next/router";
 import { FontProvider } from "~/cva/fontProvider";
-import SettingsButton from "~/componants/settingsbutton";
-import HomeButton from "~/componants/homebutton";
+import Sidebar from '~/componants/sidebar'
 
 const INSTRUCTION_DELAY = 5_000
 
@@ -67,8 +66,7 @@ const Page: NextPage = () => {
   return (
     <>
       <Head>Even Number Exercise Instructions</Head>
-      <SettingsButton />
-      <HomeButton />
+      <Sidebar />
       <FontProvider font={font}>
         <div className='flex flex-col items-center justify-center min-h-screen py-10 gap-4'>
           <Paragraph1 />

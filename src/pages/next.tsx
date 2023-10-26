@@ -2,8 +2,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import Butterfly from 'public/flying-butterfly.gif'
-import HomeButton from '~/componants/homebutton'
-import SettingsButton from '~/componants/settingsbutton'
+import Sidebar from '~/componants/sidebar'
 
 export default function Page() {
   const router = useRouter()
@@ -11,8 +10,7 @@ export default function Page() {
   return (
     <>
       <Head>Next Excercise</Head>
-      <HomeButton />
-      <SettingsButton />
+      <Sidebar />
       <main className='flex grid-cols-1 justify-center items-center min-h-screen mt-8'>
         <div className='grid justify-center items-center'>
           <div className='flex justify-center items-center'>

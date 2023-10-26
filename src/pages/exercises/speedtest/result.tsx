@@ -7,10 +7,9 @@ import { FontProvider } from '~/cva/fontProvider'
 import type { SelectFont } from '~/utils/types'
 import { TESTS_PER_DAY } from './index'
 import Head from 'next/head'
-import SettingsButton from '~/componants/settingsbutton'
-import HomeButton from '~/componants/homebutton'
 import { api } from '~/utils/api'
 import { formatDate } from '~/utils/helpers'
+import Sidebar from '~/componants/sidebar'
 
 const GOOD_GRADE = 8 //since the user will be seeing 10 questions this means they got a B
 const FAILING_GRADE = 5 //since the user will be seeing 10 questions this means they got a D
@@ -127,8 +126,7 @@ export default function Result() {
 
   return (
     <>
-      <SettingsButton />
-      <HomeButton />
+      <Sidebar />
       <Head>Test Results</Head>
       <FontProvider
         className='flex flex-col gap-4 items-center justify-center min-h-screen'

@@ -1,11 +1,11 @@
 import { useUserStore } from '~/stores/userStore'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import HomeButton from '~/componants/homebutton'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { api } from '~/utils/api'
 import type { User } from '~/utils/types'
+import Sidebar from '~/componants/sidebar'
 
 const Page: NextPage = () => {
   const user: User | undefined = api.user.getUnique.useQuery<User>().data
@@ -26,7 +26,7 @@ const Page: NextPage = () => {
   return (
     <>
       <Head>Let&#39;s Get Started!</Head>
-      <HomeButton />
+      <Sidebar />
       <main className='flex flex-col h-screen items-center justify-center'>
         <h1 className='md:text-6xl font-extrabold text-white py-4'>
           Let&#39;s Get Started!

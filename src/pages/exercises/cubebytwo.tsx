@@ -1,12 +1,10 @@
 import CornerFlasher from '~/componants/cubeflasher'
-import HomeButton from '~/componants/homebutton'
-import SettingsButton from '~/componants/settingsbutton'
+import Sidebar from '~/componants/sidebar'
 
 export default function Page(){
   return (
     <>
-      <HomeButton />
-      <SettingsButton />
+      <Sidebar />
       <div className='min-h-screen min-w-screen flex flex-col justify-center items-center'>
         <CornerFlasher number={2} />
       </div>

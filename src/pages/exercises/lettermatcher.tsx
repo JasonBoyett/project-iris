@@ -1,7 +1,6 @@
 import Head from 'next/head'
-import HomeButton from '~/componants/homebutton'
-import SettingsButton from '~/componants/settingsbutton'
 import dynamic from 'next/dynamic'
+import Sidebar from '~/componants/sidebar'
 
 const LetterMatcher = dynamic(() => import('~/componants/letterMatcher'), { ssr: false })
 
@@ -11,8 +10,7 @@ export default function Page(){
     <Head>
       <title>Letter Matcher</title>
     </Head>
-      <HomeButton />
-      <SettingsButton />
+      <Sidebar />
     <div className='flex flex-col items-center justify-center min-h-screen'>
         <LetterMatcher size={7} />
     </div>

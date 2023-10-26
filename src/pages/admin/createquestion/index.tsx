@@ -1,15 +1,13 @@
-import HomeButton from '~/componants/homebutton'
-import SettingsButton from '~/componants/settingsbutton'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import Sidebar from '~/componants/sidebar'
 import { api } from '~/utils/api'
 import type { Answer } from '~/utils/types'
 
 function Loading(){
   return(
     <>
-      <HomeButton />
-      <SettingsButton />
+      <Sidebar />
       <div className="flex flex-col items-center justify-center min-h-screen py-2">
         <p className='text-white text-4xl font-normal'>Loading...</p>
       </div>
@@ -56,8 +54,7 @@ function QuestionForm(){
 
   return (
     <>
-      <HomeButton />
-      <SettingsButton />
+      <Sidebar />
       <div className="flex flex-col items-center justify-center min-h-screen py-2 gap-4 px-4">
         <button
           type='button'

@@ -1,7 +1,6 @@
 import Head from 'next/head'
-import HomeButton from '~/componants/homebutton'
-import SettingsButton from '~/componants/settingsbutton'
 import dynamic from 'next/dynamic'
+import Sidebar from '~/componants/sidebar'
 
 const NumberMatcher = dynamic(() => import('~/componants/numbermatcher'), { ssr: false })
 
@@ -12,8 +11,7 @@ export default function Page(){
       <title>Number Matcher</title>
     </Head>
     <div className='flex flex-col items-center justify-center min-h-screen'>
-      <HomeButton />
-      <SettingsButton />
+      <Sidebar />
       <NumberMatcher />
     </div>
     </>

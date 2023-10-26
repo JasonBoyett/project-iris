@@ -1,6 +1,5 @@
 import { useRouter } from "next/router"
-import HomeButton from "~/componants/homebutton"
-import SettingsButton from "~/componants/settingsbutton"
+import Sidebar from "~/componants/sidebar"
 
 export default function Page() {
   const router = useRouter()
@@ -22,8 +21,7 @@ export default function Page() {
   return (
     <>
       <div className='min-h-screen items-center justify-center'>
-        <HomeButton />
-        <SettingsButton />
+        <Sidebar />
         <div className='flex flex-col items-center justify-center min-h-screen py-2 gap-2'>
           <NavButton path='/exercises/speedtest' text='Speed Test' />
           <NavButton path='/exercises/cubebythree' text='Cube by 3' />

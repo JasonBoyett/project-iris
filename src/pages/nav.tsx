@@ -7,9 +7,9 @@ import { SignOutButton } from '@clerk/nextjs'
 import { SignedIn, SignedOut } from '@clerk/clerk-react'
 import { SignIn } from '@clerk/clerk-react'
 import { useUserStore } from '~/stores/userStore'
-import SettingsButton from '~/componants/settingsbutton'
 import type { Exercise, User } from '~/utils/types'
 import { isAlreadyDone } from '~/utils/helpers'
+import Sidebar from '~/componants/sidebar'
 
 function ExerciseView({ text, exercise, user }: { text: string, exercise: Exercise, user: User | undefined }) {
 
@@ -66,15 +66,11 @@ export default function Page() {
       <Head>
         <title>Home</title>
       </Head>
-      <SettingsButton />
       <SignedIn>
-        <SignOutButton>
-          <button className='text-white bg-black border-2 rounded-full p-2 hover:border-3 hover:bg-gray-500'>
-            Sign Out
-          </button>
-        </SignOutButton>
-        <main className='grid-col-2 flex min-h-screen flex-col items-center justify-center py-16'>
-          <div className='container flex flex-col items-center justify-center gap-5 px-4'>
+        <main className='flex min-h-screen items-center justify-center py-16'>
+
+        <Sidebar />
+          <div className='flex flex-col items-center justify-center gap-5 px-4'>
             <div className='flex flex-col items-center justify-center'>
               <p className='text-white md:text-4xl text-2xl text-center'>Daily Exercises:</p>
               <ExerciseView text='2 Moving Cubes' exercise='cubeByTwo' user={user as User} />

@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react'
 import { FontProvider } from '~/cva/fontProvider'
 import { useUserStore } from '~/stores/userStore'
 import { useSpeedTestStore } from '~/stores/useSpeedTestStore'
-import SettingsButton from '~/componants/settingsbutton'
-import HomeButton from '~/componants/homebutton'
 import type { SelectFont } from '~/utils/types'
 import { TESTS_PER_DAY } from './index'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import Sidebar from '~/componants/sidebar'
 
 export default function Page(){
   const exerciseStore = useSpeedTestStore((state) => state)
@@ -64,14 +63,13 @@ export default function Page(){
   return (
     <>
       <Head>Speed Test</Head>
-      <HomeButton />
-      <SettingsButton />
+      <Sidebar />
       <main className='flex items-center justify-center h-screen text-white'>
         <FontProvider
-          className='flex flex-col gap-4 items-center justify-center'
+          className='flex flex-col gap-4 items-center w-2/3 justify-center'
           font={font}
         >
-          <h1 className='text-4xl font-bold'>{question}</h1>
+          <div className='text-4xl font-bold'>{question}</div>
           <div className='grid gap-4'>
             <div className='flex items-center gap-2 text-yellow-400'>
               <button

@@ -1,8 +1,7 @@
 import Head from 'next/head'
 import React, { useState } from 'react'
 import EvensAndOdds from 'src/componants/evensandodds'
-import SettingsButton from '~/componants/settingsbutton'
-import HomeButton from '~/componants/homebutton'
+import Sidebar from '~/componants/sidebar'
 
 export type framesContextType = {
   framesCleared: number
@@ -22,8 +21,7 @@ export default function Page(){
       <Head>
         <title>Speed Read</title>
       </Head>
-      <SettingsButton />
-      <HomeButton />
+      <Sidebar />
       <div className='flex-grid flex h-screen  items-center justify-center text-3xl text-white'>
     <EvensAndOdds
       evens={6}

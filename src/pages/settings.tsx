@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import HomeButton from '~/componants/homebutton'
 import { useRouter } from 'next/router'
 import { Suspense, useEffect, useState } from 'react'
 import { api } from '~/utils/api'
@@ -11,6 +10,7 @@ import { HighlightButton } from '~/cva/highlightSelectorButton'
 import type { SelectFont } from '~/utils/types'
 import type { Language } from "~/utils/types"
 import LoadingSpinner from '~/componants/loadingspinner'
+import Sidebar from '~/componants/sidebar'
 
 const Page: NextPage = () => {
   const user: User | undefined = api.user.getUnique.useQuery<User>().data
@@ -47,7 +47,7 @@ const Page: NextPage = () => {
   return (
     <>
       <Head>Settings</Head>
-      <HomeButton />
+      <Sidebar />
       <main className='flex flex-col h-screen items-center justify-center'>
         <h1 className='md:text-6xl font-extrabold text-white py-4'>Settings</h1>
         <form

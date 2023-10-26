@@ -7,8 +7,7 @@ import { useRouter } from 'next/router'
 import { api } from '~/utils/api'
 import Head from 'next/head'
 import { FontProvider } from '~/cva/fontProvider'
-import HomeButton from '~/componants/homebutton'
-import SettingsButton from '~/componants/settingsbutton'
+import Sidebar from '~/componants/sidebar'
 
 export const TESTS_PER_DAY = 10
 
@@ -62,8 +61,7 @@ export default function Page(){
   return (
     <>
       <Head>Speed Test</Head>
-      <HomeButton />
-      <SettingsButton />
+      <Sidebar />
 
       <main>
         <FontProvider
