@@ -32,6 +32,7 @@ export default function Sidebar() {
 
   return (
     <div className='min-h-full'>
+      {/*this is the shadow that covers the page when the sidebar is open*/}
       <div
         className={[
           'absolute top-0 bg-black/60 w-full min-h-full',
@@ -43,6 +44,7 @@ export default function Sidebar() {
             : () => setShowing(showing)
         }
       />
+      {/*this is the sidebar itself*/}
       <div
         className={`absolute top-0 left-0 min-h-full bg-gradient-to-br from-slate-600 to-slate-700 ${showing ? 'md:w-1/12 w-28' : 'w-4'} duration-300`}
       >
