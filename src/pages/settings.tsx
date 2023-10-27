@@ -47,8 +47,9 @@ const Page: NextPage = () => {
   return (
     <>
       <Head>Settings</Head>
-      <Sidebar />
-      <main className='flex flex-col h-screen items-center justify-center'>
+      <main className='flex items-center min-h-screen justify-center'>
+        <Sidebar />
+        <div className='flex flex-col justify-center items-center'>
         <h1 className='md:text-6xl font-extrabold text-white py-4'>Settings</h1>
         <form
           className='flex flex-col p-2 justify-items-end gap-y-2'
@@ -288,6 +289,7 @@ const Page: NextPage = () => {
             Save
           </button>
         </form>
+        </div>
       </main>
     </>
   )

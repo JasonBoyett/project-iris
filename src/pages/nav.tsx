@@ -15,7 +15,7 @@ function ExerciseView({ text, exercise, user }: { text: string, exercise: Exerci
 
   if (!user) return (<></>)
   return (
-    <p className='text-white md:text-2xl text-xl text-center'>
+    <p className='text-white md:text-2xl text-xl text-center p-1'>
       {text + (isAlreadyDone(user, exercise) ? ' ✓' : '')}
     </p>
   )
