@@ -90,6 +90,7 @@ model User {
   lastLetterMatcher       String                 @default(" ")
   numberGuesserFigures    Int                    @default(4)
   font                    Font                   @default(sans)
+  isUsingChecklist        Boolean                @default(true)
   isAdmin                 Boolean                @default(false)
   isStudySubject          Boolean                @default(false)
   language                Language               @default(english)

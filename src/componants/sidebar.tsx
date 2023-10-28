@@ -16,7 +16,7 @@ export default function Sidebar() {
         transition={{duration: 0.3, delay: 0.2}}
         onClick={onClick}
         className={[
-          "w-full",
+          "w-full items-center py-2 justify-center flex",
           "cursor-pointer text-white md:text-2xl text-xl",
           `${showing ? 'visible' : 'invisible'}`,
         ].join(' ')}

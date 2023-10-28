@@ -60,6 +60,7 @@ export const userSchema = z.object({
   numberGuesserFigures: z.number().default(0),
   isAdmin: z.boolean().default(false),
   isStudySubject: z.boolean().default(false),
+  isUsingChecklist: z.boolean().default(true),
   tested: z.boolean().default(false),
 })
 

@@ -38,6 +38,21 @@ function isToday(date2: string | undefined) {
   return result
 }
 
+export function getAvailableExercises(user: User) {
+  if (!user) return null
+
+  const available: Exercise[] = []
+
+
+  Exercise.forEach((exercise) => {
+    if (!isAlreadyDone(user, exercise)) {
+      available.push(exercise)
+    }
+  })
+
+  return available
+}
+
 export function isAlreadyDone(user: User, exercise: Exercise) {
   switch (exercise) {
     case 'speedTest': return user.tested
@@ -67,19 +82,13 @@ export function isAlreadyDone(user: User, exercise: Exercise) {
  * If the user has done all the exercises, the function returns null.
  **/
 export function getNextExercise(user: User | undefined | null) {
-
   if (!user) return null
 
-  const available: Exercise[] = []
+  const available = getAvailableExercises(user)
 
+  if (!available) return null
 
-  Exercise.forEach((exercise) => {
-    if (!isAlreadyDone(user, exercise)) {
-      available.push(exercise)
-    }
-  })
-
-  if (available.length === 0 || available === undefined || !available) {
+  if (available.length === 0 || available === undefined ) {
     return null
   }
   console.log('available: ', available)

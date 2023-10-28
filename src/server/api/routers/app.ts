@@ -67,6 +67,7 @@ export const userRouter = createTRPCRouter({
         lastLetterMatcher: input.lastLetterMatcher,
         numberGuesserFigures: input.numberGuesserFigures,
         isAdmin: input.isAdmin,
+        isUsingChecklist: input.isUsingChecklist,
         isStudySubject: input.isStudySubject,
         font: input.font,
         language: input.language,
