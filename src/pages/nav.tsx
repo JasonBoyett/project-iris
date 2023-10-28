@@ -73,18 +73,13 @@ export default function Page() {
     else return (<></>)
   }
 
-  type ExerciseCounterProps = {
-    className?: string,
-    numberStyle?: string
-  }
-
-  function ExerciseCounter({ className, numberStyle }: ExerciseCounterProps) {
+  function ExerciseCounter() {
     if (!user) return (<></>)
     const availableExercises = getAvailableExercises(user)
     return (
-      <div className={className}>
+      <div className='text-white md:text-4xl text-2xl text-center'>
         Remaining Daily Exercises:
-        <div className={numberStyle}>
+        <div className='text-8xl text-yellow-400'>
           {availableExercises?.length ?? '0'}
         </div>
       </div>
@@ -129,16 +124,10 @@ export default function Page() {
   }
 
   function RemainingExercises() {
-    return (
-      isUsingChecklist
-        ? (<CheckList />)
-        : (
-          <ExerciseCounter
-            className='text-white md:text-4xl text-2xl text-center'
-            numberStyle='text-8xl text-yellow-400'
-          />
-        )
-    )
+    if (isUsingChecklist){ return <CheckList /> }
+    else {return (
+      <ExerciseCounter />
+    )}
   }
 
   function ExerciseViewSwitcher() {
