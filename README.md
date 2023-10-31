@@ -34,6 +34,7 @@ all the serverless functions used by the application.
 
 The [components](src/components) directory contains various reusable components used
 throughout the application. 
+
 The [cva](src/cva) directory contains the 
 class variance authority styles used throughout the application. 
 
