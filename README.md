@@ -12,7 +12,7 @@ Check out the current production version [here](https://speedread-git-main-jason
 ## Project Authors
 - Primary Developer: [Jason Boyett](GitHub.com/JasonBoyett)
 - Project Manager: [Dr. Vojislav Petrovic PhD](https://schreiner.edu/su-directory/petrovic-vojislav/)
-- UI Designer: Jason Boyett & [Zach Lyman](limeademedia.com) 
+- UI Designer: Jason Boyett & [Zach Lyman](https://limeademedia.com) 
 
 ## Core Project Dependencies
 
