@@ -8,7 +8,6 @@ import { formatDate } from '~/utils/helpers'
 import { useRouter } from 'next/router'
 import { FontProvider } from '~/cva/fontProvider'
 import type { SelectFont } from '~/utils/types'
-import { user } from '~/utils/schema'
 
 export function partitionWords(
   words: string[],
@@ -90,6 +89,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
   const { data } = api.getExcerciseProps.getRandomWords.useQuery(
     {
       number: userStore.user?.currentWpm as number * 4,
+      max: 5,
       language: userStore.user?.language as 'english' | 'spanish',
     },
     { enabled: !!userStore }

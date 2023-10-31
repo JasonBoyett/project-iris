@@ -77,6 +77,7 @@ export const speedTestSchema = z.object({
 
 const randomWordInputs = z.object({
   number: z.number(),
+  max: z.number().optional(),
   language: z.union([
     z.literal('english'),
     z.literal('spanish'),

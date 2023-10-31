@@ -10,7 +10,7 @@ import Sidebar from '~/componants/sidebar'
 
 const INSTRUCTION_DELAY = 5_000
 
-const Paragraph1 = () => {
+function Paragraph1() {
   return (
     <div className='gap-2 bg-white text-2xl p-12 rounded-lg shadow-md md:h-3/5 h-96 md:w-2/5 w-4/5 items-center md:overflow-y-auto overflow-y-auto'>
       <p>
@@ -18,17 +18,17 @@ const Paragraph1 = () => {
         <span className='font-bold'>
         Remember to read the passage and answer the question based souly on the information provided.
         </span>
-        Some questions may be contain information that is different from reality.
+        Some questions may contain information that is different from reality.
         You will be asked a total of 10 questions and if you can answer 8 of them correctly your maximum reading speed will be increased.
         Your maximum speed will not be decreased if you fail to answer 8 questions correctly.
-        This test is designed for you to take twice a week to evaluate and set your progress.
+        This test is designed for you to take once a week to evaluate and set your progress.
         Remember to try to remain relaxed and focused while taking this test.
       </p>
     </div>
   )
 }
 
-const StartButton: React.FC = () => {
+function StartButton() {
   const [time, setTime] = useState(false)
   const router = useRouter()
 
@@ -52,7 +52,7 @@ const StartButton: React.FC = () => {
   )
 }
 
-const Page: NextPage = () => {
+function Page() {
   const userStore = useUserStore()
   const [font, setFont] = useState<SelectFont>('sans')
   useEffect(() => {
