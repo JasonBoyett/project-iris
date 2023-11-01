@@ -16,7 +16,7 @@ Check out the current production version [here](https://speedread-git-main-jason
 
 ## Core Project Dependencies
 
-Iris uses the [t3 stack](https://create.t3.gg/) 
+- Iris uses the [t3 stack](https://create.t3.gg/) 
 - [Zustand](https://zustand-demo.pmnd.rs/) for state management, 
 - [Clerk](https://clerk.com/) for authentication, 
 - [Class Variance Authority](https://cva.style/docs) for reusable styling,
@@ -43,5 +43,12 @@ The [hooks](src/hooks) directory contains all custom hooks used in the applicati
 The [stores](src/stores) directory contains Zustand stores.
 
 The [utils](src/utils) directory contains utility functions, types and Zod schemas.
+
+## Getting Started
+
+The best entry point for the project is the [pages](src/pages) directory.
+[Index.tsx](src/pages/index.tsx) Is the home page of the web sight but the main page of the app is [Nav](src/pages/nav.tsx). 
+From there you can view the individual exercises by viewing the [exercises](src/pages/exercises) directory. 
+Most exercises consist of some basic setup and a call to a primary component. Said components can be found in the [components directory](src/componants).
 
 
