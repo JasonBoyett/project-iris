@@ -6,6 +6,16 @@ import type { Language, User } from '~/utils/types'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { schemas, inputs } from '~/utils/validators'
 import { getNextExercise, getNextURL } from '~/utils/helpers'
+import type { EmailAddress } from '@clerk/nextjs/dist/types/server'
+
+function verifyStudySubject(emailAddresses: EmailAddress[]) {
+  emailAddresses.forEach((email) => {
+    if (email.emailAddress.endsWith('.edu')){
+      return true
+    }
+  })
+  return false
+}
 
 export const userRouter = createTRPCRouter({
   getUnique: publicProcedure
@@ -28,6 +38,7 @@ export const userRouter = createTRPCRouter({
             lastName: ctx.auth.user?.lastName ?? '',
             createdAt: new Date(),
             updatedAt: new Date(),
+            isStudySubject: verifyStudySubject(ctx.auth.user?.emailAddresses ?? []),
           },
         })
         return newUser
@@ -68,7 +79,7 @@ export const userRouter = createTRPCRouter({
           numberGuesserFigures: input.numberGuesserFigures,
           isAdmin: input.isAdmin,
           isUsingChecklist: input.isUsingChecklist,
-          isStudySubject: input.isStudySubject,
+          isStudySubject: verifyStudySubject(ctx.auth.user?.emailAddresses ?? []),
           font: input.font,
           language: input.language,
           tested: input.tested,
@@ -122,13 +133,13 @@ function getCappedRandomWords({ wordsReturned, wordLength, language }: GetRandom
   let length = wordLength
 
   while (words.length < wordsReturned) {
-    if (length <= MIN_WORD_LENGTH){
+    if (length <= MIN_WORD_LENGTH) {
       number = wordsReturned - words.length
       length = MIN_WORD_LENGTH
     }
-    getRandomWordsLimitLength({ 
-      wordsReturned: number, 
-      wordLength: length, 
+    getRandomWordsLimitLength({
+      wordsReturned: number,
+      wordLength: length,
       language: language
     }).then((result) => {
       console.log(result)
