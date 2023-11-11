@@ -15,7 +15,7 @@ export default function Page() {
   const buttonStyle = [
     'text-white md:text-3xl text-2xl',
     'bg-white/10 rounded-full p-4 h-16',
-    'hover:bg-white/20'
+    'hover:bg-white/20',
   ].join(' ')
   const user = api.user.getUnique.useQuery().data
   const [isUsingChecklist, setIsUsingChecklist] = useState<boolean>(false)
@@ -38,24 +38,20 @@ export default function Page() {
   }
 
   function StartButton() {
-    return (
-      user?.tested
-        ? (
-          <button
-            className={buttonStyle}
-            onClick={() => start()}
-          >
-            Get Started
-          </button>
-        )
-        : (
-          <button
-            className={buttonStyle}
-            onClick={() => startTest()}
-          >
-            Test your progress
-          </button>
-        )
+    return user?.tested ? (
+      <button
+        className={buttonStyle}
+        onClick={() => start()}
+      >
+        Get Started
+      </button>
+    ) : (
+      <button
+        className={buttonStyle}
+        onClick={() => startTest()}
+      >
+        Test your progress
+      </button>
     )
   }
 
@@ -67,42 +63,38 @@ export default function Page() {
           onClick={() => adminPage()}
         >
           Admin Page
-        </button>)
-
-    }
-    else return (<></>)
+        </button>
+      )
+    } else return <></>
   }
 
   type ExerciseCounterProps = {
-    className?: string,
+    className?: string
     numberStyle?: string
   }
 
   function ExerciseCounter({ className, numberStyle }: ExerciseCounterProps) {
-    if (!user) return (<></>)
+    if (!user) return <></>
     const availableExercises = getAvailableExercises(user)
     return (
       <div className={className}>
         Remaining Daily Exercises:
-        <div className={numberStyle}>
-          {availableExercises?.length ?? '0'}
-        </div>
+        <div className={numberStyle}>{availableExercises?.length ?? '0'}</div>
       </div>
     )
   }
 
   function CheckList() {
     type ExerciseViewProps = {
-      text: string,
-      exercise: Exercise,
+      text: string
+      exercise: Exercise
       user: User | undefined
     }
 
     function ExerciseView({ text, exercise, user }: ExerciseViewProps) {
-
-      if (!user) return (<></>)
+      if (!user) return <></>
       return (
-        <p className='text-white md:text-2xl text-xl text-center p-1'>
+        <p className='p-1 text-center text-xl text-white md:text-2xl'>
           {text + (isAlreadyDone(user, exercise) ? ' ✓' : '')}
         </p>
       )
@@ -110,44 +102,98 @@ export default function Page() {
 
     return (
       <div className='flex flex-col items-center justify-center'>
-        <p className='text-white md:text-4xl text-2xl text-center'>Daily Exercises:</p>
-        <ExerciseView text='2 Moving Cubes' exercise='cubeByTwo' user={user as User} />
-        <ExerciseView text='3 Moving Cubes' exercise='cubeByThree' user={user as User} />
-        <ExerciseView text='4 by 1 Highlighter' exercise='fourByOne' user={user as User} />
-        <ExerciseView text='1 by 1 Highlighter' exercise='oneByOne' user={user as User} />
-        <ExerciseView text='1 by 2 Highlighter' exercise='oneByTwo' user={user as User} />
-        <ExerciseView text='2 by 1 Highlighter' exercise='twoByOne' user={user as User} />
-        <ExerciseView text='2 by 2 Highlighter' exercise='twoByTwo' user={user as User} />
-        <ExerciseView text='Easy Schulte Table' exercise='schulteByThree' user={user as User} />
-        <ExerciseView text='Intermediate Schulte Table' exercise='schulteByFive' user={user as User} />
-        <ExerciseView text='Hard Schulte Table' exercise='schulteBySeven' user={user as User} />
-        <ExerciseView text='Even Number Game' exercise='evenNumbers' user={user as User} />
-        <ExerciseView text='Number Memory Game' exercise='numberGuesser' user={user as User} />
-        <ExerciseView text='Matching Letter Game' exercise='letterMatcher' user={user as User} />
+        <p className='text-center text-2xl text-white md:text-4xl'>
+          Daily Exercises:
+        </p>
+        <ExerciseView
+          text='2 Moving Cubes'
+          exercise='cubeByTwo'
+          user={user as User}
+        />
+        <ExerciseView
+          text='3 Moving Cubes'
+          exercise='cubeByThree'
+          user={user as User}
+        />
+        <ExerciseView
+          text='4 by 1 Highlighter'
+          exercise='fourByOne'
+          user={user as User}
+        />
+        <ExerciseView
+          text='1 by 1 Highlighter'
+          exercise='oneByOne'
+          user={user as User}
+        />
+        <ExerciseView
+          text='1 by 2 Highlighter'
+          exercise='oneByTwo'
+          user={user as User}
+        />
+        <ExerciseView
+          text='2 by 1 Highlighter'
+          exercise='twoByOne'
+          user={user as User}
+        />
+        <ExerciseView
+          text='2 by 2 Highlighter'
+          exercise='twoByTwo'
+          user={user as User}
+        />
+        <ExerciseView
+          text='Easy Schulte Table'
+          exercise='schulteByThree'
+          user={user as User}
+        />
+        <ExerciseView
+          text='Intermediate Schulte Table'
+          exercise='schulteByFive'
+          user={user as User}
+        />
+        <ExerciseView
+          text='Hard Schulte Table'
+          exercise='schulteBySeven'
+          user={user as User}
+        />
+        <ExerciseView
+          text='Even Number Game'
+          exercise='evenNumbers'
+          user={user as User}
+        />
+        <ExerciseView
+          text='Number Memory Game'
+          exercise='numberGuesser'
+          user={user as User}
+        />
+        <ExerciseView
+          text='Matching Letter Game'
+          exercise='letterMatcher'
+          user={user as User}
+        />
+        <ExerciseView
+          text='Green Dot'
+          exercise='greenDot'
+          user={user as User}
+        />
       </div>
     )
   }
 
   function RemainingExercises() {
-    return (
-      isUsingChecklist
-        ? (<CheckList />)
-        : (
-          <ExerciseCounter
-            className='text-white md:text-4xl text-2xl text-center'
-            numberStyle='text-8xl text-yellow-400'
-          />
-        )
+    return isUsingChecklist ? (
+      <CheckList />
+    ) : (
+      <ExerciseCounter
+        className='text-center text-2xl text-white md:text-4xl'
+        numberStyle='text-8xl text-yellow-400'
+      />
     )
   }
 
   function ExerciseViewSwitcher() {
     return (
       <button
-        className={[
-          buttonStyle,
-          'absolute bottom-5 right-5'
-        ].join(' ')}
+        className={[buttonStyle, 'absolute bottom-5 right-5'].join(' ')}
         onClick={() => {
           setIsUsingChecklist(!isUsingChecklist)
           mutateUser.mutate({ isUsingChecklist: !isUsingChecklist })
@@ -173,7 +219,6 @@ export default function Page() {
       <SignedIn>
         <ExerciseViewSwitcher />
         <main className='flex min-h-screen items-center justify-center py-16'>
-
           <Sidebar />
           <div className='flex flex-col items-center justify-center gap-5 px-4'>
             <RemainingExercises />

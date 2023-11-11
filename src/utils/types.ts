@@ -62,6 +62,7 @@ export const Exercise = [
   'cubeByThree',
   'numberGuesser',
   'letterMatcher',
+  'greenDot'
 ] as const
 
 /**

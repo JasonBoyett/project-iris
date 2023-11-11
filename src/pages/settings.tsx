@@ -37,7 +37,7 @@ const Page: NextPage = () => {
       mutate({
         highlightColor: currentHilight,
         font: currentFont,
-        currentWpm: currentWpm,
+        currentWpm: currentWpm as number,
         language: currentLanguage
       })
       store.setUser({
@@ -50,7 +50,7 @@ const Page: NextPage = () => {
     } else if (first === 'Unnamed' || first === null) {
       mutate({
         ...user,
-        currentWpm: currentWpm,
+        currentWpm: currentWpm as number,
         highlightColor: currentHilight,
         font: currentFont,
         language: currentLanguage
@@ -80,7 +80,7 @@ const Page: NextPage = () => {
       mutate({
         firstName: first,
         lastName: last,
-        currentWpm: currentWpm,
+        currentWpm: currentWpm as number,
         highlightColor: currentHilight,
         font: currentFont,
         language: currentLanguage

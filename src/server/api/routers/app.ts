@@ -8,7 +8,8 @@ import { schemas, inputs } from '~/utils/validators'
 import { getNextExercise, getNextURL } from '~/utils/helpers'
 import type { EmailAddress } from '@clerk/nextjs/dist/types/server'
 
-function verifyStudySubject(emailAddresses: EmailAddress[]) {
+function verifyStudySubject(emailAddresses: EmailAddress[] | undefined) {
+  if (emailAddresses === undefined) throw new Error('No email addresses') 
   emailAddresses.forEach((email) => {
     if (email.emailAddress.endsWith('.edu')){
       return true
@@ -28,8 +29,6 @@ export const userRouter = createTRPCRouter({
           id: userId,
         },
       })
-      if (ctx.auth.userId === null || ctx.auth.userId === undefined)
-        throw new Error('User not found')
       if (user === null || user === undefined) {
         const newUser = await ctx.prisma.user.create({
           data: {
@@ -38,7 +37,6 @@ export const userRouter = createTRPCRouter({
             lastName: ctx.auth.user?.lastName ?? '',
             createdAt: new Date(),
             updatedAt: new Date(),
-            isStudySubject: verifyStudySubject(ctx.auth.user?.emailAddresses ?? []),
           },
         })
         return newUser
@@ -76,10 +74,10 @@ export const userRouter = createTRPCRouter({
           lastCubeByTwo: input.lastCubeByTwo,
           lastNumberGuesser: input.lastNumberGuesser,
           lastLetterMatcher: input.lastLetterMatcher,
+          lastGreenDot: input.lastGreenDot,
           numberGuesserFigures: input.numberGuesserFigures,
           isAdmin: input.isAdmin,
           isUsingChecklist: input.isUsingChecklist,
-          isStudySubject: verifyStudySubject(ctx.auth.user?.emailAddresses ?? []),
           font: input.font,
           language: input.language,
           tested: input.tested,

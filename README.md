@@ -21,7 +21,7 @@ Check out the current production version [here](https://speedread-git-main-jason
 - [Clerk](https://clerk.com/) for authentication, 
 - [Class Variance Authority](https://cva.style/docs) for reusable styling,
 - [Planet Scale](https://planetscale.com/) for our database.
-- Iris also uses various chron jobs written in [Go](https://go.dev/) to handle various database opperations that cannot be hosted on the public repository.
+- Iris also uses various chron jobs written in [Go](https://go.dev/) to handle various database operations that cannot be hosted on the public repository.
 
 ## Project Structure
 
