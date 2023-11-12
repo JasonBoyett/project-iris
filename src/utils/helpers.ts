@@ -1,4 +1,25 @@
+import type { SingletonRouter } from 'next/router'
 import { type User, Exercise } from './types'
+import type NextRouter from 'next/router'
+
+export function navigate(router: typeof NextRouter | SingletonRouter, url: string) {
+  router.replace(url).catch(() => {
+    router.push(url).catch(() => {
+      setTimeout(() => {
+        router.push(url).catch(() => {
+          router.push('/nav').catch((err) => {
+            console.log('error navigating: ', err)
+            alert('There was an error navigating to the next exercise. Please try again.')
+          })
+        })
+      }, 3_000)
+    })
+  })
+}
+
+export function navigateToNextExercise(router: typeof NextRouter | SingletonRouter, user: User) {
+  navigate(router, getNextURL(getNextExercise(user)))
+}
 
 export function userHilightToHex(user: User) {
   switch (user.highlightColor) {
@@ -29,13 +50,7 @@ function isToday(date2: string | undefined) {
   if (!date2) return false
   const today = formatDate(new Date())
   const date2Formatted = date2
-
-  console.log('today:', today)
-  console.log('date2:', date2Formatted)
-
-  const result = today === date2Formatted
-  console.log('result:', result)
-  return result
+  return today === date2Formatted
 }
 
 export function getAvailableExercises(user: User) {
@@ -89,7 +104,7 @@ export function getNextExercise(user: User | undefined | null) {
 
   if (!available) return null
 
-  if (available.length === 0 || available === undefined ) {
+  if (available.length === 0 || available === undefined) {
     return null
   }
   console.log('available: ', available)

@@ -3,10 +3,11 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import LoadingSpinner from '~/componants/loadingspinner'
 import { useUserStore } from '~/stores/userStore'
-import type { SelectFont } from '~/utils/types'
-import { useRouter } from "next/router";
+import type { Font } from '~/utils/types'
+import { SingletonRouter, useRouter } from "next/router";
 import { FontProvider } from "~/cva/fontProvider";
 import Sidebar from '~/componants/sidebar'
+import { navigate } from '~/utils/helpers'
 
 const INSTRUCTION_DELAY = 5_000
 
@@ -30,10 +31,6 @@ function StartButton(){
   const [time, setTime] = useState(false)
   const router = useRouter()
 
-  const navigate = () => {
-    router.replace('/exercises/evennumbers').catch((err) => console.error(err))
-  }
-
   useEffect(() => {
     setTimeout(() => setTime(true), INSTRUCTION_DELAY)
   }, [])
@@ -41,7 +38,7 @@ function StartButton(){
   return time ? (
     <button
       className='text-white md:text-5xl text-4xl bg-white/10 flex items-center justify-center rounded-full md:w-40 w-60 p-4 h-16 hover:bg-white/20'
-      onClick={() => navigate()}
+      onClick={() => navigate(router as SingletonRouter, '/exercises/evennumbers')}
     >
       Start
     </button>
@@ -52,7 +49,7 @@ function StartButton(){
 
 const Page: NextPage = () => {
   const userStore = useUserStore()
-  const [font, setFont] = useState<SelectFont>('sans')
+  const [font, setFont] = useState<Font>('sans')
   useEffect(() => {
     if(!userStore.user) return
     setFont(userStore.user.font)

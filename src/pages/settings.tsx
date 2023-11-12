@@ -1,16 +1,17 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
+import { SingletonRouter, useRouter } from 'next/router'
 import { Suspense, useEffect, useState } from 'react'
 import { api } from '~/utils/api'
 import type { User } from '~/utils/types'
 import useUserStore from '~/stores/userStore'
 import type { Overlay } from '~/utils/types'
 import { HighlightButton } from '~/cva/highlightSelectorButton'
-import type { SelectFont } from '~/utils/types'
+import type { Font } from '~/utils/types'
 import type { Language } from "~/utils/types"
 import LoadingSpinner from '~/componants/loadingspinner'
 import Sidebar from '~/componants/sidebar'
+import { navigate } from '~/utils/helpers'
 
 const Page: NextPage = () => {
   const user: User | undefined = api.user.getUnique.useQuery<User>().data
@@ -21,7 +22,7 @@ const Page: NextPage = () => {
   const { mutate } = api.user.setUser.useMutation()
   const store = useUserStore()
   const [currentHilight, setCurrentHilight] = useState<Overlay>('GREY')
-  const [currentFont, setCurrentFont] = useState<SelectFont>('sans')
+  const [currentFont, setCurrentFont] = useState<Font>('sans')
   const inputStyle =
     'rounded-full p-4 h-16 py-5 bg-white/20 text-black font-normal'
   const router = useRouter()
@@ -96,7 +97,7 @@ const Page: NextPage = () => {
 
       })
     }
-    router.replace('/nav').catch((e) => console.log(e))
+    navigate(router as SingletonRouter, '/nav')
   }
 
   useEffect(() => {
@@ -105,7 +106,7 @@ const Page: NextPage = () => {
       setLast(user.lastName)
       setCurrentWpm(user.currentWpm)
       setCurrentHilight(user.highlightColor as Overlay)
-      setCurrentFont(user.font as SelectFont)
+      setCurrentFont(user.font as Font)
       setCurrentLanguage(user.language)
     }
     else if (store.user) {
@@ -113,7 +114,7 @@ const Page: NextPage = () => {
       setLast(store.user.lastName)
       setCurrentWpm(store.user.currentWpm)
       setCurrentHilight(store.user.highlightColor as Overlay)
-      setCurrentFont(store.user.font as SelectFont)
+      setCurrentFont(store.user.font as Font)
       setCurrentLanguage(store.user.language)
     }
   }, [user, store])
@@ -277,7 +278,7 @@ const Page: NextPage = () => {
                 Font:{' '}
                 <select
                   id='fontPicker'
-                  onChange={(e) => setCurrentFont(e.target.value as SelectFont)}
+                  onChange={(e) => setCurrentFont(e.target.value as Font)}
                   value={currentFont as string}
                   className='bg-white/20 text-white text-2xl rounded-lg md:w-40 p-2.5'>
                   <option value='sans' className='bg-slate-500 font-sans'>Sans</option>

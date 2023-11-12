@@ -4,10 +4,10 @@ import {
   type CSSProperties
 } from 'react'
 import useInterval from '~/hooks/useInterval'
-import useTimer from '~/hooks/useTimer'
 import { api } from '~/utils/api'
-import { useRouter } from 'next/router'
-import { formatDate } from '~/utils/helpers'
+import { type SingletonRouter, useRouter } from 'next/router'
+import { formatDate, navigate } from '~/utils/helpers'
+import useUserStore from '~/stores/userStore'
 
 /**
  * PieTimer
@@ -25,6 +25,7 @@ export default function PieTimer({ seconds, pixels }: { seconds: number, pixels:
   const [count, setCount] = useState(0)
   const router = useRouter()
   const user = api.user.getUnique.useQuery()
+  const userStore = useUserStore()
 
   //styles
   //I'm not using Tailwind here or in this componant because these styles are
@@ -67,9 +68,14 @@ export default function PieTimer({ seconds, pixels }: { seconds: number, pixels:
 
   function teardown() {
     if (!user.data) return
+    if (!userStore.user) return
     mutate({ lastGreenDot: formatDate(new Date()) })
+    userStore.setUser({ 
+      ...userStore.user, 
+      lastGreenDot: formatDate(new Date()) 
+    })
     collectData.mutate()
-    router.replace('/next').catch((err) => console.log(err))
+    navigate(router as SingletonRouter, '/next')
   }
 
   useInterval(() => {

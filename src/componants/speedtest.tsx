@@ -4,8 +4,8 @@ import type { SpeedQuestion } from '@prisma/client'
 import type { User } from '~/utils/types'
 import { api } from '~/utils/api'
 import useUserStore from '~/stores/userStore'
-import { useRouter } from 'next/router'
-import { formatDate } from '~/utils/helpers'
+import { SingletonRouter, useRouter } from 'next/router'
+import { formatDate, navigate, navigateToNextExercise } from '~/utils/helpers'
 
 type QuestionViewProps = {
   speedQuestion: SpeedQuestion
@@ -112,7 +112,7 @@ function AnswerView({
       })
     }
     setTimeout(() => {
-      router.replace('/next').catch((err) => console.log(err))
+      navigate(router as SingletonRouter, '/next')
     }, 1500)
   }
 

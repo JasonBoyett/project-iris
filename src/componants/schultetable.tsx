@@ -1,11 +1,11 @@
-import { formatDate } from '~/utils/helpers'
+import { formatDate, navigate } from '~/utils/helpers'
 import React, { useState, useRef, useEffect } from 'react'
 import { v4 } from 'uuid'
-import { useRouter } from 'next/router'
+import { SingletonRouter, useRouter } from 'next/router'
 import { api } from '~/utils/api'
 import useUserStore from '~/stores/userStore'
 import { FontProvider } from '~/cva/fontProvider'
-import type { SelectFont } from '~/utils/types'
+import type { Font } from '~/utils/types'
 import { useStopWatch } from '~/hooks/useStopWatch'
 
 
@@ -58,7 +58,7 @@ function Cell({
 
 export default function SchulteTable({ sideLength }: SchulteTableProps) {
   const [counter, setCount] = useState(1)
-  const [font, setFont] = useState<SelectFont>('sans')
+  const [font, setFont] = useState<Font>('sans')
   const errors = useRef(0)
   const router = useRouter()
   const { mutate } = api.user.setUser.useMutation()
@@ -117,7 +117,7 @@ export default function SchulteTable({ sideLength }: SchulteTableProps) {
         else store.setUser({ ...user, lastSchulteBySeven: formatDate(new Date()) })
         break
     }
-    router.replace('/next').catch((err) => console.log(err))
+    navigate(router as SingletonRouter, '/next')
   }
 
   function Table({ classString }: { classString: string }) {

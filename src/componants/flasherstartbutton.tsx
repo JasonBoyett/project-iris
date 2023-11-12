@@ -1,29 +1,28 @@
-import { type SingletonRouter, useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import LoadingSpinner from './loadingspinner'
+import { useRouter, type SingletonRouter } from 'next/router'
+import type { HighlightType } from '~/utils/types'
 import { navigate } from '~/utils/helpers'
+import LoadingSpinner from '~/componants/loadingspinner'
+import { useEffect, useState } from 'react'
 
-const MINUTE_IN_MILLISECONDS = 60_000
-
-export default function StartButton({ option }: { option: string }){
+export default function FlasherStartButton({ option, delay }: { option: HighlightType, delay: number }){
   const [time, setTime] = useState(false)
   const router = useRouter()
 
   const handleNavigation = () => {
     switch (option) {
-      case '4by1':
+      case 'fourByOne':
         navigate(router as SingletonRouter, '/exercises/flashfourbyone')
         break
-      case '1by2':
+      case 'oneByTwo':
         navigate(router as SingletonRouter, '/exercises/flashonebytwo')
         break
-      case '2by2':
+      case 'twoByTwo':
         navigate(router as SingletonRouter, '/exercises/flashtwobytwo')
         break
-      case '1by1':
+      case 'oneByOne':
         navigate(router as SingletonRouter, '/exercises/flashonebyone')
         break
-      case '2by1':
+      case 'twoByOne':
         navigate(router as SingletonRouter, '/exercises/flashtwobyone')
         break
       default:
@@ -32,7 +31,7 @@ export default function StartButton({ option }: { option: string }){
   }
 
   useEffect(() => {
-    setTimeout(() => setTime(true), MINUTE_IN_MILLISECONDS / 2)
+    setTimeout(() => setTime(true), delay)
   }, [])
 
   return time ? (

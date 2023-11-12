@@ -10,11 +10,11 @@ import type { ReactElement } from 'react'
 import useInterval from '@/hooks/useInterval'
 import { v4 as uuid } from 'uuid'
 import { useIsVisible } from '@/hooks/useIsVisible'
-import { useRouter } from 'next/router'
+import { SingletonRouter, useRouter } from 'next/router'
 import { useUserStore } from '~/stores/userStore'
 import { api } from '~/utils/api'
-import type { SelectFont, User } from '~/utils/types'
-import { formatDate } from '~/utils/helpers'
+import type { Font, User } from '~/utils/types'
+import { formatDate, navigate } from '~/utils/helpers'
 import { FontProvider } from '~/cva/fontProvider'
 import type { HighlightType } from '~/utils/types'
 
@@ -186,7 +186,7 @@ function Grid({ rows = 4, type, }: GridProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const store = useUserStore((state) => state)
-  const [font, setFont] = useState<SelectFont>('sans')
+  const [font, setFont] = useState<Font>('sans')
   const user = store.user
   const router = useRouter()
   const { mutate } = api.user.setUser.useMutation()
@@ -238,7 +238,7 @@ function Grid({ rows = 4, type, }: GridProps) {
       })
     }
     markComplete()
-    return router.replace('/next').catch((err) => console.log(err))
+    navigate(router as SingletonRouter, '/next')
   }
 
   useEffect(() => {

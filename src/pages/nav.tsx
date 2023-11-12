@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { api } from '~/utils/api'
-import { useRouter } from 'next/router'
+import { type SingletonRouter, useRouter } from 'next/router'
 import { SignedIn, SignedOut } from '@clerk/clerk-react'
 import { SignIn } from '@clerk/clerk-react'
 import { useUserStore } from '~/stores/userStore'
 import type { Exercise, User } from '~/utils/types'
-import { isAlreadyDone } from '~/utils/helpers'
+import {
+  isAlreadyDone,
+  navigate,
+  getAvailableExercises,
+  navigateToNextExercise,
+} from '~/utils/helpers'
 import Sidebar from '~/componants/sidebar'
-import { getAvailableExercises } from '~/utils/helpers'
 
 
 export default function Page() {
@@ -26,15 +30,16 @@ export default function Page() {
   const router = useRouter()
 
   const start = () => {
-    router.replace('/loadnext').catch((err) => console.log(err))
+    if (!user) return
+    navigateToNextExercise(router as SingletonRouter, user)
   }
 
   const startTest = () => {
-    router.replace('/instructions/speedtest').catch((err) => console.log(err))
+    navigate(router as SingletonRouter, '/exercises/speedtest')
   }
 
   const adminPage = () => {
-    router.replace('/admin').catch((err) => console.log(err))
+    navigate(router as SingletonRouter, '/admin')
   }
 
   function StartButton() {

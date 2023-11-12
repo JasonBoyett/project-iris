@@ -154,10 +154,6 @@ export const boxFlasherData = z.object({
   speed: z.number(),
 })
 
-export const greenDotData = z.object({
-  userId: z.string(),
-})
-
 export const schemas = {
   user: userSchema,
   speedTest: speedTestSchema,

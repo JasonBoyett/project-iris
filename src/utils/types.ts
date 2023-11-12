@@ -72,7 +72,7 @@ export const Exercise = [
  **/
 export type Exercise = (typeof Exercise)[number]
 
-export const Font = [
+const Font = [
   'sans',
   'mono',
   'serif',
@@ -85,4 +85,4 @@ export const Font = [
   'ibmPlexMono',
 ] as const
 
-export type SelectFont = (typeof Font)[number] | null | undefined
+export type Font = (typeof Font)[number] | null | undefined

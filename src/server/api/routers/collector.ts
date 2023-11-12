@@ -7,7 +7,6 @@ import {
   numberGuesserData,
   schulteData,
   letterMatcherData,
-  greenDotData,
 } from '~/utils/validators'
 
 export const highlightSessionRouter = createTRPCRouter({

@@ -1,10 +1,10 @@
-import { useRef, useEffect, useState, use } from "react"
+import { useRef, useEffect, useState } from "react"
 import { api } from "~/utils/api"
-import { useRouter } from "next/router"
+import { SingletonRouter, useRouter } from "next/router"
 import useUserStore from "~/stores/userStore"
-import { formatDate } from "~/utils/helpers"
+import { formatDate, navigate } from "~/utils/helpers"
 import useTimer from '~/hooks/useTimer'
-import type { SelectFont } from "~/utils/types"
+import type { Font } from "~/utils/types"
 import { FontProvider } from "~/cva/fontProvider"
 import { motion } from "framer-motion"
 
@@ -41,7 +41,7 @@ export default function LetterGrid({ size }: LetterGridProps) {
   )
   const matching = useRef<boolean>(Math.random() < 0.5)
   const [showingTarget, setShowing] = useState<boolean>(false)
-  const [font, setFont] = useState<SelectFont>('sans' as SelectFont)
+  const [font, setFont] = useState<Font>('sans' as Font)
   const grid = (() => {
     const grid = []
     for (let i = 0; i < size; i++) {
@@ -151,7 +151,7 @@ export default function LetterGrid({ size }: LetterGridProps) {
         lastLetterMatcher: formatDate(new Date()),
       })
     }
-    router.replace('/next').catch(console.error)
+    navigate(router as SingletonRouter, '/next')
   }
 
   function gameLoop() {

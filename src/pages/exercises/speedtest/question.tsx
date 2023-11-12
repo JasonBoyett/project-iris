@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react'
 import { FontProvider } from '~/cva/fontProvider'
 import { useUserStore } from '~/stores/userStore'
 import { useSpeedTestStore } from '~/stores/useSpeedTestStore'
-import type { SelectFont } from '~/utils/types'
+import type { Font } from '~/utils/types'
 import { TESTS_PER_DAY } from './index'
-import { useRouter } from 'next/router'
+import { type SingletonRouter, useRouter } from 'next/router'
 import Head from 'next/head'
 import Sidebar from '~/componants/sidebar'
+import { navigate } from '~/utils/helpers'
 
 export default function Page(){
   const exerciseStore = useSpeedTestStore((state) => state)
@@ -16,7 +17,7 @@ export default function Page(){
   const [answerC, setAnswerC] = useState('Loading..')
   const [answerD, setAnswerD] = useState('Loading..')
   const [question, setQuestion] = useState('Loading..')
-  const [font, setFont] = useState<SelectFont>('sans')
+  const [font, setFont] = useState<Font>('sans')
   const [rate, setRate] = useState(0)
   const router = useRouter()
 
@@ -40,7 +41,7 @@ export default function Page(){
       })
     }
     if (exerciseStore.totalResponses < TESTS_PER_DAY - 1) {
-      router.replace('/exercises/speedtest').catch((err) => console.log(err))
+      navigate(router as SingletonRouter, '/exercises/speedtest')
     } else {
       router
         .replace('/exercises/speedtest/result')
