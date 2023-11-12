@@ -272,7 +272,7 @@ function Grid({ rows = 4, type, }: GridProps) {
       section.current >= words.current.length - 1 &&
       cellCounter >= rows * width
     ) {
-      tearDown()?.catch((err) => console.log(err))
+      tearDown()
       return
     }
     if (cellCounter >= rows * width) {
