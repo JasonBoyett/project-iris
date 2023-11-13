@@ -49,7 +49,7 @@ The [stores](src/stores) directory contains Zustand stores.
 The [utils](src/utils) directory contains utility functions, types and Zod schemas.
 
 ## Project Authors
-- Primary Developer: [Jason Boyett](GitHub.com/JasonBoyett)
+- Primary Developer: [Jason Boyett](https://GitHub.com/JasonBoyett)
 - Project Manager: [Dr. Vojislav Petrovic PhD](https://schreiner.edu/su-directory/petrovic-vojislav/)
 - UI Designer: Jason Boyett & [Zach Lyman](https://limeademedia.com) 
 
