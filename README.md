@@ -27,7 +27,61 @@ participants and their usage of the application.
 - [Planet Scale](https://planetscale.com/) for our database.
 - Iris also uses various chron jobs written in [Go](https://go.dev/) to handle various database operations that cannot be hosted on the public repository.
 
+
 ## Project Structure
+
+### Basic Usage
+```mermaid
+---
+title: Daily use
+---
+graph LR 
+    index[Home Page] -- Clerk Authentication --> nav{Navigation Page}
+    nav -- If weekly test is done --> exercise(random exercise)
+    nav -- If weekly test is not done --> test(Weekly test) --> exercise
+    exercise -- If there are still remaining exercises --> exercise
+    exercise -- If all exercises are completed --> done(Done for the day) --> nav
+    nav -- If user is an administrator --> admin(Admin Page)
+    exercise --sends exercise data --> db[(Database)]
+```
+
+### System Architecture
+```mermaid
+---
+title: Data flow
+---
+
+sequenceDiagram
+    actor user
+    participant Client
+    participant Server
+    participant DB
+    participant Auth
+    participant Chron
+    participant Third Party API
+
+    user ->> Client: Logs in
+    Client ->> Auth: sends request
+    Auth -->> Client: returns cookie
+    Auth -->> Server: sends cookie
+    Client ->> Server: Requests user info through tRPC
+    Server ->> DB: requests user info through prisma
+    DB -->> Server: returns user info as SQL string that is parsed by prisma
+    Server -->> Client: returns user info through tRPC
+    Client ->> Server: requests exercise data
+    Server ->> Third Party API: requests data
+    Third Party API -->> Server: returns data
+    Server ->> DB: requests data
+    DB -->> Server: returns data
+    Chron ->> DB: resets all user's "tested" values to "false" at the beginning of the week
+    Client -->> user: Serves daily exercises until all are complete.
+    Client ->> Server: Sends exercise data through tRPC
+    Server ->> DB: Sends exercise data through prisma
+    Client ->> Client: Maintains state with Zustand
+
+```
+
+### Understanding the file structure
 
 Iris uses the pages router provided by Next.js. The [pages](src/pages) directory contains all
 the routs for the application. The pages are divided into instructions, exercises, 
