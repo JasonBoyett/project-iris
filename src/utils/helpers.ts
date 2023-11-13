@@ -46,9 +46,17 @@ export function userHilightToHex(user: User) {
   }
 }
 
+/**
+ * isToday takes a string that is the result of calling 
+ * the formatDate function on a date object 
+ * and returns true if the date is today.
+ *
+ * @param date2 - a string that is the result of calling
+ * the formatDate function on a date object.
+**/
 function isToday(date2: string | undefined) {
   if (!date2) return false
-  const today = formatDate(new Date())
+  const today = formatDate()
   const date2Formatted = date2
   return today === date2Formatted
 }
@@ -112,7 +120,7 @@ export function getNextExercise(user: User | undefined | null) {
   return choice
 }
 
-export const formatDate = (date: Date | undefined) => {
+export const formatDate = (date?: Date | undefined | null) => {
   if (!date) date = new Date()
   return date
     .toString()
