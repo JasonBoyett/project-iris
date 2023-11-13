@@ -2,7 +2,6 @@ import Head from 'next/head'
 import FlashingGrid from 'src/componants/flashingcell'
 import Sidebar from '~/componants/sidebar'
 
-
 export default function Page(){
   return (
     <>

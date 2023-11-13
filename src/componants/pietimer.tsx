@@ -1,4 +1,4 @@
-import {
+import React, {
   useState,
   useEffect,
   type CSSProperties
@@ -11,14 +11,18 @@ import useUserStore from '~/stores/userStore'
 
 /**
  * PieTimer
-  * @param duration - duration is the number 
-    * of seconds the timer will run
-*/
+ * @param duration - duration is the number
+ * of seconds the timer will run
+ */
 
-
-
-export default function PieTimer({ seconds, pixels }: { seconds: number, pixels: number }) {
-  const MILLI_SECONDS_IN_A_SECOND = 1_000
+export default function PieTimer({
+  seconds,
+  pixels,
+}: {
+  seconds: number
+  pixels: number
+}) {
+  const MILLISECONDS_IN_A_SECOND = 1_000
   const [started, setStarted] = useState<boolean>(false)
   const { mutate } = api.user.setUser.useMutation()
   const collectData = api.greenDotSession.setUnique.useMutation()
@@ -28,11 +32,11 @@ export default function PieTimer({ seconds, pixels }: { seconds: number, pixels:
   const userStore = useUserStore()
 
   //styles
-  //I'm not using Tailwind here or in this componant because these styles are
+  //I'm not using Tailwind here or in this component because these styles are
   //going to be more complex and require more control.
   //I'll still use tailwind colors to help keep colors consistent
   //I'll note the tailwind color in the comments
-  const BG_COLOR = '#16a34a' //tailwind green-600 
+  const BG_COLOR = '#16a34a' //tailwind green-600
   const FG_COLOR = '#166534' //tailwind green-800
 
   const clock: CSSProperties = {
@@ -70,9 +74,9 @@ export default function PieTimer({ seconds, pixels }: { seconds: number, pixels:
     if (!user.data) return
     if (!userStore.user) return
     mutate({ lastGreenDot: formatDate(new Date()) })
-    userStore.setUser({ 
-      ...userStore.user, 
-      lastGreenDot: formatDate(new Date()) 
+    userStore.setUser({
+      ...userStore.user,
+      lastGreenDot: formatDate(new Date()),
     })
     collectData.mutate()
     navigate(router as SingletonRouter, '/next')
@@ -87,9 +91,9 @@ export default function PieTimer({ seconds, pixels }: { seconds: number, pixels:
     console.log(count)
     setRotatorStyle({
       ...rotatorStyle,
-      transform: `rotate(${count * (360 / seconds)}deg)`
+      transform: `rotate(${count * (360 / seconds)}deg)`,
     })
-    if ((seconds / 2) < count) {
+    if (seconds / 2 < count) {
       setMaskStyle({
         ...maskStyle,
         backgroundColor: FG_COLOR,
@@ -97,7 +101,7 @@ export default function PieTimer({ seconds, pixels }: { seconds: number, pixels:
         right: '50%',
       })
     }
-  }, MILLI_SECONDS_IN_A_SECOND)
+  }, MILLISECONDS_IN_A_SECOND)
 
   useEffect(() => {
     if (!user) return
@@ -107,11 +111,9 @@ export default function PieTimer({ seconds, pixels }: { seconds: number, pixels:
   }, [user])
 
   return (
-    <>
-      <div style={clock}>
-        <div style={rotatorStyle} />
-        <div style={maskStyle} />
-      </div>
-    </>
+    <div style={clock}>
+      <div style={rotatorStyle} />
+      <div style={maskStyle} />
+    </div>
   )
 }
