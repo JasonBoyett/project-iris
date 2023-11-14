@@ -8,7 +8,7 @@ performance.
 To facilitate this study, Iris is designed to collect data on the study
 participants and their usage of the application. 
 
-### Check out the current production version [here.](https://speedread-jasonboyett.vercel.app/)
+### Check out the current production version [here.](https://speedread-git-main-jasonboyett.vercel.app/)
 ---
 
 
