@@ -191,67 +191,67 @@
     "comment": 0,
     "blank": 10
   },
-  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/wordchanger.tsx": {
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/components/wordchanger.tsx": {
     "language": "TypeScript JSX",
     "code": 76,
     "comment": 1,
     "blank": 10
   },
-  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/schultetable.tsx": {
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/components/schultetable.tsx": {
     "language": "TypeScript JSX",
     "code": 162,
     "comment": 1,
     "blank": 8
   },
-  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/settingsbutton.tsx": {
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/components/settingsbutton.tsx": {
     "language": "TypeScript JSX",
     "code": 19,
     "comment": 0,
     "blank": 2
   },
-  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/evensandodds.tsx": {
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/components/evensandodds.tsx": {
     "language": "TypeScript JSX",
     "code": 190,
     "comment": 0,
     "blank": 18
   },
-  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/loadingspinner.tsx": {
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/components/loadingspinner.tsx": {
     "language": "TypeScript JSX",
     "code": 24,
     "comment": 0,
     "blank": 1
   },
-  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/homebutton.tsx": {
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/components/homebutton.tsx": {
     "language": "TypeScript JSX",
     "code": 19,
     "comment": 0,
     "blank": 3
   },
-  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/tests/evensandodds.test.ts": {
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/components/tests/evensandodds.test.ts": {
     "language": "TypeScript",
     "code": 92,
     "comment": 0,
     "blank": 5
   },
-  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/cubeflasher.tsx": {
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/components/cubeflasher.tsx": {
     "language": "TypeScript JSX",
     "code": 210,
     "comment": 2,
     "blank": 12
   },
-  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/speedtest.tsx": {
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/components/speedtest.tsx": {
     "language": "TypeScript JSX",
     "code": 195,
     "comment": 0,
     "blank": 8
   },
-  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/flashingcell.tsx": {
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/components/flashingcell.tsx": {
     "language": "TypeScript JSX",
     "code": 308,
     "comment": 4,
     "blank": 26
   },
-  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/componants/globals.d.ts": {
+  "file:///Users/jasonboyett/Documents/Coding/GitHub/speedread/src/components/globals.d.ts": {
     "language": "TypeScript",
     "code": 29,
     "comment": 0,

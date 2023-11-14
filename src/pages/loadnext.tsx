@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import useUserStore from '~/stores/userStore'
-import LoadingSpinner from 'src/componants/loadingspinner'
+import LoadingSpinner from 'src/components/loadingspinner'
 import type { User } from '~/utils/types'
 import { api } from '~/utils/api'
 

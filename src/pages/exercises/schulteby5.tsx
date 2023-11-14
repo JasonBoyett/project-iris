@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
-import Sidebar from '~/componants/sidebar'
+import Sidebar from '~/components/sidebar'
 
-const SchulteTable = dynamic(() => import('~/componants/schultetable'), { ssr: false })
+const SchulteTable = dynamic(() => import('~/components/schultetable'), { ssr: false })
 
 export default function Page() {
   return (

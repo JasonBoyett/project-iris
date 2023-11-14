@@ -30,9 +30,9 @@ Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-
 | prisma                 |     1 |    138 |       0 |    23 |    161 |
 | src                    |    59 |  3,382 |     179 |   324 |  3,885 |
 | src (Files)            |     2 |     49 |      23 |    16 |     88 |
-| src/componants         |    11 |  1,324 |       8 |    97 |  1,429 |
-| src/componants (Files) |    10 |  1,232 |       8 |    92 |  1,332 |
-| src/componants/tests   |     1 |     92 |       0 |     5 |     97 |
+| src/components         |    11 |  1,324 |       8 |    97 |  1,429 |
+| src/components (Files) |    10 |  1,232 |       8 |    92 |  1,332 |
+| src/components/tests   |     1 |     92 |       0 |     5 |     97 |
 | src/cva                |     4 |    172 |       0 |    21 |    193 |
 | src/hooks              |     3 |    129 |       2 |    18 |    149 |
 | src/pages              |    24 |  1,147 |       3 |    82 |  1,232 |

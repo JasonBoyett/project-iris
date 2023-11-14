@@ -12,7 +12,7 @@ import {
   getAvailableExercises,
   navigateToNextExercise,
 } from '~/utils/helpers'
-import Sidebar from '~/componants/sidebar'
+import Sidebar from '~/components/sidebar'
 
 
 export default function Page() {

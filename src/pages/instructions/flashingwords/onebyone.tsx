@@ -3,8 +3,8 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useUserStore } from '~/stores/userStore'
 import { FontProvider } from '~/cva/fontProvider'
-import Sidebar from '~/componants/sidebar'
-import FlasherStartButton from '~/componants/flasherstartbutton'
+import Sidebar from '~/components/sidebar'
+import FlasherStartButton from '~/components/flasherstartbutton'
 import type { Font } from '~/utils/types'
 
 const INSTRUCTION_DELAY = 5_000

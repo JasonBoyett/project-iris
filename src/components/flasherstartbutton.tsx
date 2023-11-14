@@ -1,7 +1,7 @@
 import { useRouter, type SingletonRouter } from 'next/router'
 import type { HighlightType } from '~/utils/types'
 import { navigate } from '~/utils/helpers'
-import LoadingSpinner from '~/componants/loadingspinner'
+import LoadingSpinner from '~/components/loadingspinner'
 import { useEffect, useState } from 'react'
 
 export default function FlasherStartButton({ option, delay }: { option: HighlightType, delay: number }){

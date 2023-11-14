@@ -8,7 +8,7 @@ import { TESTS_PER_DAY } from './index'
 import Head from 'next/head'
 import { api } from '~/utils/api'
 import { formatDate, navigateToNextExercise } from '~/utils/helpers'
-import Sidebar from '~/componants/sidebar'
+import Sidebar from '~/components/sidebar'
 
 const GOOD_GRADE = 8 //since the user will be seeing 10 questions this means they got a B
 const FAILING_GRADE = 5 //since the user will be seeing 10 questions this means they got a D

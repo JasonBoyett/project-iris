@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { SingletonRouter, useRouter } from 'next/router'
 import Image from 'next/image'
 import Butterfly from 'public/flying-butterfly.gif'
-import Sidebar from '~/componants/sidebar'
+import Sidebar from '~/components/sidebar'
 import { navigateToNextExercise } from '~/utils/helpers'
 import { api } from '~/utils/api'
 

@@ -1,5 +1,5 @@
-import CornerFlasher from '~/componants/cubeflasher'
-import Sidebar from '~/componants/sidebar'
+import CornerFlasher from '~/components/cubeflasher'
+import Sidebar from '~/components/sidebar'
 
 export default function Page(){
   return (

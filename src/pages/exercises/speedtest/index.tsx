@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { api } from '~/utils/api'
 import Head from 'next/head'
 import { FontProvider } from '~/cva/fontProvider'
-import Sidebar from '~/componants/sidebar'
+import Sidebar from '~/components/sidebar'
 
 export const TESTS_PER_DAY = 10
 

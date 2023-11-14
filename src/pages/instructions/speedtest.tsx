@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
-import LoadingSpinner from '~/componants/loadingspinner'
+import LoadingSpinner from '~/components/loadingspinner'
 import { useUserStore } from '~/stores/userStore'
 import type { Font } from '~/utils/types'
 import { type SingletonRouter, useRouter } from "next/router";
 import { FontProvider } from "~/cva/fontProvider";
-import Sidebar from '~/componants/sidebar'
+import Sidebar from '~/components/sidebar'
 import { navigate } from '~/utils/helpers'
 
 const INSTRUCTION_DELAY = 5_000

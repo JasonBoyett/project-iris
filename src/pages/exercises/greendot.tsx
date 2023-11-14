@@ -1,11 +1,11 @@
 import Head from 'next/head'
-import PieTimer from '~/componants/pietimer'
-import Sidebar from '~/componants/sidebar'
+import PieTimer from '~/components/pietimer'
+import Sidebar from '~/components/sidebar'
 import { api } from '~/utils/api'
 import { FontProvider } from '~/cva/fontProvider'
 import type { Font } from '~/utils/types'
 import { useEffect, useState } from 'react'
-import BackgroundText from '~/componants/greendottext'
+import BackgroundText from '~/components/greendottext'
 
 export default function Page() {
   const user = api.user.getUnique.useQuery()

@@ -4,8 +4,8 @@ import Head from 'next/head'
 import { useUserStore } from '~/stores/userStore'
 import type { HighlightType, Font } from '~/utils/types'
 import { FontProvider } from '~/cva/fontProvider'
-import Sidebar from '~/componants/sidebar'
-import FlasherStartButton from '~/componants/flasherstartbutton'
+import Sidebar from '~/components/sidebar'
+import FlasherStartButton from '~/components/flasherstartbutton'
 
 const INSTRUCTION_DELAY = 5_000
 
