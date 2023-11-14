@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { api } from '~/utils/api'
 import { useRouter } from 'next/router'
-import Sidebar from '~/componants/sidebar'
+import Sidebar from '~/components/sidebar'
 
 export default function Page(){
   const router = useRouter()

@@ -113,7 +113,7 @@ The [utils](src/utils) directory contains utility functions, types and Zod schem
 The best entry point for the project is the [pages](src/pages) directory.
 [Index.tsx](src/pages/index.tsx) Is the home page of the web sight but the main page of the app is [Nav](src/pages/nav.tsx). 
 From there you can view the individual exercises by viewing the [exercises](src/pages/exercises) directory. 
-Most exercises consist of some basic setup and a call to a primary component. Said components can be found in the [components directory](src/componants).
+Most exercises consist of some basic setup and a call to a primary component. Said components can be found in the [components directory](src/components).
 
 ### Running the project locally
 To run the project locally you will neet to have [Node.js](https://nodejs.org/en/) installed.

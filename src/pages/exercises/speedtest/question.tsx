@@ -6,7 +6,7 @@ import type { Font } from '~/utils/types'
 import { TESTS_PER_DAY } from './index'
 import { type SingletonRouter, useRouter } from 'next/router'
 import Head from 'next/head'
-import Sidebar from '~/componants/sidebar'
+import Sidebar from '~/components/sidebar'
 import { navigate } from '~/utils/helpers'
 
 export default function Page(){

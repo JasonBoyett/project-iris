@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import WordChanger from 'src/componants/wordchanger'
-import Sidebar from '~/componants/sidebar'
+import WordChanger from 'src/components/wordchanger'
+import Sidebar from '~/components/sidebar'
 
 export default function Page(){
   return (

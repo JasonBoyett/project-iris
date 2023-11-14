@@ -5,7 +5,7 @@ import { SingletonRouter, useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { api } from '~/utils/api'
 import type { User } from '~/utils/types'
-import Sidebar from '~/componants/sidebar'
+import Sidebar from '~/components/sidebar'
 import { navigateToNextExercise } from '~/utils/helpers'
 
 const Page: NextPage = () => {

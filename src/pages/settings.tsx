@@ -9,8 +9,8 @@ import type { Overlay } from '~/utils/types'
 import { HighlightButton } from '~/cva/highlightSelectorButton'
 import type { Font } from '~/utils/types'
 import type { Language } from '~/utils/types'
-import LoadingSpinner from '~/componants/loadingspinner'
-import Sidebar from '~/componants/sidebar'
+import LoadingSpinner from '~/components/loadingspinner'
+import Sidebar from '~/components/sidebar'
 import { navigate } from '~/utils/helpers'
 
 const Page: NextPage = () => {
