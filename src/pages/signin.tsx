@@ -1,15 +1,18 @@
 import { SignIn } from '@clerk/nextjs'
-import { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import StudyLogo from 'public/study-logo.png'
 
-const Page: NextPage = () => {
+export default function Page() {
   return (
     <>
       <Head>
         <title>Sign In</title>
       </Head>
+        <SignIn
+          signUpUrl={'/signup'}
+          redirectUrl={'/nav'}
+        />
       <main className='flex h-screen flex-col items-center justify-center'>
         <Image
           src={StudyLogo}
@@ -22,4 +25,3 @@ const Page: NextPage = () => {
     </>
   )
 }
-export default Page
