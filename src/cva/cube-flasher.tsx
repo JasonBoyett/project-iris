@@ -17,7 +17,7 @@ export const cornersCell = cva(
     variants: {
       intent: {
         noFlash: 'bg-invsible invsible',
-        flash: 'rounded-lg gap-1 bg-gray-200',
+        flash: 'rounded-lg gap-1 bg-white',
       },
     },
     compoundVariants: [{ intent: 'noFlash' }],

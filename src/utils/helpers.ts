@@ -2,6 +2,12 @@ import type { SingletonRouter } from 'next/router'
 import { type User, Exercise } from './types'
 import type NextRouter from 'next/router'
 
+export function checkName(name: string | undefined | null) {
+  if (!name) return false
+  const regex = /[a-zA-Z]/
+  return regex.test(name)
+}
+
 export function navigate(router: typeof NextRouter | SingletonRouter, url: string) {
   router.replace(url).catch(() => {
     router.push(url).catch(() => {

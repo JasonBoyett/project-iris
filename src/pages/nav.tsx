@@ -11,6 +11,7 @@ import {
   navigate,
   getAvailableExercises,
   navigateToNextExercise,
+  checkName,
 } from '~/utils/helpers'
 import Sidebar from '~/components/sidebar'
 
@@ -212,6 +213,9 @@ export default function Page() {
   useEffect(() => {
     console.log(user)
     if (!user) return
+    if (!checkName(user.firstName) || !checkName(user.lastName)) {
+      navigate(router as SingletonRouter, '/setup') 
+    }    
     setUserStore(user)
     setIsUsingChecklist(user.isUsingChecklist)
   }, [user, isLoading, data, setUserStore])
