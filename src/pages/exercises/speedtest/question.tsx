@@ -102,7 +102,7 @@ export default function Page() {
               </button>
               <p className='text-white text-3xl'>{answerC}</p>
             </div>
-            <div 
+            <div
               onClick={() => handleClick('D')}
               className='flex items-center gap-2 text-yellow-400 cursor-pointer'>
               <button
