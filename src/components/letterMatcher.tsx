@@ -195,7 +195,7 @@ export default function LetterGrid({ size }: LetterGridProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className='grid grid-cols-1 gap-3'>
+      className='grid grid-cols-1 gap-3 md:w-auto w-80'>
       <h1 className='md:text-4xl text-3xl text-white text-center'>
         {
           !started
@@ -205,7 +205,10 @@ export default function LetterGrid({ size }: LetterGridProps) {
       </h1>
       <FontProvider
         font={font}
-        className={'grid md:gap-5 gap-3 border-2 p-3 text-white md:text-6xl text-5xl rounded-lg grid-cols-' + size.toString()}>
+        className={['grid md:gap-5 gap-3', 
+          'border-2 p-3 text-white', 
+          'md:text-6xl text-5xl', 
+          ('rounded-lg grid-cols-' + size.toString())].join(' ')}>
         {grid}
       </FontProvider>
       <div className='grid grid-cols-2 justify-center items-center gap-2'>

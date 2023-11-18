@@ -23,7 +23,7 @@ export default function Page() {
               style={{ width: '24rem', height: '16rem' }}
             />
           </div>
-          <p className='md:text-5xl text-4xl text-center text-white font-bold'>
+          <p className='md:text-5xl text-3xl text-center text-white font-bold'>
             Click for your next exercise!
           </p>
           <div className='flex items-center justify-center p-12'>

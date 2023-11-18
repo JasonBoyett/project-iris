@@ -19,7 +19,8 @@ import Sidebar from '~/components/sidebar'
 export default function Page() {
   const buttonStyle = [
     'text-white md:text-3xl text-2xl',
-    'bg-white/10 rounded-full p-4 h-16',
+    'bg-white/10 rounded-full md:p-4',
+    'p-2 md:h-16 h-12',
     'hover:bg-white/20',
   ].join(' ')
   const user = api.user.getUnique.useQuery().data

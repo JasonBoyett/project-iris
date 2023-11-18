@@ -2,8 +2,13 @@ import React from 'react'
 import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
 
-export const cell = cva(
-  ['flex', 'text-black', 'text-xl', 'p-8', 'justify-center'],
+export const cell = cva([
+  'flex',
+  'text-black',
+  'md:text-xl',
+  'text-l',
+  'p-2',
+  'justify-center'],
   {
     variants: {
       intent: {
@@ -34,7 +39,7 @@ export const cell = cva(
 
 export interface ButtonProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof cell> {}
+  VariantProps<typeof cell> { }
 
 export const StyledCell: React.FC<ButtonProps> = ({
   className,
