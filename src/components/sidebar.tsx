@@ -46,14 +46,14 @@ export default function Sidebar() {
       />
       {/*this is the sidebar itself*/}
       <div
-        className={`absolute top-0 left-0 min-h-full bg-gradient-to-br from-slate-600 to-slate-700 ${showing ? 'md:w-1/12 w-28' : 'w-4'} duration-300`}
+        className={`absolute top-0 left-0 min-h-full bg-slate-600 ${showing ? 'md:w-1/12 w-28' : 'md:w-4 w-2'} duration-300`}
       >
         <div
           className={[
             'flex justify-center items-center',
             'cursor-pointer text-white md:text-3xl text-2xl',
-            'bg-slate-600 w-8 h-8 rounded-full',
-            'absolute top-4 -right-3'
+            'bg-slate-600 w-8 h-8 rounded-r-full',
+            'absolute top-4 md:-right-4 -right-5',
           ].join(' ')}
           onClick={() => setShowing(!showing)}
         >

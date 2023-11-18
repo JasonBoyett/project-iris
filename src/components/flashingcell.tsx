@@ -10,7 +10,7 @@ import type { ReactElement } from 'react'
 import useInterval from '@/hooks/useInterval'
 import { v4 as uuid } from 'uuid'
 import { useIsVisible } from '@/hooks/useIsVisible'
-import { SingletonRouter, useRouter } from 'next/router'
+import { type SingletonRouter, useRouter } from 'next/router'
 import { useUserStore } from '~/stores/userStore'
 import { api } from '~/utils/api'
 import type { Font, User } from '~/utils/types'
@@ -181,7 +181,7 @@ function Grid({ rows = 4, type, }: GridProps) {
   const [wordsPerCell, width]: [number, number] | number[] = layoutManager(type)
   const [grid, setGrid] = useState<JSX.Element[]>()
   const returnClass = useState<string>(
-    `grid grid-cols-${width} gap-2 bg-white p-12 rounded-lg shadow-md md:h-auto h-min md:w-2/5 w-4/5 items-center`,
+    `grid grid-cols-${width} gap-2 bg-white p-2 rounded-lg shadow-md md:h-auto h-min md:w-2/5 w-4/5 items-center`,
   )[0]
   const ref = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState<boolean>(false)

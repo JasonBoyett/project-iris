@@ -11,13 +11,14 @@ export const cornersCell = cva(
     'p-8',
     'gap-2',
     'h-52',
-    'w-96',
+    'md:w-96',
+    'w-80',
   ],
   {
     variants: {
       intent: {
         noFlash: 'bg-invsible invsible',
-        flash: 'rounded-lg gap-1 bg-white',
+        flash: 'rounded-lg border-black border-2 gap-1 bg-white',
       },
     },
     compoundVariants: [{ intent: 'noFlash' }],

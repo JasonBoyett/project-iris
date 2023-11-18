@@ -5,7 +5,7 @@ import { useCubeStore } from '~/stores/useCubeStore'
 import useUserStore from '~/stores/userStore'
 import useInterval from '~/hooks/useInterval'
 import { formatDate, navigate } from '~/utils/helpers'
-import { SingletonRouter, useRouter } from 'next/router'
+import { type SingletonRouter, useRouter } from 'next/router'
 import { FontProvider } from '~/cva/fontProvider'
 import type { Font } from '~/utils/types'
 
