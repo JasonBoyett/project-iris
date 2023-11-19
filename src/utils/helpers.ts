@@ -1,4 +1,31 @@
+import type { SingletonRouter } from 'next/router'
 import { type User, Exercise } from './types'
+import type NextRouter from 'next/router'
+
+export function checkName(name: string | undefined | null) {
+  if (!name) return false
+  const regex = /[a-zA-Z]/
+  return regex.test(name)
+}
+
+export function navigate(router: typeof NextRouter | SingletonRouter, url: string) {
+  router.replace(url).catch(() => {
+    router.push(url).catch(() => {
+      setTimeout(() => {
+        router.push(url).catch(() => {
+          router.push('/nav').catch((err) => {
+            console.log('error navigating: ', err)
+            alert('There was an error navigating to the next exercise. Please try again.')
+          })
+        })
+      }, 3_000)
+    })
+  })
+}
+
+export function navigateToNextExercise(router: typeof NextRouter | SingletonRouter, user: User) {
+  navigate(router, getNextURL(getNextExercise(user)))
+}
 
 export function userHilightToHex(user: User) {
   switch (user.highlightColor) {
@@ -25,17 +52,19 @@ export function userHilightToHex(user: User) {
   }
 }
 
+/**
+ * isToday takes a string that is the result of calling 
+ * the formatDate function on a date object 
+ * and returns true if the date is today.
+ *
+ * @param date2 - a string that is the result of calling
+ * the formatDate function on a date object.
+**/
 function isToday(date2: string | undefined) {
   if (!date2) return false
-  const today = formatDate(new Date())
+  const today = formatDate()
   const date2Formatted = date2
-
-  console.log('today:', today)
-  console.log('date2:', date2Formatted)
-
-  const result = today === date2Formatted
-  console.log('result:', result)
-  return result
+  return today === date2Formatted
 }
 
 export function getAvailableExercises(user: User) {
@@ -69,6 +98,7 @@ export function isAlreadyDone(user: User, exercise: Exercise) {
     case 'cubeByTwo': return isToday(user.lastCubeByTwo)
     case 'cubeByThree': return isToday(user.lastCubeByThree)
     case 'letterMatcher': return isToday(user.lastLetterMatcher)
+    case 'greenDot': return isToday(user.lastGreenDot)
     default: return null
   }
 }
@@ -88,7 +118,7 @@ export function getNextExercise(user: User | undefined | null) {
 
   if (!available) return null
 
-  if (available.length === 0 || available === undefined ) {
+  if (available.length === 0 || available === undefined) {
     return null
   }
   console.log('available: ', available)
@@ -96,7 +126,7 @@ export function getNextExercise(user: User | undefined | null) {
   return choice
 }
 
-export const formatDate = (date: Date | undefined) => {
+export const formatDate = (date?: Date | undefined | null) => {
   if (!date) date = new Date()
   return date
     .toString()
@@ -138,13 +168,15 @@ export function getNextURL(next: Exercise | undefined | null): string {
     case 'schulteBySeven':
       return 'exercises/schulteby7'
     case 'evenNumbers':
-      return '/exercises/evennumbers'
+      return '/instructions/evennumbers'
     case 'cubeByTwo':
-      return '/exercises/cubebytwo'
+      return '/exercises/cubes?type=two'
     case 'cubeByThree':
-      return '/exercises/cubebythree'
+      return '/exercises/cubes?type=three'
     case 'letterMatcher':
       return '/exercises/lettermatcher'
+    case 'greenDot':
+      return '/exercises/greendot'
     default:
       return '/done'
   }

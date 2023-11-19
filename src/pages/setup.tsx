@@ -1,11 +1,12 @@
 import { useUserStore } from '~/stores/userStore'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
+import { SingletonRouter, useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { api } from '~/utils/api'
 import type { User } from '~/utils/types'
-import Sidebar from '~/componants/sidebar'
+import Sidebar from '~/components/sidebar'
+import { navigateToNextExercise } from '~/utils/helpers'
 
 const Page: NextPage = () => {
   const user: User | undefined = api.user.getUnique.useQuery<User>().data
@@ -61,7 +62,7 @@ const Page: NextPage = () => {
                 lastName: last,
               })
             }
-            router.replace('/loadnext').catch((e) => console.log(e))
+            navigateToNextExercise(router as SingletonRouter, user)
           }}
         >
           <label className='py-4 text-white text-2xl font-bold'>

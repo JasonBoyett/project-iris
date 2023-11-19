@@ -21,17 +21,17 @@ Total : 73 files, 13035 codes, 205 comments, 370 blanks, all 13610 lines
 | [postcss.config.cjs](/postcss.config.cjs)                                               | JavaScript         |     7 |       0 |     2 |     9 |
 | [prettier.config.cjs](/prettier.config.cjs)                                             | JavaScript         |    16 |       1 |     2 |    19 |
 | [prisma/schema.prisma](/prisma/schema.prisma)                                           | Prisma             |   138 |       0 |    23 |   161 |
-| [src/componants/cubeflasher.tsx](/src/componants/cubeflasher.tsx)                       | TypeScript JSX     |   210 |       2 |    12 |   224 |
-| [src/componants/evensandodds.tsx](/src/componants/evensandodds.tsx)                     | TypeScript JSX     |   190 |       0 |    18 |   208 |
-| [src/componants/flashingcell.tsx](/src/componants/flashingcell.tsx)                     | TypeScript JSX     |   308 |       4 |    26 |   338 |
-| [src/componants/globals.d.ts](/src/componants/globals.d.ts)                             | TypeScript         |    29 |       0 |     4 |    33 |
-| [src/componants/homebutton.tsx](/src/componants/homebutton.tsx)                         | TypeScript JSX     |    19 |       0 |     3 |    22 |
-| [src/componants/loadingspinner.tsx](/src/componants/loadingspinner.tsx)                 | TypeScript JSX     |    24 |       0 |     1 |    25 |
-| [src/componants/schultetable.tsx](/src/componants/schultetable.tsx)                     | TypeScript JSX     |   162 |       1 |     8 |   171 |
-| [src/componants/settingsbutton.tsx](/src/componants/settingsbutton.tsx)                 | TypeScript JSX     |    19 |       0 |     2 |    21 |
-| [src/componants/speedtest.tsx](/src/componants/speedtest.tsx)                           | TypeScript JSX     |   195 |       0 |     8 |   203 |
-| [src/componants/tests/evensandodds.test.ts](/src/componants/tests/evensandodds.test.ts) | TypeScript         |    92 |       0 |     5 |    97 |
-| [src/componants/wordchanger.tsx](/src/componants/wordchanger.tsx)                       | TypeScript JSX     |    76 |       1 |    10 |    87 |
+| [src/components/cubeflasher.tsx](/src/components/cubeflasher.tsx)                       | TypeScript JSX     |   210 |       2 |    12 |   224 |
+| [src/components/evensandodds.tsx](/src/components/evensandodds.tsx)                     | TypeScript JSX     |   190 |       0 |    18 |   208 |
+| [src/components/flashingcell.tsx](/src/components/flashingcell.tsx)                     | TypeScript JSX     |   308 |       4 |    26 |   338 |
+| [src/components/globals.d.ts](/src/components/globals.d.ts)                             | TypeScript         |    29 |       0 |     4 |    33 |
+| [src/components/homebutton.tsx](/src/components/homebutton.tsx)                         | TypeScript JSX     |    19 |       0 |     3 |    22 |
+| [src/components/loadingspinner.tsx](/src/components/loadingspinner.tsx)                 | TypeScript JSX     |    24 |       0 |     1 |    25 |
+| [src/components/schultetable.tsx](/src/components/schultetable.tsx)                     | TypeScript JSX     |   162 |       1 |     8 |   171 |
+| [src/components/settingsbutton.tsx](/src/components/settingsbutton.tsx)                 | TypeScript JSX     |    19 |       0 |     2 |    21 |
+| [src/components/speedtest.tsx](/src/components/speedtest.tsx)                           | TypeScript JSX     |   195 |       0 |     8 |   203 |
+| [src/components/tests/evensandodds.test.ts](/src/components/tests/evensandodds.test.ts) | TypeScript         |    92 |       0 |     5 |    97 |
+| [src/components/wordchanger.tsx](/src/components/wordchanger.tsx)                       | TypeScript JSX     |    76 |       1 |    10 |    87 |
 | [src/cva/cube-flasher.tsx](/src/cva/cube-flasher.tsx)                                   | TypeScript JSX     |    32 |       0 |     5 |    37 |
 | [src/cva/flashingStyles.tsx](/src/cva/flashingStyles.tsx)                               | TypeScript JSX     |    38 |       0 |     5 |    43 |
 | [src/cva/fontProvider.tsx](/src/cva/fontProvider.tsx)                                   | TypeScript JSX     |    36 |       0 |     5 |    41 |

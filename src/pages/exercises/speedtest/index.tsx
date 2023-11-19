@@ -1,20 +1,20 @@
 import useInterval from '~/hooks/useInterval'
 import { useState, useEffect } from 'react'
-import type { SelectFont } from '~/utils/types'
+import type { Font } from '~/utils/types'
 import useUserStore from '~/stores/userStore'
 import useSpeedTestStore from '~/stores/useSpeedTestStore'
 import { useRouter } from 'next/router'
 import { api } from '~/utils/api'
 import Head from 'next/head'
 import { FontProvider } from '~/cva/fontProvider'
-import Sidebar from '~/componants/sidebar'
+import Sidebar from '~/components/sidebar'
 
 export const TESTS_PER_DAY = 10
 
-export default function Page(){
+export default function Page() {
   const [counter, setCounter] = useState(0)
   const [words, setWords] = useState<string[]>([''])
-  const [font, setFont] = useState<SelectFont>('sans')
+  const [font, setFont] = useState<Font>('sans')
   const userStore = useUserStore((state) => state)
   const exerciseStore = useSpeedTestStore((state) => state)
   const [loading, setLoading] = useState(true)
@@ -23,7 +23,7 @@ export default function Page(){
   const { data } = api.getExcerciseProps.getSingleSpeedTestProps.useQuery()
   const router = useRouter()
 
-  function navigateToQuestion(){
+  function navigateToQuestion() {
     router
       .replace('/exercises/speedtest/question')
       .catch((err) => console.log(err))
@@ -34,20 +34,20 @@ export default function Page(){
   }
 
   useEffect(() => {
-    if(!data) return
-    if(!data.id) return
-    if(!userStore.user) return
-    if(!data.passage) return
+    if (!data) return
+    if (!data.id) return
+    if (!userStore.user) return
+    if (!data.passage) return
     setWords(() => {
-      if(!data.passage) return ['']
+      if (!data.passage) return ['']
       return data.passage.split(' ')
     })
     setFont(userStore.user.font)
     exerciseStore.setUp(data)
     setLoading(() => false)
     setTime(wpmToMiliseconds(userStore.user.testSpeed))
-  },[data, userStore.user])
-  
+  }, [data, userStore.user])
+
   useInterval(() => {
     if (!!loading) return
     if (counter === words.length) return navigateToQuestion()

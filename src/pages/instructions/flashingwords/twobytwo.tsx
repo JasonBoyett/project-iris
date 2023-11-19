@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import LoadingSpinner from '~/componants/loadingspinner'
 import { useUserStore } from '~/stores/userStore'
-import type { SelectFont } from '~/utils/types'
-import type { HighlightType } from '~/utils/types'
-import { useRouter } from 'next/router'
+import type { Font } from '~/utils/types'
 import { FontProvider } from '~/cva/fontProvider'
-import Sidebar from '~/componants/sidebar'
+import Sidebar from '~/components/sidebar'
+import FlasherStartButton from '~/components/flasherstartbutton'
 
 const INSTRUCTION_DELAY = 5_000
 
@@ -27,62 +25,9 @@ const Paragraph1 = () => {
   )
 }
 
-const StartButton = ({ option }: { option: HighlightType }) => {
-  const [time, setTime] = useState(false)
-  const router = useRouter()
-
-  const navigate = () => {
-    switch (option) {
-      case 'fourByOne':
-        router
-          .replace('/exercises/flashfourbyone')
-          .catch((err) => console.log(err))
-        break
-      case 'oneByTwo':
-        router
-          .replace('/exercises/flashonebytwo')
-          .catch((err) => console.log(err))
-        break
-      case 'twoByTwo':
-        router
-          .replace('/exercises/flashtwobytwo')
-          .catch((err) => console.log(err))
-        break
-      case 'oneByOne':
-        router
-          .replace('/exercises/flashonebyone')
-          .catch((err) => console.log(err))
-        break
-      case 'twoByOne':
-        router
-          .replace('/exercises/flashtwobyone')
-          .catch((err) => console.log(err))
-        break
-      default:
-        router.replace('/nav').catch((err) => console.log(err))
-    }
-  }
-
-  useEffect(() => {
-    setTimeout(() => setTime(true), INSTRUCTION_DELAY)
-  }, [])
-
-  return time ? (
-    <button
-      className='text-white md:text-5xl text-4xl bg-white/10 flex items-center justify-center rounded-full md:w-40 w-60 p-4 h-16 hover:bg-white/20'
-      onClick={() => navigate()}
-    >
-      Start
-    </button>
-  ) : (
-    <LoadingSpinner />
-  )
-}
-
 const Page: NextPage = () => {
   const userStore = useUserStore()
-  const [font, setFont] = useState<SelectFont>('sans')
-  const router = useRouter()
+  const [font, setFont] = useState<Font>('sans')
   const option = 'twoByOne'
 
   useEffect(() => {
@@ -97,7 +42,7 @@ const Page: NextPage = () => {
       <FontProvider font={font}>
         <div className='flex flex-col items-center justify-center min-h-screen py-10 gap-4'>
           <Paragraph1 />
-          <StartButton option={option} />
+          <FlasherStartButton option={option} delay={INSTRUCTION_DELAY}/>
         </div>
       </FontProvider>
     </>

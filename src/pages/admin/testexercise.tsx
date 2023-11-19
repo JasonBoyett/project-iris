@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import Sidebar from "~/componants/sidebar"
+import Sidebar from "~/components/sidebar"
 
 export default function Page() {
   const router = useRouter()
@@ -37,6 +37,7 @@ export default function Page() {
           <NavButton path='/exercises/schulteby5' text='Schulte Table by 5' />
           <NavButton path='/exercises/schulteby7' text='Schulte Table by 7' />
           <NavButton path='/exercises/lettermatcher' text='Matching Letters Game' />
+          <NavButton path='/exercises/greendot' text='Green Dot' />
         </div>
       </div>
     </>

@@ -57,6 +57,7 @@ export const userSchema = z.object({
   lastCubeByThree: z.string().default(' '),
   lastCubeByTwo: z.string().default(' '),
   lastLetterMatcher: z.string().default(' '),
+  lastGreenDot: z.string().default(' '),
   numberGuesserFigures: z.number().default(0),
   isAdmin: z.boolean().default(false),
   isStudySubject: z.boolean().default(false),
@@ -77,6 +78,7 @@ export const speedTestSchema = z.object({
 
 const randomWordInputs = z.object({
   number: z.number(),
+  max: z.number(),
   language: z.union([
     z.literal('english'),
     z.literal('spanish'),

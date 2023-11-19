@@ -4,11 +4,10 @@ import { StyledCube } from '~/cva/cube-flasher'
 import { useCubeStore } from '~/stores/useCubeStore'
 import useUserStore from '~/stores/userStore'
 import useInterval from '~/hooks/useInterval'
-import { formatDate } from '~/utils/helpers'
-import { useRouter } from 'next/router'
+import { formatDate, navigate } from '~/utils/helpers'
+import { type SingletonRouter, useRouter } from 'next/router'
 import { FontProvider } from '~/cva/fontProvider'
-import type { SelectFont } from '~/utils/types'
-import { user } from '~/utils/schema'
+import type { Font } from '~/utils/types'
 
 export function partitionWords(
   words: string[],
@@ -81,7 +80,7 @@ type CornerFlasherProps = {
 
 export default function CornerFlasher({ number }: CornerFlasherProps) {
   const store = useCubeStore()
-  const [font, setFont] = useState<SelectFont>('sans')
+  const [font, setFont] = useState<Font>('sans')
   const userStore = useUserStore()
   const { mutate } = api.user.setUser.useMutation()
   const [section, setSection] = useState<number>(0)
@@ -89,7 +88,8 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
   const router = useRouter()
   const { data } = api.getExcerciseProps.getRandomWords.useQuery(
     {
-      number: userStore.user?.currentWpm as number * 4,
+      number: userStore.user?.currentWpm as number / 4,
+      max: 5,
       language: userStore.user?.language as 'english' | 'spanish',
     },
     { enabled: !!userStore }
@@ -101,7 +101,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
 
   function getRate() {
     if (!userStore.user) return 60_000 / 200
-    return 60_000 / userStore.user.currentWpm
+    return ( 60_000 / userStore.user.currentWpm) * 4
   }
 
   function tearDown() {
@@ -128,7 +128,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
           ...userStore.user,
           lastCubeByTwo: formatDate(new Date())
         })
-        router.replace('/next').catch(console.error)
+        navigate(router as SingletonRouter, '/next')
         break
       case 3:
         mutate({ lastCubeByThree: formatDate(new Date()) })
@@ -137,10 +137,10 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
           ...userStore.user,
           lastCubeByThree: formatDate(new Date())
         })
-        router.replace('/next').catch(console.error)
+        navigate(router as SingletonRouter, '/next')
         break
     }
-    router.replace('/next').catch(console.error)
+    navigate(router as SingletonRouter, '/next')
   }
 
   useEffect(() => {

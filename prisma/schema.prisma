@@ -72,7 +72,8 @@ model User {
   evenNumberSessions      EvenNumberSession[]
   wordGridFlasherSessions HighlightSession[]
   wordFlasherSessions     WordFlasherSession[]
-  LetterMatcherSession    LetterMatcherSession[]
+  LetterMatcherSessions   LetterMatcherSession[]
+  GreenDotSessions        GreenDotSession[]
   highlightColor          Overlay                @default(GREY)
   lastSchulteByFive       String                 @default(" ")
   lastSchulteByThree      String                 @default(" ")
@@ -88,6 +89,7 @@ model User {
   lastCubeByThree         String                 @default(" ")
   lastNumberGuesser       String                 @default(" ")
   lastLetterMatcher       String                 @default(" ")
+  lastGreenDot            String                 @default(" ")
   numberGuesserFigures    Int                    @default(4)
   font                    Font                   @default(sans)
   isUsingChecklist        Boolean                @default(true)
@@ -162,12 +164,12 @@ model NumberGuesserSession {
 }
 
 model LetterMatcherSession {
-  id             String   @unique
-  userId         String
-  user           User     @relation(fields: [userId], references: [id])
-  numberCorrect  Int
-  numberWrong    Int
-  date           DateTime @db.DateTime
+  id            String   @unique
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  numberCorrect Int
+  numberWrong   Int
+  date          DateTime @db.DateTime
 
   @@index([id])
 }
@@ -190,6 +192,15 @@ model BoxFlasherSession {
   speed  Int
   date   DateTime @db.DateTime
   type   BoxType
+
+  @@index([id])
+}
+
+model GreenDotSession {
+  id     String   @unique
+  userId String
+  user   User     @relation(fields: [userId], references: [id])
+  date   DateTime @db.DateTime
 
   @@index([id])
 }

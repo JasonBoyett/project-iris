@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import Sidebar from '~/componants/sidebar'
+import Sidebar from '~/components/sidebar'
 import { api } from '~/utils/api'
 import type { Answer } from '~/utils/types'
 

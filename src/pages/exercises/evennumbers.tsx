@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React, { useState } from 'react'
-import EvensAndOdds from 'src/componants/evensandodds'
-import Sidebar from '~/componants/sidebar'
+import EvensAndOdds from 'src/components/evensandodds'
+import Sidebar from '~/components/sidebar'
 
 export type framesContextType = {
   framesCleared: number

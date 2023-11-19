@@ -1,10 +1,9 @@
-import { type NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import StudyLogo from 'public/study-logo.png'
 import { SignUp } from '@clerk/nextjs'
 
-const Page: NextPage = () => {
+export default function Page() {
   return (
     <>
       <Head>
@@ -27,5 +26,3 @@ const Page: NextPage = () => {
     </>
   )
 }
-
-export default Page

@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react'
 import { FontProvider } from '~/cva/fontProvider'
 import { useUserStore } from '~/stores/userStore'
 import { useSpeedTestStore } from '~/stores/useSpeedTestStore'
-import type { SelectFont } from '~/utils/types'
+import type { Font } from '~/utils/types'
 import { TESTS_PER_DAY } from './index'
-import { useRouter } from 'next/router'
+import { type SingletonRouter, useRouter } from 'next/router'
 import Head from 'next/head'
-import Sidebar from '~/componants/sidebar'
+import Sidebar from '~/components/sidebar'
+import { navigate } from '~/utils/helpers'
 
-export default function Page(){
+export default function Page() {
   const exerciseStore = useSpeedTestStore((state) => state)
   const userStore = useUserStore((state) => state)
   const [answerA, setAnswerA] = useState('Loading..')
@@ -16,11 +17,11 @@ export default function Page(){
   const [answerC, setAnswerC] = useState('Loading..')
   const [answerD, setAnswerD] = useState('Loading..')
   const [question, setQuestion] = useState('Loading..')
-  const [font, setFont] = useState<SelectFont>('sans')
+  const [font, setFont] = useState<Font>('sans')
   const [rate, setRate] = useState(0)
   const router = useRouter()
 
-  function handleClick(answer: string){
+  function handleClick(answer: string) {
     if (!userStore.user) return
     console.log('registered click')
     console.log('ran')
@@ -29,18 +30,18 @@ export default function Page(){
     if (exerciseStore.current.correctAnswer === answer) {
       exerciseStore.incrementCorrect(rate)
       userStore.setUser({
-        ...userStore.user, 
+        ...userStore.user,
         testSpeed: rate + 10,
       })
     }
-    else{
+    else {
       userStore.setUser({
-        ...userStore.user, 
+        ...userStore.user,
         testSpeed: rate - 10,
       })
     }
     if (exerciseStore.totalResponses < TESTS_PER_DAY - 1) {
-      router.replace('/exercises/speedtest').catch((err) => console.log(err))
+      navigate(router as SingletonRouter, '/exercises/speedtest')
     } else {
       router
         .replace('/exercises/speedtest/result')
@@ -71,36 +72,40 @@ export default function Page(){
         >
           <div className='text-4xl font-bold'>{question}</div>
           <div className='grid gap-4'>
-            <div className='flex items-center gap-2 text-yellow-400'>
+            <div
+              onClick={() => handleClick('A')}
+              className='flex items-center gap-2 text-yellow-400 cursor-pointer'>
               <button
-                onClick={() => handleClick('A')}
                 className='text-4xl font-bold bg-white/20 px-4 py-2 rounded-md text-yellow-400'
               >
                 A
               </button>
               <p className='text-white text-3xl'>{answerA}</p>
             </div>
-            <div className='flex items-center gap-2 text-yellow-400'>
+            <div
+              onClick={() => handleClick('B')}
+              className='flex items-center gap-2 text-yellow-400 cursor-pointer'>
               <button
-                onClick={() => handleClick('B')}
                 className='text-4xl font-bold bg-white/20 px-4 py-2 rounded-md text-yellow-400'
               >
                 B
               </button>
               <p className='text-white text-3xl'>{answerB}</p>
             </div>
-            <div className='flex items-center gap-2 text-yellow-400'>
+            <div
+              onClick={() => handleClick('C')}
+              className='flex items-center gap-2 text-yellow-400 cursor-pointer'>
               <button
-                onClick={() => handleClick('C')}
                 className='text-4xl font-bold bg-white/20 px-4 py-2 rounded-md text-yellow-400'
               >
                 C
               </button>
               <p className='text-white text-3xl'>{answerC}</p>
             </div>
-            <div className='flex items-center gap-2 text-yellow-400'>
+            <div
+              onClick={() => handleClick('D')}
+              className='flex items-center gap-2 text-yellow-400 cursor-pointer'>
               <button
-                onClick={() => handleClick('D')}
                 className='text-4xl font-bold bg-white/20 px-4 py-2 rounded-md text-yellow-400'
               >
                 D

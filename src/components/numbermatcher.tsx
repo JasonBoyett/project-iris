@@ -155,7 +155,7 @@ export default function NumberMatcher() {
   return (
     <div className='grid grid-cols-1 gap-1'>
       <div className='flex flex-col items-center justify-center min-h-screen gap-1'>
-        <div className='flex items-center justify-center rounded-lg bg-white/20 w-full md:h-24  text-4xl text-white'>
+        <div className='flex items-center justify-center rounded-lg bg-white/20 w-full h-24  text-4xl text-white'>
           {
             showingTarget
               ? target

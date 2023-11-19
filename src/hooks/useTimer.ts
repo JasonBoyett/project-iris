@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 
 type TimeMeasure = 'milliseconds' | 'seconds' | 'minutes'
 

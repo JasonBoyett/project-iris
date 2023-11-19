@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
-import Sidebar from '~/componants/sidebar'
+import Sidebar from '~/components/sidebar'
 
-const LetterMatcher = dynamic(() => import('~/componants/letterMatcher'), { ssr: false })
+const LetterMatcher = dynamic(() => import('~/components/letterMatcher'), { ssr: false })
 
 export default function Page(){
   return (

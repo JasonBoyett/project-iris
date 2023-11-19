@@ -1,7 +1,6 @@
 import Head from 'next/head'
-import FlashingGrid from 'src/componants/flashingcell'
-import Sidebar from '~/componants/sidebar'
-
+import FlashingGrid from 'src/components/flashingcell'
+import Sidebar from '~/components/sidebar'
 
 export default function Page(){
   return (

@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { Beginner, Intermediate, Ideal } from '~/componants/schultedraw'
+import { Beginner, Intermediate, Ideal } from '~/components/schultedraw'
 
 export default function ByThree() {
   return (

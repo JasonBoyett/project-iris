@@ -3,15 +3,15 @@ import { FontProviderButton } from '~/cva/fontProvider'
 import type { Dispatch, SetStateAction } from 'react'
 import { motion } from 'framer-motion'
 import useUserStore from '~/stores/userStore'
-import type { SelectFont } from '~/utils/types'
+import type { Font } from '~/utils/types'
 import { useStopWatch } from '~/hooks/useStopWatch'
-import { useRouter } from 'next/router'
+import { type SingletonRouter, useRouter } from 'next/router'
 import { api } from '~/utils/api'
-import { formatDate } from '~/utils/helpers'
+import { formatDate, navigate } from '~/utils/helpers'
 const DEFAULT =
-  'flex text-white md:text-3xl text-2xl justify-center p-4 bg-white/10 rounded-md'
+  'flex text-white md:text-3xl text-xl justify-center md:p-4 p-2 bg-white/10 rounded-md'
 const HILIGHT =
-  'flex text-white md:text-3xl text-2xl justify-center p-4 bg-blue-500 gap-0 bg-slate-700/40 rounded-md'
+  'flex text-white md:text-3xl text-xl justify-center md:p-4 p-2 bg-blue-500 gap-0 bg-slate-700/40 rounded-md'
 
 type EvenOddProps = {
   segFigs: number
@@ -75,7 +75,7 @@ function generateNumbers(props: EvenOddProps): number[]{
 function Cell(props: CellProps){
   const [currentClass, setCurrentClass] = useState(props.defaultClass)
   const userStore = useUserStore()
-  const [font, setFont] = useState<SelectFont>('sans')
+  const [font, setFont] = useState<Font>('sans')
   const [disabled, setDisabled] = useState(false)
 
   function handleClick(){
@@ -151,7 +151,7 @@ export default function EvensAndOdds(props: EvenOddProps){
     }
     mutate({...user, lastEvenNumbers: formatDate(new Date())})
     userStore.setUser({...user, lastEvenNumbers: formatDate(new Date())})
-    router.replace('/next').catch((err) => console.log(err))
+    navigate(router as SingletonRouter, '/next')
   }
 
   const pressEven = () => {

@@ -1,22 +1,21 @@
-import type { NextPage } from 'next'
-import { useRouter } from 'next/router'
+import { type SingletonRouter, useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useUserStore } from '~/stores/userStore'
 import { useSpeedTestStore } from '~/stores/useSpeedTestStore'
 import { FontProvider } from '~/cva/fontProvider'
-import type { SelectFont } from '~/utils/types'
+import type { Font } from '~/utils/types'
 import { TESTS_PER_DAY } from './index'
 import Head from 'next/head'
 import { api } from '~/utils/api'
-import { formatDate } from '~/utils/helpers'
-import Sidebar from '~/componants/sidebar'
+import { formatDate, navigateToNextExercise } from '~/utils/helpers'
+import Sidebar from '~/components/sidebar'
 
 const GOOD_GRADE = 8 //since the user will be seeing 10 questions this means they got a B
 const FAILING_GRADE = 5 //since the user will be seeing 10 questions this means they got a D
 
 export default function Result() {
   const [correct, setCorrect] = useState(0)
-  const [font, setFont] = useState<SelectFont>('sans')
+  const [font, setFont] = useState<Font>('sans')
   const router = useRouter()
   const userStore = useUserStore()
   const speedTestStore = useSpeedTestStore()
@@ -107,10 +106,11 @@ export default function Result() {
   }
 
   function handleClick() {
+    if (!userStore.user) return
     saveData()
     saveUser()
     speedTestStore.clear()
-    router.replace('/loadnext').catch(console.error)
+    navigateToNextExercise(router as SingletonRouter, userStore.user)
   }
 
   useEffect(() => {

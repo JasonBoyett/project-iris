@@ -10,11 +10,11 @@ import type { ReactElement } from 'react'
 import useInterval from '@/hooks/useInterval'
 import { v4 as uuid } from 'uuid'
 import { useIsVisible } from '@/hooks/useIsVisible'
-import { useRouter } from 'next/router'
+import { type SingletonRouter, useRouter } from 'next/router'
 import { useUserStore } from '~/stores/userStore'
 import { api } from '~/utils/api'
-import type { SelectFont, User } from '~/utils/types'
-import { formatDate } from '~/utils/helpers'
+import type { Font, User } from '~/utils/types'
+import { formatDate, navigate } from '~/utils/helpers'
 import { FontProvider } from '~/cva/fontProvider'
 import type { HighlightType } from '~/utils/types'
 
@@ -46,15 +46,15 @@ type GridProps = {
 const layoutManager = (layout: HighlightType) => {
   switch (layout) {
     case 'oneByOne':
-      return [1, 1]
+      return [1, 1, -1]
     case 'oneByTwo':
-      return [1, 2]
+      return [1, 2, -1]
     case 'twoByOne':
-      return [2, 1]
+      return [2, 1, 5]
     case 'twoByTwo':
-      return [2, 2]
+      return [2, 2, 6]
     case 'fourByOne':
-      return [4, 1]
+      return [4, 1, 6]
   }
 }
 
@@ -178,30 +178,32 @@ function Grid({ rows = 4, type, }: GridProps) {
   const [fetched, setFetched] = useState<string[]>([])
   const words = useRef<string[][]>([])
   const section = useRef<number>(0)
-  const [wordsPerCell, width]: [number, number] | number[] = layoutManager(type)
+  const [wordsPerCell, width, max]: [number, number, number] | number[] = layoutManager(type)
   const [grid, setGrid] = useState<JSX.Element[]>()
   const returnClass = useState<string>(
-    `grid grid-cols-${width} gap-2 bg-white p-12 rounded-lg shadow-md md:h-auto h-min md:w-2/5 w-4/5 items-center`,
+    `grid grid-cols-${width} gap-2 bg-white p-2 rounded-lg shadow-md md:h-auto h-min md:w-2/5 w-4/5 items-center`,
   )[0]
   const ref = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const store = useUserStore((state) => state)
-  const [font, setFont] = useState<SelectFont>('sans')
+  const [font, setFont] = useState<Font>('sans')
   const user = store.user
   const router = useRouter()
   const { mutate } = api.user.setUser.useMutation()
   const buff = api.getExcerciseProps.getRandomWords.useQuery(
     {
-      number: wordsPerCell * (user?.currentWpm as number),
+      number: ( wordsPerCell * (user?.currentWpm as number)) / wordsPerCell,
       language: user?.language as "english" | "spanish",
+      max: max,
     },
     { enabled: !!user }
   )
   const collectData = api.highlightSession.setUnique.useMutation()
 
   function setSpeed(user: User | undefined) {
-    if (!user) return 60_000 / 200
-    return 60_000 / user.currentWpm
+    if (!wordsPerCell) return
+    if (!user) return ( 60_000 / 200) * wordsPerCell
+    return ( 60_000 / user.currentWpm) * wordsPerCell
   }
 
   function markComplete() {
@@ -238,7 +240,7 @@ function Grid({ rows = 4, type, }: GridProps) {
       })
     }
     markComplete()
-    return router.replace('/next').catch((err) => console.log(err))
+    navigate(router as SingletonRouter, '/next')
   }
 
   useEffect(() => {
@@ -247,6 +249,8 @@ function Grid({ rows = 4, type, }: GridProps) {
   }, [buff])
 
   useEffect(() => {
+    if (!wordsPerCell) return
+    if (!width) return
     if (!user) return
     (() => {
       const wordsArry = fetched
@@ -265,14 +269,13 @@ function Grid({ rows = 4, type, }: GridProps) {
   }, [fetched])
 
   useInterval(() => {
-    if (!isVisible) {
-      return
-    }
+    if (!width) return
+    if (!isVisible) return
     if (
       section.current >= words.current.length - 1 &&
       cellCounter >= rows * width
     ) {
-      tearDown()?.catch((err) => console.log(err))
+      tearDown()
       return
     }
     if (cellCounter >= rows * width) {
@@ -289,7 +292,7 @@ function Grid({ rows = 4, type, }: GridProps) {
     } else {
       setCounter((prev) => prev + 1)
     }
-  }, setSpeed(user))
+  }, setSpeed(user) as number)
 
   return (
     <counterContext.Provider value={cellCounter}>
