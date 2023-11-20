@@ -125,7 +125,9 @@ export function getNextExercise(user: User | undefined | null) {
 }
 
 export const formatDate = (date?: Date | undefined | null) => {
-  if (!date) date = new Date()
+  if (!date) {
+  date = new Date()
+  }
   return date
     .toString()
     .replace(
