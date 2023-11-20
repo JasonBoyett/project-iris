@@ -6,17 +6,6 @@ import type { Language, User } from '~/utils/types'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { schemas, inputs } from '~/utils/validators'
 import { getNextExercise, getNextURL } from '~/utils/helpers'
-import type { EmailAddress } from '@clerk/nextjs/dist/types/server'
-
-function verifyStudySubject(emailAddresses: EmailAddress[] | undefined) {
-  if (emailAddresses === undefined) throw new Error('No email addresses') 
-  emailAddresses.forEach((email) => {
-    if (email.emailAddress.endsWith('.edu')){
-      return true
-    }
-  })
-  return false
-}
 
 export const userRouter = createTRPCRouter({
   getUnique: publicProcedure
@@ -59,10 +48,8 @@ export const userRouter = createTRPCRouter({
           currentWpm: input.currentWpm,
           createdAt: input.createdAt,
           updatedAt: input.updatedAt,
-          lastSchulteByThree: input.lastSchulteByThree,
           highlightColor: input.highlightColor,
-          lastSchulteByFive: input.lastSchulteByFive,
-          lastSchulteBySeven: input.lastSchulteBySeven,
+          lastSchulte: input.lastSchulte,
           lastSpeedTest: input.lastSpeedTest,
           lastFourByOne: input.lastFourByOne,
           lastOneByTwo: input.lastOneByTwo,
@@ -76,6 +63,8 @@ export const userRouter = createTRPCRouter({
           lastLetterMatcher: input.lastLetterMatcher,
           lastGreenDot: input.lastGreenDot,
           numberGuesserFigures: input.numberGuesserFigures,
+          schulteLevel: input.schulteLevel,
+          schulteAdvanceCount: input.schulteAdvanceCount,
           isAdmin: input.isAdmin,
           isUsingChecklist: input.isUsingChecklist,
           font: input.font,
@@ -107,6 +96,27 @@ type GetRandomWordsLimitLength = {
   language: Language
 }
 async function getRandomWordsLimitLength({ wordsReturned, wordLength, language }: GetRandomWordsLimitLength) {
+  const blockSize = Math.ceil(wordsReturned / 3)
+  const words = new Array<string>()
+  const block1 = await getWords({ wordsReturned: blockSize, wordLength: wordLength, language: language })
+  const block2 = await getWords({ wordsReturned: blockSize, wordLength: wordLength - 1, language: language })
+  const block3 = await getWords({ wordsReturned: blockSize, wordLength: wordLength - 2, language: language })
+  if (block1 === undefined || block2 === undefined || block3 === undefined) {
+    return
+  }
+  block1.forEach((word) => {
+    words.push(word)
+  })
+  block2.forEach((word) => {
+    words.push(word)
+  })
+  block3.forEach((word) => {
+    words.push(word)
+  })
+  return words.slice(0, wordsReturned).sort(() => (Math.random() > .5) ? 1 : -1)
+}
+
+async function getWords({ wordsReturned, wordLength, language }: GetRandomWordsLimitLength) {
   console.log('test2')
   if (language === 'spanish') {
     const response = await axios.get<string[]>(
@@ -182,7 +192,7 @@ export const excercisesPropsRouter = createTRPCRouter({
     .input(inputs.randomWords)
     .output(z.array(z.string()).or(z.undefined()))
     .query<string[] | undefined>(async ({ input }) => {
-      if (!input.max) {
+      if (input.max < 0) {
         return getRandomWords(input.number, input.language)
       }
       else {

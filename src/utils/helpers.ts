@@ -90,9 +90,7 @@ export function isAlreadyDone(user: User, exercise: Exercise) {
     case 'oneByTwo': return isToday(user.lastOneByTwo)
     case 'twoByTwo': return isToday(user.lastTwoByTwo)
     case 'oneByOne': return isToday(user.lastOneByOne)
-    case 'schulteByThree': return isToday(user.lastSchulteByThree)
-    case 'schulteByFive': return isToday(user.lastSchulteByFive)
-    case 'schulteBySeven': return isToday(user.lastSchulteBySeven)
+    case 'schulteTable': return isToday(user.lastSchulte)
     case 'twoByOne': return isToday(user.lastTwoByOne)
     case 'evenNumbers': return isToday(user.lastEvenNumbers)
     case 'cubeByTwo': return isToday(user.lastCubeByTwo)
@@ -150,7 +148,7 @@ export function getNextURL(next: Exercise | undefined | null): string {
     case null || undefined:
       return '/nav'
     case 'numberGuesser':
-      return '/exercises/numbermatcher'
+      return '/instructions/numbermatcher'
     case 'fourByOne':
       return '/instructions/flashingwords/fourbyone'
     case 'oneByTwo':
@@ -161,22 +159,18 @@ export function getNextURL(next: Exercise | undefined | null): string {
       return '/instructions/flashingwords/onebyone'
     case 'twoByOne':
       return '/instructions/flashingwords/twobyone'
-    case 'schulteByThree':
-      return 'exercises/schulteby3'
-    case 'schulteByFive':
-      return '/exercises/schulteby5'
-    case 'schulteBySeven':
-      return 'exercises/schulteby7'
+    case 'schulteTable':
+      return '/instructions/schultetable'
     case 'evenNumbers':
-      return '/exercises/evennumbers'
+      return '/instructions/evennumbers'
     case 'cubeByTwo':
-      return '/exercises/cubebytwo'
+      return '/instructions/boxes?type=two'
     case 'cubeByThree':
-      return '/exercises/cubebythree'
+      return '/instructions/boxes?type=three'
     case 'letterMatcher':
-      return '/exercises/lettermatcher'
+      return '/instructions/lettermatcher'
     case 'greenDot':
-      return '/exercises/greendot'
+      return '/instructions/greendot'
     default:
       return '/done'
   }

@@ -31,7 +31,7 @@ export default function Sidebar() {
   }
 
   return (
-    <div className='min-h-full'>
+    <div className='min-h-fit'>
       {/*this is the shadow that covers the page when the sidebar is open*/}
       <div
         className={[

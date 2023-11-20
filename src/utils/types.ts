@@ -1,4 +1,4 @@
-import type { z as zodValidate } from 'zod'
+import type { z } from 'zod'
 import type { userSchema } from '~/utils/validators'
 import type { speedTestSchema } from '~/utils/validators'
 
@@ -25,9 +25,9 @@ export type Overlay = (typeof Overlay)[number]
  * but it is defined here to make it easier for
  * TypeScript to infer the type of user objects.
  **/
-export type User = zodValidate.infer<typeof userSchema>
+export type User = z.infer<typeof userSchema>
 
-export type SpeedTest = zodValidate.infer<typeof speedTestSchema>
+export type SpeedTest = z.infer<typeof speedTestSchema>
 
 const Highlight = [
   'fourByOne',
@@ -53,9 +53,7 @@ export const Exercise = [
   'twoByTwo',
   'oneByOne',
   'twoByOne',
-  'schulteByThree',
-  'schulteByFive',
-  'schulteBySeven',
+  'schulteTable',
   'speedTest',
   'evenNumbers',
   'cubeByTwo',

@@ -75,18 +75,15 @@ export default function Page() {
     } else return <></>
   }
 
-  type ExerciseCounterProps = {
-    className?: string
-    numberStyle?: string
-  }
-
-  function ExerciseCounter({ className, numberStyle }: ExerciseCounterProps) {
-    if (!user) return <></>
+  function ExerciseCounter() {
+    if (!user) return (<></>)
     const availableExercises = getAvailableExercises(user)
     return (
-      <div className={className}>
+      <div className='text-white md:text-4xl text-2xl text-center'>
         Remaining Daily Exercises:
-        <div className={numberStyle}>{availableExercises?.length ?? '0'}</div>
+        <div className='text-8xl text-yellow-400'>
+          {availableExercises?.length ?? '0'}
+        </div>
       </div>
     )
   }
@@ -148,18 +145,8 @@ export default function Page() {
           user={user as User}
         />
         <ExerciseView
-          text='Easy Schulte Table'
-          exercise='schulteByThree'
-          user={user as User}
-        />
-        <ExerciseView
-          text='Intermediate Schulte Table'
-          exercise='schulteByFive'
-          user={user as User}
-        />
-        <ExerciseView
-          text='Hard Schulte Table'
-          exercise='schulteBySeven'
+          text='Schulte Table'
+          exercise='schulteTable'
           user={user as User}
         />
         <ExerciseView
@@ -187,14 +174,12 @@ export default function Page() {
   }
 
   function RemainingExercises() {
-    return isUsingChecklist ? (
-      <CheckList />
-    ) : (
-      <ExerciseCounter
-        className='text-center text-2xl text-white md:text-4xl'
-        numberStyle='text-8xl text-yellow-400'
-      />
-    )
+    if (isUsingChecklist) { return <CheckList /> }
+    else {
+      return (
+        <ExerciseCounter />
+      )
+    }
   }
 
   function ExerciseViewSwitcher() {
@@ -215,8 +200,8 @@ export default function Page() {
     console.log(user)
     if (!user) return
     if (!checkName(user.firstName) || !checkName(user.lastName)) {
-      navigate(router as SingletonRouter, '/setup') 
-    }    
+      navigate(router as SingletonRouter, '/setup')
+    }
     setUserStore(user)
     setIsUsingChecklist(user.isUsingChecklist)
   }, [user, isLoading, data, setUserStore])

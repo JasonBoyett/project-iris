@@ -3,10 +3,23 @@ import Head from 'next/head'
 import Link from 'next/link'
 import irisLogo from 'public/IRIS-LOGO.png'
 import Image from 'next/image'
+import { useEffect } from 'react'
+import { useAuth } from '@clerk/nextjs'
+import { type SingletonRouter, useRouter } from 'next/router'
+import { navigate } from '~/utils/helpers'
+import { SignedOut } from '@clerk/clerk-react'
 
 const Home: NextPage = () => {
+  const authState = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (authState.isSignedIn) {
+      navigate(router as SingletonRouter, '/nav')
+    }
+  }, [authState])
   return (
-    <>
+    <SignedOut>
       <Head>
         <title>Project Iris</title>
         <meta
@@ -59,7 +72,7 @@ const Home: NextPage = () => {
           <p className='text-2xl text-white'></p>
         </div>
       </main>
-    </>
+    </SignedOut>
   )
 }
 

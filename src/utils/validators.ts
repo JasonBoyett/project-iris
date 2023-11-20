@@ -43,9 +43,7 @@ export const userSchema = z.object({
     z.literal('spanish'),
   ])
     .default('english'),
-  lastSchulteByThree: z.string().default(' '),
-  lastSchulteByFive: z.string().default(' '),
-  lastSchulteBySeven: z.string().default(' '),
+  lastSchulte: z.string().default(' '),
   lastSpeedTest: z.string().default(' '),
   lastFourByOne: z.string().default(' '),
   lastOneByTwo: z.string().default(' '),
@@ -59,6 +57,12 @@ export const userSchema = z.object({
   lastLetterMatcher: z.string().default(' '),
   lastGreenDot: z.string().default(' '),
   numberGuesserFigures: z.number().default(0),
+  schulteLevel: z.union([
+    z.literal('three'),
+    z.literal('five'),
+    z.literal('seven'),
+  ]).default('three'),
+  schulteAdvanceCount: z.number().default(0),
   isAdmin: z.boolean().default(false),
   isStudySubject: z.boolean().default(false),
   isUsingChecklist: z.boolean().default(true),
@@ -78,7 +82,7 @@ export const speedTestSchema = z.object({
 
 const randomWordInputs = z.object({
   number: z.number(),
-  max: z.number().optional(),
+  max: z.number(),
   language: z.union([
     z.literal('english'),
     z.literal('spanish'),

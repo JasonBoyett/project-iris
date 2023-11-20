@@ -23,13 +23,13 @@ export default function Page() {
               style={{ width: '24rem', height: '16rem' }}
             />
           </div>
-          <p className='md:text-5xl text-3xl text-center text-white font-bold'>
+          <p className='md:text-5xl text-2xl text-center text-white font-bold'>
             Click for your next exercise!
           </p>
           <div className='flex items-center justify-center p-12'>
             <button
               name='start'
-              className='text-white md:text-5xl text-4xl bg-white/10 flex items-center justify-center rounded-full md:w-40 w-60 p-4 h-16 hover:bg-white/20'
+              className='text-white md:text-5xl text-3xl bg-white/10 flex items-center justify-center rounded-full md:w-40 w-60 p-4 h-16 hover:bg-white/20'
               onClick={() => {
                 if(!data) return
                 navigateToNextExercise(router as SingletonRouter,data)

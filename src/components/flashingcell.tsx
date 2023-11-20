@@ -46,15 +46,15 @@ type GridProps = {
 const layoutManager = (layout: HighlightType) => {
   switch (layout) {
     case 'oneByOne':
-      return [1, 1]
+      return [1, 1, -1]
     case 'oneByTwo':
-      return [1, 2]
+      return [1, 2, -1]
     case 'twoByOne':
-      return [2, 1]
+      return [2, 1, 5]
     case 'twoByTwo':
-      return [2, 2]
+      return [2, 2, 6]
     case 'fourByOne':
-      return [4, 1]
+      return [4, 1, 6]
   }
 }
 
@@ -173,17 +173,18 @@ export function createCells({
   return cells
 }
 
-function Grid({ rows = 4, type, }: GridProps) {
+function Grid({ rows = 7, type, }: GridProps) {
   const [cellCounter, setCounter] = useState<number>(0)
   const [fetched, setFetched] = useState<string[]>([])
   const words = useRef<string[][]>([])
   const section = useRef<number>(0)
-  const [wordsPerCell, width]: [number, number] | number[] = layoutManager(type)
+  const [wordsPerCell, width, max]: [number, number, number] | number[] = layoutManager(type)
   const [grid, setGrid] = useState<JSX.Element[]>()
   const returnClass = useState<string>(
     `grid grid-cols-${width} gap-2 bg-white p-2 rounded-lg shadow-md md:h-auto h-min md:w-2/5 w-4/5 items-center`,
   )[0]
   const ref = useRef<HTMLDivElement>(null)
+  const [ticks, setTicks] = useState<number>(0)
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const store = useUserStore((state) => state)
   const [font, setFont] = useState<Font>('sans')
@@ -194,37 +195,47 @@ function Grid({ rows = 4, type, }: GridProps) {
     {
       number: wordsPerCell * (user?.currentWpm as number),
       language: user?.language as "english" | "spanish",
+      max: max,
     },
     { enabled: !!user }
   )
   const collectData = api.highlightSession.setUnique.useMutation()
 
   function setSpeed(user: User | undefined) {
-    if (!user) return 60_000 / 200
-    return 60_000 / user.currentWpm
+    if (!wordsPerCell) return
+    if (!user) return 60_000 / (200 / wordsPerCell)
+    return 60_000 / (user.currentWpm / wordsPerCell)
   }
 
   function markComplete() {
     if (!user) return
-    if (type === 'oneByOne') {
-      mutate({ lastOneByOne: formatDate(new Date()) })
-      store.setUser({ ...user, lastOneByOne: formatDate(new Date()) })
-    }
-    if (type === 'oneByTwo') {
-      mutate({ lastOneByTwo: formatDate(new Date()) })
-      store.setUser({ ...user, lastOneByTwo: formatDate(new Date()) })
-    }
-    if (type === 'fourByOne') {
-      mutate({ lastFourByOne: formatDate(new Date()) })
-      store.setUser({ ...user, lastFourByOne: formatDate(new Date()) })
-    }
-    if (type === 'twoByTwo') {
-      mutate({ lastTwoByTwo: formatDate(new Date()) })
-      store.setUser({ ...user, lastTwoByTwo: formatDate(new Date()) })
-    }
-    if (type === 'twoByOne') {
-      mutate({ lastTwoByOne: formatDate(new Date()) })
-      store.setUser({ ...user, lastTwoByOne: formatDate(new Date()) })
+    console.log('marking complete')
+    switch (type) {
+      case 'oneByOne': {
+        mutate({ lastOneByOne: formatDate(new Date()) })
+        store.setUser({ ...user, lastOneByOne: formatDate(new Date()) })
+        break
+      }
+      case 'oneByTwo': {
+        mutate({ lastOneByTwo: formatDate(new Date()) })
+        store.setUser({ ...user, lastOneByTwo: formatDate(new Date()) })
+        break
+      }
+      case 'fourByOne': {
+        mutate({ lastFourByOne: formatDate(new Date()) })
+        store.setUser({ ...user, lastFourByOne: formatDate(new Date()) })
+        break
+      }
+      case 'twoByTwo': {
+        mutate({ lastTwoByTwo: formatDate(new Date()) })
+        store.setUser({ ...user, lastTwoByTwo: formatDate(new Date()) })
+        break
+      }
+      case 'twoByOne': {
+        mutate({ lastTwoByOne: formatDate(new Date()) })
+        store.setUser({ ...user, lastTwoByOne: formatDate(new Date()) })
+        break
+      }
     }
   }
 
@@ -247,6 +258,8 @@ function Grid({ rows = 4, type, }: GridProps) {
   }, [buff])
 
   useEffect(() => {
+    if (!wordsPerCell) return
+    if (!width) return
     if (!user) return
     (() => {
       const wordsArry = fetched
@@ -265,17 +278,9 @@ function Grid({ rows = 4, type, }: GridProps) {
   }, [fetched])
 
   useInterval(() => {
-    if (!isVisible) {
-      return
-    }
-    if (
-      section.current >= words.current.length - 1 &&
-      cellCounter >= rows * width
-    ) {
-      tearDown()
-      return
-    }
-    if (cellCounter >= rows * width) {
+    if (!width) return
+    if (!isVisible) return
+    if (cellCounter >= (rows * width) - 1) {
       section.current++
       if (!user) return
       setGrid(
@@ -286,10 +291,20 @@ function Grid({ rows = 4, type, }: GridProps) {
         }),
       )
       setCounter(0)
+      setTicks((prev) => prev + 1)
+      if (ticks > words.current.reduce((a, b) => a.concat(b), []).length) {
+        tearDown()
+        return
+      }
     } else {
       setCounter((prev) => prev + 1)
+      setTicks((prev) => prev + 1)
+      if (ticks > words.current.reduce((a, b) => a.concat(b), []).length) {
+        tearDown()
+        return
+      }
     }
-  }, setSpeed(user))
+  }, setSpeed(user) as number)
 
   return (
     <counterContext.Provider value={cellCounter}>

@@ -24,8 +24,8 @@ export default function Page() {
         <Sidebar />
         <div className='flex flex-col items-center justify-center min-h-screen py-2 gap-2'>
           <NavButton path='/exercises/speedtest' text='Speed Test' />
-          <NavButton path='/exercises/cubebythree' text='Cube by 3' />
-          <NavButton path='/exercises/cubebytwo' text='Cube by 2' />
+          <NavButton path='/exercises/boxes?type=3' text='Boxes by 3' />
+          <NavButton path='/exercises/boxes?type=2' text='Boxes by 2' />
           <NavButton path='/exercises/evennumbers' text='Even Numbers' />
           <NavButton path='/exercises/flashfourbyone' text='Flash 4 by 1' />
           <NavButton path='/exercises/flashonebyone' text='Flash 1 by 1' />
@@ -33,9 +33,9 @@ export default function Page() {
           <NavButton path='/exercises/flashtwobytwo' text='Flash 2 by 2' />
           <NavButton path='/exercises/flashtwobyone' text='Flash 2 by 1' />
           <NavButton path='/exercises/numbermatcher' text='Number Match' />
-          <NavButton path='/exercises/schulteby3' text='Schulte Table by 3' />
-          <NavButton path='/exercises/schulteby5' text='Schulte Table by 5' />
-          <NavButton path='/exercises/schulteby7' text='Schulte Table by 7' />
+          <NavButton path='/exercises/schultetable?type=3' text='Schulte Table by 3' />
+          <NavButton path='/exercises/schultetable?type=5' text='Schulte Table by 5' />
+          <NavButton path='/exercises/schultetable?type=7' text='Schulte Table by 7' />
           <NavButton path='/exercises/lettermatcher' text='Matching Letters Game' />
           <NavButton path='/exercises/greendot' text='Green Dot' />
         </div>

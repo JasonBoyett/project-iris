@@ -88,7 +88,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
   const router = useRouter()
   const { data } = api.getExcerciseProps.getRandomWords.useQuery(
     {
-      number: userStore.user?.currentWpm as number * 4,
+      number: userStore.user?.currentWpm as number,
       max: 5,
       language: userStore.user?.language as 'english' | 'spanish',
     },
@@ -101,7 +101,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
 
   function getRate() {
     if (!userStore.user) return 60_000 / 200
-    return 60_000 / userStore.user.currentWpm
+    return ( 60_000 / userStore.user.currentWpm) * 4
   }
 
   function tearDown() {
