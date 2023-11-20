@@ -148,7 +148,7 @@ export function getNextURL(next: Exercise | undefined | null): string {
     case null || undefined:
       return '/nav'
     case 'numberGuesser':
-      return '/exercises/numbermatcher'
+      return '/instructions/numbermatcher'
     case 'fourByOne':
       return '/instructions/flashingwords/fourbyone'
     case 'oneByTwo':
@@ -168,9 +168,9 @@ export function getNextURL(next: Exercise | undefined | null): string {
     case 'cubeByThree':
       return '/instructions/boxes?type=three'
     case 'letterMatcher':
-      return '/exercises/lettermatcher'
+      return '/instructions/lettermatcher'
     case 'greenDot':
-      return '/exercises/greendot'
+      return '/instructions/greendot'
     default:
       return '/done'
   }
