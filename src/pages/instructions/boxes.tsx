@@ -31,9 +31,9 @@ type BlockType = 'two' | 'three'
 
 function typeToUrl(type: BlockType){
   switch(type){
-    case 'two': return '/exercises/cubebytwo'
-    case 'three': return '/exercises/cubebythree'
-    default: return '/exercises/cubebytwo'
+    case 'two': return '/exercises/boxes?type=2'
+    case 'three': return '/exercises/boxes?type=3'
+    default: return '/exercises/boxes?type=2'
   }
 
 }

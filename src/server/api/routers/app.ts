@@ -6,17 +6,6 @@ import type { Language, User } from '~/utils/types'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { schemas, inputs } from '~/utils/validators'
 import { getNextExercise, getNextURL } from '~/utils/helpers'
-import type { EmailAddress } from '@clerk/nextjs/dist/types/server'
-
-function verifyStudySubject(emailAddresses: EmailAddress[] | undefined) {
-  if (emailAddresses === undefined) throw new Error('No email addresses') 
-  emailAddresses.forEach((email) => {
-    if (email.emailAddress.endsWith('.edu')){
-      return true
-    }
-  })
-  return false
-}
 
 export const userRouter = createTRPCRouter({
   getUnique: publicProcedure
@@ -59,10 +48,8 @@ export const userRouter = createTRPCRouter({
           currentWpm: input.currentWpm,
           createdAt: input.createdAt,
           updatedAt: input.updatedAt,
-          lastSchulteByThree: input.lastSchulteByThree,
           highlightColor: input.highlightColor,
-          lastSchulteByFive: input.lastSchulteByFive,
-          lastSchulteBySeven: input.lastSchulteBySeven,
+          lastSchulte: input.lastSchulte,
           lastSpeedTest: input.lastSpeedTest,
           lastFourByOne: input.lastFourByOne,
           lastOneByTwo: input.lastOneByTwo,
@@ -76,6 +63,8 @@ export const userRouter = createTRPCRouter({
           lastLetterMatcher: input.lastLetterMatcher,
           lastGreenDot: input.lastGreenDot,
           numberGuesserFigures: input.numberGuesserFigures,
+          schulteLevel: input.schulteLevel,
+          schulteAdvanceCount: input.schulteAdvanceCount,
           isAdmin: input.isAdmin,
           isUsingChecklist: input.isUsingChecklist,
           font: input.font,

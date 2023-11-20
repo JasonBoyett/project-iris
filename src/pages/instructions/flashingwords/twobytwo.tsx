@@ -28,7 +28,7 @@ const Paragraph1 = () => {
 const Page: NextPage = () => {
   const userStore = useUserStore()
   const [font, setFont] = useState<Font>('sans')
-  const option = 'twoByOne'
+  const option = 'twoByTwo'
 
   useEffect(() => {
     if (!userStore.user) return

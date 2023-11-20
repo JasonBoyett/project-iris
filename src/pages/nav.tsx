@@ -145,18 +145,8 @@ export default function Page() {
           user={user as User}
         />
         <ExerciseView
-          text='Easy Schulte Table'
-          exercise='schulteByThree'
-          user={user as User}
-        />
-        <ExerciseView
-          text='Intermediate Schulte Table'
-          exercise='schulteByFive'
-          user={user as User}
-        />
-        <ExerciseView
-          text='Hard Schulte Table'
-          exercise='schulteBySeven'
+          text='Schulte Table'
+          exercise='schulteTable'
           user={user as User}
         />
         <ExerciseView

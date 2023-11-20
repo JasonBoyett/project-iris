@@ -173,7 +173,7 @@ export function createCells({
   return cells
 }
 
-function Grid({ rows = 4, type, }: GridProps) {
+function Grid({ rows = 7, type, }: GridProps) {
   const [cellCounter, setCounter] = useState<number>(0)
   const [fetched, setFetched] = useState<string[]>([])
   const words = useRef<string[][]>([])
@@ -184,6 +184,7 @@ function Grid({ rows = 4, type, }: GridProps) {
     `grid grid-cols-${width} gap-2 bg-white p-2 rounded-lg shadow-md md:h-auto h-min md:w-2/5 w-4/5 items-center`,
   )[0]
   const ref = useRef<HTMLDivElement>(null)
+  const [ticks, setTicks] = useState<number>(0)
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const store = useUserStore((state) => state)
   const [font, setFont] = useState<Font>('sans')
@@ -192,7 +193,7 @@ function Grid({ rows = 4, type, }: GridProps) {
   const { mutate } = api.user.setUser.useMutation()
   const buff = api.getExcerciseProps.getRandomWords.useQuery(
     {
-      number: ( wordsPerCell * (user?.currentWpm as number)) / wordsPerCell,
+      number: wordsPerCell * (user?.currentWpm as number),
       language: user?.language as "english" | "spanish",
       max: max,
     },
@@ -202,31 +203,39 @@ function Grid({ rows = 4, type, }: GridProps) {
 
   function setSpeed(user: User | undefined) {
     if (!wordsPerCell) return
-    if (!user) return ( 60_000 / 200) * wordsPerCell
-    return ( 60_000 / user.currentWpm) * wordsPerCell
+    if (!user) return 60_000 / (200 / wordsPerCell)
+    return 60_000 / (user.currentWpm / wordsPerCell)
   }
 
   function markComplete() {
     if (!user) return
-    if (type === 'oneByOne') {
-      mutate({ lastOneByOne: formatDate(new Date()) })
-      store.setUser({ ...user, lastOneByOne: formatDate(new Date()) })
-    }
-    if (type === 'oneByTwo') {
-      mutate({ lastOneByTwo: formatDate(new Date()) })
-      store.setUser({ ...user, lastOneByTwo: formatDate(new Date()) })
-    }
-    if (type === 'fourByOne') {
-      mutate({ lastFourByOne: formatDate(new Date()) })
-      store.setUser({ ...user, lastFourByOne: formatDate(new Date()) })
-    }
-    if (type === 'twoByTwo') {
-      mutate({ lastTwoByTwo: formatDate(new Date()) })
-      store.setUser({ ...user, lastTwoByTwo: formatDate(new Date()) })
-    }
-    if (type === 'twoByOne') {
-      mutate({ lastTwoByOne: formatDate(new Date()) })
-      store.setUser({ ...user, lastTwoByOne: formatDate(new Date()) })
+    console.log('marking complete')
+    switch (type) {
+      case 'oneByOne': {
+        mutate({ lastOneByOne: formatDate(new Date()) })
+        store.setUser({ ...user, lastOneByOne: formatDate(new Date()) })
+        break
+      }
+      case 'oneByTwo': {
+        mutate({ lastOneByTwo: formatDate(new Date()) })
+        store.setUser({ ...user, lastOneByTwo: formatDate(new Date()) })
+        break
+      }
+      case 'fourByOne': {
+        mutate({ lastFourByOne: formatDate(new Date()) })
+        store.setUser({ ...user, lastFourByOne: formatDate(new Date()) })
+        break
+      }
+      case 'twoByTwo': {
+        mutate({ lastTwoByTwo: formatDate(new Date()) })
+        store.setUser({ ...user, lastTwoByTwo: formatDate(new Date()) })
+        break
+      }
+      case 'twoByOne': {
+        mutate({ lastTwoByOne: formatDate(new Date()) })
+        store.setUser({ ...user, lastTwoByOne: formatDate(new Date()) })
+        break
+      }
     }
   }
 
@@ -271,14 +280,7 @@ function Grid({ rows = 4, type, }: GridProps) {
   useInterval(() => {
     if (!width) return
     if (!isVisible) return
-    if (
-      section.current >= words.current.length - 1 &&
-      cellCounter >= rows * width
-    ) {
-      tearDown()
-      return
-    }
-    if (cellCounter >= rows * width) {
+    if (cellCounter >= (rows * width) - 1) {
       section.current++
       if (!user) return
       setGrid(
@@ -289,8 +291,18 @@ function Grid({ rows = 4, type, }: GridProps) {
         }),
       )
       setCounter(0)
+      setTicks((prev) => prev + 1)
+      if (ticks > words.current.reduce((a, b) => a.concat(b), []).length) {
+        tearDown()
+        return
+      }
     } else {
       setCounter((prev) => prev + 1)
+      setTicks((prev) => prev + 1)
+      if (ticks > words.current.reduce((a, b) => a.concat(b), []).length) {
+        tearDown()
+        return
+      }
     }
   }, setSpeed(user) as number)
 

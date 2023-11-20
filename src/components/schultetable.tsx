@@ -1,11 +1,11 @@
 import { formatDate, navigate } from '~/utils/helpers'
 import React, { useState, useRef, useEffect } from 'react'
 import { v4 } from 'uuid'
-import { SingletonRouter, useRouter } from 'next/router'
+import { type SingletonRouter, useRouter } from 'next/router'
 import { api } from '~/utils/api'
 import useUserStore from '~/stores/userStore'
 import { FontProvider } from '~/cva/fontProvider'
-import type { Font } from '~/utils/types'
+import type { Font, User } from '~/utils/types'
 import { useStopWatch } from '~/hooks/useStopWatch'
 
 
@@ -66,7 +66,7 @@ export default function SchulteTable({ sideLength }: SchulteTableProps) {
   const user = store.user
   const totalCells = Math.pow(sideLength, 2)
   const [classString, setClassString] = useState('')
-  const stopWatch = useStopWatch() 
+  const stopWatch = useStopWatch()
   const collectData = api.schulteSession.setUnique.useMutation()
   const numbers = useRef(
     Array.from({ length: totalCells }, (_, i) => i + 1).sort(
@@ -80,6 +80,32 @@ export default function SchulteTable({ sideLength }: SchulteTableProps) {
       case 5: return 'five'
       case 7: return 'seven'
       default: return 'five'
+    }
+  }
+
+  function advance(user: User) {
+    if (!user) return
+    if (user.schulteLevel === 'three') {
+      mutate({ ...user, schulteLevel: 'five', schulteAdvanceCount: 0 })
+    } else if (user.schulteLevel === 'five') {
+      mutate({ ...user, schulteLevel: 'seven', schulteAdvanceCount: 0 })
+    } else if (user.schulteLevel === 'seven') {
+      mutate({ ...user, schulteAdvanceCount: 0 })
+    }
+  }
+
+  function determineAdvancement(user: User) {
+    if (!user) return
+    const cellCount = (sideLength * sideLength)
+    const goodSessions = user.schulteAdvanceCount
+
+    if (user.schulteLevel !== formatType(sideLength)) return
+    if (cellCount / (cellCount - errors.current) >= 0.9) {
+      if (goodSessions >= 26) {
+        advance(user)
+      } else {
+        mutate({ ...user, schulteAdvanceCount: goodSessions + 1 })
+      }
     }
   }
 
@@ -99,24 +125,9 @@ export default function SchulteTable({ sideLength }: SchulteTableProps) {
 
       })
     }
-    switch (sideLength) {
-      case 3:
-        mutate({ lastSchulteByThree: formatDate(new Date()) })
-        if (!user) return
-        else
-          store.setUser({ ...user, lastSchulteByThree: formatDate(new Date()) })
-        break
-      case 5:
-        mutate({ lastSchulteByFive: formatDate(new Date()) })
-        if (!user) return
-        else store.setUser({ ...user, lastSchulteByFive: formatDate(new Date()) })
-        break
-      case 7:
-        mutate({ lastSchulteBySeven: formatDate(new Date()) })
-        if (!user) return
-        else store.setUser({ ...user, lastSchulteBySeven: formatDate(new Date()) })
-        break
-    }
+    
+    mutate({ lastSchulte: formatDate(new Date()) })
+    determineAdvancement(user)
     navigate(router as SingletonRouter, '/next')
   }
 

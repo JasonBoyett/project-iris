@@ -75,9 +75,7 @@ model User {
   LetterMatcherSessions   LetterMatcherSession[]
   GreenDotSessions        GreenDotSession[]
   highlightColor          Overlay                @default(GREY)
-  lastSchulteByFive       String                 @default(" ")
-  lastSchulteByThree      String                 @default(" ")
-  lastSchulteBySeven      String                 @default(" ")
+  lastSchulte             String                 @default(" ")
   lastSpeedTest           String                 @default(" ")
   lastFourByOne           String                 @default(" ")
   lastOneByTwo            String                 @default(" ")
@@ -95,6 +93,8 @@ model User {
   isUsingChecklist        Boolean                @default(true)
   isAdmin                 Boolean                @default(false)
   isStudySubject          Boolean                @default(false)
+  schulteLevel            SchulteType            @default(three)
+  schulteAdvanceCount     Int                    @default(0)
   language                Language               @default(english)
   tested                  Boolean                @default(false)
   NumberGuesserSession    NumberGuesserSession[]
