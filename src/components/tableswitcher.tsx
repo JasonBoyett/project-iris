@@ -1,44 +1,35 @@
 import Link from "next/link"
 import { type User } from "~/utils/types"
 
-export default function TableSwitcher({ user, className, callback }: { user: User | null, className?: string, callback: (type: 3 | 5 | 7) => void }) {
+export default function TableSwitcher({ user, className }: { user: User | null, className?: string }) {
   function NavEasy() {
     return (
-      <button
+      <Link
         className='bg-white/20 text-white rounded-md px-4 py-2'
-        onClick={
-          () => {
-            callback(3)
-          }
-        }
+        href='/exercises/schultetable/by3'
       >
         Easy
-      </button>
+      </Link>
     )
   }
   function NavMed() {
     return (
-      <button
+      <Link
         className='bg-white/20 text-white rounded-md px-4 py-2'
-        onClick={
-          () => {
-            callback(5)
-          }}
+        href='/exercises/schultetable/by5'
       >
         Medium
-      </button>
+      </Link>
     )
   }
   function NavHard() {
     return (
-      <button
+      <Link
         className='bg-white/20 text-white rounded-md px-4 py-2'
-        onClick={() => {
-            callback(7)
-        }}
+        href='/exercises/schultetable/by7'
       >
         Hard
-      </button>
+      </Link>
     )
   }
 
