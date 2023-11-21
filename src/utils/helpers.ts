@@ -9,18 +9,19 @@ export function checkName(name: string | undefined | null) {
 }
 
 export function navigate(router: typeof NextRouter | SingletonRouter, url: string) {
-  router.push(url).catch(() => {
-    router.push(url).catch(() => {
-      setTimeout(() => {
-        router.push(url).catch(() => {
-          router.push('/nav').catch((err) => {
-            console.log('error navigating: ', err)
-            alert('There was an error navigating to the next exercise. Please try again.')
+  router.replace(url, undefined, { shallow: false })
+    .catch(() => {
+      router.push(url).catch(() => {
+        setTimeout(() => {
+          router.push(url).catch(() => {
+            router.push('/nav').catch((err) => {
+              console.log('error navigating: ', err)
+              alert('There was an error navigating to the next exercise. Please try again.')
+            })
           })
-        })
-      }, 3_000)
+        }, 3_000)
+      })
     })
-  })
 }
 
 export function navigateToNextExercise(router: typeof NextRouter | SingletonRouter, user: User) {
@@ -126,7 +127,7 @@ export function getNextExercise(user: User | undefined | null) {
 
 export const formatDate = (date?: Date | undefined | null) => {
   if (!date) {
-  date = new Date()
+    date = new Date()
   }
   return date
     .toString()

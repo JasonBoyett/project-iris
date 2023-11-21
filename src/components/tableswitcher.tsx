@@ -1,35 +1,44 @@
 import Link from "next/link"
 import { type User } from "~/utils/types"
 
-export default function TableSwitcher({ user, className }: { user: User | null, className?: string }) {
+export default function TableSwitcher({ user, className, callback }: { user: User | null, className?: string, callback: (type: 3 | 5 | 7) => void }) {
   function NavEasy() {
     return (
-      <Link
+      <button
         className='bg-white/20 text-white rounded-md px-4 py-2'
-        href='/exercises/schultetable?type=3'
+        onClick={
+          () => {
+            callback(3)
+          }
+        }
       >
         Easy
-      </Link>
+      </button>
     )
   }
   function NavMed() {
     return (
-      <Link
+      <button
         className='bg-white/20 text-white rounded-md px-4 py-2'
-        href='/exercises/schultetable?type=5'
+        onClick={
+          () => {
+            callback(5)
+          }}
       >
         Medium
-      </Link>
+      </button>
     )
   }
   function NavHard() {
     return (
-      <Link
+      <button
         className='bg-white/20 text-white rounded-md px-4 py-2'
-        href='/exercises/schultetable?type=7'
+        onClick={() => {
+            callback(7)
+        }}
       >
         Hard
-      </Link>
+      </button>
     )
   }
 
@@ -37,7 +46,7 @@ export default function TableSwitcher({ user, className }: { user: User | null, 
   if (user.schulteLevel === 'three') return <></>
   if (user.schulteLevel === 'seven') {
     return (
-      <div className={ className }>
+      <div className={className}>
         <NavEasy />
         <NavMed />
         <NavHard />
@@ -46,7 +55,7 @@ export default function TableSwitcher({ user, className }: { user: User | null, 
   }
   if (user.schulteLevel === 'five') {
     return (
-      <div className={ className }>
+      <div className={className}>
         <NavEasy />
         <NavMed />
       </div>
