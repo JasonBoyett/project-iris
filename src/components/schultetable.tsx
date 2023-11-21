@@ -56,6 +56,7 @@ function Cell({
   )
 }
 
+
 export default function SchulteTable({ sideLength }: SchulteTableProps) {
   const [counter, setCount] = useState(1)
   const [font, setFont] = useState<Font>('sans')

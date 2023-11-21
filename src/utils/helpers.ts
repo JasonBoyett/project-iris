@@ -9,7 +9,7 @@ export function checkName(name: string | undefined | null) {
 }
 
 export function navigate(router: typeof NextRouter | SingletonRouter, url: string) {
-  router.replace(url).catch(() => {
+  router.push(url).catch(() => {
     router.push(url).catch(() => {
       setTimeout(() => {
         router.push(url).catch(() => {
