@@ -276,6 +276,20 @@ const Page: NextPage = () => {
               >
                 Español {currentLanguage === 'spanish' ? '✓' : ''}
               </button>
+              <button
+                className='h-12 rounded-full bg-white/20 p-4 py-2 text-2xl font-bold text-white md:w-40'
+                type='button'
+                onClick={() => setCurrentLanguage('spanish')}
+              >
+                Deutsch {currentLanguage === 'german' ? '✓' : ''}
+              </button>
+              <button
+                className='h-12 rounded-full bg-white/20 p-4 py-2 text-2xl font-bold text-white md:w-40'
+                type='button'
+                onClick={() => setCurrentLanguage('spanish')}
+              >
+                Italiano {currentLanguage === 'spanish' ? '✓' : ''}
+              </button>
             </label>
             <Suspense fallback={<LoadingSpinner />}>
               <label className='items-center gap-3 py-4 text-2xl font-bold text-white md:flex'>

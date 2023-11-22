@@ -76,15 +76,27 @@ export const userRouter = createTRPCRouter({
 })
 
 async function getRandomWords(size: number, language: Language) {
+  if (language === 'english') {
+    const response = await axios.get<string[]>(
+      `https://random-word-api.herokuapp.com/word?number=${size}`,
+    )
+    return response.data
+  }
   if (language === 'spanish') {
     const response = await axios.get<string[]>(
       `https://random-word-api.herokuapp.com/word?lang=es&number=${size}`
     )
     return response.data
   }
-  if (language === 'english') {
+  if (language === 'italian') {
     const response = await axios.get<string[]>(
-      `https://random-word-api.herokuapp.com/word?number=${size}`,
+      `https://random-word-api.herokuapp.com/word?lang=it&number=${size}`
+    )
+    return response.data
+  }
+  if (language === 'german') {
+    const response = await axios.get<string[]>(
+      `https://random-word-api.herokuapp.com/word?lang=de&number=${size}`
     )
     return response.data
   }
@@ -117,13 +129,6 @@ async function getRandomWordsLimitLength({ wordsReturned, wordLength, language }
 }
 
 async function getWords({ wordsReturned, wordLength, language }: GetRandomWordsLimitLength) {
-  console.log('test2')
-  if (language === 'spanish') {
-    const response = await axios.get<string[]>(
-      `https://random-word-api.herokuapp.com/word?lang=es&number=${wordsReturned}&length=${wordLength}`
-    )
-    return response.data
-  }
   if (language === 'english') {
     const response = await axios.get<string[]>(
       `https://random-word-api.herokuapp.com/word?number=${wordsReturned}&length=${wordLength}`
@@ -131,35 +136,24 @@ async function getWords({ wordsReturned, wordLength, language }: GetRandomWordsL
     console.log(response.data)
     return response.data
   }
-}
-
-function getCappedRandomWords({ wordsReturned, wordLength, language }: GetRandomWordsLimitLength) {
-
-  const MIN_WORD_LENGTH = 3
-  const words = new Array<string>()
-  let number = Math.random() * wordsReturned
-  let length = wordLength
-
-  while (words.length < wordsReturned) {
-    if (length <= MIN_WORD_LENGTH) {
-      number = wordsReturned - words.length
-      length = MIN_WORD_LENGTH
-    }
-    getRandomWordsLimitLength({
-      wordsReturned: number,
-      wordLength: length,
-      language: language
-    }).then((result) => {
-      console.log(result)
-      result?.forEach((word) => {
-        words.push(word)
-      })
-    }).catch((err) => console.log(err))
-    length = length - 1
-
-    console.log(words.length)
+  if (language === 'spanish') {
+    const response = await axios.get<string[]>(
+      `https://random-word-api.herokuapp.com/word?lang=es&number=${wordsReturned}&length=${wordLength}`
+    )
+    return response.data
   }
-  return words
+  if (language === 'italian') {
+    const response = await axios.get<string[]>(
+      `https://random-word-api.herokuapp.com/word?lang=it&number=${wordsReturned}&length=${wordLength}`
+    )
+    return response.data
+  }
+  if (language === 'german') {
+    const response = await axios.get<string[]>(
+      `https://random-word-api.herokuapp.com/word?lang=de&number=${wordsReturned}&length=${wordLength}`
+    )
+    return response.data
+  }
 }
 
 export const excercisesPropsRouter = createTRPCRouter({
