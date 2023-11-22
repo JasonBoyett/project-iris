@@ -119,7 +119,7 @@ function Page() {
       <Sidebar />
       <FontProvider font={font}>
         <div className='flex flex-col items-center justify-center min-h-screen py-10 gap-4'>
-          <Paragraph1 />
+          <Paragraph1 user={ userStore.user }/>
           <StartButton />
         </div>
       </FontProvider>

@@ -11,7 +11,7 @@ import { navigate } from '~/utils/helpers'
 
 const INSTRUCTION_DELAY = 5_000
 
-const Paragraph1 = ({ user }: { user: User | undefined }) => {
+function Paragraph1({ user }: { user: User | undefined }) {
   if (!user) return <LoadingSpinner />
   if (user.language === 'english') return (
     <div className='gap-2 bg-white text-2xl p-12 rounded-lg shadow-md md:h-3/5 h-96 md:w-2/5 w-4/5 items-center md:overflow-y-auto overflow-y-auto'>
@@ -84,7 +84,7 @@ const Paragraph1 = ({ user }: { user: User | undefined }) => {
   )
 }
 
-const StartButton: React.FC = () => {
+function StartButton() {
   const [time, setTime] = useState(false)
   const router = useRouter()
 
@@ -105,7 +105,7 @@ const StartButton: React.FC = () => {
   )
 }
 
-const Page: NextPage = () => {
+export default function Page() {
   const userStore = useUserStore()
   const [font, setFont] = useState<Font>('sans')
   useEffect(() => {
@@ -126,5 +126,3 @@ const Page: NextPage = () => {
     </>
   )
 }
-
-export default Page
