@@ -88,6 +88,8 @@ const randomWordInputs = z.object({
   language: z.union([
     z.literal('english'),
     z.literal('spanish'),
+    z.literal('german'),
+    z.literal('italian'),
   ]),
 })
 
