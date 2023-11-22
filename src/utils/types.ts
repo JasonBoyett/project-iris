@@ -43,7 +43,12 @@ const Answer = ['A', 'B', 'C', 'D'] as const
 
 export type Answer = (typeof Answer)[number]
 
-const Language = ['english', 'spanish'] as const
+const Language = [
+  'english', 
+  'spanish',
+  'german',
+  'italian',
+] as const
 
 export type Language = (typeof Language)[number]
 

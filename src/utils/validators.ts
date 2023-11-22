@@ -41,6 +41,8 @@ export const userSchema = z.object({
   language: z.union([
     z.literal('english'),
     z.literal('spanish'),
+    z.literal('german'),
+    z.literal('italian'),
   ])
     .default('english'),
   lastSchulte: z.string().default(' '),
@@ -86,6 +88,8 @@ const randomWordInputs = z.object({
   language: z.union([
     z.literal('english'),
     z.literal('spanish'),
+    z.literal('german'),
+    z.literal('italian'),
   ]),
 })
 

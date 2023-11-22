@@ -260,21 +260,35 @@ const Page: NextPage = () => {
                 </HighlightButton>
               </div>
             </label>
-            <label className='flex flex-col gap-3 py-4 text-2xl font-bold text-white md:flex-row md:items-center'>
+            <label className='flex flex-col gap-3 py-4 text-2xl font-bold text-white md:flex-row'>
               Language:{' '}
               <button
-                className='h-12 rounded-full bg-white/20 p-4 py-2 text-2xl font-bold text-white md:w-40'
+                className='h-12 rounded-full bg-white/20 p-4 py-2 text-2xl font-bold text-white'
                 type='button'
                 onClick={() => setCurrentLanguage('english')}
               >
-                English {currentLanguage === 'english' ? '✓' : ''}
+                {currentLanguage === 'english' ? 'English ✓' : 'English'}
               </button>
               <button
-                className='h-12 rounded-full bg-white/20 p-4 py-2 text-2xl font-bold text-white md:w-40'
+                className='h-12 rounded-full bg-white/20 p-4 py-2 text-2xl font-bold text-white'
                 type='button'
                 onClick={() => setCurrentLanguage('spanish')}
               >
                 Español {currentLanguage === 'spanish' ? '✓' : ''}
+              </button>
+              <button
+                className='h-12 rounded-full bg-white/20 p-4 py-2 text-2xl font-bold text-white'
+                type='button'
+                onClick={() => setCurrentLanguage('german')}
+              >
+                Deutsch {currentLanguage === 'german' ? '✓' : ''}
+              </button>
+              <button
+                className='h-12 rounded-full bg-white/20 p-4 py-2 text-2xl font-bold text-white'
+                type='button'
+                onClick={() => setCurrentLanguage('italian')}
+              >
+                Italiano {currentLanguage === 'italian' ? '✓' : ''}
               </button>
             </label>
             <Suspense fallback={<LoadingSpinner />}>

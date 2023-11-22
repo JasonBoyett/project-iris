@@ -37,6 +37,8 @@ enum Font {
 enum Language {
   english
   spanish
+  italian
+  german
 }
 
 enum HighlightType {
@@ -228,14 +230,15 @@ model SatQuestion {
 }
 
 model SpeedQuestion {
-  id            Int    @id @unique
-  passage       String @db.Text
-  question      String @db.Text
+  id            Int      @id @unique
+  passage       String   @db.Text
+  question      String   @db.Text
   answerA       String
   answerB       String
   answerC       String
   answerD       String
   correctAnswer String
+  language      Language @default(english)
 
   @@index([id])
 }
