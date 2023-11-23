@@ -28,7 +28,7 @@ export function navigateToNextExercise(router: typeof NextRouter | SingletonRout
   navigate(router, getNextURL(getNextExercise(user)))
 }
 
-export function userHilightToHex(user: User) {
+export function userHilightToHex(user: User): string {
   switch (user.highlightColor) {
     case 'BLUE':
       return '#96adfc'
@@ -50,6 +50,8 @@ export function userHilightToHex(user: User) {
       return '#a5f7e1'
     case 'YELLOW':
       return '#F8fd89'
+    default:
+      return '#dbe1f1'
   }
 }
 
