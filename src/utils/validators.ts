@@ -164,8 +164,24 @@ export const boxFlasherData = z.object({
 })
 
 export const wordPairData = z.object({
-  primary: z.string(),
-  secondary: z.string(),
+  primaryWord: z.string(),
+  secondaryWord: z.string(),
+  language: z.union([
+    z.literal('english'),
+    z.literal('spanish'),
+    z.literal('german'),
+    z.literal('italian'),
+  ]),
+})
+
+export const wordPairProps = z.object({
+  count: z.number(),
+  language: z.union([
+    z.literal('english'),
+    z.literal('spanish'),
+    z.literal('german'),
+    z.literal('italian'),
+  ]),
 })
 
 export const schemas = {

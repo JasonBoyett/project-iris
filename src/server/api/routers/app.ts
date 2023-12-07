@@ -4,7 +4,7 @@ import { z } from 'zod'
 import type { SpeedQuestion } from '@prisma/client'
 import type { Language, User, WordPair } from '~/utils/types'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
-import { schemas, inputs, wordPairData } from '~/utils/validators'
+import { schemas, inputs, wordPairData, wordPairProps } from '~/utils/validators'
 import { getNextExercise, getNextURL } from '~/utils/helpers'
 
 export const userRouter = createTRPCRouter({
@@ -200,7 +200,7 @@ export const excercisesPropsRouter = createTRPCRouter({
     }),
 
   getWordPairs: publicProcedure
-    .input(z.number())
+    .input(wordPairProps)
     .output(z.array(wordPairData))
     .query(async ({ input, ctx }) => {
       const result = await ctx.prisma.$queryRaw<Array<WordPair>>(
