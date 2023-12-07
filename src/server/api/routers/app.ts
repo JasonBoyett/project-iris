@@ -2,9 +2,9 @@ import axios from 'axios'
 import { Prisma } from '@prisma/client'
 import { z } from 'zod'
 import type { SpeedQuestion } from '@prisma/client'
-import type { Language, User } from '~/utils/types'
+import type { Language, User, WordPair } from '~/utils/types'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
-import { schemas, inputs } from '~/utils/validators'
+import { schemas, inputs, wordPairData } from '~/utils/validators'
 import { getNextExercise, getNextURL } from '~/utils/helpers'
 
 export const userRouter = createTRPCRouter({
@@ -61,6 +61,7 @@ export const userRouter = createTRPCRouter({
           lastCubeByTwo: input.lastCubeByTwo,
           lastNumberGuesser: input.lastNumberGuesser,
           lastLetterMatcher: input.lastLetterMatcher,
+          lastWordPair: input.lastWordPair, 
           lastGreenDot: input.lastGreenDot,
           numberGuesserFigures: input.numberGuesserFigures,
           schulteLevel: input.schulteLevel,
@@ -196,6 +197,16 @@ export const excercisesPropsRouter = createTRPCRouter({
           language: input.language,
         })
       }
+    }),
+
+  getWordPairs: publicProcedure
+    .input(z.number())
+    .output(z.array(wordPairData))
+    .query(async ({ input, ctx }) => {
+      const result = await ctx.prisma.$queryRaw<Array<WordPair>>(
+        Prisma.sql`SELECT * FROM WordPair ORDER BY RANDOM() LIMIT ${input}`,
+      )
+      return result
     }),
 })
 

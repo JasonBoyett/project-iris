@@ -1,5 +1,5 @@
 import type { z } from 'zod'
-import type { userSchema } from '~/utils/validators'
+import type { userSchema, wordPairData } from '~/utils/validators'
 import type { speedTestSchema } from '~/utils/validators'
 
 export const Overlay = [
@@ -26,6 +26,8 @@ export type Overlay = (typeof Overlay)[number]
  * TypeScript to infer the type of user objects.
  **/
 export type User = z.infer<typeof userSchema>
+
+export type WordPair = z.infer<typeof wordPairData>
 
 export type SpeedTest = z.infer<typeof speedTestSchema>
 

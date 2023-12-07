@@ -58,6 +58,7 @@ export const userSchema = z.object({
   lastCubeByTwo: z.string().default(' '),
   lastLetterMatcher: z.string().default(' '),
   lastGreenDot: z.string().default(' '),
+  lastWordPair: z.string().default(' '),
   numberGuesserFigures: z.number().default(0),
   schulteLevel: z.union([
     z.literal('three'),
@@ -160,6 +161,11 @@ export const boxFlasherData = z.object({
     z.literal('three'),
   ]),
   speed: z.number(),
+})
+
+export const wordPairData = z.object({
+  primary: z.string(),
+  secondary: z.string(),
 })
 
 export const schemas = {
