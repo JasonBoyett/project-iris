@@ -1,26 +1,35 @@
 export default function BackgroundText() {
-  return(
+  return (
     <div>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu ultrices est. Vestibulum egestas libero eget placerat tincidunt. Quisque ultricies odio ac mattis interdum. Aliquam erat volutpat. Praesent metus nisl, vulputate a interdum vel, feugiat et odio. Integer finibus nunc in nisi elementum ullamcorper. Etiam nisi sem, accumsan pulvinar lorem tempus, mollis mollis ipsum. Nulla at cursus ante, id efficitur est. Donec tellus urna, pharetra at aliquam vitae, imperdiet eu quam. Phasellus posuere semper imperdiet. Curabitur id purus cursus ipsum bibendum semper iaculis in sapien.
+      Saturday morning was come, and all the summer world was bright and fresh, 
+      and brimming with life. There was a song in every heart; and if the heart was young the music issued at the lips. 
+      There was cheer in every face and a spring in every step. The locust-trees were in bloom and the fragrance of the 
+      blossoms filled the air. Cardiff Hill, beyond the village and above it, 
+      was green with vegetation and it lay just far enough away to seem a Delectable Land, dreamy, reposeful, and inviting.
 
-          Donec tristique pharetra leo, pulvinar malesuada risus facilisis vel. Nulla lorem tortor, molestie sed mi sit amet, efficitur efficitur elit. Fusce sed hendrerit nisi. Duis ex nunc, maximus eget nibh molestie, laoreet rutrum ex. Integer urna turpis, fermentum in tempus condimentum, feugiat vitae sapien. Morbi commodo mattis lacinia. Donec sit amet orci consequat enim molestie auctor vitae a eros. Donec bibendum, odio non porta venenatis, sem mi posuere dui, quis elementum ipsum lectus at nibh.
+      Tom appeared on the sidewalk with a bucket of whitewash and a long-handled brush. He surveyed the fence, 
+      and all gladness left him and a deep melancholy settled down upon his spirit. Thirty yards of board fence nine feet high. 
+      Life to him seemed hollow, and existence but a burden. Sighing, he dipped his brush and passed it along the topmost plank; 
+      repeated the operation; did it again; compared the insignificant whitewashed streak with the far-reaching continent of unwhitewashed fence, 
+      and sat down on a tree-box discouraged. Jim came skipping out at the gate with a tin pail, and singing Buffalo Gals. 
+      Bringing water from the town pump had always been hateful work in Tom’s eyes, before, but now it did not strike him so. 
+      He remembered that there was company at the pump. White, mulatto, and negro boys and girls were always there waiting their turns, 
+      resting, trading playthings, quarrelling, fighting, skylarking. And he remembered that although the pump was only a hundred and fifty yards off, 
+      Jim never got back with a bucket of water under an hour – and even then somebody generally had to go after him. Tom said:
+      “Say, Jim, I’ll fetch the water if you’ll whitewash some.”
 
-          Aenean nunc neque, luctus fringilla blandit viverra, vestibulum condimentum ante. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed vitae scelerisque diam. Sed placerat, ipsum a eleifend imperdiet, ligula dui pretium nulla, dapibus mollis enim felis id lectus. Duis varius dapibus suscipit. Quisque lacinia ullamcorper ligula, non mattis arcu ullamcorper ac. Suspendisse potenti. Donec tincidunt, mauris ac ornare gravida, augue justo semper erat, in fringilla arcu dui quis lectus. Ut sodales semper fermentum. Etiam lacinia risus ac aliquet finibus.
+      Jim shook his head and said:
 
-          Vivamus fringilla dolor eu justo elementum maximus. Ut vitae turpis purus. Sed pharetra, massa et blandit fringilla, magna diam convallis felis, eget elementum massa ex non purus. Donec malesuada at ipsum vel mattis. Fusce dolor arcu, efficitur sed lectus eu, mollis dignissim augue. Integer erat ipsum, efficitur et eros eu, porta consectetur eros. Donec suscipit dictum mi, eget cursus nulla iaculis sed. Praesent nisl arcu, condimentum mattis sem eu, bibendum molestie erat. Aenean congue diam eget feugiat pulvinar. Mauris lacinia massa et efficitur rutrum. Sed euismod eleifend dui vel dapibus. In fringilla dui eget pretium condimentum. Vestibulum non sapien tellus.
+      “Can’t, Mars Tom. Ole missis, she tole me I got to go an’ git dis water an’ not stop foolin’ roun’ wid anybody. 
+      She say she spec’ Mars Tom gwine to ax me to whitewash, an’ so she tole me go ‘long an’ 
+      ‘tend to my own business – she ‘lowed she’d ‘tend to de whitewashin’.”
 
-          Mauris in dui vehicula, maximus justo sit amet, euismod metus. Quisque maximus nibh mauris, non aliquet sapien placerat sed. Nam id est auctor, laoreet nibh in, luctus nulla. Donec vestibulum dapibus nisi, vel pulvinar sapien scelerisque sit amet. Aliquam pretium erat a justo semper, non aliquam tortor aliquet. Donec rutrum convallis neque eget efficitur. Ut posuere consectetur magna sed congue.
+      “Oh, never you mind what she said, Jim. That’s the way she always talks. Gimme the bucket – I won’t be gone only a a minute. She won’t ever know.”
 
+      “Oh, I dasn’t, Mars Tom. Ole missis she’d take an’ tar de head off’n me. ‘Deed she would.”
 
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu ultrices est. Vestibulum egestas libero eget placerat tincidunt. Quisque ultricies odio ac mattis interdum. Aliquam erat volutpat. Praesent metus nisl, vulputate a interdum vel, feugiat et odio. Integer finibus nunc in nisi elementum ullamcorper. Etiam nisi sem, accumsan pulvinar lorem tempus, mollis mollis ipsum. Nulla at cursus ante, id efficitur est. Donec tellus urna, pharetra at aliquam vitae, imperdiet eu quam. Phasellus posuere semper imperdiet. Curabitur id purus cursus ipsum bibendum semper iaculis in sapien.
-
-          Donec tristique pharetra leo, pulvinar malesuada risus facilisis vel. Nulla lorem tortor, molestie sed mi sit amet, efficitur efficitur elit. Fusce sed hendrerit nisi. Duis ex nunc, maximus eget nibh molestie, laoreet rutrum ex. Integer urna turpis, fermentum in tempus condimentum, feugiat vitae sapien. Morbi commodo mattis lacinia. Donec sit amet orci consequat enim molestie auctor vitae a eros. Donec bibendum, odio non porta venenatis, sem mi posuere dui, quis elementum ipsum lectus at nibh.
-
-          Aenean nunc neque, luctus fringilla blandit viverra, vestibulum condimentum ante. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed vitae scelerisque diam. Sed placerat, ipsum a eleifend imperdiet, ligula dui pretium nulla, dapibus mollis enim felis id lectus. Duis varius dapibus suscipit. Quisque lacinia ullamcorper ligula, non mattis arcu ullamcorper ac. Suspendisse potenti. Donec tincidunt, mauris ac ornare gravida, augue justo semper erat, in fringilla arcu dui quis lectus. Ut sodales semper fermentum. Etiam lacinia risus ac aliquet finibus.
-
-          Vivamus fringilla dolor eu justo elementum maximus. Ut vitae turpis purus. Sed pharetra, massa et blandit fringilla, magna diam convallis felis, eget elementum massa ex non purus. Donec malesuada at ipsum vel mattis. Fusce dolor arcu, efficitur sed lectus eu, mollis dignissim augue. Integer erat ipsum, efficitur et eros eu, porta consectetur eros. Donec suscipit dictum mi, eget cursus nulla iaculis sed. Praesent nisl arcu, condimentum mattis sem eu, bibendum molestie erat. Aenean congue diam eget feugiat pulvinar. Mauris lacinia massa et efficitur rutrum. Sed euismod eleifend dui vel dapibus. In fringilla dui eget pretium condimentum. Vestibulum non sapien tellus.
-
-          Mauris in dui vehicula, maximus justo sit amet, euismod metus. Quisque maximus nibh mauris, non aliquet sapien placerat sed. Nam id est auctor, laoreet nibh in, luctus nulla. Donec vestibulum dapibus nisi, vel pulvinar sapien scelerisque sit amet. Aliquam pretium erat a justo semper, non aliquam tortor aliquet. Donec rutrum convallis neque eget efficitur. Ut posuere consectetur magna sed congue.
+      “She! She never licks anybody – whacks ’em over the head with her thimble – and who cares for that, 
+      I’d like to know. She talks awful, but talk don’t hurt – anyways it don’t if she don’t cry. Jim, I’ll give you a marvel. I’ll give you a white alley!”
     </div>
   )
 }

@@ -90,6 +90,7 @@ model User {
   lastNumberGuesser       String                 @default(" ")
   lastLetterMatcher       String                 @default(" ")
   lastGreenDot            String                 @default(" ")
+  lastWordPair            String                 @default(" ")
   numberGuesserFigures    Int                    @default(4)
   font                    Font                   @default(sans)
   isUsingChecklist        Boolean                @default(true)
@@ -241,4 +242,12 @@ model SpeedQuestion {
   language      Language @default(english)
 
   @@index([id])
+}
+
+model WordPair {
+  primaryWord   String   @id @unique
+  secondaryWord String
+  language      Language @default(english)
+
+  @@index([primaryWord])
 }

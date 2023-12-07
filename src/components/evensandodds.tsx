@@ -11,7 +11,7 @@ import { formatDate, navigate } from '~/utils/helpers'
 const DEFAULT =
   'flex text-white md:text-3xl text-xl justify-center md:p-4 p-2 bg-white/10 rounded-md'
 const HILIGHT =
-  'flex text-white md:text-3xl text-xl justify-center md:p-4 p-2 bg-blue-500 gap-0 bg-slate-700/40 rounded-md'
+  'flex text-white md:text-3xl text-1xl justify-center md:p-4 p-2 bg-blue-500 gap-0 bg-slate-700/40 rounded-md'
 
 type EvenOddProps = {
   segFigs: number
