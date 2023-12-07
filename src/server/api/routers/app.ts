@@ -204,7 +204,7 @@ export const excercisesPropsRouter = createTRPCRouter({
     .output(z.array(wordPairData))
     .query(async ({ input, ctx }) => {
       const result = await ctx.prisma.$queryRaw<Array<WordPair>>(
-        Prisma.sql`SELECT * FROM WordPair ORDER BY RANDOM() LIMIT ${input}`,
+        Prisma.sql`SELECT * FROM WordPair ORDER BY RANDOM() LIMIT ${input.count}`,
       )
       return result
     }),
