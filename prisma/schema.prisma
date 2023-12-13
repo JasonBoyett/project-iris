@@ -90,7 +90,6 @@ model User {
   lastNumberGuesser       String                 @default(" ")
   lastLetterMatcher       String                 @default(" ")
   lastGreenDot            String                 @default(" ")
-  lastWordPair            String                 @default(" ")
   numberGuesserFigures    Int                    @default(4)
   font                    Font                   @default(sans)
   isUsingChecklist        Boolean                @default(true)
