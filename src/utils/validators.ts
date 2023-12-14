@@ -2,6 +2,13 @@ import { z } from 'zod'
 //zod is a library for data validation and parsing
 //in this code base z represents the zod validation library and its members
 
+export const language = z.union([
+  z.literal('english'),
+  z.literal('spanish'),
+  z.literal('german'),
+  z.literal('italian'),
+])
+
 export const userSchema = z.object({
   id: z.string(),
   firstName: z.string(),
@@ -38,13 +45,7 @@ export const userSchema = z.object({
     z.literal('ibmPlexMono'),
   ])
     .default('sans'),
-  language: z.union([
-    z.literal('english'),
-    z.literal('spanish'),
-    z.literal('german'),
-    z.literal('italian'),
-  ])
-    .default('english'),
+  language: language.default('english'),
   lastSchulte: z.string().default(' '),
   lastSpeedTest: z.string().default(' '),
   lastFourByOne: z.string().default(' '),
@@ -58,7 +59,7 @@ export const userSchema = z.object({
   lastCubeByTwo: z.string().default(' '),
   lastLetterMatcher: z.string().default(' '),
   lastGreenDot: z.string().default(' '),
-  lastWordPair: z.string().default(' '),
+  lastWordPairs: z.string().default(' '),
   numberGuesserFigures: z.number().default(0),
   schulteLevel: z.union([
     z.literal('three'),
@@ -86,12 +87,7 @@ export const speedTestSchema = z.object({
 const randomWordInputs = z.object({
   number: z.number(),
   max: z.number(),
-  language: z.union([
-    z.literal('english'),
-    z.literal('spanish'),
-    z.literal('german'),
-    z.literal('italian'),
-  ]),
+  language: language, 
 })
 
 const exercise = z.union([
@@ -166,22 +162,18 @@ export const boxFlasherData = z.object({
 export const wordPairData = z.object({
   primaryWord: z.string(),
   secondaryWord: z.string(),
-  language: z.union([
-    z.literal('english'),
-    z.literal('spanish'),
-    z.literal('german'),
-    z.literal('italian'),
-  ]),
+  language: language,
+})
+
+export const wordPairSessionData = z.object({
+  userId: z.string(),
+  errorCount: z.number(),
+  time: z.number(),
 })
 
 export const wordPairProps = z.object({
   count: z.number(),
-  language: z.union([
-    z.literal('english'),
-    z.literal('spanish'),
-    z.literal('german'),
-    z.literal('italian'),
-  ]),
+  language: language,
 })
 
 export const schemas = {

@@ -1,5 +1,5 @@
 import type { z } from 'zod'
-import type { userSchema, wordPairData } from '~/utils/validators'
+import type { language, userSchema, wordPairData } from '~/utils/validators'
 import type { speedTestSchema } from '~/utils/validators'
 
 export const Overlay = [
@@ -45,14 +45,8 @@ const Answer = ['A', 'B', 'C', 'D'] as const
 
 export type Answer = (typeof Answer)[number]
 
-const Language = [
-  'english', 
-  'spanish',
-  'german',
-  'italian',
-] as const
 
-export type Language = (typeof Language)[number]
+export type Language = z.infer<typeof language>
 
 export const Exercise = [
   'fourByOne',
@@ -67,7 +61,8 @@ export const Exercise = [
   'cubeByThree',
   'numberGuesser',
   'letterMatcher',
-  'greenDot'
+  'wordPairs',
+  'greenDot',
 ] as const
 
 /**

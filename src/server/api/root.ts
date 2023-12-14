@@ -7,6 +7,7 @@ import {
   schulteSessionRouter,
   letterMatcherRouter,
   greenDotRouter,
+  wordPairsRouter,
 } from '~/server/api/routers/collector'
 import {
   createSpeedTestRouter,
@@ -32,6 +33,7 @@ export const appRouter = createTRPCRouter({
   boxFlasherSession: boxFlasherRouter,
   letterMatcherSession: letterMatcherRouter,
   greenDotSession: greenDotRouter,
+  wordPairSession: wordPairsRouter,
 })
 
 // export type definition of API

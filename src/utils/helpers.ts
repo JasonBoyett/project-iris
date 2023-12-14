@@ -99,8 +99,9 @@ export function isAlreadyDone(user: User, exercise: Exercise) {
     case 'cubeByTwo': return isToday(user.lastCubeByTwo)
     case 'cubeByThree': return isToday(user.lastCubeByThree)
     case 'letterMatcher': return isToday(user.lastLetterMatcher)
+    case 'wordPairs': return isToday(user.lastWordPair)
     case 'greenDot': return isToday(user.lastGreenDot)
-    default: return null
+   default: return null
   }
 }
 
