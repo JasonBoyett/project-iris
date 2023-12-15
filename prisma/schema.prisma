@@ -76,6 +76,9 @@ model User {
   wordFlasherSessions     WordFlasherSession[]
   LetterMatcherSessions   LetterMatcherSession[]
   GreenDotSessions        GreenDotSession[]
+  NumberGuesserSession    NumberGuesserSession[]
+  BoxFlasherSession       BoxFlasherSession[]
+  PairsSession            PairsSession[]
   highlightColor          Overlay                @default(GREY)
   lastSchulte             String                 @default(" ")
   lastSpeedTest           String                 @default(" ")
@@ -89,8 +92,8 @@ model User {
   lastCubeByThree         String                 @default(" ")
   lastNumberGuesser       String                 @default(" ")
   lastLetterMatcher       String                 @default(" ")
+  lastWordPairs           String                 @default(" ")
   lastGreenDot            String                 @default(" ")
-  lastWordPair            String                 @default(" ")
   numberGuesserFigures    Int                    @default(4)
   font                    Font                   @default(sans)
   isUsingChecklist        Boolean                @default(true)
@@ -100,8 +103,6 @@ model User {
   schulteAdvanceCount     Int                    @default(0)
   language                Language               @default(english)
   tested                  Boolean                @default(false)
-  NumberGuesserSession    NumberGuesserSession[]
-  BoxFlasherSession       BoxFlasherSession[]
 
   @@index([id])
 }
@@ -204,6 +205,17 @@ model GreenDotSession {
   userId String
   user   User     @relation(fields: [userId], references: [id])
   date   DateTime @db.DateTime
+
+  @@index([id])
+}
+
+model PairsSession {
+  id         String   @unique
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  date       DateTime @db.DateTime
+  time       Int
+  errorCount Int
 
   @@index([id])
 }

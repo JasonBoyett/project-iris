@@ -61,7 +61,7 @@ export const userRouter = createTRPCRouter({
           lastCubeByTwo: input.lastCubeByTwo,
           lastNumberGuesser: input.lastNumberGuesser,
           lastLetterMatcher: input.lastLetterMatcher,
-          lastWordPair: input.lastWordPair, 
+          lastWordPairs: input.lastWordPairs, 
           lastGreenDot: input.lastGreenDot,
           numberGuesserFigures: input.numberGuesserFigures,
           schulteLevel: input.schulteLevel,
@@ -204,8 +204,9 @@ export const excercisesPropsRouter = createTRPCRouter({
     .output(z.array(wordPairData))
     .query(async ({ input, ctx }) => {
       const result = await ctx.prisma.$queryRaw<Array<WordPair>>(
-        Prisma.sql`SELECT * FROM WordPair ORDER BY RANDOM() LIMIT ${input.count}`,
+        Prisma.sql`SELECT * FROM WordPair ORDER BY RAND() LIMIT ${input.count}`,
       )
+      if (result === null || result === undefined) throw new Error('No result')
       return result
     }),
 })

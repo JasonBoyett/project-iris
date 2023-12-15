@@ -16,8 +16,9 @@ function Paragraph1({ user }: { user: User | undefined }) {
     <div className='gap-2 bg-white text-2xl p-12 rounded-lg shadow-md md:h-3/5 h-96 md:w-2/5 w-4/5 items-center md:overflow-y-auto overflow-y-auto'>
       <p>
         <span className='font-bold'>
-          The goal of this exercise is for you to find the six even numbers in
-          the table.
+          Each cell will contian two words. In five of the cells the words will be
+          slightly different and the remaining cells contain matching words.
+          Click on all of the cells that contain two different words.
         </span>
         <br />
         There is no time limit, though your time will be recorded to track your
@@ -36,14 +37,13 @@ function Paragraph1({ user }: { user: User | undefined }) {
   if (user.language === 'german') return (
     <div className='gap-2 bg-white text-2xl p-12 rounded-lg shadow-md md:h-3/5 h-96 md:w-2/5 w-4/5 items-center md:overflow-y-auto overflow-y-auto'>
       <p>
-        Das Ziel dieser Übung ist es, die sechs geraden Zahlen zu finden
-        Der Tisch. Es gibt keine zeitliche Begrenzung, Ihre Zeit wird jedoch
-        aufgezeichnet, um Ihre Zeit zu verfolgen
-        Fortschreiten. Versuchen Sie also, so schnell wie möglich zu gehen,
-        während Sie bleiben genau. Diese Übung soll Ihnen dabei helfen, Ihre
-        Fähigkeiten zu verbessern
-        Fokus und Ihre Wahrnehmung. Versuchen Sie dabei entspannt und
-        konzentriert zu bleiben
+        Jede Zelle enthält zwei Wörter. In fünf der Zellen stehen die Wörter
+        etwas anders und die restlichen Zellen enthalten übereinstimmende Wörter.
+        Klicken Sie auf alle Zellen, die zwei verschiedene Wörter enthalten.
+        Es gibt keine zeitliche Begrenzung, Ihre Zeit wird jedoch aufgezeichnet, um Ihre Zeit zu verfolgen
+        Fortschreiten. Versuchen Sie also, so schnell wie möglich zu gehen, während Sie bleiben
+        genau. Diese Übung soll Ihnen dabei helfen, Ihre Fähigkeiten zu verbessern
+        Fokus und Ihre Wahrnehmung. Versuchen Sie dabei entspannt und konzentriert zu bleiben
         diese Übung machen. Es liegt an Ihnen, wie Sie dies angehen möchten
         Übung. Wir empfehlen Ihnen jedoch, die Tabelle entweder zeilenweise zu durchsuchen
         oder Spalte für Spalte.
@@ -53,9 +53,10 @@ function Paragraph1({ user }: { user: User | undefined }) {
   if (user.language === 'spanish') return (
     <div className='gap-2 bg-white text-2xl p-12 rounded-lg shadow-md md:h-3/5 h-96 md:w-2/5 w-4/5 items-center md:overflow-y-auto overflow-y-auto'>
       <p>
-        El objetivo de este ejercicio es que encuentres los seis números pares en
-        la mesa. No hay límite de tiempo, aunque su tiempo se registrará para
-        realizar un seguimiento de su
+        Cada celda contendrá dos palabras. En cinco de las celdas las palabras estarán
+        ligeramente diferentes y las celdas restantes contienen palabras coincidentes.
+        Haga clic en todas las celdas que contengan dos palabras diferentes.
+        No hay límite de tiempo, aunque su tiempo se registrará para realizar un seguimiento de su
         progresión. así que intenta ir lo más rápido que puedas mientras permaneces
         preciso. Este ejercicio está diseñado para ayudarle a mejorar su capacidad para
         enfoque y tu percepción. Intenta mantenerte relajado y concentrado mientras estás
@@ -68,13 +69,13 @@ function Paragraph1({ user }: { user: User | undefined }) {
   if (user.language === 'italian') return (
     <div className='gap-2 bg-white text-2xl p-12 rounded-lg shadow-md md:h-3/5 h-96 md:w-2/5 w-4/5 items-center md:overflow-y-auto overflow-y-auto'>
       <p>
-        L&apos;obiettivo di questo esercizio è trovare i sei numeri pari
-        la tavola. Non c&apos;è limite di tempo, anche se il tuo tempo verrà
-        registrato per tenere traccia del tuo
+        Ogni cella conterrà due parole. In cinque celle ci saranno le parole
+        leggermente diverso e le celle rimanenti contengono parole corrispondenti.
+        Fare clic su tutte le celle che contengono due parole diverse.
+        Non c&apos;è limite di tempo, anche se il tuo tempo verrà registrato per tenere traccia del tuo
         progressione. quindi prova ad andare il più velocemente possibile rimanendo
         accurato. Questo esercizio è progettato per aiutarti a migliorare la tua capacità di
-        concentrazione e la tua percezione. Cerca di rimanere rilassato e concentrato
-        mentre lo sei
+        concentrazione e la tua percezione. Cerca di rimanere rilassato e concentrato mentre lo sei
         facendo questo esercizio. Dipende da te come vuoi affrontare questo problema
         esercizio. Ma ti consigliamo di cercare nella tabella riga per riga
         o colonna per colonna.
@@ -95,7 +96,7 @@ function StartButton() {
   return time ? (
     <button
       className='text-white md:text-5xl text-4xl bg-white/10 flex items-center justify-center rounded-full md:w-40 w-60 p-4 h-16 hover:bg-white/20'
-      onClick={() => navigate(router as SingletonRouter, '/exercises/evennumbers')}
+      onClick={() => navigate(router as SingletonRouter, '/exercises/wordpairs')}
     >
       Start
     </button>

@@ -38,6 +38,7 @@ export default function Page() {
           <NavButton path='/exercises/schultetable?type=7' text='Schulte Table by 7' />
           <NavButton path='/exercises/lettermatcher' text='Matching Letters Game' />
           <NavButton path='/exercises/greendot' text='Green Dot' />
+          <NavButton path='/exercises/wordpairs' text='Word Pairs' />
         </div>
       </div>
     </>

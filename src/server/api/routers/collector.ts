@@ -7,6 +7,7 @@ import {
   numberGuesserData,
   schulteData,
   letterMatcherData,
+  wordPairSessionData,
 } from '~/utils/validators'
 
 export const highlightSessionRouter = createTRPCRouter({
@@ -116,6 +117,22 @@ export const greenDotRouter = createTRPCRouter({
         data: {
           id: uuid(),
           userId: ctx.auth.userId as string,
+          date: new Date(),
+        }
+      })
+    })
+})
+
+export const wordPairsRouter = createTRPCRouter({
+  setUnique: publicProcedure
+    .input(wordPairSessionData)
+    .mutation(async ({ input, ctx }) => {
+      await ctx.prisma.pairsSession.create({
+        data: {
+          id: uuid(),
+          userId: ctx.auth.userId as string,
+          time: input.time,
+          errorCount: input.errorCount,
           date: new Date(),
         }
       })

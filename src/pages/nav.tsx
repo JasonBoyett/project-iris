@@ -169,6 +169,11 @@ export default function Page() {
           exercise='greenDot'
           user={user as User}
         />
+        <ExerciseView
+          text='Word Pairs'
+          exercise='wordPairs'
+          user={user as User}
+        />
       </div>
     )
   }
