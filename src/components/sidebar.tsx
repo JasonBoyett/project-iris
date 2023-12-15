@@ -2,6 +2,10 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useClerk } from "@clerk/clerk-react"
 import { motion } from 'framer-motion'
+import { 
+  IoArrowForwardCircleOutline,
+  IoArrowBackCircleOutline
+} from "react-icons/io5"
 
 export default function Sidebar() {
   const [showing, setShowing] = useState<boolean>(false)
@@ -59,8 +63,8 @@ export default function Sidebar() {
         >
           {
             showing
-              ? '⮈'
-              : '⮊'
+              ? <IoArrowBackCircleOutline className='text-white'/>
+              : <IoArrowForwardCircleOutline className='text-white'/>
           }
         </div>
         <div className='grid grid-cols-1 gap-2'>

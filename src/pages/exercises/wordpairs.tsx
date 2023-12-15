@@ -9,7 +9,7 @@ export default function Page() {
 			<div className="flex flex-col items-center">
 				<center>
 					<WordPairs
-						diffCount={10}
+						diffCount={5}
 					/>
 				</center>
 			</div>

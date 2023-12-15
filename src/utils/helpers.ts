@@ -99,7 +99,7 @@ export function isAlreadyDone(user: User, exercise: Exercise) {
     case 'cubeByTwo': return isToday(user.lastCubeByTwo)
     case 'cubeByThree': return isToday(user.lastCubeByThree)
     case 'letterMatcher': return isToday(user.lastLetterMatcher)
-    case 'wordPairs': return isToday(user.lastWordPair)
+    case 'wordPairs': return isToday(user.lastWordPairs)
     case 'greenDot': return isToday(user.lastGreenDot)
    default: return null
   }
@@ -177,6 +177,8 @@ export function getNextURL(next: Exercise | undefined | null): string {
       return '/instructions/lettermatcher'
     case 'greenDot':
       return '/instructions/greendot'
+    case 'wordPairs':
+      return '/instructions/wordpairs'
     default:
       return '/done'
   }

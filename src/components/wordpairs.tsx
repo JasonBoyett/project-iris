@@ -8,7 +8,7 @@ import { api } from '~/utils/api'
 import { formatDate, navigateToNextExercise } from '~/utils/helpers'
 import type { Font, WordPair } from '~/utils/types'
 
-function useGetProps(total = 16, diffCount = 10) {
+function useGetProps(total = 18, diffCount = 5) {
 
   const pairs = api.getExcerciseProps.getWordPairs.useQuery({
     count: diffCount,
@@ -36,16 +36,6 @@ function useGetProps(total = 16, diffCount = 10) {
   return result
 }
 
-function useGerUser() {
-  const user = api.user.getUnique.useQuery()
-  const userStore = useUserStore()
-  useEffect(() => {
-    if (user.isSuccess) {
-      userStore.setUser(user.data)
-    }
-  }, [user])
-}
-
 type PairsProps = {
   diffCount: number
 }
@@ -53,7 +43,7 @@ type PairsProps = {
 
 export default function WordPairs({ diffCount }: PairsProps) {
 
-  const total = 16
+  const total = 18
   const { words, pairs } = useGetProps(total, diffCount)
   const user = api.user.getUnique.useQuery()
   const { mutate: updateUser } = api.user.setUser.useMutation()
@@ -147,7 +137,7 @@ export default function WordPairs({ diffCount }: PairsProps) {
 
   return (
     <div
-      className="grid grid-cols-4 gap-2"
+      className="grid grid-cols-3 gap-2"
     >
       {grid}
     </div>
@@ -165,19 +155,14 @@ type CellProps = {
 
 function Cell({ font, different, word1, word2, id, callback }: CellProps) {
   const [highlighted, setHighlighted] = useState(false)
-  const variableStyle = useRef<string>([
-    'items-center grid grid-cols-1 rounded-lg text-white text-3xl p-2',
-    `${highlighted ? 'bg-white/10' : 'bg-white/20'}`,
-    'cursor-pointer',
-  ].join(' '))
-  const [styles, setStyles] = useState<string>(variableStyle.current)
 
   function handleClick() {
     if (different && !highlighted) {
       callback('correct')
       setHighlighted(() => true)
-      setStyles(() => variableStyle.current)
-    } else {
+    } 
+    else if (!different && !highlighted) {
+      setHighlighted(() => true)
       callback('error')
     }
   }
@@ -187,10 +172,13 @@ function Cell({ font, different, word1, word2, id, callback }: CellProps) {
       key={id}
       onClick={() => handleClick()}
       id={id?.toString() ?? '0'}
-      className={['items-center grid grid-cols-1 rounded-lg text-white text-3xl p-2',
-        `${highlighted ? 'bg-white/10' : 'bg-white/20'}`,
-        'cursor-pointer',
-      ].join(' ')}
+      className={[
+    'items-center grid grid-cols-1 rounded-lg text-white',
+    'md:text-3xl md:p-2',
+    'text-2xl p-1',
+    `${highlighted ? (different ? 'bg-white/10' : 'bg-red-500/40') : 'bg-white/20'}`,
+    'cursor-pointer',
+  ].join(' ')}
     >
       <div>
         {word1}
