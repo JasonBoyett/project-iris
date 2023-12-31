@@ -1,215 +1,205 @@
-# Project Iris Official Repo
+[![CI](https://github.com/perkinsjr/t3-turbo-and-clerk/actions/workflows/ci.yml/badge.svg)](https://github.com/perkinsjr/t3-turbo-and-clerk/actions/workflows/ci.yml)
 
-![Iris Logo](/public/IRIS-LOGO.png)
+# Create T3 Turbo with Clerk Authentication
 
-Iris is a speed reading training application. It is deigned to be used as part of
-an academic study on the effects of speed reading training on reading and academic 
-performance. 
-To facilitate this study, Iris is designed to collect data on the study
-participants and their usage of the application. 
+## Clerk Dashboard Setup
 
-### Check out the current production version [here.](https://project-iris.app)
----
+For this template to work you need to enable Discord as an OAuth provider. You can find the social options under `User & Authentication / Social Providers` in the [Clerk Dashboard](https://dashboard.clerk.dev)
 
+> If you change any setting here outside of adding Discord, you may need to update your Expo code to handle any requirements you change.
 
-## Core Project Dependencies
+It uses [Turborepo](https://turborepo.org/) and contains:
 
-- Iris uses the [t3 stack](https://create.t3.gg/) 
-    - [TypeScript](https://www.typescriptlang.org/)
-    - [Tailwind CSS](https://tailwindcss.com/)
-    - [Trpc](https://trpc.io/)
-    - [Next.js](https://nextjs.org/)
-        - [React](https://reactjs.org/)
-        - [Vercel](https://vercel.com/)
-- [Zustand](https://zustand-demo.pmnd.rs/) for state management, 
-- [Clerk](https://clerk.com/) for authentication, 
-- [Class Variance Authority](https://cva.style/docs) for reusable styling,
-- [Planet Scale](https://planetscale.com/) for our database.
-- Iris also uses various chron jobs written in [Go](https://go.dev/) to handle various database operations that cannot be hosted on the public repository.
+## Code Layout
 
-
-## Project Structure
-
-### Basic Usage
-```mermaid
----
-title: Daily use
----
-graph LR 
-    index[Home Page] -- Clerk Authentication --> nav{Navigation Page}
-    nav -- If weekly test is done --> exercise(random exercise)
-    nav -- If weekly test is not done --> test(Weekly test) --> exercise
-    exercise -- If there are still remaining exercises --> exercise
-    exercise -- If all exercises are completed --> done(Done for the day) --> nav
-    nav -- If user is an administrator --> admin(Admin Page)
-    exercise --sends exercise data --> db[(Database)]
+```
+.github
+  └─ workflows
+        └─ CI with pnpm cache setup
+.vscode
+  └─ Recommended extensions and settings for VSCode users
+apps
+  ├─ expo
+  └─ next.js
+      ├─ Next.js 13
+      ├─ React 18
+      └─ E2E Typesafe API Server & Client
+packages
+ ├─ api
+ |   └─ tRPC v10 router definition
+ └─ db
+     └─ typesafe db-calls using Prisma
 ```
 
-### System Architecture
-```mermaid
----
-title: Data flow
----
+## Quick Start
 
-sequenceDiagram
-    actor user
-    participant Client
-    participant Server
-    participant DB
-    participant Auth
-    participant Chron
-    participant Third Party API
+To get it running, follow the steps below:
 
-    user ->> Client: Logs in
-    Client ->> Auth: sends request
-    Auth -->> Client: returns cookie
-    Auth -->> Server: sends cookie
-    Client ->> Server: Requests user info through tRPC
-    Server ->> DB: requests user info through prisma
-    DB -->> Server: returns user info as SQL string that is parsed by prisma
-    Server -->> Client: returns user info through tRPC
-    Client ->> Server: requests exercise data
-    Server ->> Third Party API: requests data
-    Third Party API -->> Server: returns data
-    Server ->> DB: requests data
-    DB -->> Server: returns data
-    Chron ->> DB: resets all user's "tested" values to "false" at the beginning of the week
-    Client -->> user: Serves daily exercises until all are complete.
-    Client ->> Server: Sends exercise data through tRPC
-    Server ->> DB: Sends exercise data through prisma
-    Client ->> Client: Maintains state with Zustand
+### Setup dependencies
+
+```diff
+# Install dependencies
+pnpm i
+
+
+# Configure environment variables.
+# There is an `.env.example` in the root directory you can use for reference
+cp .env.example .env
+
+# Push the Prisma schema to your database
+pnpm db-push
+```
+
+### Configure Expo app
+
+Expo doesn't use the .env for the publishable key, so you will need to go to `apps/expo/app.config.ts` and add it there.
+
+```
+const CLERK_PUBLISHABLE_KEY = "your-clerk-publishable-key";
 
 ```
 
-### Understanding the file structure
+### Configure Expo `dev`-script
 
-Iris uses the pages router provided by Next.js. The [pages](src/pages) directory contains all
-the routs for the application. The pages are divided into instructions, exercises, 
-and admin routes as well some miscellaneous routes listed directly in the pages directory. 
+> **Note:** If you want to use a physical phone with Expo Go, just run `pnpm dev` and scan the QR-code.
 
-The [server](src/server) directory is a part of the Next.js framework and it contains
-all the serverless functions used by the application.
+#### Use iOS Simulator
 
-The [components](src/components) directory contains various reusable components used
-throughout the application. 
+1. Make sure you have XCode and XCommand Line Tools installed [as shown on expo docs](https://docs.expo.dev/workflow/ios-simulator/).
+2. Change the `dev` script at `apps/expo/package.json` to open the iOS simulator.
 
-The [cva](src/cva) directory contains the 
-class variance authority styles used throughout the application. 
-
-The [hooks](src/hooks) directory contains all custom hooks used in the application.
-
-The [stores](src/stores) directory contains Zustand stores.
-
-The [utils](src/utils) directory contains utility functions, types and Zod schemas.
-
-## Project Authors
-- Primary Developer: [Jason Boyett](https://GitHub.com/JasonBoyett)
-- Project Manager: [Dr. Vojislav Petrovic PhD](https://schreiner.edu/su-directory/petrovic-vojislav/)
-- UI Designer: Jason Boyett & [Zach Lyman](https://limeademedia.com) 
-
-## Contributing
-
-### Getting a foothold
-The best entry point for the project is the [pages](src/pages) directory.
-[Index.tsx](src/pages/index.tsx) Is the home page of the web sight but the main page of the app is [Nav](src/pages/nav.tsx). 
-From there you can view the individual exercises by viewing the [exercises](src/pages/exercises) directory. 
-Most exercises consist of some basic setup and a call to a primary component. Said components can be found in the [components directory](src/components).
-
-### Running the project locally
-To run the project locally you will neet to have [Node.js](https://nodejs.org/en/) installed.
-Once you have Node.js installed, clone the repository and run `npm install` to install all the dependencies.
-You will need some environment variables to run the project locally.
-These will be:
-
-- DATABASE_URL
-    - This is the connection point to the database.
-    - You can get by creating a planet scale database and copying the connection string.
-- NEXT_PUBLIC_CLERK_FRONTEND_API
-    - This is the public API key for the Clerk authentication service.
-    - You can get this by creating a Clerk account and creating a project.
-- NEXT_PUBLIC_CLERK_SIGN_IN_URL
-    - This is the URL for the Clerk sign in page.
-    - You can get this by creating a Clerk account and creating a project.
-
-If you would like to use the production database 
-and clerk project you can contact the project author for access.
-You will need to make significant contributions before you will be
-considered for access to the production database and clerk project.
-
-Once you have the environment variables set up you will need to initialize
-your development database by running `npx prisma db push` to view the database
-database contents run `npx prisma studio` and navigate to `localhost:5555` in your browser.
-
-You can now run the project using either:
-
-npm
-```bash
-npm run dev
-```
-or turbo
-```bash
-turbo dev
+```diff
++  "dev": "expo start --ios",
 ```
 
-Both of these commands will start the project and default to port 3000.
+3. Run `pnpm dev` at the project root folder.
 
-Before attempting to submit your pull request please run the following commands
-```bash
-prettier --write .
-turbo build lint
+#### For Android
+
+1. Install Android Studio tools [as shown on expo docs](https://docs.expo.dev/workflow/android-studio-emulator/).
+2. Change the `dev` script at `apps/expo/package.json` to open the Android emulator.
+
+```diff
++  "dev": "expo start --android",
 ```
-This will ensure that your code is formatted correctly and will build in production.
 
-### Code Style
-If you are taking the time to contribute to the development of Iris we greatly appreciate your contribution.
-In order to keep the code consistent there are a few things we ask.
+3. Run `pnpm dev` at the project root folder.
 
-- If you can, keep lines under 100 characters.
-    - consider setting a guide line in your editor
-    - some times long lines are unavoidable. We won't reject a pr over this issue.
-- We prefer most functions to be declared using the `function myFunction(){}` syntax as opposed to arrow functions.
-    - the exception is when you are passing an inline function as a parameter. In this case please use arrow functions.
-- We prefer functional components and react hooks as opposed to class components.
-- Limit comments.
-    - We prefer where possible code to be self documenting.
-    - JS doc comments do not count.
-        - If you are exporting a function or a class feel free to add any documentation you deem necessary.
-- Limit single line if statements.
-    - accept in certain cases please add brackets after if statements even if they are only a single line.
-    - the exception is if you are checking the condition and immediately breaking the current scope. For example:
-    
-    ```tsx
-    if(!condition) return
-    ```
-- Where possible apply single responsibility principle.
+## Deployment
 
-### Submitting a Pull Request
-If you are not familiar with the process of submitting a pull request we suggest you check out the [docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) provided by GitHub.
+### Next.js
 
-We ask that your pull request have the following information:
+> Note if you are building locallly you will need to insert your env correctly, for example using `pnpm with-env next build`
 
-#### Motivation
-> Why is this change necessary? What problem does it solve?
+#### Prerequisites
 
-> If this is related to an issue which one?
+_We do not recommend deploying a SQLite database on serverless environments since the data wouldn't be persisted. I provisioned a quick Postgresql database on [Railway](https://railway.app), but you can of course use any other database provider. Make sure the prisma schema is updated to use the correct database._
 
-Closes #ISSUE_NUMBER
+#### Deploy to Vercel
 
-#### Implementation
-> How does this PR solve the problem? What technical approach is taken?
+Let's deploy the Next.js application to [Vercel](https://vercel.com/). If you have ever deployed a Turborepo app there, the steps are quite straightforward. You can also read the [official Turborepo guide](https://vercel.com/docs/concepts/monorepos/turborepo) on deploying to Vercel.
 
-#### Testing
-> How did you verify that this works? Were automated tests written? 
-> What manual tests were performed?
+1. Create a new project on Vercel, select the `apps/nextjs` folder as the root directory and apply the following build settings:
 
-#### Related PRs
-> Optional: if any other PRs provide context to this change
+<img width="927" alt="Vercel deployment settings" src="https://user-images.githubusercontent.com/11340449/201974887-b6403a32-5570-4ce6-b146-c486c0dbd244.png">
 
-If your pull request does not have this information or some equivalent attached it will be rejected without further consideration.
+> The install command filters out the expo package and saves a few second (and cache size) of dependency installation. The build command makes us build the application using Turbo.
 
-### Issues
-If you don't want to contribute directly or don't feel ready to file a pull request you are welcome to contribute by filing issues.
+2. Add your `DATABASE_URL`,`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` environment variable.
 
-We want Iris to be as great of an experience as possible and the only way for us to accomplish that is to get feedback. Please if you see a problem, let us know!
+3. Done! Your app should successfully deploy. Assign your domain and use that instead of `localhost` for the `url` in the Expo app so that your Expo app can communicate with your backend when you are not in development.
 
-If you don't know how to file an issue here is a [guide](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue) from GitHub.
+### Expo
+
+Deploying your Expo application works slightly differently compared to Next.js on the web. Instead of "deploying" your app online, you need to submit production builds of your app to the app stores, like [Apple App Store](https://www.apple.com/app-store/) and [Google Play](https://play.google.com/store/apps). You can read the full [Distributing your app](https://docs.expo.dev/distribution/introduction/), including best practices, in the Expo docs.
+
+1. Let's start by setting up [EAS Build](https://docs.expo.dev/build/introduction/), which is short for Expo Application Services. The build service helps you create builds of your app, without requiring a full native development setup. The commands below are a summary of [Creating your first build](https://docs.expo.dev/build/setup/).
+
+   ```bash
+   // Install the EAS CLI
+   $ pnpm add -g eas-cli
+
+   // Log in with your Expo account
+   $ eas login
+
+   // Configure your Expo app
+   $ cd apps/expo
+   $ eas build:configure
+   ```
+
+2. After the initial setup, you can create your first build. You can build for Android and iOS platforms and use different [**eas.json** build profiles](https://docs.expo.dev/build-reference/eas-json/) to create production builds or development, or test builds. Let's make a production build for iOS.
+
+   ```
+   $ eas build --platform ios --profile production
+   ```
+
+   > If you don't specify the `--profile` flag, EAS uses the `production` profile by default.
+
+3. Now that you have your first production build, you can submit this to the stores. [EAS Submit](https://docs.expo.dev/submit/introduction/) can help you send the build to the stores.
+
+   ```
+   $ eas submit --platform ios --latest
+   ```
+
+   > You can also combine build and submit in a single command, using `eas build ... --auto-submit`.
+
+4. Before you can get your app in the hands of your users, you'll have to provide additional information to the app stores. This includes screenshots, app information, privacy policies, etc. _While still in preview_, [EAS Metadata](https://docs.expo.dev/eas/metadata/) can help you with most of this information.
+
+5. If you're using OAuth social providers with Clerk, for instance Google, Apple, Facebook, etc..., you must whitelist your own OAuth redirect URL for the Expo application in the Clerk Dashboard.
+
+   In `apps/expo/app.config.ts`, add a `scheme` that will be used to identify your standalone app.
+
+   ```ts
+   import { ExpoConfig, ConfigContext } from "@expo/config";
+
+   const CLERK_PUBLISHABLE_KEY = "your-clerk-publishable-key";
+
+   const defineConfig = (_ctx: ConfigContext): ExpoConfig => ({
+      name: "expo",
+      slug: "expo",
+      scheme: "your-app-scheme",
+      // ...
+   });
+   ```
+
+   Then, in the [Clerk Dashboard](https://dashboard.clerk.dev/), go to **User & Authentication > Social Connections > Settings** and add your app's scheme and redirect URL to the **Redirect URLs** field:
+
+   ```txt
+   your-app-scheme://oauth-native-callback
+   ```
+
+   Here, `your-app-scheme` corresponds to the `scheme` defined in `app.config.ts`, and `oauth-native-callback` corresponds to the redirect URL defined when authenticating with social providers. See [SignInWithOAuth.tsx](/apps/expo/src/components/SignInWithOAuth.tsx) for reference.
+
+   > You can find more information about this in the [Expo documentation](https://docs.expo.dev/versions/latest/sdk/auth-session/#redirecting-to-your-app).
+
+   You should now be able to sign in with your social providers in the TestFlight application build.
+
+6. Once everything is approved, your users can finally enjoy your app. Let's say you spotted a small typo; you'll have to create a new build, submit it to the stores, and wait for approval before you can resolve this issue. In these cases, you can use EAS Update to quickly send a small bugfix to your users without going through this long process. Let's start by setting up EAS Update.
+
+   The steps below summarize the [Getting started with EAS Update](https://docs.expo.dev/eas-update/getting-started/#configure-your-project) guide.
+
+   ```bash
+   // Add the `expo-updates` library to your Expo app
+   $ cd apps/expo
+   $ pnpm expo install expo-updates
+
+   // Configure EAS Update
+   $ eas update:configure
+   ```
+
+6. Before we can send out updates to your app, you have to create a new build and submit it to the app stores. For every change that includes native APIs, you have to rebuild the app and submit the update to the app stores. See steps 2 and 3.
+
+7. Now that everything is ready for updates, let's create a new update for `production` builds. With the `--auto` flag, EAS Update uses your current git branch name and commit message for this update. See [How EAS Update works](https://docs.expo.dev/eas-update/how-eas-update-works/#publishing-an-update) for more information.
+
+   ```bash
+   $ cd apps/expo
+   $ eas update --auto
+   ```
+
+   > Your OTA (Over The Air) updates must always follow the app store's rules. You can't change your app's primary functionality without getting app store approval. But this is a fast way to update your app for minor changes and bug fixes.
+
+8. Done! Now that you have created your production build, submitted it to the stores, and installed EAS Update, you are ready for anything!
+
+## References
+
+The stack originates from [create-t3-turbo](https://github.com/t3-oss/create-t3-turbo).
