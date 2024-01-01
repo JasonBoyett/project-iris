@@ -75,14 +75,27 @@ const CreatePost: React.FC = () => {
 export const HomeScreen = () => {
   const postQuery = trpc.post.all.useQuery();
   const [showPost, setShowPost] = React.useState<string | null>(null);
+  const user = trpc.user.get.useQuery();
+
+  const Greeting = () => {
+    if (!user.data) {
+      return (
+        <Text className="text-white">
+          Loading <Text className="font-semibold">...</Text>
+        </Text>
+      )
+    }
+    return (
+      <Text className="text-white">
+        Hello, <Text className="font-semibold">{user.data.firstName}</Text>
+      </Text>
+    );
+  }
 
   return (
     <SafeAreaView className="bg-[#2e026d] bg-gradient-to-b from-[#2e026d] to-[#15162c]">
       <View className="h-full w-full p-4">
-        <Text className="mx-auto pb-2 text-5xl font-bold text-white">
-          Create <Text className="text-[#cc66ff]">T3</Text> Turbo
-        </Text>
-
+        <Greeting />
         <View className="py-2">
           {showPost ? (
             <Text className="text-white">

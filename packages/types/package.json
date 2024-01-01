@@ -10,7 +10,6 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/db": "*",
     "@acme/validators": "*",
     "@trpc/client": "^10.1.0",
     "@trpc/server": "^10.1.0",
