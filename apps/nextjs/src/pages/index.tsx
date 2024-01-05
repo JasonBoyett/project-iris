@@ -1,4 +1,4 @@
-import { trpc } from "../utils/trpc";
+import { trpc } from '../utils/trpc'
 import { type NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -35,13 +35,13 @@ const Home: NextPage = () => {
       </Head>
       <main className='flex min-h-screen flex-col items-center justify-center'>
         <div className='container flex flex-col items-center justify-center gap-12 px-4 py-16 '>
-          <div className='items-center justify-center md:w-96 md:h-96 h-60 w-60'>
+          <div className='h-60 w-60 items-center justify-center md:h-96 md:w-96'>
             <Image
               src={irisLogo}
               alt='IRIS Logo'
             />
           </div>
-          <h1 className='md:text-5xl text-4xl font-extrabold tracking-tight text-white sm:text-[5rem]'>
+          <h1 className='text-4xl font-extrabold tracking-tight text-white sm:text-[5rem] md:text-5xl'>
             Welcome to
             <span className='text-[#39b54a]'> Iris</span>
           </h1>
@@ -74,7 +74,7 @@ const Home: NextPage = () => {
           <p className='text-2xl text-white'></p>
         </div>
       </main>
-      </>
+    </>
   )
 }
 

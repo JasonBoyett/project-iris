@@ -7,9 +7,9 @@ export const useCubeStore = create<{
   reset: () => void
 }>()(
   persist(
-    (set) => ({
+    set => ({
       current: 1,
-      increment: () => set((state) => ({ current: state.current + 1 })),
+      increment: () => set(state => ({ current: state.current + 1 })),
       reset: () => set({ current: 0 }),
     }),
     {

@@ -31,12 +31,12 @@ type CellProps = {
 }
 
 type GenerateorProps = {
-  props: EvenOddProps,
-  evenEvent: () => void,
-  oddEvent: () => void,
+  props: EvenOddProps
+  evenEvent: () => void
+  oddEvent: () => void
 }
 
-function randomNumber(segFigs: number, isEven: boolean){
+function randomNumber(segFigs: number, isEven: boolean) {
   const min = Math.pow(10, segFigs - 1)
   const max = Math.pow(10, segFigs) - 1
   const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min
@@ -61,7 +61,7 @@ function randomNumber(segFigs: number, isEven: boolean){
   }
 }
 
-function generateNumbers(props: EvenOddProps): number[]{
+function generateNumbers(props: EvenOddProps): number[] {
   const count = props.cols * props.rows
   const numbers: number[] = []
 
@@ -72,13 +72,13 @@ function generateNumbers(props: EvenOddProps): number[]{
   return numbers.sort(() => Math.random() - 0.5)
 }
 
-function Cell(props: CellProps){
+function Cell(props: CellProps) {
   const [currentClass, setCurrentClass] = useState(props.defaultClass)
   const userStore = useUserStore()
   const [font, setFont] = useState<Font>('sans')
   const [disabled, setDisabled] = useState(false)
 
-  function handleClick(){
+  function handleClick() {
     if (props.id % 2 === 0 && !disabled) {
       setCurrentClass(props.hilightClass)
       setDisabled(true)
@@ -111,47 +111,46 @@ function Cell(props: CellProps){
     >
       {props.id}
     </FontProviderButton>
-  ) 
+  )
 }
 
-function Grid({ props, evenEvent,oddEvent } : GenerateorProps){
+function Grid({ props, evenEvent, oddEvent }: GenerateorProps) {
   const result = generateNumbers(props).map((num, i) => (
-      <Cell
-        id={num}
-        key={i}
-        defaultClass={DEFAULT}
-        hilightClass={HILIGHT}
-        evenEvent={() => evenEvent()}
-        oddEvent={() => oddEvent()}
-      />
-    )
-  )
+    <Cell
+      id={num}
+      key={i}
+      defaultClass={DEFAULT}
+      hilightClass={HILIGHT}
+      evenEvent={() => evenEvent()}
+      oddEvent={() => oddEvent()}
+    />
+  ))
   return <>{result}</>
 }
 
-export default function EvensAndOdds(props: EvenOddProps){
+export default function EvensAndOdds(props: EvenOddProps) {
   const evenCount = useRef(0)
   const errorCount = useRef(0)
   const GRID_CLASS = useState(`grid grid-cols-${props.cols} gap-1`)[0]
   const timer = useStopWatch()
   const router = useRouter()
-  const { mutate } = trpc.user.set.useMutation() 
+  const { mutate } = trpc.user.set.useMutation()
   const user = trpc.user.get.useQuery().data
-  const collectData = trpc.collect.evenNumberSession.useMutation() 
+  const collectData = trpc.collect.evenNumberSession.useMutation()
   const userStore = useUserStore()
 
-  function tearDown(){
-    if(!user) return
-    if(user.isStudySubject){
+  function tearDown() {
+    if (!user) return
+    if (user.isStudySubject) {
       timer.end()
       collectData.mutate({
         userId: user.id,
         time: timer.getDuration(),
         errorCount: errorCount.current,
-      })  
+      })
     }
-    mutate({...user, lastEvenNumbers: formatDate(new Date())})
-    userStore.setUser({...user, lastEvenNumbers: formatDate(new Date())})
+    mutate({ ...user, lastEvenNumbers: formatDate(new Date()) })
+    userStore.setUser({ ...user, lastEvenNumbers: formatDate(new Date()) })
     navigate(router as SingletonRouter, '/next')
   }
 

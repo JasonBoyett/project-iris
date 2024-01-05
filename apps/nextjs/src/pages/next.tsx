@@ -9,30 +9,30 @@ import { trpc } from '../utils/trpc'
 export default function Page() {
   const { data } = trpc.user.get.useQuery()
   const router = useRouter()
-  
+
   return (
     <>
       <Head>Next Excercise</Head>
       <Sidebar />
-      <main className='flex grid-cols-1 justify-center items-center min-h-screen mt-8'>
-        <div className='grid justify-center items-center'>
-          <div className='flex justify-center items-center'>
+      <main className='mt-8 flex min-h-screen grid-cols-1 items-center justify-center'>
+        <div className='grid items-center justify-center'>
+          <div className='flex items-center justify-center'>
             <Image
               src={Butterfly}
               alt='Butterfly'
               style={{ width: '24rem', height: '16rem' }}
             />
           </div>
-          <p className='md:text-5xl text-2xl text-center text-white font-bold'>
+          <p className='text-center text-2xl font-bold text-white md:text-5xl'>
             Click for your next exercise!
           </p>
           <div className='flex items-center justify-center p-12'>
             <button
               name='start'
-              className='text-white md:text-5xl text-3xl bg-white/10 flex items-center justify-center rounded-full md:w-40 w-60 p-4 h-16 hover:bg-white/20'
+              className='flex h-16 w-60 items-center justify-center rounded-full bg-white/10 p-4 text-3xl text-white hover:bg-white/20 md:w-40 md:text-5xl'
               onClick={() => {
-                if(!data) return
-                navigateToNextExercise(router as SingletonRouter,data)
+                if (!data) return
+                navigateToNextExercise(router as SingletonRouter, data)
               }}
             >
               Start

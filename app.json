@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "418def15-d8c8-4d16-a260-3a3deb6af0a7"
+      }
+    },
+    "android": {
+      "package": "com.jasonboyett.projectIris"
+    },
+    "ios": {
+      "bundleIdentifier": "com.jasonboyett.projectIris"
+    }
+  }
+}

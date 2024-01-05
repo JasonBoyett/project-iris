@@ -5,19 +5,20 @@ import TableSwitcher from '../../../components/tableswitcher'
 import { trpc } from '../../../utils/trpc'
 import type { User } from '@acme/types'
 
-const SchulteTable = dynamic(() => import('../../../components/schultetable'), { ssr: false })
-
+const SchulteTable = dynamic(() => import('../../../components/schultetable'), {
+  ssr: false,
+})
 
 export default function Page() {
-  const user = trpc.user.get.useQuery() 
+  const user = trpc.user.get.useQuery()
 
   return (
     <>
       <Head>
         <title>Speed Read</title>
       </Head>
-      <TableSwitcher 
-        user={user.data as User} 
+      <TableSwitcher
+        user={user.data as User}
         className='absolute top-0 right-0 mt-4 mr-4 flex gap-4'
       />
       <Sidebar />

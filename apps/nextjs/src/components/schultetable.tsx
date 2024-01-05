@@ -8,7 +8,6 @@ import { FontProvider } from '../cva/fontProvider'
 import type { Font, User } from '@acme/types'
 import { useStopWatch } from '../hooks/useStopWatch'
 
-
 type SchulteTableProps = {
   sideLength: 3 | 5 | 7
 }
@@ -37,7 +36,7 @@ function Cell({
       clicked.current = true
     } else if (!clicked.current) {
       clicked.current = true
-      counterSetter((prev) => prev + 1)
+      counterSetter(prev => prev + 1)
     }
   }
 
@@ -47,7 +46,7 @@ function Cell({
 
   return (
     <div
-      className='h-12 w-12 text-white text-lg md:text-2xl flex items-center justify-center rounded-md bg-white/20 md:h-20 md:w-20'
+      className='flex h-12 w-12 items-center justify-center rounded-md bg-white/20 text-lg text-white md:h-20 md:w-20 md:text-2xl'
       onClick={handleClick}
       id={v4()}
     >
@@ -55,7 +54,6 @@ function Cell({
     </div>
   )
 }
-
 
 export default function SchulteTable({ sideLength }: SchulteTableProps) {
   const [counter, setCount] = useState(1)
@@ -77,10 +75,14 @@ export default function SchulteTable({ sideLength }: SchulteTableProps) {
 
   function formatType(sideLength: number) {
     switch (sideLength) {
-      case 3: return 'three'
-      case 5: return 'five'
-      case 7: return 'seven'
-      default: return 'five'
+      case 3:
+        return 'three'
+      case 5:
+        return 'five'
+      case 7:
+        return 'seven'
+      default:
+        return 'five'
     }
   }
 
@@ -97,7 +99,7 @@ export default function SchulteTable({ sideLength }: SchulteTableProps) {
 
   function determineAdvancement(user: User) {
     if (!user) return
-    const cellCount = (sideLength * sideLength)
+    const cellCount = sideLength * sideLength
     const goodSessions = user.schulteAdvanceCount
 
     if (user.schulteLevel !== formatType(sideLength)) return
@@ -123,7 +125,6 @@ export default function SchulteTable({ sideLength }: SchulteTableProps) {
         type: formatType(sideLength),
         time: stopWatch.getDuration(),
         errorCount: errors.current,
-
       })
     }
 
@@ -133,27 +134,21 @@ export default function SchulteTable({ sideLength }: SchulteTableProps) {
   }
 
   function Table({ classString }: { classString: string }) {
-    const cells = numbers.current.map(
-      (number) => (
-        <>
-          <div>
-            <Cell
-              innerValue={number}
-              counterSetter={setCount}
-              errorSetter={setErrors}
-              counter={counter}
-              key={number}
-              errorCounter={errors.current}
-            />
-          </div>
-        </>
-      )
-    )
-    return (
-      <div className={classString}>
-        {cells}
-      </div>
-    )
+    const cells = numbers.current.map(number => (
+      <>
+        <div>
+          <Cell
+            innerValue={number}
+            counterSetter={setCount}
+            errorSetter={setErrors}
+            counter={counter}
+            key={number}
+            errorCounter={errors.current}
+          />
+        </div>
+      </>
+    ))
+    return <div className={classString}>{cells}</div>
   }
 
   useEffect(() => {
@@ -179,7 +174,7 @@ export default function SchulteTable({ sideLength }: SchulteTableProps) {
       <Table classString={classString} />
       <FontProvider
         font={font}
-        className='md:text-4xl text-white'
+        className='text-white md:text-4xl'
       >
         Find: <span className='text-yellow-200'>{counter}</span>
       </FontProvider>

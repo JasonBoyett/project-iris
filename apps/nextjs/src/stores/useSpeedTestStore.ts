@@ -25,13 +25,13 @@ export const useSpeedTestStore = create<{
   clear: () => void
 }>()(
   persist(
-    (set) => ({
+    set => ({
       current: emptySpeedTest,
       correctResponses: 0,
       correctSpeeds: [],
       totalResponses: 0,
-      setUp: (speedTest) =>
-        set((state) => ({
+      setUp: speedTest =>
+        set(state => ({
           ...state,
           current: {
             ...speedTest,
@@ -39,10 +39,9 @@ export const useSpeedTestStore = create<{
           correctResponses: state.correctResponses,
           totalResponses: state.totalResponses,
         })),
-      setResponse: (answer) =>
-        set((state) => ({ ...state, userAnswer: answer })),
+      setResponse: answer => set(state => ({ ...state, userAnswer: answer })),
       incrementResponseCount: () =>
-        set((state) => {
+        set(state => {
           console.log('I was called')
           console.log(state.totalResponses)
           const res = {
@@ -53,7 +52,7 @@ export const useSpeedTestStore = create<{
           return res
         }),
       incrementCorrect: (speed: number) =>
-        set((state) => {
+        set(state => {
           state.correctSpeeds.push(speed)
           const res = {
             current: state.current,

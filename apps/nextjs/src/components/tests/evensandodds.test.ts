@@ -14,7 +14,7 @@ describe('generates an array of random numbers with a given number of significan
     let evenCount = 0
     let overs = 0
     let unders = 0
-    testArray.forEach((num) => {
+    testArray.forEach(num => {
       if (num % 2 === 0) {
         evenCount++
       }
@@ -42,7 +42,7 @@ describe('generates an array of random numbers with a given number of significan
     let evenCount = 0
     let overs = 0
     let unders = 0
-    testArray.forEach((num) => {
+    testArray.forEach(num => {
       if (num % 2 === 0) {
         evenCount++
       }
@@ -75,8 +75,8 @@ describe('generates an array of random numbers with a given number of significan
     for (let i = 0; i < ITERS; i++) {
       holder.push(generateNumbers(props))
     }
-    holder.forEach((testArray) => {
-      testArray.forEach((num) => {
+    holder.forEach(testArray => {
+      testArray.forEach(num => {
         if (num % 2 === 0) {
           evenCount++
         }

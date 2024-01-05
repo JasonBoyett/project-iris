@@ -2,19 +2,20 @@ import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import Sidebar from '../../components/sidebar'
 
-const LetterMatcher = dynamic(() => import('../../components/letterMatcher'), { ssr: false })
+const LetterMatcher = dynamic(() => import('../../components/letterMatcher'), {
+  ssr: false,
+})
 
-export default function Page(){
+export default function Page() {
   return (
     <>
-    <Head>
-      <title>Letter Matcher</title>
-    </Head>
+      <Head>
+        <title>Letter Matcher</title>
+      </Head>
       <Sidebar />
-    <div className='flex flex-col items-center justify-center min-h-screen'>
+      <div className='flex min-h-screen flex-col items-center justify-center'>
         <LetterMatcher size={7} />
-    </div>
+      </div>
     </>
   )
 }
-

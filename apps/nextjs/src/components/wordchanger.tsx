@@ -9,7 +9,7 @@ export type ChangerProps = {
 
 const MILISECONDS_IN_A_MINUTE = 60000
 
-async function fetchWords(number: number){
+async function fetchWords(number: number) {
   try {
     if (number > 500) {
       //random words api won't return more than 500 words at a time so here's a hacky workaround
@@ -33,7 +33,7 @@ async function fetchWords(number: number){
   }
 }
 
-function formatWords(words: string[], wordsPerCell: number){
+function formatWords(words: string[], wordsPerCell: number) {
   const wordJoiner: string[] = []
   for (let i = 0; i < words.length / wordsPerCell; i += wordsPerCell) {
     wordJoiner.push(words.slice(i, i + wordsPerCell).join(' '))
@@ -41,7 +41,7 @@ function formatWords(words: string[], wordsPerCell: number){
   return wordJoiner
 }
 
-async function fetch(props: ChangerProps){
+async function fetch(props: ChangerProps) {
   const words = await fetchWords(props.wordsPerCell * props.wpm)
   const formattedWords = formatWords(words, props.wordsPerCell)
   return formattedWords
@@ -63,13 +63,13 @@ export default function Changer(props: ChangerProps) {
         console.log("Here's the error: ", error)
       }
     }
-    load().catch((error) => console.log("Here's the error: ", error))
+    load().catch(error => console.log("Here's the error: ", error))
   }, [])
 
   useInterval(() => {
     if (fetched) {
       setCurrent(words[wordIndex] as string)
-      setWordIndex((prev) => prev + 1)
+      setWordIndex(prev => prev + 1)
     }
   }, MILISECONDS_IN_A_MINUTE / props.wpm)
 

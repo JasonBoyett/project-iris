@@ -9,28 +9,27 @@ import { formatDate, navigateToNextExercise } from '@acme/helpers'
 import type { Font, WordPair } from '@acme/types'
 
 function useGetProps(total = 18, diffCount = 5) {
-
   const pairs = trpc.excercise.getWordPairs.useQuery({
     count: diffCount,
-    language: "english",
+    language: 'english',
   })
   const words = trpc.excercise.getRandomWords.useQuery({
     number: total - diffCount,
-    language: "english",
-    max: 7
+    language: 'english',
+    max: 7,
   })
 
   const result = useMemo(() => {
     if (words.isSuccess && pairs.isSuccess) {
       return {
         words: words.data,
-        pairs: pairs.data
+        pairs: pairs.data,
       }
-    }
-    else return {
-      words: undefined,
-      pairs: undefined
-    }
+    } else
+      return {
+        words: undefined,
+        pairs: undefined,
+      }
   }, [pairs, words])
 
   return result
@@ -40,15 +39,14 @@ type PairsProps = {
   diffCount: number
 }
 
-
 export default function WordPairs({ diffCount }: PairsProps) {
-
   const total = 18
   const { words, pairs } = useGetProps(total, diffCount)
   const user = trpc.user.get.useQuery()
   const { mutate: updateUser } = trpc.user.set.useMutation()
   const userStore = useUserStore()
-  const { mutate: collectSessionData } = trpc.collect.wordPairSession.useMutation()
+  const { mutate: collectSessionData } =
+    trpc.collect.wordPairSession.useMutation()
   const stopWatch = useStopWatch()
   const router = useRouter()
   const foud = useRef(0)
@@ -56,20 +54,18 @@ export default function WordPairs({ diffCount }: PairsProps) {
   const font = useRef<Font>('sans')
   const [grid, setGrid] = useState<JSX.Element[]>()
 
-
   function generateGrid() {
     if (!pairs || !words) return
     const cells = new Array<JSX.Element>()
-    words.forEach((word) => {
+    words.forEach(word => {
       cells.push(generateSame(word))
     })
-    pairs.forEach((pair) => {
+    pairs.forEach(pair => {
       cells.push(generateDifferent(pair))
     })
     stopWatch.start()
     return cells.sort(() => Math.random() - 0.5)
   }
-
 
   const handleCellClick = useCallback((answer: 'correct' | 'error') => {
     console.log(answer)
@@ -84,7 +80,6 @@ export default function WordPairs({ diffCount }: PairsProps) {
     console.log('pairsFound', foud.current)
   }, [])
 
-
   function tearDown() {
     console.log('teardown')
     if (!user) return
@@ -93,37 +88,44 @@ export default function WordPairs({ diffCount }: PairsProps) {
     updateUser({ lastWordPairs: formatDate(new Date()) })
     userStore.setUser({
       ...userStore.user,
-      lastWordPairs: formatDate(new Date())
+      lastWordPairs: formatDate(new Date()),
     })
     if (user.data && user.data.isStudySubject) {
       collectSessionData({
         userId: user.data.id,
         errorCount: wrongs.current,
-        time: stopWatch.getDuration()
+        time: stopWatch.getDuration(),
       })
     }
-    navigateToNextExercise(router as SingletonRouter, user.data ?? userStore.user)
+    navigateToNextExercise(
+      router as SingletonRouter,
+      user.data ?? userStore.user,
+    )
   }
 
   function generateSame(word: string) {
-    return <Cell
-      different={false}
-      font={font.current}
-      word1={word}
-      word2={word}
-      id={uuid()}
-      callback={handleCellClick}
-    />
+    return (
+      <Cell
+        different={false}
+        font={font.current}
+        word1={word}
+        word2={word}
+        id={uuid()}
+        callback={handleCellClick}
+      />
+    )
   }
   function generateDifferent(pair: WordPair) {
-    return <Cell
-      different={true}
-      font={font.current}
-      word1={pair.primaryWord}
-      word2={pair.secondaryWord}
-      id={uuid()}
-      callback={handleCellClick}
-    />
+    return (
+      <Cell
+        different={true}
+        font={font.current}
+        word1={pair.primaryWord}
+        word2={pair.secondaryWord}
+        id={uuid()}
+        callback={handleCellClick}
+      />
+    )
   }
 
   useEffect(() => {
@@ -135,13 +137,7 @@ export default function WordPairs({ diffCount }: PairsProps) {
     setGrid(() => generateGrid())
   }, [words, pairs])
 
-  return (
-    <div
-      className="grid grid-cols-3 gap-2"
-    >
-      {grid}
-    </div>
-  )
+  return <div className='grid grid-cols-3 gap-2'>{grid}</div>
 }
 
 type CellProps = {
@@ -160,8 +156,7 @@ function Cell({ font, different, word1, word2, id, callback }: CellProps) {
     if (different && !highlighted) {
       callback('correct')
       setHighlighted(() => true)
-    } 
-    else if (!different && !highlighted) {
+    } else if (!different && !highlighted) {
       setHighlighted(() => true)
       callback('error')
     }
@@ -173,19 +168,21 @@ function Cell({ font, different, word1, word2, id, callback }: CellProps) {
       onClick={() => handleClick()}
       id={id?.toString() ?? '0'}
       className={[
-    'items-center grid grid-cols-1 rounded-lg text-white',
-    'md:text-3xl md:p-2',
-    'text-2xl p-1',
-    `${highlighted ? (different ? 'bg-white/10' : 'bg-red-500/40') : 'bg-white/20'}`,
-    'cursor-pointer',
-  ].join(' ')}
+        'grid grid-cols-1 items-center rounded-lg text-white',
+        'md:p-2 md:text-3xl',
+        'p-1 text-2xl',
+        `${
+          highlighted
+            ? different
+              ? 'bg-white/10'
+              : 'bg-red-500/40'
+            : 'bg-white/20'
+        }`,
+        'cursor-pointer',
+      ].join(' ')}
     >
-      <div>
-        {word1}
-      </div>
-      <div>
-        {word2}
-      </div>
+      <div>{word1}</div>
+      <div>{word2}</div>
     </FontProvider>
   )
 }

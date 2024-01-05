@@ -1,20 +1,19 @@
 import Head from 'next/head'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 import Sidebar from '../components/sidebar'
-import { trpc } from "../utils/trpc";
+import { trpc } from '../utils/trpc'
 import { type SingletonRouter } from 'next/router'
-import { Exercise, User } from '@acme/types'
+import type { Exercise, User } from '@acme/types'
 import {
   navigateToNextExercise,
   navigate,
   getAvailableExercises,
   isAlreadyDone,
   checkName,
-} from '@acme/helpers';
+} from '@acme/helpers'
 import { useEffect, useState } from 'react'
 import { useUserStore } from '../stores/userStore'
-import { useClerk } from "@clerk/nextjs"
-
+import { useClerk } from '@clerk/nextjs'
 
 export default function Page() {
   const buttonStyle = [
@@ -76,10 +75,10 @@ export default function Page() {
   }
 
   function ExerciseCounter() {
-    if (!user) return (<></>)
+    if (!user) return <></>
     const availableExercises = getAvailableExercises(user)
     return (
-      <div className='text-white md:text-4xl text-2xl text-center'>
+      <div className='text-center text-2xl text-white md:text-4xl'>
         Remaining Daily Exercises:
         <div className='text-8xl text-yellow-400'>
           {availableExercises?.length ?? '0'}
@@ -179,11 +178,10 @@ export default function Page() {
   }
 
   function RemainingExercises() {
-    if (isUsingChecklist) { return <CheckList /> }
-    else {
-      return (
-        <ExerciseCounter />
-      )
+    if (isUsingChecklist) {
+      return <CheckList />
+    } else {
+      return <ExerciseCounter />
     }
   }
 
@@ -211,12 +209,11 @@ export default function Page() {
   }, [user, isLoading, data, setUserStore])
 
   useEffect(() => {
-    if (auth.loaded){
+    if (auth.loaded) {
       if (!auth.session) return
       if (auth.session.status === 'active') {
         return
-      }
-      else{
+      } else {
         navigate(router as SingletonRouter, '/')
       }
     }

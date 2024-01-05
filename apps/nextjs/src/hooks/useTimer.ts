@@ -1,11 +1,12 @@
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef } from 'react'
 
 type TimeMeasure = 'milliseconds' | 'seconds' | 'minutes'
 
 export default function useTimer(
-  timeUnit: TimeMeasure, 
-  endTime: number, 
-  eventName: string) {
+  timeUnit: TimeMeasure,
+  endTime: number,
+  eventName: string,
+) {
   const time = useRef(0)
   const running = useRef(false)
   const ticker = useRef<NodeJS.Timer>()
@@ -14,21 +15,21 @@ export default function useTimer(
   const unit = useRef<TimeMeasure>(timeUnit)
   const event = new Event(eventName)
   const end = (() => {
-      switch (unit.current) {
-        case 'milliseconds':
-          delay.current = 1
-          return endTime
-        case 'seconds':
-          delay.current = 100
-          return endTime * 1000
-        case 'minutes':
-          delay.current = 1_000
-          return endTime * 60_000
-        // the interval numbers are kind of arbitrary.
-        // I wanted them small enough to be accurate,
-        // but large enough to not be a performance issue.
-      }
-    })()
+    switch (unit.current) {
+      case 'milliseconds':
+        delay.current = 1
+        return endTime
+      case 'seconds':
+        delay.current = 100
+        return endTime * 1000
+      case 'minutes':
+        delay.current = 1_000
+        return endTime * 60_000
+      // the interval numbers are kind of arbitrary.
+      // I wanted them small enough to be accurate,
+      // but large enough to not be a performance issue.
+    }
+  })()
 
   const start = useCallback(() => {
     time.current = Date.now()
@@ -39,8 +40,6 @@ export default function useTimer(
     running.current = false
     running.current = true
   }, [])
-
-
 
   const tick = useCallback(() => {
     if (!running.current) return
@@ -53,7 +52,7 @@ export default function useTimer(
     }
   }, [])
 
-  const clear = useCallback(() =>{
+  const clear = useCallback(() => {
     running.current = false as const
     clearInterval(ticker.current)
     duration.current = 0
@@ -64,8 +63,7 @@ export default function useTimer(
       clearInterval(ticker.current as NodeJS.Timer)
       duration.current = 0
       return
-    }
-    else {
+    } else {
       ticker.current = setInterval(() => {
         tick()
       }, delay.current)

@@ -2,8 +2,7 @@ import Head from 'next/head'
 import FlashingGrid from '../../components/flashingcell'
 import Sidebar from '../../components/sidebar'
 
-
-export default function Page(){
+export default function Page() {
   return (
     <>
       <Head>
@@ -11,7 +10,7 @@ export default function Page(){
       </Head>
       <Sidebar />
       <div className='flex min-h-screen grid-cols-2 flex-col items-center justify-center gap-4 py-2'>
-        <FlashingGrid type={ 'oneByTwo' } />
+        <FlashingGrid type={'oneByTwo'} />
       </div>
     </>
   )

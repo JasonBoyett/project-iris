@@ -19,7 +19,7 @@ export default function Result() {
   const router = useRouter()
   const userStore = useUserStore()
   const speedTestStore = useSpeedTestStore()
-  const { mutate } = trpc.user.set.useMutation() 
+  const { mutate } = trpc.user.set.useMutation()
 
   function saveData() {
     //TODO create a data saving function in TRPC
@@ -27,9 +27,7 @@ export default function Result() {
   }
 
   function getAvg(nums: number[]) {
-    return nums.reduce(
-      (previous, current) => (current += previous) / 2
-    )
+    return nums.reduce((previous, current) => (current += previous) / 2)
   }
 
   function getNewSpeed() {
@@ -40,15 +38,14 @@ export default function Result() {
       const avg = Math.floor(getAvg(speedTestStore.correctSpeeds) / 10) * 10
       return {
         max: avg,
-        current: Math.floor(avg / 0.9 / 10) * 10
+        current: Math.floor(avg / 0.9 / 10) * 10,
       }
-    }
-    else if (speedTestStore.correctResponses < FAILING_GRADE) {
+    } else if (speedTestStore.correctResponses < FAILING_GRADE) {
       const maxSpeed = speedTestStore.correctSpeeds.sort().pop() as number
       return {
         max: maxSpeed,
         //this will get the highest speed the user got correct
-        current: Math.floor(maxSpeed / 0.9 / 10) * 10
+        current: Math.floor(maxSpeed / 0.9 / 10) * 10,
       }
     }
   }
@@ -129,19 +126,19 @@ export default function Result() {
       <Sidebar />
       <Head>Test Results</Head>
       <FontProvider
-        className='flex flex-col gap-4 items-center justify-center min-h-screen'
+        className='flex min-h-screen flex-col items-center justify-center gap-4'
         font={font}
       >
-        <p className='text-white text-4xl'>
+        <p className='text-4xl text-white'>
           You got {correct}/{TESTS_PER_DAY}.
         </p>
-        <p className='text-white text-4xl'>
+        <p className='text-4xl text-white'>
           Click <span className='text-[#39b54a]'>start</span> to move on to
           todays exercises.
         </p>
         <button
           onClick={() => handleClick()}
-          className='bg-white/20 rounded-full p-4 h-12 py-2 font-normal text-white text-3xl'
+          className='h-12 rounded-full bg-white/20 p-4 py-2 text-3xl font-normal text-white'
         >
           Start
         </button>

@@ -1,15 +1,15 @@
-import { useRef, useEffect, useState } from "react"
-import { trpc } from "../utils/trpc"
-import { type SingletonRouter, useRouter } from "next/router"
-import useUserStore from "../stores/userStore"
-import { formatDate, navigate } from "@acme/helpers"
+import { useRef, useEffect, useState } from 'react'
+import { trpc } from '../utils/trpc'
+import { type SingletonRouter, useRouter } from 'next/router'
+import useUserStore from '../stores/userStore'
+import { formatDate, navigate } from '@acme/helpers'
 import useTimer from '../hooks/useTimer'
-import type { Font } from "@acme/types"
-import { FontProvider } from "../cva/fontProvider"
-import { motion } from "framer-motion"
+import type { Font } from '@acme/types'
+import { FontProvider } from '../cva/fontProvider'
+import { motion } from 'framer-motion'
 
 function getLetter() {
-  const letters = "abcdefghijklmnopqrstuvwxyz"
+  const letters = 'abcdefghijklmnopqrstuvwxyz'
   return letters[Math.floor(Math.random() * letters.length)] as string
 }
 
@@ -17,11 +17,10 @@ type LetterGridProps = {
   size: number
 }
 
-
 export default function LetterGrid({ size }: LetterGridProps) {
-  const classNameCenter = "text-green-500"
-  const classNameHighlight = "text-yellow-400"
-  const signal = "teardown letter matcher"
+  const classNameCenter = 'text-green-500'
+  const classNameHighlight = 'text-yellow-400'
+  const signal = 'teardown letter matcher'
   const correctCount = useRef(0)
   const incorrectCount = useRef(0)
   const user = trpc.user.get.useQuery()
@@ -34,11 +33,7 @@ export default function LetterGrid({ size }: LetterGridProps) {
   const [bottom, setBottom] = useState<string>('●')
   const [left, setLeft] = useState<string>('●')
   const [right, setRight] = useState<string>('●')
-  const timer = useTimer(
-    "minutes",
-    1,
-    signal,
-  )
+  const timer = useTimer('minutes', 1, signal)
   const matching = useRef<boolean>(Math.random() < 0.5)
   const [showingTarget, setShowing] = useState<boolean>(false)
   const [font, setFont] = useState<Font>('sans' as Font)
@@ -48,70 +43,33 @@ export default function LetterGrid({ size }: LetterGridProps) {
       const row = []
       for (let j = 0; j < size; j++) {
         if (i === Math.floor(size / 2) && j === Math.floor(size / 2)) {
+          row.push(<div className={classNameCenter}>⊚</div>)
+        } else if (i === 0 && j === Math.floor(size / 2)) {
           row.push(
-            <div
-              className={classNameCenter}>
-              ⊚
-            </div>
+            <div className={classNameHighlight}>
+              {!showingTarget ? '●' : top}
+            </div>,
           )
-        }
-        else if (i === 0 && j === Math.floor(size / 2)) {
+        } else if (i === size - 1 && j === Math.floor(size / 2)) {
           row.push(
-            <div
-              className={classNameHighlight}
-            >
-              {
-                !showingTarget
-                  ? '●'
-                  : top
-              }
-            </div>)
-        }
-        else if (i === (size - 1) && j === Math.floor(size / 2)) {
+            <div className={classNameHighlight}>
+              {!showingTarget ? '●' : bottom}
+            </div>,
+          )
+        } else if (i === Math.floor(size / 2) && j === 0) {
           row.push(
-            <div
-              className={classNameHighlight}
-            >
-              {
-                !showingTarget
-                  ? '●'
-                  : bottom
-              }
-            </div>)
-        }
-        else if (i === Math.floor(size / 2) && j === 0) {
+            <div className={classNameHighlight}>
+              {!showingTarget ? '●' : left}
+            </div>,
+          )
+        } else if (i === Math.floor(size / 2) && j === size - 1) {
           row.push(
-            <div
-              className={classNameHighlight}
-            >
-              {
-                !showingTarget
-                  ? '●'
-                  : left
-              }
-            </div>)
-        }
-        else if (i === Math.floor(size / 2) && j === (size - 1)) {
-          row.push(
-            <div
-              className={classNameHighlight}
-            >
-              {
-                !showingTarget
-                  ? '●'
-                  : right
-              }
-            </div>)
-        }
-        else {
-          row.push(
-            <div>
-              {
-                !showingTarget
-                  ? '●'
-                  : getLetter()
-              }
-            </div>)
+            <div className={classNameHighlight}>
+              {!showingTarget ? '●' : right}
+            </div>,
+          )
+        } else {
+          row.push(<div>{!showingTarget ? '●' : getLetter()}</div>)
         }
       }
       grid.push(row)
@@ -128,8 +86,7 @@ export default function LetterGrid({ size }: LetterGridProps) {
     }
     if (answer === matching.current) {
       correctCount.current += 1
-    }
-    else {
+    } else {
       incorrectCount.current += 1
     }
     gameLoop()
@@ -164,8 +121,7 @@ export default function LetterGrid({ size }: LetterGridProps) {
       setBottom(() => letter)
       setLeft(() => letter)
       setRight(() => letter)
-    }
-    else {
+    } else {
       console.log('not matching')
       setTop(() => getLetter())
       setBottom(() => getLetter())
@@ -195,31 +151,33 @@ export default function LetterGrid({ size }: LetterGridProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className='grid grid-cols-1 gap-3 md:w-auto w-80'>
-      <h1 className='md:text-4xl text-3xl text-white text-center'>
-        {
-          !started
-            ? 'Press a button to start'
-            : ' '
-        }
+      className='grid w-80 grid-cols-1 gap-3 md:w-auto'
+    >
+      <h1 className='text-center text-3xl text-white md:text-4xl'>
+        {!started ? 'Press a button to start' : ' '}
       </h1>
       <FontProvider
         font={font}
-        className={['grid md:gap-5 gap-3', 
-          'border-2 p-3 text-white', 
-          'md:text-6xl text-5xl', 
-          ('rounded-lg grid-cols-' + size.toString())].join(' ')}>
+        className={[
+          'grid gap-3 md:gap-5',
+          'border-2 p-3 text-white',
+          'text-5xl md:text-6xl',
+          'grid-cols- rounded-lg' + size.toString(),
+        ].join(' ')}
+      >
         {grid}
       </FontProvider>
-      <div className='grid grid-cols-2 justify-center items-center gap-2'>
+      <div className='grid grid-cols-2 items-center justify-center gap-2'>
         <button
-          className='flex bg-white/20 items-center justify-center rounded-lg p-4 md:h-24 w-auto text-white text-4xl'
-          onClick={() => handleClick(true)}>
+          className='flex w-auto items-center justify-center rounded-lg bg-white/20 p-4 text-4xl text-white md:h-24'
+          onClick={() => handleClick(true)}
+        >
           ✓
         </button>
         <button
-          className='flex bg-white/20 items-center justify-center rounded-lg p-4 md:h-24 w-auto text-white text-4xl'
-          onClick={() => handleClick(false)}>
+          className='flex w-auto items-center justify-center rounded-lg bg-white/20 p-4 text-4xl text-white md:h-24'
+          onClick={() => handleClick(false)}
+        >
           ⛔
         </button>
       </div>

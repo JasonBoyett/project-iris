@@ -9,6 +9,33 @@ export const language = z.union([
   z.literal('italian'),
 ])
 
+export const font = z.union([
+  z.literal('sans'),
+  z.literal('serif'),
+  z.literal('mono'),
+  z.literal('robotoMono'),
+  z.literal('rem'),
+  z.literal('kanit'),
+  z.literal('preahvihear'),
+  z.literal('bebasNeue'),
+  z.literal('chakraPetch'),
+  z.literal('ibmPlexMono'),
+])
+
+
+export const highlightColor = z.union([
+  z.literal('BLUE'),
+  z.literal('BLUE_GREY'),
+  z.literal('GREEN'),
+  z.literal('GREY'),
+  z.literal('ORANGE'),
+  z.literal('PEACH'),
+  z.literal('PURPLE'),
+  z.literal('RED'),
+  z.literal('TURQUOISE'),
+  z.literal('YELLOW'),
+])
+
 export const userSchema = z.object({
   id: z.string(),
   firstName: z.string(),
@@ -18,33 +45,8 @@ export const userSchema = z.object({
   testSpeed: z.number().default(230),
   createdAt: z.date(),
   updatedAt: z.date(),
-  highlightColor: z
-    .union([
-      z.literal('BLUE'),
-      z.literal('BLUE_GREY'),
-      z.literal('GREEN'),
-      z.literal('GREY'),
-      z.literal('ORANGE'),
-      z.literal('PEACH'),
-      z.literal('PURPLE'),
-      z.literal('RED'),
-      z.literal('TURQUOISE'),
-      z.literal('YELLOW'),
-    ])
-    .optional(),
-  font: z.union([
-    z.literal('sans'),
-    z.literal('serif'),
-    z.literal('mono'),
-    z.literal('robotoMono'),
-    z.literal('rem'),
-    z.literal('kanit'),
-    z.literal('preahvihear'),
-    z.literal('bebasNeue'),
-    z.literal('chakraPetch'),
-    z.literal('ibmPlexMono'),
-  ])
-    .default('sans'),
+  highlightColor: highlightColor.optional(),
+  font: font.default('sans'),
   language: language.default('english'),
   lastSchulte: z.string().default(' '),
   lastSpeedTest: z.string().default(' '),
@@ -90,20 +92,21 @@ const randomWordInputs = z.object({
   language: language,
 })
 
-const exercise = z.union([
+export const exercise = z.union([
   z.literal('fourByOne'),
   z.literal('oneByTwo'),
   z.literal('twoByTwo'),
   z.literal('oneByOne'),
   z.literal('twoByOne'),
-  z.literal('schulteByThree'),
-  z.literal('schulteByFive'),
-  z.literal('schulteBySeven'),
+  z.literal('schulteTable'),
   z.literal('speedTest'),
   z.literal('evenNumbers'),
   z.literal('cubeByTwo'),
   z.literal('cubeByThree'),
   z.literal('numberGuesser'),
+  z.literal('letterMatcher'),
+  z.literal('wordPairs'),
+  z.literal('greenDot'),
 ])
 
 export const highlightData = z.object({
@@ -120,11 +123,7 @@ export const highlightData = z.object({
 
 export const schulteData = z.object({
   userId: z.string(),
-  type: z.union([
-    z.literal('three'),
-    z.literal('five'),
-    z.literal('seven'),
-  ]),
+  type: z.union([z.literal('three'), z.literal('five'), z.literal('seven')]),
   time: z.number(),
   errorCount: z.number(),
 })
@@ -152,10 +151,7 @@ export const evenNumbersData = z.object({
 
 export const boxFlasherData = z.object({
   userId: z.string(),
-  type: z.union([
-    z.literal('two'),
-    z.literal('three'),
-  ]),
+  type: z.union([z.literal('two'), z.literal('three')]),
   speed: z.number(),
 })
 
@@ -179,7 +175,7 @@ export const wordPairProps = z.object({
 export const schemas = {
   user: userSchema,
   speedTest: speedTestSchema,
-  exercise: exercise
+  exercise: exercise,
 }
 
 export const inputs = {

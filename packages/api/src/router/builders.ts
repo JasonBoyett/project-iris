@@ -1,5 +1,5 @@
-import { schemas } from "@acme/validators";
-import { router, protectedProcedure } from "../trpc";
+import { schemas } from '@acme/validators'
+import { router, protectedProcedure } from '../trpc'
 
 export const buildSpeedTestRouter = router({
   createSpeedTest: protectedProcedure
@@ -25,5 +25,5 @@ export const buildSpeedTestRouter = router({
           correctAnswer: input.correctAnswer,
         },
       })
-    })
+    }),
 })

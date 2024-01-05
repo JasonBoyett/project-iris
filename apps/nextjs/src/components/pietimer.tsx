@@ -1,8 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  type CSSProperties
-} from 'react'
+import React, { useState, useEffect, type CSSProperties } from 'react'
 import useInterval from '../hooks/useInterval'
 import { trpc } from '../utils/trpc'
 import { type SingletonRouter, useRouter } from 'next/router'

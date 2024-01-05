@@ -2,7 +2,7 @@ import Head from 'next/head'
 import FlashingGrid from '../../components/flashingcell'
 import Sidebar from '../../components/sidebar'
 
-export default function Page(){
+export default function Page() {
   return (
     <>
       <Head>
@@ -15,4 +15,3 @@ export default function Page(){
     </>
   )
 }
-

@@ -13,10 +13,10 @@ export const useUserStore = create<{
   setUser: (user: User) => void
 }>()(
   persist(
-    (set) => ({
+    set => ({
       user: undefined,
       setUser: (userFromClient: User) => {
-        return set((state) => ({ ...state, user: userFromClient }))
+        return set(state => ({ ...state, user: userFromClient }))
       },
     }),
     {

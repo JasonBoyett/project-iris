@@ -10,8 +10,8 @@ import Sidebar from '../../../components/sidebar'
 import { navigate } from '@acme/helpers'
 
 export default function Page() {
-  const exerciseStore = useSpeedTestStore((state) => state)
-  const userStore = useUserStore((state) => state)
+  const exerciseStore = useSpeedTestStore(state => state)
+  const userStore = useUserStore(state => state)
   const [answerA, setAnswerA] = useState('Loading..')
   const [answerB, setAnswerB] = useState('Loading..')
   const [answerC, setAnswerC] = useState('Loading..')
@@ -33,8 +33,7 @@ export default function Page() {
         ...userStore.user,
         testSpeed: rate + 10,
       })
-    }
-    else {
+    } else {
       userStore.setUser({
         ...userStore.user,
         testSpeed: rate - 10,
@@ -45,7 +44,7 @@ export default function Page() {
     } else {
       router
         .replace('/exercises/speedtest/result')
-        .catch((err) => console.log(err))
+        .catch(err => console.log(err))
     }
   }
 
@@ -65,52 +64,48 @@ export default function Page() {
     <>
       <Head>Speed Test</Head>
       <Sidebar />
-      <main className='flex items-center justify-center h-screen text-white'>
+      <main className='flex h-screen items-center justify-center text-white'>
         <FontProvider
-          className='flex flex-col gap-4 items-center w-2/3 justify-center'
+          className='flex w-2/3 flex-col items-center justify-center gap-4'
           font={font}
         >
           <div className='text-4xl font-bold'>{question}</div>
           <div className='grid gap-4'>
             <div
               onClick={() => handleClick('A')}
-              className='flex items-center gap-2 text-yellow-400 cursor-pointer'>
-              <button
-                className='text-4xl font-bold bg-white/20 px-4 py-2 rounded-md text-yellow-400'
-              >
+              className='flex cursor-pointer items-center gap-2 text-yellow-400'
+            >
+              <button className='rounded-md bg-white/20 px-4 py-2 text-4xl font-bold text-yellow-400'>
                 A
               </button>
-              <p className='text-white text-3xl'>{answerA}</p>
+              <p className='text-3xl text-white'>{answerA}</p>
             </div>
             <div
               onClick={() => handleClick('B')}
-              className='flex items-center gap-2 text-yellow-400 cursor-pointer'>
-              <button
-                className='text-4xl font-bold bg-white/20 px-4 py-2 rounded-md text-yellow-400'
-              >
+              className='flex cursor-pointer items-center gap-2 text-yellow-400'
+            >
+              <button className='rounded-md bg-white/20 px-4 py-2 text-4xl font-bold text-yellow-400'>
                 B
               </button>
-              <p className='text-white text-3xl'>{answerB}</p>
+              <p className='text-3xl text-white'>{answerB}</p>
             </div>
             <div
               onClick={() => handleClick('C')}
-              className='flex items-center gap-2 text-yellow-400 cursor-pointer'>
-              <button
-                className='text-4xl font-bold bg-white/20 px-4 py-2 rounded-md text-yellow-400'
-              >
+              className='flex cursor-pointer items-center gap-2 text-yellow-400'
+            >
+              <button className='rounded-md bg-white/20 px-4 py-2 text-4xl font-bold text-yellow-400'>
                 C
               </button>
-              <p className='text-white text-3xl'>{answerC}</p>
+              <p className='text-3xl text-white'>{answerC}</p>
             </div>
             <div
               onClick={() => handleClick('D')}
-              className='flex items-center gap-2 text-yellow-400 cursor-pointer'>
-              <button
-                className='text-4xl font-bold bg-white/20 px-4 py-2 rounded-md text-yellow-400'
-              >
+              className='flex cursor-pointer items-center gap-2 text-yellow-400'
+            >
+              <button className='rounded-md bg-white/20 px-4 py-2 text-4xl font-bold text-yellow-400'>
                 D
               </button>
-              <p className='text-white text-3xl'>{answerD}</p>
+              <p className='text-3xl text-white'>{answerD}</p>
             </div>
           </div>
         </FontProvider>

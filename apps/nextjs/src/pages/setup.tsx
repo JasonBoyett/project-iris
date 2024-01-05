@@ -28,16 +28,16 @@ const Page: NextPage = () => {
     <>
       <Head>Let&#39;s Get Started!</Head>
       <Sidebar />
-      <main className='flex flex-col h-screen items-center justify-center'>
-        <h1 className='md:text-6xl font-extrabold text-white py-4'>
+      <main className='flex h-screen flex-col items-center justify-center'>
+        <h1 className='py-4 font-extrabold text-white md:text-6xl'>
           Let&#39;s Get Started!
         </h1>
-        <h2 className='md:text-4xl font-extrabold text-white py-4'>
+        <h2 className='py-4 font-extrabold text-white md:text-4xl'>
           Please tell us your name
         </h2>
         <form
-          className='flex flex-col p-2 justify-items-end'
-          onSubmit={(e) => {
+          className='flex flex-col justify-items-end p-2'
+          onSubmit={e => {
             e.preventDefault()
             if (!user) return
             else if (
@@ -65,25 +65,25 @@ const Page: NextPage = () => {
             navigateToNextExercise(router as SingletonRouter, user)
           }}
         >
-          <label className='py-4 text-white text-2xl font-bold'>
+          <label className='py-4 text-2xl font-bold text-white'>
             First Name:{' '}
             <input
               type='text'
               defaultValue={first}
               className={inputStyle}
-              onChange={(e) => setFirst(e.target.value)}
+              onChange={e => setFirst(e.target.value)}
             />
           </label>
-          <label className='py-4 text-white text-2xl font-bold'>
+          <label className='py-4 text-2xl font-bold text-white'>
             Last Name:{' '}
             <input
               type='text'
               defaultValue={last}
               className={inputStyle}
-              onChange={(e) => setLast(e.target.value)}
+              onChange={e => setLast(e.target.value)}
             />
           </label>
-          <button className='bg-white/20 rounded-full p-4 h-16 py-5 text-white font-normal'>
+          <button className='h-16 rounded-full bg-white/20 p-4 py-5 font-normal text-white'>
             Start
           </button>
         </form>

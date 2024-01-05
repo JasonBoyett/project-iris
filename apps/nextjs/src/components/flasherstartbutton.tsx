@@ -4,7 +4,13 @@ import { navigate } from '@acme/helpers'
 import LoadingSpinner from '../components/loadingspinner'
 import { useEffect, useState } from 'react'
 
-export default function FlasherStartButton({ option, delay }: { option: HighlightType, delay: number }){
+export default function FlasherStartButton({
+  option,
+  delay,
+}: {
+  option: HighlightType
+  delay: number
+}) {
   const [time, setTime] = useState(false)
   const router = useRouter()
 
@@ -36,7 +42,7 @@ export default function FlasherStartButton({ option, delay }: { option: Highligh
 
   return time ? (
     <button
-      className='text-white md:text-5xl text-4xl bg-white/10 flex items-center justify-center rounded-full md:w-40 w-60 p-4 h-16 hover:bg-white/20'
+      className='flex h-16 w-60 items-center justify-center rounded-full bg-white/10 p-4 text-4xl text-white hover:bg-white/20 md:w-40 md:text-5xl'
       onClick={() => handleNavigation()}
     >
       Start

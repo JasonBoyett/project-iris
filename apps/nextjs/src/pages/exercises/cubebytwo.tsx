@@ -5,8 +5,8 @@ export default function Page() {
   return (
     <>
       <Sidebar />
-      <div className='min-h-screen min-w-screen flex flex-col justify-center items-center'>
-        <div className='bg-white rounded-lg'>
+      <div className='min-w-screen flex min-h-screen flex-col items-center justify-center'>
+        <div className='rounded-lg bg-white'>
           <CornerFlasher number={2} />
         </div>
       </div>

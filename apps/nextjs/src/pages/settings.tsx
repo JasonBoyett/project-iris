@@ -1,18 +1,9 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { SingletonRouter, useRouter } from 'next/router'
-import { 
-  Suspense, 
-  useEffect, 
-  useState 
-} from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { trpc } from '../utils/trpc'
-import type { 
-  User,
-  Overlay,
-  Language,
-  Font,
-} from '@acme/types'
+import type { User, Overlay, Language, Font } from '@acme/types'
 import useUserStore from '../stores/userStore'
 import { HighlightButton } from '../cva/highlightSelectorButton'
 import LoadingSpinner from '../components/loadingspinner'
@@ -134,7 +125,7 @@ const Page: NextPage = () => {
           </h1>
           <form
             className='flex w-full flex-col gap-y-2 px-4 md:justify-items-end'
-            onSubmit={(e) => handleSubmition(e)}
+            onSubmit={e => handleSubmition(e)}
           >
             <label className='flex w-full flex-col gap-3 py-4 text-2xl font-bold text-white md:flex-row md:items-center'>
               First Name:{' '}
@@ -142,7 +133,7 @@ const Page: NextPage = () => {
                 type='text'
                 defaultValue={first}
                 className={inputStyle}
-                onChange={(e) => setFirst(e.target.value)}
+                onChange={e => setFirst(e.target.value)}
               />
             </label>
             <label className='flex flex-col gap-3 py-4 text-2xl font-bold text-white md:flex-row md:items-center'>
@@ -151,7 +142,7 @@ const Page: NextPage = () => {
                 type='text'
                 defaultValue={last}
                 className={inputStyle}
-                onChange={(e) => setLast(e.target.value)}
+                onChange={e => setLast(e.target.value)}
               />
             </label>
             <label className='flex flex-col gap-3 py-4 text-2xl font-bold text-white md:flex-row md:items-center'>
@@ -161,7 +152,7 @@ const Page: NextPage = () => {
                 readOnly={true}
                 defaultValue={currentWpm}
                 className={inputStyle}
-                onChange={(e) => setCurrentWpm(parseInt(e.target.value))}
+                onChange={e => setCurrentWpm(parseInt(e.target.value))}
               />
               <div className='mt-4 flex items-center gap-4 md:mt-0'>
                 <button
@@ -171,7 +162,7 @@ const Page: NextPage = () => {
                     if (!user) return
                     if (currentWpm >= user.maxWpm && !user.isAdmin) return
                     else {
-                      setCurrentWpm((prev) => (prev as number) + 10)
+                      setCurrentWpm(prev => (prev as number) + 10)
                     }
                   }}
                   className='flex h-12 w-12 min-w-max items-center justify-center rounded-full bg-white/20 font-normal'
@@ -183,7 +174,7 @@ const Page: NextPage = () => {
                   onClick={() => {
                     if (!currentWpm) return
                     if (currentWpm > 70)
-                      setCurrentWpm((prev) => (prev as number) - 10)
+                      setCurrentWpm(prev => (prev as number) - 10)
                   }}
                   className='flex h-12 w-12 items-center justify-center rounded-full bg-white/20 font-normal'
                 >
@@ -302,7 +293,7 @@ const Page: NextPage = () => {
                 Font:{' '}
                 <select
                   id='fontPicker'
-                  onChange={(e) => setCurrentFont(e.target.value as Font)}
+                  onChange={e => setCurrentFont(e.target.value as Font)}
                   value={currentFont as string}
                   className='rounded-lg bg-white/20 p-2.5 text-2xl text-white md:w-40'
                 >
@@ -326,43 +317,43 @@ const Page: NextPage = () => {
                   </option>
                   <option
                     value='robotoMono'
-                    className='bg-slate-500 font-robotoMono'
+                    className='font-robotoMono bg-slate-500'
                   >
                     Roboto Mono
                   </option>
                   <option
                     value='rem'
-                    className='bg-slate-500 font-rem'
+                    className='font-rem bg-slate-500'
                   >
                     Rem
                   </option>
                   <option
                     value='kanti'
-                    className='bg-slate-500 font-kanit'
+                    className='font-kanit bg-slate-500'
                   >
                     Kanti
                   </option>
                   <option
                     value='preahvihear'
-                    className='bg-slate-500 font-preahvihear'
+                    className='font-preahvihear bg-slate-500'
                   >
                     Preahvihear
                   </option>
                   <option
                     value='bebasNeue'
-                    className='bg-slate-500 font-bebasNeue'
+                    className='font-bebasNeue bg-slate-500'
                   >
                     BebasNeue
                   </option>
                   <option
                     value='chakraPetch'
-                    className='bg-slate-500 font-chakraPetch'
+                    className='font-chakraPetch bg-slate-500'
                   >
                     Chakra Petch
                   </option>
                   <option
                     value='ibmPlexMono'
-                    className='bg-slate-500 font-ibmPlexMono'
+                    className='font-ibmPlexMono bg-slate-500'
                   >
                     Ibm Plex Mono
                   </option>

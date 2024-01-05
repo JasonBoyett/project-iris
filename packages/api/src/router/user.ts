@@ -1,32 +1,30 @@
-import { router, protectedProcedure } from "../trpc";
-import { User } from "@acme/types";
-import { userSchema } from "@acme/validators";
+import { router, protectedProcedure } from '../trpc'
+import { User } from '@acme/types'
+import { userSchema } from '@acme/validators'
 
 export const userRouter = router({
-  get: protectedProcedure
-    .output(userSchema)
-    .query<User>( async ({ ctx }) => {
-      const userId = ctx.auth.userId
-      if (userId === null || userId === undefined) throw new Error('No user')
-      const user = await ctx.prisma.user.findUnique({
-        where: {
-          id: userId,
+  get: protectedProcedure.output(userSchema).query<User>(async ({ ctx }) => {
+    const userId = ctx.auth.userId
+    if (userId === null || userId === undefined) throw new Error('No user')
+    const user = await ctx.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    })
+    if (user === null || user === undefined) {
+      const newUser = await ctx.prisma.user.create({
+        data: {
+          id: ctx.auth.userId?.toString(),
+          firstName: ctx.auth.user?.firstName ?? '',
+          lastName: ctx.auth.user?.lastName ?? '',
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       })
-      if (user === null || user === undefined) {
-        const newUser = await ctx.prisma.user.create({
-          data: {
-            id: ctx.auth.userId?.toString(),
-            firstName: ctx.auth.user?.firstName ?? '',
-            lastName: ctx.auth.user?.lastName ?? '',
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          },
-        })
-        return newUser
-      }
-      return user 
-    }), 
+      return newUser
+    }
+    return user
+  }),
 
   set: protectedProcedure
     .input(userSchema.partial())
@@ -56,7 +54,7 @@ export const userRouter = router({
           lastCubeByTwo: input.lastCubeByTwo,
           lastNumberGuesser: input.lastNumberGuesser,
           lastLetterMatcher: input.lastLetterMatcher,
-          lastWordPairs: input.lastWordPairs, 
+          lastWordPairs: input.lastWordPairs,
           lastGreenDot: input.lastGreenDot,
           numberGuesserFigures: input.numberGuesserFigures,
           schulteLevel: input.schulteLevel,
@@ -69,5 +67,4 @@ export const userRouter = router({
         },
       })
     }),
-    
 })

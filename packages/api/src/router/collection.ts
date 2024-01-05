@@ -21,7 +21,7 @@ export const collectionRouter = router({
           type: input.type,
           speed: input.speed,
           date: new Date(),
-        }
+        },
       })
     }),
 
@@ -35,7 +35,7 @@ export const collectionRouter = router({
           type: input.type,
           time: input.time,
           errorCount: input.errorCount,
-        }
+        },
       })
     }),
 
@@ -52,7 +52,7 @@ export const collectionRouter = router({
           figuresAtStart: input.figuresAtStart,
           figuresAtEnd: input.figuresAtEnd,
           date: new Date(),
-        }
+        },
       })
     }),
 
@@ -66,7 +66,7 @@ export const collectionRouter = router({
           numberCorrect: input.numberCorrect,
           numberWrong: input.numberWrong,
           date: new Date(),
-        }
+        },
       })
     }),
 
@@ -80,7 +80,7 @@ export const collectionRouter = router({
           time: input.time,
           errorCount: input.errorCount,
           date: new Date(),
-        }
+        },
       })
     }),
 
@@ -94,20 +94,19 @@ export const collectionRouter = router({
           speed: input.speed,
           date: new Date(),
           type: input.type,
-        }
+        },
       })
     }),
 
-  greenDotSession: protectedProcedure
-    .mutation(async ({ ctx }) => {
-      await ctx.prisma.greenDotSession.create({
-        data: {
-          id: uuid(),
-          userId: ctx.auth.userId as string, 
-          date: new Date(),
-        }
-      })
-    }),
+  greenDotSession: protectedProcedure.mutation(async ({ ctx }) => {
+    await ctx.prisma.greenDotSession.create({
+      data: {
+        id: uuid(),
+        userId: ctx.auth.userId as string,
+        date: new Date(),
+      },
+    })
+  }),
 
   wordPairSession: protectedProcedure
     .input(wordPairSessionData)
@@ -119,7 +118,7 @@ export const collectionRouter = router({
           time: input.time,
           errorCount: input.errorCount,
           date: new Date(),
-        }
+        },
       })
     }),
 })

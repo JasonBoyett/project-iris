@@ -18,9 +18,9 @@ export default function Page() {
   return (
     <>
       <Sidebar />
-      <div className='min-h-screen min-w-screen flex flex-col justify-center items-center'>
-        <div className='bg-white rounded-lg shadow-lg'>
-          <CornerFlasher number={ getSideLength(params.type as string) } />
+      <div className='min-w-screen flex min-h-screen flex-col items-center justify-center'>
+        <div className='rounded-lg bg-white shadow-lg'>
+          <CornerFlasher number={getSideLength(params.type as string)} />
         </div>
       </div>
     </>

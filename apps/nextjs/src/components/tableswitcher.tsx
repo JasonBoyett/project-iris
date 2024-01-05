@@ -1,11 +1,17 @@
-import Link from "next/link"
-import { type User } from "@acme/types"
+import Link from 'next/link'
+import { type User } from '@acme/types'
 
-export default function TableSwitcher({ user, className }: { user: User | null, className?: string }) {
+export default function TableSwitcher({
+  user,
+  className,
+}: {
+  user: User | null
+  className?: string
+}) {
   function NavEasy() {
     return (
       <Link
-        className='bg-white/20 text-white rounded-md px-4 py-2'
+        className='rounded-md bg-white/20 px-4 py-2 text-white'
         href='/exercises/schultetable/by3'
       >
         Easy
@@ -15,7 +21,7 @@ export default function TableSwitcher({ user, className }: { user: User | null, 
   function NavMed() {
     return (
       <Link
-        className='bg-white/20 text-white rounded-md px-4 py-2'
+        className='rounded-md bg-white/20 px-4 py-2 text-white'
         href='/exercises/schultetable/by5'
       >
         Medium
@@ -25,7 +31,7 @@ export default function TableSwitcher({ user, className }: { user: User | null, 
   function NavHard() {
     return (
       <Link
-        className='bg-white/20 text-white rounded-md px-4 py-2'
+        className='rounded-md bg-white/20 px-4 py-2 text-white'
         href='/exercises/schultetable/by7'
       >
         Hard
@@ -43,14 +49,12 @@ export default function TableSwitcher({ user, className }: { user: User | null, 
         <NavHard />
       </div>
     )
-  }
-  else if (user.schulteLevel === 'five') {
+  } else if (user.schulteLevel === 'five') {
     return (
       <div className={className}>
         <NavEasy />
         <NavMed />
       </div>
     )
-  }
-  else return <></>
+  } else return <></>
 }

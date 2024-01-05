@@ -14,7 +14,7 @@ export const framesContext = React.createContext<framesContextType>({
   },
 })
 
-export default function Page(){
+export default function Page() {
   const [framesCleared, setFramesCleared] = useState<number>(0)
   return (
     <>
@@ -23,14 +23,14 @@ export default function Page(){
       </Head>
       <Sidebar />
       <div className='flex-grid flex h-screen  items-center justify-center text-3xl text-white'>
-    <EvensAndOdds
-      evens={6}
-      rows={8}
-      cols={5}
-      segFigs={4}
-      framesCleared={framesCleared}
-      frameSetter={setFramesCleared}
-    />
+        <EvensAndOdds
+          evens={6}
+          rows={8}
+          cols={5}
+          segFigs={4}
+          framesCleared={framesCleared}
+          frameSetter={setFramesCleared}
+        />
       </div>
     </>
   )

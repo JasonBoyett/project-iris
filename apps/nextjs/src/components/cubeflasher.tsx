@@ -82,7 +82,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
   const store = useCubeStore()
   const [font, setFont] = useState<Font>('sans')
   const userStore = useUserStore()
-  const { mutate } = trpc.user.set.useMutation() 
+  const { mutate } = trpc.user.set.useMutation()
   const [section, setSection] = useState<number>(0)
   const [counter, setCounter] = useState<number>(0)
   const router = useRouter()
@@ -92,16 +92,18 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
       max: 5,
       language: userStore.user?.language as 'english' | 'spanish',
     },
-    { enabled: !!userStore }
+    { enabled: !!userStore },
   )
   const cubes = useRef<JSX.Element[]>([])
   const formattedCubes = useRef<JSX.Element[][]>([])
-  const [displayedCubes, setDisplayedCubes] = useState<JSX.Element[] | undefined>([])
+  const [displayedCubes, setDisplayedCubes] = useState<
+    JSX.Element[] | undefined
+  >([])
   const collectData = trpc.collect.boxFlasherSession.useMutation()
 
   function getRate() {
     if (!userStore.user) return 60_000 / 200
-    return ( 60_000 / userStore.user.currentWpm) * 4
+    return (60_000 / userStore.user.currentWpm) * 4
   }
 
   function tearDown() {
@@ -110,14 +112,16 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
       collectData.mutate({
         type: (() => {
           switch (number) {
-            case 2: return 'two'
-            case 3: return 'three'
-            default: return 'two'
+            case 2:
+              return 'two'
+            case 3:
+              return 'three'
+            default:
+              return 'two'
           }
         })(),
         userId: userStore.user.id,
         speed: userStore.user.currentWpm,
-
       })
     }
     switch (number) {
@@ -126,7 +130,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
         if (!userStore.user) return
         userStore.setUser({
           ...userStore.user,
-          lastCubeByTwo: formatDate(new Date())
+          lastCubeByTwo: formatDate(new Date()),
         })
         navigate(router as SingletonRouter, '/next')
         break
@@ -135,7 +139,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
         if (!userStore.user) return
         userStore.setUser({
           ...userStore.user,
-          lastCubeByThree: formatDate(new Date())
+          lastCubeByThree: formatDate(new Date()),
         })
         navigate(router as SingletonRouter, '/next')
         break

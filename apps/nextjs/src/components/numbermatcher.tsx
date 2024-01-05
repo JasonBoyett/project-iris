@@ -1,15 +1,15 @@
-import { useRef, useEffect, useState } from "react"
-import { trpc } from "../utils/trpc"
-import { useRouter } from "next/router"
-import useUserStore from "../stores/userStore"
-import { formatDate } from "@acme/helpers"
+import { useRef, useEffect, useState } from 'react'
+import { trpc } from '../utils/trpc'
+import { useRouter } from 'next/router'
+import useUserStore from '../stores/userStore'
+import { formatDate } from '@acme/helpers'
 import useTimer from '../hooks/useTimer'
 
 const CORRECT_INCREASE_SEGFIGS = 5
 const INCORRECT_DECREASE_SEGFIGS = 3
 
 function numberGen(segfigs: number) {
-  return Math.floor(Math.random() * (10 ** segfigs)).toString()
+  return Math.floor(Math.random() * 10 ** segfigs).toString()
 }
 
 type NumberButtonProps = {
@@ -19,7 +19,12 @@ type NumberButtonProps = {
   callBack: (arg: string) => void
 }
 
-function NumberButton({ number, callBack, className, disabled = false }: NumberButtonProps) {
+function NumberButton({
+  number,
+  callBack,
+  className,
+  disabled = false,
+}: NumberButtonProps) {
   function handleClick() {
     callBack(number.toString())
   }
@@ -50,14 +55,10 @@ export default function NumberMatcher() {
   const [target, setTarget] = useState<string>()
   const [showingTarget, setShowing] = useState(true)
   const user = trpc.user.get.useQuery()
-  const eventName = "teardown number matcher"
+  const eventName = 'teardown number matcher'
   const router = useRouter()
   const collectData = trpc.collect.numberGuesserSession.useMutation()
-  const componantTimer = useTimer(
-    "minutes",
-    1,
-    eventName,
-  )
+  const componantTimer = useTimer('minutes', 1, eventName)
 
   function handleCorrect() {
     incrementCounter.current += 1
@@ -100,13 +101,12 @@ export default function NumberMatcher() {
     }
   }
 
-
   function teardown() {
     if (user.data) {
-      if (user.data.isStudySubject){
+      if (user.data.isStudySubject) {
         collectData.mutate({
           userId: user.data.id,
-          figuresAtStart: segFigsAtStart.current, 
+          figuresAtStart: segFigsAtStart.current,
           figuresAtEnd: segFigs.current,
           numberCorrect: numberCorrect.current,
           numberWrong: numberIncorrect.current,
@@ -124,9 +124,8 @@ export default function NumberMatcher() {
         numberGuesserFigures: segFigs.current,
       })
     }
-    router.push('/next').catch((err) => console.log(err))
+    router.push('/next').catch(err => console.log(err))
   }
-
 
   useEffect(() => {
     if (!user.data) return
@@ -145,48 +144,44 @@ export default function NumberMatcher() {
     }, 5000)
   }, [user.data])
 
-  useEffect(() =>{
+  useEffect(() => {
     document.addEventListener(eventName, teardown)
     return () => {
       document.removeEventListener(eventName, teardown)
     }
-  },[])
+  }, [])
 
   return (
     <div className='grid grid-cols-1 gap-1'>
-      <div className='flex flex-col items-center justify-center min-h-screen gap-1'>
-        <div className='flex items-center justify-center rounded-lg bg-white/20 w-full h-24  text-4xl text-white'>
-          {
-            showingTarget
-              ? target
-              : guess
-          }
+      <div className='flex min-h-screen flex-col items-center justify-center gap-1'>
+        <div className='flex h-24 w-full items-center justify-center rounded-lg bg-white/20  text-4xl text-white'>
+          {showingTarget ? target : guess}
         </div>
         <div className='grid grid-cols-1 gap-1'>
-          <div className="grid grid-cols-3 gap-1">
-            {numbers.map((number) => (
+          <div className='grid grid-cols-3 gap-1'>
+            {numbers.map(number => (
               <NumberButton
-                className='flex bg-white/20 items-center justify-center rounded-lg p-4 md:h-24 md:w-24 text-white text-4xl'
+                className='flex items-center justify-center rounded-lg bg-white/20 p-4 text-4xl text-white md:h-24 md:w-24'
                 key={number}
                 disabled={showingTarget}
                 number={number}
-                callBack={(arg: string) => setGuess((prev) => prev + arg)}
+                callBack={(arg: string) => setGuess(prev => prev + arg)}
               />
             ))}
             <button
-              className='flex bg-white/20 items-center justify-center rounded-lg p-4 md:h-24 text-white text-4xl'
+              className='flex items-center justify-center rounded-lg bg-white/20 p-4 text-4xl text-white md:h-24'
               onClick={submit}
             >
               ✓
             </button>
             <NumberButton
-              className='flex bg-white/20 items-center justify-center rounded-lg p-4 md:h-24 text-white text-4xl'
+              className='flex items-center justify-center rounded-lg bg-white/20 p-4 text-4xl text-white md:h-24'
               number={0}
-              callBack={(arg: string) => setGuess((prev) => prev + arg)}
+              callBack={(arg: string) => setGuess(prev => prev + arg)}
             />
             <button
-              className='flex bg-white/20 items-center justify-center rounded-lg p-4 md:h-24 text-white text-4xl'
-              onClick={() => setGuess((prev) => prev.slice(0, -1))}
+              className='flex items-center justify-center rounded-lg bg-white/20 p-4 text-4xl text-white md:h-24'
+              onClick={() => setGuess(prev => prev.slice(0, -1))}
             >
               ⌫
             </button>

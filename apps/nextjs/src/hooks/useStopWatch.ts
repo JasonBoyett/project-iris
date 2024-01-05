@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useRef } from 'react'
 
 /**
  * @description A simple stop watch class to measure the time it takes
@@ -28,8 +28,8 @@ import { useRef } from "react"
  * @throws Error if the stopWatch is not started before getting duration
  *
  * @class StopWatch
-**/
-export function useStopWatch(){
+ **/
+export function useStopWatch() {
   const startTime = useRef(0)
   const endTime = useRef(0)
 
@@ -42,7 +42,7 @@ export function useStopWatch(){
   }
 
   function getDuration() {
-    if (startTime.current === 0 ) {
+    if (startTime.current === 0) {
       throw new Error('StopWatch must be started before getting duration')
     }
     if (endTime.current === 0) {
@@ -50,10 +50,10 @@ export function useStopWatch(){
     }
     return endTime.current - startTime.current
   }
-  
+
   return {
     start,
     end,
-    getDuration
+    getDuration,
   }
 }

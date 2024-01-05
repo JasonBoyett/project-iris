@@ -13,11 +13,7 @@ import { useIsVisible } from '../hooks/useIsVisible'
 import { type SingletonRouter, useRouter } from 'next/router'
 import { useUserStore } from '../stores/userStore'
 import { trpc } from '../utils/trpc'
-import type {
-  Font,
-  User,
-  HighlightType,
-} from '@acme/types'
+import type { Font, User, HighlightType } from '@acme/types'
 import { formatDate, navigate } from '@acme/helpers'
 import { FontProvider } from '../cva/fontProvider'
 
@@ -63,16 +59,26 @@ const layoutManager = (layout: HighlightType) => {
 
 function colorSelector(user: User) {
   switch (user.highlightColor) {
-    case 'BLUE': return 'blue'
-    case 'BLUE_GREY': return 'blueGrey'
-    case 'GREEN': return 'green'
-    case 'GREY': return 'grey'
-    case 'ORANGE': return 'orange'
-    case 'PEACH': return 'peach'
-    case 'PURPLE': return 'purple'
-    case 'RED': return 'red'
-    case 'TURQUOISE': return 'turquoise'
-    case 'YELLOW': return 'yellow'
+    case 'BLUE':
+      return 'blue'
+    case 'BLUE_GREY':
+      return 'blueGrey'
+    case 'GREEN':
+      return 'green'
+    case 'GREY':
+      return 'grey'
+    case 'ORANGE':
+      return 'orange'
+    case 'PEACH':
+      return 'peach'
+    case 'PURPLE':
+      return 'purple'
+    case 'RED':
+      return 'red'
+    case 'TURQUOISE':
+      return 'turquoise'
+    case 'YELLOW':
+      return 'yellow'
   }
   return 'none'
 }
@@ -176,12 +182,13 @@ export function createCells({
   return cells
 }
 
-function Grid({ rows = 7, type, }: GridProps) {
+function Grid({ rows = 7, type }: GridProps) {
   const [cellCounter, setCounter] = useState<number>(0)
   const [fetched, setFetched] = useState<string[]>([])
   const words = useRef<string[][]>([])
   const section = useRef<number>(0)
-  const [wordsPerCell, width, max]: [number, number, number] | number[] = layoutManager(type)
+  const [wordsPerCell, width, max]: [number, number, number] | number[] =
+    layoutManager(type)
   const [grid, setGrid] = useState<JSX.Element[]>()
   const returnClass = useState<string>(
     `grid grid-cols-${width} gap-2 bg-white p-2 rounded-lg shadow-md md:h-auto h-min md:w-2/5 w-4/5 items-center`,
@@ -189,7 +196,7 @@ function Grid({ rows = 7, type, }: GridProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [ticks, setTicks] = useState<number>(0)
   const [isVisible, setIsVisible] = useState<boolean>(false)
-  const store = useUserStore((state) => state)
+  const store = useUserStore(state => state)
   const [font, setFont] = useState<Font>('sans')
   const user = store.user
   const router = useRouter()
@@ -197,10 +204,10 @@ function Grid({ rows = 7, type, }: GridProps) {
   const buff = trpc.excercise.getRandomWords.useQuery(
     {
       number: wordsPerCell * (user?.currentWpm as number),
-      language: user?.language as "english" | "spanish",
+      language: user?.language as 'english' | 'spanish',
       max: max,
     },
-    { enabled: !!user }
+    { enabled: !!user },
   )
   const collectData = trpc.collect.highlightSession.useMutation()
 
@@ -264,18 +271,20 @@ function Grid({ rows = 7, type, }: GridProps) {
     if (!wordsPerCell) return
     if (!width) return
     if (!user) return
-    (() => {
+    ;(() => {
       const wordsArry = fetched
       words.current = partitionWords(
         wordsArry,
         wordsArry.length / wordsPerCell,
         rows * width,
       )
-      setGrid(createCells({
-        words: words.current[0],
-        loadCheck: setIsVisible,
-        user: user
-      }))
+      setGrid(
+        createCells({
+          words: words.current[0],
+          loadCheck: setIsVisible,
+          user: user,
+        }),
+      )
       setFont(user.font)
     })()
   }, [fetched])
@@ -283,7 +292,7 @@ function Grid({ rows = 7, type, }: GridProps) {
   useInterval(() => {
     if (!width) return
     if (!isVisible) return
-    if (cellCounter >= (rows * width) - 1) {
+    if (cellCounter >= rows * width - 1) {
       section.current++
       if (!user) return
       setGrid(
@@ -294,14 +303,14 @@ function Grid({ rows = 7, type, }: GridProps) {
         }),
       )
       setCounter(0)
-      setTicks((prev) => prev + 1)
+      setTicks(prev => prev + 1)
       if (ticks > words.current.reduce((a, b) => a.concat(b), []).length) {
         tearDown()
         return
       }
     } else {
-      setCounter((prev) => prev + 1)
-      setTicks((prev) => prev + 1)
+      setCounter(prev => prev + 1)
+      setTicks(prev => prev + 1)
       if (ticks > words.current.reduce((a, b) => a.concat(b), []).length) {
         tearDown()
         return
