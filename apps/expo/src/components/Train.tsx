@@ -6,12 +6,21 @@ import type {
   HighlightType,
 } from '@acme/types'
 import { useEffect, useState } from 'react';
+import useUserStore from '../stores/userStore';
+import { SchulteTable } from './exercises/SchulteTable';
 
 const TempCompnenet = (
-  { text, signal }: { text: string, signal: VoidFunction }
+  { text, signal, user }: { text: string, signal: VoidFunction, user: User | undefined }
 ) => {
   return (
     <View className='grid grid-cols-1 items-center justify-center min-h-screen gap-5'>
+      <Text className='text-6xl text-white p-4'>
+        {
+          !!user
+            ? `Welcome ${user.firstName ?? 'User'}`
+            : 'Loading...'
+        }
+      </Text>
       <Text className='text-6xl text-white p-4'>
         {text}
       </Text>
@@ -38,6 +47,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
     case undefined: 
       return (
         <TempCompnenet
+          user={user}
           text='Exercise not found'
           signal={signal}
         />
@@ -45,6 +55,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
     case 'oneByTwo':
       return (
         <TempCompnenet
+          user={user}
           text={exercise}
           signal={signal}
         />
@@ -52,6 +63,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
     case 'oneByOne':
       return (
         <TempCompnenet
+          user={user}
           text={exercise}
           signal={signal}
         />
@@ -59,6 +71,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
     case 'twoByOne':
       return (
         <TempCompnenet
+          user={user}
           text={exercise}
           signal={signal}
         />
@@ -66,6 +79,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
     case 'twoByTwo':
       return (
         <TempCompnenet
+          user={user}
           text={exercise}
           signal={signal}
         />
@@ -73,6 +87,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
     case 'fourByOne':
       return (
         <TempCompnenet
+          user={user}
           text={exercise}
           signal={signal}
         />
@@ -80,6 +95,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
     case 'evenNumbers':
       return (
         <TempCompnenet
+          user={user}
           text={exercise}
           signal={signal}
         />
@@ -87,6 +103,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
     case 'cubeByTwo':
       return (
         <TempCompnenet
+          user={user}
           text={exercise}
           signal={signal}
         />
@@ -94,6 +111,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
     case 'cubeByThree':
       return (
         <TempCompnenet
+          user={user}
           text={exercise}
           signal={signal}
         />
@@ -101,6 +119,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
     case 'greenDot':
       return (
         <TempCompnenet
+          user={user}
           text={exercise}
           signal={signal}
         />
@@ -108,6 +127,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
     case 'evenNumbers':
       return (
         <TempCompnenet
+          user={user}
           text={exercise}
           signal={signal}
         />
@@ -115,6 +135,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
     case 'numberGuesser':
       return (
         <TempCompnenet
+          user={user}
           text={exercise}
           signal={signal}
         />
@@ -122,6 +143,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
     case 'wordPairs':
       return (
         <TempCompnenet
+          user={user}
           text={exercise}
           signal={signal}
         />
@@ -129,20 +151,22 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
     case 'letterMatcher':
       return (
         <TempCompnenet
+          user={user}
           text={exercise}
           signal={signal}
         />
       )
     case 'schulteTable':
       return (
-        <TempCompnenet
-          text={exercise}
+        <SchulteTable
+          user={user}
           signal={signal}
         />
       )
     case 'speedTest':
       return (
         <TempCompnenet
+          user={user}
           text={exercise}
           signal={signal}
         />
@@ -191,7 +215,7 @@ export const TrainingScreen = () => {
       <View>
         {training ? (
           <Session 
-            exercise={next} 
+            exercise={'schulteTable'} 
             signal={cycle} 
             user={user as User} 
           />
