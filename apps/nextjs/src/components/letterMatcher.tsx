@@ -161,8 +161,8 @@ export default function LetterGrid({ size }: LetterGridProps) {
         className={[
           'grid gap-3 md:gap-5',
           'border-2 p-3 text-white',
-          'text-5xl md:text-6xl',
-          'grid-cols- rounded-lg' + size.toString(),
+          'text-5xl md:text-6xlrounded-lg',
+          'grid-cols-'  + size.toString(),
         ].join(' ')}
       >
         {grid}

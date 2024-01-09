@@ -3,11 +3,11 @@ import { trpc } from '../utils/trpc';
 import type { 
   Exercise, 
   User, 
-  HighlightType,
 } from '@acme/types'
 import { useEffect, useState } from 'react';
-import useUserStore from '../stores/userStore';
 import { SchulteTable } from './exercises/SchulteTable';
+import { EvenNumbers } from './exercises/EvenNumber';
+import { WordPairs } from './exercises/WordPiars';
 
 const TempCompnenet = (
   { text, signal, user }: { text: string, signal: VoidFunction, user: User | undefined }
@@ -94,9 +94,8 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
       )
     case 'evenNumbers':
       return (
-        <TempCompnenet
+        <EvenNumbers
           user={user}
-          text={exercise}
           signal={signal}
         />
       )
@@ -142,9 +141,8 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
       )
     case 'wordPairs':
       return (
-        <TempCompnenet
+        <WordPairs
           user={user}
-          text={exercise}
           signal={signal}
         />
       )
@@ -215,7 +213,7 @@ export const TrainingScreen = () => {
       <View>
         {training ? (
           <Session 
-            exercise={'schulteTable'} 
+            exercise={'wordPairs'} 
             signal={cycle} 
             user={user as User} 
           />
