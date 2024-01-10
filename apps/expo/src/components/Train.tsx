@@ -1,13 +1,14 @@
 import { Button, SafeAreaView, Text, View } from 'react-native';
 import { trpc } from '../utils/trpc';
-import type { 
-  Exercise, 
-  User, 
+import type {
+  Exercise,
+  User,
 } from '@acme/types'
 import { useEffect, useState } from 'react';
 import { SchulteTable } from './exercises/SchulteTable';
 import { EvenNumbers } from './exercises/EvenNumber';
 import { WordPairs } from './exercises/WordPiars';
+import { LetterMatcher } from './exercises/Letters';
 
 const TempCompnenet = (
   { text, signal, user }: { text: string, signal: VoidFunction, user: User | undefined }
@@ -39,12 +40,12 @@ type ExerciseProps = {
 }
 const Session = ({ exercise, signal, user }: ExerciseProps) => {
 
-  useEffect(() =>{
+  useEffect(() => {
     console.log(exercise)
   }, [])
 
   switch (exercise) {
-    case undefined: 
+    case undefined:
       return (
         <TempCompnenet
           user={user}
@@ -148,9 +149,9 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
       )
     case 'letterMatcher':
       return (
-        <TempCompnenet
+        <LetterMatcher
+          size={7}
           user={user}
-          text={exercise}
           signal={signal}
         />
       )
@@ -169,22 +170,22 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
           signal={signal}
         />
       )
-      default: 
-        return (
-          <View className='grid grid-cols-1 items-center justify-center min-h-screen gap-5'>
-            <Text className='text-6xl text-white p-4'>
-              You're done for the Day!
-            </Text>
-            <Button
-              title='Signal'
-              onPress={() => signal()}
-            />
-          </View>
-        )
+    default:
+      return (
+        <View className='grid grid-cols-1 items-center justify-center min-h-screen gap-5'>
+          <Text className='text-6xl text-white p-4'>
+            You're done for the Day!
+          </Text>
+          <Button
+            title='Signal'
+            onPress={() => signal()}
+          />
+        </View>
+      )
   }
 }
 
-const Next = ({ cycle }:{ cycle: VoidFunction}) => {
+const Next = ({ cycle }: { cycle: VoidFunction }) => {
   return (
     <View className='grid grid-cols-1 items-center justify-center min-h-screen gap-5'>
       <Text className='text-6xl text-white p-4'>
@@ -212,10 +213,10 @@ export const TrainingScreen = () => {
     <SafeAreaView className='bg-[#2e026d] bg-gradient-to-b from-[#2e026d] to-[#15162c] min-h-screen items-center'>
       <View>
         {training ? (
-          <Session 
-            exercise={'wordPairs'} 
-            signal={cycle} 
-            user={user as User} 
+          <Session
+            exercise={'letterMatcher'}
+            signal={cycle}
+            user={user as User}
           />
         ) : (
           <Next cycle={cycle} />

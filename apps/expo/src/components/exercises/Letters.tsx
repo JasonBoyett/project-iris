@@ -11,29 +11,39 @@ import {
   useMemo,
   useRef,
 } from 'react'
-import { useInterval } from '../../hooks/useInterval'
-import { User } from '@acme/types'
-import { FontProvider } from '../../cva/FontProvider'
+import type { User } from '@acme/types'
+import { FontButton, FontProvider } from '../../cva/FontProvider'
+import * as taskManager from 'expo-task-manager'
+import * as backgroundFetch from 'expo-background-fetch'
 
 type CellProps = {
   content: string
   highlight: boolean
   user: User
+  isCenter?: boolean
 }
 const Cell = (props: CellProps) => {
-  const { content, highlight, user } = props
+  const { content, 
+    highlight, 
+    user, 
+    isCenter
+  } = props
+
   return (
-    <FontProvider
+    <FontButton
       font={user.font ?? 'sans'}
+      className="h-14 w-14"
     >
       <Text
         className={
-          highlight
-            ? 'text-4xl text-center text-white bg-yellow-400'
-            : 'text-4xl text-center text-black bg-white'
+          !!isCenter 
+          ? 'text-6xl text-center text-green-500'
+          :(highlight
+            ? 'text-6xl text-center text-yellow-400'
+            : 'text-6xl text-center text-white')
         }
       >{content}</Text>
-    </FontProvider>
+    </FontButton>
   )
 }
 
@@ -42,13 +52,24 @@ const getLetter = () => {
   return letters[Math.floor(Math.random() * letters.length)] as string
 }
 
-const LetterMatcher = (props: { user: User, size: number }) => {
-  const { user, size } = props
+type LetterMatcherProps = {
+  user: User
+  size: number
+  signal: VoidFunction
+}
+export const LetterMatcher = (props: LetterMatcherProps) => {
+  const {
+    user,
+    size,
+    signal,
+  } = props
 
   const [showMessage, setShowMessage] = useState<boolean>(false)
   const correctCount = useRef<number>(0)
   const incorrectCount = useRef<number>(0)
+  const [started, setStarted] = useState<boolean>(false)
   const [top, setTop] = useState<string>('●')
+  const letters = useMemo( () => Array.from({ length: size * size }, () => getLetter()), [size])
   const [bottom, setBottom] = useState<string>('●')
   const [left, setLeft] = useState<string>('●')
   const [right, setRight] = useState<string>('●')
@@ -58,54 +79,96 @@ const LetterMatcher = (props: { user: User, size: number }) => {
     content: string
     highlight: boolean
     user: User
+    position: number
+    isCenter?: boolean
   }
   const gridData = useMemo(() => {
     const grid = Array<Data>()
     for (let i = 0; i < size; i++) {
-      const row = []
       for (let j = 0; j < size; j++) {
         if (i === Math.floor(size / 2) && j === Math.floor(size / 2)) {
-          row.push({
+          grid.push({
             content: '⊚',
+            isCenter: true,
             highlight: true,
             user: user,
+            position: i * size + j,
           })
         } else if (i === 0 && j === Math.floor(size / 2)) {
-          row.push({
-            content: top,
+          grid.push({
+            content: (() => {
+              if (isShowing) {
+                return top
+              }
+              return '●'
+            })(),
             highlight: true,
             user: user,
+            position: i * size + j,
           })
         } else if (i === size - 1 && j === Math.floor(size / 2)) {
-          row.push({
-            content: bottom,
+          grid.push({
+            content: (() => {
+              if (isShowing) {
+                return bottom
+              }
+              return '●'
+            })(),
             highlight: true,
             user: user,
+            position: i * size + j,
           })
         } else if (i === Math.floor(size / 2) && j === 0) {
-          row.push({
-            content: left,
+          grid.push({
+            content: (() => {
+              if (isShowing) {
+                return left
+              }
+              return '●'
+            })(),
             highlight: true,
             user: user,
+            position: i * size + j,
           })
         } else if (i === Math.floor(size / 2) && j === size - 1) {
-          row.push({
-            content: right,
+          grid.push({
+            content: (() => {
+              if (isShowing) {
+                return right
+              }
+              return '●'
+            })(),
             highlight: true,
             user: user,
+            position: i * size + j,
           })
         } else {
-          row.push({
-            content: '●',
+          grid.push({
+            content: (() => {
+              if (isShowing) {
+                return letters[i * size + j] ?? '●'
+              }
+              return '●'
+            })(),
             highlight: false,
             user: user,
+            position: i * size + j,
           })
         }
 
       }
     }
+    console.log(grid)
     return grid
   }, [isShowing])
+
+  const reset = () => {
+    setShowing(() => false)
+    setTop(() => '●')
+    setBottom(() => '●')
+    setLeft(() => '●')
+    setRight(() => '●')
+  }
 
   const gameLoop = () => {
     matching.current = Math.random() < 0.5
@@ -123,7 +186,7 @@ const LetterMatcher = (props: { user: User, size: number }) => {
     }
     console.log(top, bottom, left, right)
     setShowing(() => true)
-    setTimeout(() => setShowing(() => false), 500)
+    setTimeout(() => reset(), 500)
   }
 
   const match = () => {
@@ -134,44 +197,62 @@ const LetterMatcher = (props: { user: User, size: number }) => {
   const Grid = () => {
     const MyList = FlatList<Data>
     return (
-      <View>
+      <View
+        className="border-white border-2 rounded-lg items-center justify-center"
+      >
         <MyList
           data={gridData}
           key={gridData.length}
+          numColumns={size}
           renderItem={({ item }) => (
             <Cell
               content={item.content}
               highlight={item.highlight}
               user={item.user}
+              isCenter={item.isCenter ?? false}
             />
           )}
         />
       </View>
     )
   }
- 
+
+  useEffect(() => {
+    if (started) {
+      setTimeout(() => {
+        signal()
+      }, 60_000)
+    }
+  }, [started])
+
   return (
-    <View>
+    <View className="mt-28">
       <View>
-        <Text className="text-4xl text-center text-black bg-white">
-          Press a button to start
+        <Text className="text-4xl text-center text-white ">
+          {
+            !started
+              ? 'Press a button to start'
+              : 'Game started'
+          }
         </Text>
       </View>
       <Grid />
-      <View>
+      <View className='flex-row items-center justify-center'>
         <TouchableOpacity
           onPress={() => {
             if (match()) {
               correctCount.current++
-            } 
+            }
             else {
               incorrectCount.current++
             }
-
+            setStarted(() => true)
             gameLoop()
           }}
         >
-          ✓
+          <Text className="text-4xl text-center text-white">
+            ✓
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -181,10 +262,13 @@ const LetterMatcher = (props: { user: User, size: number }) => {
             else {
               incorrectCount.current++
             }
+            setStarted(() => true)
             gameLoop()
           }}
         >
-          ⛔
+          <Text className="text-4xl text-center">
+            ⛔
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

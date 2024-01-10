@@ -108,6 +108,9 @@ importers:
       expo-auth-session:
         specifier: ^4.0.3
         version: 4.0.3(expo@48.0.10)
+      expo-background-fetch:
+        specifier: ~11.1.1
+        version: 11.1.1(expo@48.0.10)
       expo-constants:
         specifier: ~14.2.1
         version: 14.2.1(expo@48.0.10)
@@ -126,6 +129,9 @@ importers:
       expo-status-bar:
         specifier: ^1.4.4
         version: 1.4.4
+      expo-task-manager:
+        specifier: ~11.1.1
+        version: 11.1.1(expo@48.0.10)
       expo-web-browser:
         specifier: ^12.1.1
         version: 12.1.1(expo@48.0.10)
@@ -7194,6 +7200,15 @@ packages:
       - supports-color
     dev: false
 
+  /expo-background-fetch@11.1.1(expo@48.0.10):
+    resolution: {integrity: sha512-5X63ogpCqEqdqXYk4Sl4J8Lt/ZWcQCboS1pq3uprqD1KUi4ICl1P3gwPo+il3rYPV6xYb74Wv1KyyEEYj2vklg==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 48.0.10(@babel/core@7.20.5)
+      expo-task-manager: 11.1.1(expo@48.0.10)
+    dev: false
+
   /expo-constants@14.2.1(expo@48.0.10):
     resolution: {integrity: sha512-DD5u4QmBds2U7uYo409apV7nX+XjudARcgqe7S9aRFJ/6kyftmuxvk1DpaU4X42Av8z/tfKwEpuxl+vl7HHx/Q==}
     peerDependencies:
@@ -7375,6 +7390,15 @@ packages:
 
   /expo-status-bar@1.4.4:
     resolution: {integrity: sha512-5DV0hIEWgatSC3UgQuAZBoQeaS9CqeWRZ3vzBR9R/+IUD87Adbi4FGhU10nymRqFXOizGsureButGZIXPs7zEA==}
+    dev: false
+
+  /expo-task-manager@11.1.1(expo@48.0.10):
+    resolution: {integrity: sha512-Ot4wq0fVd8+I1W7MsJz0rNdX0ma/zdnBvAppxDX1Oo0o0exo4qs1FmgrTnh3OBnn18aB4cX3wBJoXIatIgNMZQ==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 48.0.10(@babel/core@7.20.5)
+      unimodules-app-loader: 4.1.2
     dev: false
 
   /expo-web-browser@12.1.1(expo@48.0.10):
@@ -13165,6 +13189,10 @@ packages:
   /unicode-property-aliases-ecmascript@2.1.0:
     resolution: {integrity: sha512-6t3foTQI9qne+OZoVQB/8x8rk2k1eVy1gRXhV3oFQ5T6R1dqQ1xtin3XqSlx3+ATBkliTaR/hHyJBm+LVPNM8w==}
     engines: {node: '>=4'}
+
+  /unimodules-app-loader@4.1.2:
+    resolution: {integrity: sha512-DLYUCjNpguFhNpxNsBf47NWZi2OjIfWCVQY4f+r4/bwIqFfR7qQd6lXwCFA8EhHS1ti87CBzjMSbIC5bB0J/0Q==}
+    dev: false
 
   /unique-filename@1.1.1:
     resolution: {integrity: sha512-Vmp0jIp2ln35UTXuryvjzkjGdRyf9b2lTXuSYUiPmzRcl3FDtYqAwOnTJkAngD9SWhnoJzDbTKwaOrZ+STtxNQ==}
