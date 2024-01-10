@@ -113,16 +113,13 @@ export default function LetterGrid({ size }: LetterGridProps) {
 
   function gameLoop() {
     matching.current = Math.random() < 0.5
-    console.log('triggerd')
     if (matching.current) {
-      console.log('matching')
       const letter = getLetter()
       setTop(() => letter)
       setBottom(() => letter)
       setLeft(() => letter)
       setRight(() => letter)
     } else {
-      console.log('not matching')
       setTop(() => getLetter())
       setBottom(() => getLetter())
       setLeft(() => getLetter())
