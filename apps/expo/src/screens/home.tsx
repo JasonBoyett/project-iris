@@ -10,6 +10,7 @@ import type { AppRouter } from '@acme/api'
 import { trpc } from '../utils/trpc'
 import { getAvailableExercises, isAlreadyDone } from '@acme/helpers'
 import { useNavigation } from '@react-navigation/native'
+import useUserStore from '../stores/userStore'
 
 const buttonStyle = [
   'text-white md:text-3xl',
@@ -152,6 +153,7 @@ const ExerciseCounter = ({ user }: { user: User }) => {
 
 export const HomeScreen = () => {
   const user = trpc.user.get.useQuery()
+  const store = useUserStore()
   const [isChekList, setIsCheckList] = useState(false)
   const { mutate: mutateUser } = trpc.user.set.useMutation()
   const nav = useNavigation<StackNavigation>()
@@ -214,8 +216,8 @@ export const HomeScreen = () => {
         >
           {
             !isChekList
-              ? <ExerciseCounter user={user.data as User} />
-              : <ExerciseList user={user.data as User} />
+              ? <ExerciseCounter user={store.user as User} />
+              : <ExerciseList user={store.user as User} />
           }
         </TouchableOpacity>
         {

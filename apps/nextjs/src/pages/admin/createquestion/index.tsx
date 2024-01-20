@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import Sidebar from '~/components/sidebar'
-import { api } from '~/utils/api'
-import type { Answer } from '~/utils/types'
+import Sidebar from '../../../components/sidebar'
+import { trpc } from '../../../utils/trpc'
+import type { Answer } from '@acme/types'
 
 function Loading() {
   return (
@@ -22,7 +22,7 @@ function QuestionForm() {
   const [answerB, setAnswerB] = useState('')
   const [answerC, setAnswerC] = useState('')
   const [answerD, setAnswerD] = useState('')
-  const { mutate } = api.createSpeedTest.createSpeedTest.useMutation()
+  const { mutate } = trpc.buildSpeedTest.createSpeedTest.useMutation() 
   const [correctAnswer, setCorrectAnswer] = useState<Answer>('A')
   const router = useRouter()
 
@@ -148,7 +148,7 @@ function QuestionForm() {
 
 export default function Page() {
   const router = useRouter()
-  const { data: user } = api.user.getUnique.useQuery()
+  const { data: user } = trpc.user.get.useQuery()
   const [approved, setApproved] = useState(false)
 
   useEffect(() => {

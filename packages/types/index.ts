@@ -5,6 +5,7 @@ import {
   type userSchema, 
   type wordPairData,
   type highlightColor,
+  type FlasherType,
 } from '@acme/validators'
 import type { speedTestSchema } from '@acme/validators'
 
@@ -24,6 +25,8 @@ export type User = z.infer<typeof userSchema>
 export type WordPair = z.infer<typeof wordPairData>
 
 export type SpeedTest = z.infer<typeof speedTestSchema>
+
+export type FlasherType = z.infer<typeof FlasherType>
 
 const Highlight = [
   'fourByOne',

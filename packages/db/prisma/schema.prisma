@@ -67,7 +67,7 @@ model User {
   id                      String                 @id @unique
   createdAt               DateTime               @default(now())
   updatedAt               DateTime               @updatedAt
-  firstName               String                 @default("Defaul") @db.VarChar(255)
+  firstName               String                 @default("Default") @db.VarChar(255)
   lastName                String                 @default("User") @db.VarChar(255)
   maxWpm                  Int                    @default(250) @db.SmallInt
   testSpeed               Int                    @default(230) @db.SmallInt
@@ -101,7 +101,7 @@ model User {
   font                    Font                   @default(sans)
   isUsingChecklist        Boolean                @default(true)
   isAdmin                 Boolean                @default(false)
-  isStudySubject          Boolean                @default(false)
+  isStudySubject          Boolean                @default(true)
   schulteLevel            SchulteType            @default(three)
   schulteAdvanceCount     Int                    @default(0)
   language                Language               @default(english)
@@ -130,6 +130,8 @@ model SchulteSession {
   time       Int
   errorCount Int         @db.SmallInt
   userId     String      @db.VarChar(255)
+  date       DateTime    @db.DateTime
+  platform   String      @default("web")
 
   @@index([id])
 }
@@ -141,17 +143,19 @@ model EvenNumberSession {
   errorCount Int      @db.SmallInt
   time       Int
   date       DateTime @db.DateTime
+  platform   String   @default("web")
 
   @@index([id])
 }
 
 model HighlightSession {
-  id     String        @unique
-  userId String
-  user   User          @relation(fields: [userId], references: [id])
-  speed  Int           @db.SmallInt
-  date   DateTime      @db.DateTime
-  type   HighlightType
+  id       String        @unique
+  userId   String
+  user     User          @relation(fields: [userId], references: [id])
+  speed    Int           @db.SmallInt
+  date     DateTime      @db.DateTime
+  type     HighlightType
+  platform String        @default("web")
 
   @@index([id])
 }
@@ -166,6 +170,7 @@ model NumberGuesserSession {
   figuresAtStart Int
   figuresAtEnd   Int
   date           DateTime @db.DateTime
+  platform       String   @default("web")
 
   @@index([id])
 }
@@ -177,37 +182,41 @@ model LetterMatcherSession {
   numberCorrect Int
   numberWrong   Int
   date          DateTime @db.DateTime
+  platform      String   @default("web")
 
   @@index([id])
 }
 
 model WordFlasherSession {
-  id     String   @unique
-  userId String
-  user   User     @relation(fields: [userId], references: [id])
-  speed  Int      @db.SmallInt
-  date   DateTime @db.DateTime
-  type   String   @db.VarChar(255)
+  id       String   @unique
+  userId   String
+  user     User     @relation(fields: [userId], references: [id])
+  speed    Int      @db.SmallInt
+  date     DateTime @db.DateTime
+  type     String   @db.VarChar(255)
+  platform String   @default("web")
 
   @@index([id])
 }
 
 model BoxFlasherSession {
-  id     String   @unique
-  userId String
-  user   User     @relation(fields: [userId], references: [id])
-  speed  Int
-  date   DateTime @db.DateTime
-  type   BoxType
+  id       String   @unique
+  userId   String
+  user     User     @relation(fields: [userId], references: [id])
+  speed    Int
+  date     DateTime @db.DateTime
+  type     BoxType
+  platform String   @default("web")
 
   @@index([id])
 }
 
 model GreenDotSession {
-  id     String   @unique
-  userId String
-  user   User     @relation(fields: [userId], references: [id])
-  date   DateTime @db.DateTime
+  id       String   @unique
+  userId   String
+  user     User     @relation(fields: [userId], references: [id])
+  date     DateTime @db.DateTime
+  platform String   @default("web")
 
   @@index([id])
 }
@@ -219,6 +228,7 @@ model PairsSession {
   date       DateTime @db.DateTime
   time       Int
   errorCount Int
+  platform   String   @default("web")
 
   @@index([id])
 }
@@ -260,14 +270,16 @@ model SpeedQuestion {
 }
 
 model WordPair {
-  primaryWord   String   @id @unique
+  id            Int      @id @default(autoincrement()) @unique
+  primaryWord   String   
   secondaryWord String
   language      Language @default(english)
 
-  @@index([primaryWord])
+  @@index([id])
 }
+
 model Post {
-    id      String @id @default(cuid())
-    title   String
-    content String
+  id      String @id @default(cuid())
+  title   String
+  content String
 }

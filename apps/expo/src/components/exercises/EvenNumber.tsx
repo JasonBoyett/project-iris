@@ -129,6 +129,7 @@ const Table = (props: TableProps) => {
       userId: user.id,
       time: timer.getDuration(),
       errorCount: errors,
+      platform: 'mobile',
     })
     signal()
   }

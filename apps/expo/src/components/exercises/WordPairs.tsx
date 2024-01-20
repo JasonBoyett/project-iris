@@ -112,7 +112,7 @@ const Table = (props: TableProps) => {
   const { mutate } = trpc.user.set.useMutation()
   const pairs = trpc.excercise.getWordPairs.useQuery({
     language: 'english',
-    count: 5,
+    count: PAIR_COUNT,
   })
   const words = trpc.excercise.getRandomWords.useQuery({
     language: 'english',
@@ -128,6 +128,7 @@ const Table = (props: TableProps) => {
     pairs.data.forEach((pair) => {
       content.push({ content: pair })
     })
+    console.log(pairs.data)
     words.data.forEach((word) => {
       content.push({ content: word })
     })
@@ -142,7 +143,8 @@ const Table = (props: TableProps) => {
     collect({
       userId: user.id,
       time: timer.getDuration(),
-      errorCount,
+      errorCount: errorCount,
+      platform: 'mobile',
     })
     signal()
   }

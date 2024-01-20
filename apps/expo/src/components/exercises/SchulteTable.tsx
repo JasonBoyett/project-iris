@@ -100,6 +100,7 @@ const Table = (props: TableProps) => {
         advance(user)
       } else {
         mutate({ ...user, schulteAdvanceCount: goodSessions + 1 })
+        user = { ...user, schulteAdvanceCount: goodSessions + 1 }
       }
     }
   }
@@ -120,6 +121,7 @@ const Table = (props: TableProps) => {
       type: sideLength,
     })
     determineAdvancement(user)
+    user.lastSchulte = formatDate()
     signal()
   }
 

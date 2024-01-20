@@ -12,7 +12,7 @@ import {
   wordPairProps,
 } from '@acme/validators'
 import { Prisma, type SpeedQuestion, type WordPair } from '@acme/db'
-import { getNextExercise, getNextWebURL } from '@acme/helpers'
+import { getNextExercise, getNextURL } from '@acme/helpers'
 
 const multiTest = speedTestSchema.array()
 
@@ -95,7 +95,6 @@ async function getWords({
     const response = await axios.get<string[]>(
       `https://random-word-api.herokuapp.com/word?number=${wordsReturned}&length=${wordLength}`,
     )
-    console.log(response.data)
     return response.data
   }
   if (language === 'spanish') {
@@ -175,7 +174,7 @@ export const excercisePropsRouter = router({
     .output(z.string())
     .query(({ input }) => {
       const next = getNextExercise(input)
-      return getNextWebURL(next)
+      return getNextURL(next)
     }),
 
   getNext: protectedProcedure
@@ -188,7 +187,7 @@ export const excercisePropsRouter = router({
         },
       })
       const next = getNextExercise(user)
-      const result = exercise.safeParse(next) 
+      const result = exercise.safeParse(next)
       if (!result.success) {
         return undefined
       }

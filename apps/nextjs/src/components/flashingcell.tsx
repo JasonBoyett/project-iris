@@ -201,14 +201,11 @@ function Grid({ rows = 7, type }: GridProps) {
   const user = store.user
   const router = useRouter()
   const { mutate } = trpc.user.set.useMutation()
-  const buff = trpc.excercise.getRandomWords.useQuery(
-    {
-      number: wordsPerCell * (user?.currentWpm as number),
-      language: user?.language as 'english' | 'spanish',
-      max: max,
-    },
-    { enabled: !!user },
-  )
+  const buff = trpc.excercise.getRandomWords.useQuery({
+    number: wordsPerCell * (user?.currentWpm as number),
+    language: user?.language ?? 'english',
+    max: max,
+  }, { enabled: !!user })
   const collectData = trpc.collect.highlightSession.useMutation()
 
   function setSpeed(user: User | undefined) {
@@ -271,22 +268,22 @@ function Grid({ rows = 7, type }: GridProps) {
     if (!wordsPerCell) return
     if (!width) return
     if (!user) return
-    ;(() => {
-      const wordsArry = fetched
-      words.current = partitionWords(
-        wordsArry,
-        wordsArry.length / wordsPerCell,
-        rows * width,
-      )
-      setGrid(
-        createCells({
-          words: words.current[0],
-          loadCheck: setIsVisible,
-          user: user,
-        }),
-      )
-      setFont(user.font)
-    })()
+      ; (() => {
+        const wordsArry = fetched
+        words.current = partitionWords(
+          wordsArry,
+          wordsArry.length / wordsPerCell,
+          rows * width,
+        )
+        setGrid(
+          createCells({
+            words: words.current[0],
+            loadCheck: setIsVisible,
+            user: user,
+          }),
+        )
+        setFont(user.font)
+      })()
   }, [fetched])
 
   useInterval(() => {

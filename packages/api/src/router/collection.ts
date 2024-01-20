@@ -9,6 +9,7 @@ import {
   letterMatcherData,
   wordPairSessionData,
 } from '@acme/validators'
+import { z } from 'zod'
 
 export const collectionRouter = router({
   highlightSession: protectedProcedure
@@ -31,10 +32,12 @@ export const collectionRouter = router({
       await ctx.prisma.schulteSession.create({
         data: {
           id: uuid(),
+          date: new Date(),
           userId: input.userId,
           type: input.type,
           time: input.time,
           errorCount: input.errorCount,
+          platform: input.platform ?? 'web',
         },
       })
     }),
@@ -52,6 +55,7 @@ export const collectionRouter = router({
           figuresAtStart: input.figuresAtStart,
           figuresAtEnd: input.figuresAtEnd,
           date: new Date(),
+          platform: input.platform ?? 'web',
         },
       })
     }),
@@ -66,6 +70,7 @@ export const collectionRouter = router({
           numberCorrect: input.numberCorrect,
           numberWrong: input.numberWrong,
           date: new Date(),
+          platform: input.platform ?? 'web',
         },
       })
     }),
@@ -80,6 +85,7 @@ export const collectionRouter = router({
           time: input.time,
           errorCount: input.errorCount,
           date: new Date(),
+          platform: input.platform ?? 'web',
         },
       })
     }),
@@ -94,19 +100,28 @@ export const collectionRouter = router({
           speed: input.speed,
           date: new Date(),
           type: input.type,
+          platform: input.platform ?? 'web',
         },
       })
     }),
 
-  greenDotSession: protectedProcedure.mutation(async ({ ctx }) => {
-    await ctx.prisma.greenDotSession.create({
-      data: {
-        id: uuid(),
-        userId: ctx.auth.userId as string,
-        date: new Date(),
-      },
-    })
-  }),
+  greenDotSession: protectedProcedure
+    .input(
+      z.object({
+        platform: z.union([z.literal('web'), z.literal('mobile')])
+          .optional()
+      }).optional()
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.greenDotSession.create({
+        data: {
+          id: uuid(),
+          userId: ctx.auth.userId as string,
+          date: new Date(),
+          platform: input?.platform ?? 'web',
+        },
+      })
+    }),
 
   wordPairSession: protectedProcedure
     .input(wordPairSessionData)
@@ -118,6 +133,7 @@ export const collectionRouter = router({
           time: input.time,
           errorCount: input.errorCount,
           date: new Date(),
+          platform: input.platform ?? 'web',
         },
       })
     }),

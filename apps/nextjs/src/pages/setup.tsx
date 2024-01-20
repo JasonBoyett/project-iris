@@ -1,19 +1,18 @@
-import { useUserStore } from '~/stores/userStore'
+import { useUserStore } from '../stores/userStore'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { SingletonRouter, useRouter } from 'next/router'
+import { type SingletonRouter, useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { api } from '~/utils/api'
-import type { User } from '~/utils/types'
-import Sidebar from '~/components/sidebar'
-import { navigateToNextExercise } from '~/utils/helpers'
+import { trpc } from '../utils/trpc'
+import Sidebar from '../components/sidebar'
+import { navigateToNextExercise } from '@acme/helpers'
 
 const Page: NextPage = () => {
-  const user: User | undefined = api.user.getUnique.useQuery<User>().data
+  const user = trpc.user.get.useQuery().data
   const [first, setFirst] = useState<string>()
   const [last, setLast] = useState<string>()
   const store = useUserStore()
-  const { mutate } = api.user.setUser.useMutation()
+  const { mutate } = trpc.user.set.useMutation()
   const inputStyle =
     'rounded-full p-4 h-16 py-5 bg-white/20 text-black font-normal'
   const router = useRouter()

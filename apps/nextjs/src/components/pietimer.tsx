@@ -5,12 +5,6 @@ import { type SingletonRouter, useRouter } from 'next/router'
 import { formatDate, navigate } from '@acme/helpers'
 import useUserStore from '../stores/userStore'
 
-/**
- * PieTimer
- * @param duration - duration is the number
- * of seconds the timer will run
- */
-
 export default function PieTimer({
   seconds,
   pixels,

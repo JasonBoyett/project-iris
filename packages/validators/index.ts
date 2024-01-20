@@ -109,16 +109,19 @@ export const exercise = z.union([
   z.literal('greenDot'),
 ])
 
+export const FlasherType = z.union([
+  z.literal('fourByOne'),
+  z.literal('oneByTwo'),
+  z.literal('twoByTwo'),
+  z.literal('oneByOne'),
+  z.literal('twoByOne'),
+])
 export const highlightData = z.object({
-  type: z.union([
-    z.literal('fourByOne'),
-    z.literal('oneByTwo'),
-    z.literal('twoByTwo'),
-    z.literal('oneByOne'),
-    z.literal('twoByOne'),
-  ]),
+  type: FlasherType,
   userId: z.string(),
   speed: z.number(),
+  platform: z.union([z.literal('mobile'), z.literal('web')])
+    .default('web'),
 })
 
 export const schulteData = z.object({
@@ -126,6 +129,8 @@ export const schulteData = z.object({
   type: z.union([z.literal('three'), z.literal('five'), z.literal('seven')]),
   time: z.number(),
   errorCount: z.number(),
+  platform: z.union([z.literal('mobile'), z.literal('web')])
+    .default('web'),
 })
 
 export const numberGuesserData = z.object({
@@ -135,36 +140,48 @@ export const numberGuesserData = z.object({
   longestStreak: z.number(),
   figuresAtStart: z.number(),
   figuresAtEnd: z.number(),
+  platform: z.union([z.literal('mobile'), z.literal('web')])
+    .default('web'),
 })
 
 export const letterMatcherData = z.object({
   userId: z.string(),
   numberCorrect: z.number(),
   numberWrong: z.number(),
+  platform: z.union([z.literal('mobile'), z.literal('web')])
+    .default('web'),
 })
 
 export const evenNumbersData = z.object({
   userId: z.string(),
   time: z.number(),
   errorCount: z.number(),
+  platform: z.union([z.literal('mobile'), z.literal('web')])
+    .default('web'),
 })
 
 export const boxFlasherData = z.object({
   userId: z.string(),
   type: z.union([z.literal('two'), z.literal('three')]),
   speed: z.number(),
+  platform: z.union([z.literal('mobile'), z.literal('web')])
+    .default('web'),
 })
 
 export const wordPairData = z.object({
   primaryWord: z.string(),
   secondaryWord: z.string(),
   language: language,
+  platform: z.union([z.literal('mobile'), z.literal('web')])
+    .default('web'),
 })
 
 export const wordPairSessionData = z.object({
   userId: z.string(),
   errorCount: z.number(),
   time: z.number(),
+  platform: z.union([z.literal('mobile'), z.literal('web')])
+    .default('web'),
 })
 
 export const wordPairProps = z.object({

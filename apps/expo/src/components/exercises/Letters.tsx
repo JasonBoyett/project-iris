@@ -12,38 +12,50 @@ import {
   useRef,
 } from 'react'
 import type { User } from '@acme/types'
-import { FontButton, FontProvider } from '../../cva/FontProvider'
-import * as taskManager from 'expo-task-manager'
-import * as backgroundFetch from 'expo-background-fetch'
+import { FontButton } from '../../cva/FontProvider'
+import { trpc } from '../../utils/trpc'
+import useUserStore from '../../stores/userStore'
+import { formatDate } from '@acme/helpers'
 
 type CellProps = {
-  content: string
+  letter?: string
   highlight: boolean
   user: User
+  showing: boolean
   isCenter?: boolean
 }
 const Cell = (props: CellProps) => {
-  const { content, 
-    highlight, 
-    user, 
+  const { letter,
+    highlight,
+    user,
+    showing,
     isCenter
   } = props
 
+  const getContent = () => {
+    if (!letter) return getLetter()
+    if (isCenter) return '⊚'
+    if (highlight) return letter
+  }
+
   return (
-    <FontButton
-      font={user.font ?? 'sans'}
+    <TouchableOpacity
       className="h-14 w-14"
     >
       <Text
         className={
-          !!isCenter 
-          ? 'text-6xl text-center text-green-500'
-          :(highlight
-            ? 'text-6xl text-center text-yellow-400'
-            : 'text-6xl text-center text-white')
+          !!isCenter
+            ? 'text-6xl text-center text-green-500'
+            : (highlight
+              ? 'text-6xl text-center text-yellow-400'
+              : 'text-6xl text-center text-white')
         }
-      >{content}</Text>
-    </FontButton>
+      >{
+          showing
+            ? getContent()
+            : '●'
+        }</Text>
+    </TouchableOpacity>
   )
 }
 
@@ -64,31 +76,32 @@ export const LetterMatcher = (props: LetterMatcherProps) => {
     signal,
   } = props
 
-  const [showMessage, setShowMessage] = useState<boolean>(false)
+  const { mutate } = trpc.user.set.useMutation()
+  const store = useUserStore()
+  const { mutate: collectData } = trpc.collect.letterMatcherSession.useMutation()
+
   const correctCount = useRef<number>(0)
+  const matching = useRef<boolean>(Math.random() < 0.5)
   const incorrectCount = useRef<number>(0)
   const [started, setStarted] = useState<boolean>(false)
-  const [top, setTop] = useState<string>('●')
-  const letters = useMemo( () => Array.from({ length: size * size }, () => getLetter()), [size])
-  const [bottom, setBottom] = useState<string>('●')
-  const [left, setLeft] = useState<string>('●')
-  const [right, setRight] = useState<string>('●')
+  const [letter, setLetter] = useState(matching.current ? '●' : undefined)
   const [isShowing, setShowing] = useState<boolean>(false)
-  const matching = useRef<boolean>(Math.random() < 0.5)
   type Data = {
-    content: string
+    letter?: string
     highlight: boolean
     user: User
     position: number
+    showing: boolean
     isCenter?: boolean
   }
-  const gridData = useMemo(() => {
+  const gridData = (() => {
     const grid = Array<Data>()
     for (let i = 0; i < size; i++) {
       for (let j = 0; j < size; j++) {
         if (i === Math.floor(size / 2) && j === Math.floor(size / 2)) {
           grid.push({
-            content: '⊚',
+            letter: '⊚',
+            showing: true,
             isCenter: true,
             highlight: true,
             user: user,
@@ -96,60 +109,40 @@ export const LetterMatcher = (props: LetterMatcherProps) => {
           })
         } else if (i === 0 && j === Math.floor(size / 2)) {
           grid.push({
-            content: (() => {
-              if (isShowing) {
-                return top
-              }
-              return '●'
-            })(),
+            letter: letter,
+            showing: isShowing,
             highlight: true,
             user: user,
             position: i * size + j,
           })
         } else if (i === size - 1 && j === Math.floor(size / 2)) {
           grid.push({
-            content: (() => {
-              if (isShowing) {
-                return bottom
-              }
-              return '●'
-            })(),
+            letter: letter,
+            showing: isShowing,
             highlight: true,
             user: user,
             position: i * size + j,
           })
         } else if (i === Math.floor(size / 2) && j === 0) {
           grid.push({
-            content: (() => {
-              if (isShowing) {
-                return left
-              }
-              return '●'
-            })(),
+            letter: letter,
+            showing: isShowing,
             highlight: true,
             user: user,
             position: i * size + j,
           })
         } else if (i === Math.floor(size / 2) && j === size - 1) {
           grid.push({
-            content: (() => {
-              if (isShowing) {
-                return right
-              }
-              return '●'
-            })(),
+            letter: letter,
+            showing: isShowing,
             highlight: true,
             user: user,
             position: i * size + j,
           })
         } else {
           grid.push({
-            content: (() => {
-              if (isShowing) {
-                return letters[i * size + j] ?? '●'
-              }
-              return '●'
-            })(),
+            letter: undefined,
+            showing: isShowing,
             highlight: false,
             user: user,
             position: i * size + j,
@@ -158,41 +151,29 @@ export const LetterMatcher = (props: LetterMatcherProps) => {
 
       }
     }
-    console.log(grid)
     return grid
-  }, [isShowing])
-
-  const reset = () => {
-    setShowing(() => false)
-    setTop(() => '●')
-    setBottom(() => '●')
-    setLeft(() => '●')
-    setRight(() => '●')
-  }
+  })()
 
   const gameLoop = () => {
-    matching.current = Math.random() < 0.5
     if (matching.current) {
-      const letter = getLetter()
-      setTop(() => letter)
-      setBottom(() => letter)
-      setLeft(() => letter)
-      setRight(() => letter)
+      const newLetter = getLetter()
+      setLetter(() => newLetter)
     } else {
-      setTop(() => getLetter())
-      setBottom(() => getLetter())
-      setLeft(() => getLetter())
-      setRight(() => getLetter())
+      setLetter(() => undefined)
     }
-    console.log(top, bottom, left, right)
     setShowing(() => true)
-    setTimeout(() => reset(), 500)
+    setTimeout(() => {
+      setShowing(() => false)
+      setLetter(() => '●')
+    }, 500)
+    matching.current = Math.random() < 0.5
   }
 
   const match = () => {
-    setShowMessage(() => false)
-    return top === bottom && bottom === left && left === right
+    setStarted(() => true)
+    return !!letter
   }
+
 
   const Grid = () => {
     const MyList = FlatList<Data>
@@ -206,10 +187,11 @@ export const LetterMatcher = (props: LetterMatcherProps) => {
           numColumns={size}
           renderItem={({ item }) => (
             <Cell
-              content={item.content}
+              letter={item.letter}
               highlight={item.highlight}
               user={item.user}
               isCenter={item.isCenter ?? false}
+              showing={item.showing}
             />
           )}
         />
@@ -217,13 +199,33 @@ export const LetterMatcher = (props: LetterMatcherProps) => {
     )
   }
 
+  const teardown = () => {
+    mutate({ lastLetterMatcher: formatDate() })
+    store.setUser({
+      ...user,
+      lastLetterMatcher: formatDate(),
+    })
+    collectData({
+      userId: user.id,
+      numberCorrect: correctCount.current,
+      numberWrong: incorrectCount.current,
+      platform: 'mobile'
+    })
+    user.lastLetterMatcher = formatDate()
+  }
+
   useEffect(() => {
     if (started) {
       setTimeout(() => {
+        teardown()
         signal()
       }, 60_000)
     }
   }, [started])
+
+  useEffect(() => {
+    console.log('isShowing: ', isShowing)
+  }, [isShowing])
 
   return (
     <View className="mt-28">
@@ -239,15 +241,16 @@ export const LetterMatcher = (props: LetterMatcherProps) => {
       <Grid />
       <View className='flex-row items-center justify-center'>
         <TouchableOpacity
+          className='m-4 w-44 h-16 bg-white/20 rounded-lg items-center justify-center'
           onPress={() => {
-            if (match()) {
+            setStarted(() => true)
+            if (match() && !isShowing) {
               correctCount.current++
             }
-            else {
+            else if (!match() && !isShowing) {
               incorrectCount.current++
             }
-            setStarted(() => true)
-            gameLoop()
+            if (!isShowing) gameLoop()
           }}
         >
           <Text className="text-4xl text-center text-white">
@@ -255,15 +258,16 @@ export const LetterMatcher = (props: LetterMatcherProps) => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
+          className='m-4 w-44 h-16 bg-white/20 rounded-lg items-center justify-center'
           onPress={() => {
-            if (!match()) {
+            setStarted(() => true)
+            if (!match() && !isShowing) {
               correctCount.current++
             }
-            else {
+            else if (match() && !isShowing) {
               incorrectCount.current++
             }
-            setStarted(() => true)
-            gameLoop()
+            if (!isShowing) gameLoop()
           }}
         >
           <Text className="text-4xl text-center">

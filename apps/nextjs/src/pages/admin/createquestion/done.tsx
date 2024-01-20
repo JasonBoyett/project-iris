@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { api } from '~/utils/api'
+import { trpc } from '../../../utils/trpc'
 import { useRouter } from 'next/router'
-import Sidebar from '~/components/sidebar'
+import Sidebar from '../../../components/sidebar'
 
 export default function Page() {
   const router = useRouter()
   const [approved, setApproved] = useState(false)
-  const user = api.user.getUnique.useQuery().data
+  const user = trpc.user.get.useQuery()
 
   const navToCreatQuestion = () => {
     router.push('/admin/createquestion').catch(err => console.log(err))
@@ -52,7 +52,7 @@ export default function Page() {
 
   useEffect(() => {
     if (!user) return
-    if (!user.isAdmin) {
+    if (!user.data?.isAdmin ?? false) {
       router.push('/').catch(err => console.log(err))
     } else {
       setApproved(true)

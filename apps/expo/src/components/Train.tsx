@@ -4,11 +4,13 @@ import type {
   Exercise,
   User,
 } from '@acme/types'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SchulteTable } from './exercises/SchulteTable';
 import { EvenNumbers } from './exercises/EvenNumber';
-import { WordPairs } from './exercises/WordPiars';
+import { WordPairs } from './exercises/WordPairs';
 import { LetterMatcher } from './exercises/Letters';
+import { WordFlasher } from './exercises/WordFlasher';
+import { GreenDot } from './exercises/GreenDot';
 
 const TempCompnenet = (
   { text, signal, user }: { text: string, signal: VoidFunction, user: User | undefined }
@@ -40,10 +42,6 @@ type ExerciseProps = {
 }
 const Session = ({ exercise, signal, user }: ExerciseProps) => {
 
-  useEffect(() => {
-    console.log(exercise)
-  }, [])
-
   switch (exercise) {
     case undefined:
       return (
@@ -55,42 +53,47 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
       )
     case 'oneByTwo':
       return (
-        <TempCompnenet
+        <WordFlasher
+          type='oneByTwo'
           user={user}
-          text={exercise}
           signal={signal}
+          rows={5} 
         />
       )
     case 'oneByOne':
       return (
-        <TempCompnenet
+        <WordFlasher
+          type='oneByOne'
           user={user}
-          text={exercise}
           signal={signal}
+          rows={5} 
         />
       )
     case 'twoByOne':
       return (
-        <TempCompnenet
+        <WordFlasher
+          type='twoByOne'
           user={user}
-          text={exercise}
           signal={signal}
+          rows={5} 
         />
       )
     case 'twoByTwo':
       return (
-        <TempCompnenet
+        <WordFlasher
+          type='twoByTwo'
           user={user}
-          text={exercise}
           signal={signal}
+          rows={5} 
         />
       )
     case 'fourByOne':
       return (
-        <TempCompnenet
+        <WordFlasher
+          type='fourByOne'
           user={user}
-          text={exercise}
           signal={signal}
+          rows={5} 
         />
       )
     case 'evenNumbers':
@@ -118,9 +121,8 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
       )
     case 'greenDot':
       return (
-        <TempCompnenet
+        <GreenDot
           user={user}
-          text={exercise}
           signal={signal}
         />
       )
@@ -201,10 +203,11 @@ const Next = ({ cycle }: { cycle: VoidFunction }) => {
 
 export const TrainingScreen = () => {
   const { data: next, refetch } = trpc.excercise.getNext.useQuery()
-  const { data: user } = trpc.user.get.useQuery()
+  const { data: user, refetch : fetchUser } = trpc.user.get.useQuery()
   const [training, setTraining] = useState(false)
 
   const cycle = () => {
+    fetchUser()
     refetch()
     setTraining(!training)
   }
@@ -214,7 +217,7 @@ export const TrainingScreen = () => {
       <View>
         {training ? (
           <Session
-            exercise={'letterMatcher'}
+            exercise={'greenDot'}
             signal={cycle}
             user={user as User}
           />
