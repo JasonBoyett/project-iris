@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   FlatList,
 } from 'react-native'
@@ -10,7 +9,7 @@ import React, {
   useRef,
   useState
 } from 'react'
-import { User } from '@acme/types'
+import type { User } from '@acme/types'
 import { trpc } from '../../utils/trpc'
 import useUserStore from '../../stores/userStore'
 import { formatDate } from '@acme/helpers'
@@ -30,11 +29,10 @@ const numberGen = (segfigs: number) => {
 type NumberButtonProps = {
   content: string
   disabled?: boolean
-  className?: string
   callBack: (arg: string) => void
 }
 const NumberButton = (props: NumberButtonProps) => {
-  const { content, callBack, className, disabled = false } = props
+  const { content, callBack, disabled = false } = props
 
   const handlePress = () => {
     callBack(content)
@@ -151,12 +149,15 @@ type ExerciseProps = {
 }
 export const NumberMatcher = React.memo((props: ExerciseProps) => {
   const target = useRef<string>(numberGen(props.user.numberGuesserFigures))
-  const segnificantFigures = useRef<number>(props.user.numberGuesserFigures)
+  const significantFigures = useRef<number>(props.user.numberGuesserFigures)
   const correctStreak = useRef<number>(0)
   const correctStreakActual = useRef<number>(0)
   // the difference between correctStreak and correctStreakActual is
-  // that correctStreak is reset when segnificantFigures is increased
+  // that correctStreak is reset when significantFigures is increased
   // while correctStreakActual is not.
+  // This way the actual streak can be tracked while 
+  // the streak needed to increase the number of significant figures
+  // is kept separate
   const incorrectStreak = useRef<number>(0)
   const longestStreak = useRef<number>(0)
   const correctCount = useRef<number>(0)
@@ -173,19 +174,19 @@ export const NumberMatcher = React.memo((props: ExerciseProps) => {
       userId: props.user.id, 
       longestStreak: longestStreak.current,
       figuresAtStart: props.user.numberGuesserFigures,
-      figuresAtEnd: segnificantFigures.current,
+      figuresAtEnd: significantFigures.current,
       numberWrong: incorrectCount.current,
       numberCorrect: correctCount.current,
       platform: 'mobile'
     })
     mutate({ 
       lastNumberGuesser: formatDate(),
-      numberGuesserFigures: segnificantFigures.current,
+      numberGuesserFigures: significantFigures.current,
     })
     store.setUser({ 
       ...props.user,
       lastNumberGuesser: formatDate(),
-      numberGuesserFigures: segnificantFigures.current,
+      numberGuesserFigures: significantFigures.current,
     })
   }
 
@@ -194,6 +195,7 @@ export const NumberMatcher = React.memo((props: ExerciseProps) => {
     if (correctStreakActual.current > longestStreak.current) {
       longestStreak.current = correctStreakActual.current
     }
+  props.signal()
   }
 
   const handleCorrect = () => {
@@ -204,7 +206,7 @@ export const NumberMatcher = React.memo((props: ExerciseProps) => {
       return
     }
     if (correctStreak.current > CORRECT_STREAK_NEEDED) {
-      segnificantFigures.current++
+      significantFigures.current++
       correctStreak.current = 0
     }
     else {
@@ -220,7 +222,7 @@ export const NumberMatcher = React.memo((props: ExerciseProps) => {
       return
     }
     if (incorrectStreak.current > INCORRECT_STREAK_CUT_OFF) {
-      segnificantFigures.current--
+      significantFigures.current--
     }
     else {
       incorrectStreak.current++
@@ -243,7 +245,7 @@ export const NumberMatcher = React.memo((props: ExerciseProps) => {
   }
 
   const gameLoop = () => {
-    target.current = numberGen(segnificantFigures.current)
+    target.current = numberGen(significantFigures.current)
     setShowing(false)
     setDisplay(() => target.current)
     setTimeout(() => {
@@ -255,19 +257,23 @@ export const NumberMatcher = React.memo((props: ExerciseProps) => {
   useEffect(() => {
     setTimeout(() => {
       setDisplay('3')
-    }, 1000)
+    }, 1_000)
     setTimeout(() => {
       setDisplay('2')
-    }, 2000)
+    }, 2_000)
     setTimeout(() => {
       setDisplay('1')
-    }, 3000)
+    }, 3_000)
     setTimeout(() => {
       setDisplay('GO!')
-    }, 4000)
+    }, 4_000)
     setTimeout(() => {
       gameLoop()
-    }, 5000)
+    }, 5_000)
+    setTimeout(() => {
+      teardown()
+    }, 65_000)
+    
   }, [])
 
   return (
