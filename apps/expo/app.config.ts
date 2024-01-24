@@ -30,7 +30,7 @@ const defineConfig = (_ctx: ConfigContext): ExpoConfig => ({
   },
   extra: {
     eas: {
-      projectId: 'your-project-id',
+      projectId: '0fa37b39-ff25-4053-ba33-a30409f8546e',
     },
     CLERK_PUBLISHABLE_KEY,
   },

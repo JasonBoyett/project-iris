@@ -55,7 +55,7 @@ export default function NumberMatcher() {
   const [target, setTarget] = useState<string>()
   const [showingTarget, setShowing] = useState(true)
   const user = trpc.user.get.useQuery()
-  const eventName = 'teardown number matcher'
+  const eventName = 'tear down number match'
   const router = useRouter()
   const collectData = trpc.collect.numberGuesserSession.useMutation()
   const componantTimer = useTimer('minutes', 1, eventName)

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 export default function Page() {
   const params = useRouter().query
 
-  function getSideLength(param: string) {
+  function getBoxCount(param: string) {
     switch (param) {
       case '2':
         return 2
@@ -20,7 +20,7 @@ export default function Page() {
       <Sidebar />
       <div className='min-w-screen flex min-h-screen flex-col items-center justify-center'>
         <div className='rounded-lg bg-white shadow-lg'>
-          <CornerFlasher number={getSideLength(params.type as string)} />
+          <CornerFlasher number={getBoxCount(params.type as string)} />
         </div>
       </div>
     </>

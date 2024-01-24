@@ -47,10 +47,8 @@ type ExerciseViewProps = {
 
 const ExerciseView = ({ user, text, exercise }: ExerciseViewProps) => {
 
-  if (!user) {
-    return <></>
-  }
-  const done = isAlreadyDone(user, exercise) ?? true
+  if (!user) return <></>
+  const done = isAlreadyDone(user as User, exercise) ?? false
   return (
     <View className='p-2'>
       <Text className='text-white text-3xl text-center'>
@@ -198,10 +196,19 @@ export const HomeScreen = () => {
   }, [])
 
   useEffect(() => {
-
     if (!user.data) return
-    console.log(isChekList)
-  }, [isChekList])
+    if (!store.user) {
+      store.setUser(user.data)
+      return
+    }
+    if (user.data.updatedAt > store.user.updatedAt) {
+      store.setUser(user.data)
+    } 
+    else if (user.data.updatedAt < store.user.updatedAt) {
+      mutateUser(store.user)
+    }
+
+  }, [user.data])
 
   return (
     <SafeAreaView className='bg-[#2e026d] bg-gradient-to-b from-[#2e026d] to-[#15162c]'>

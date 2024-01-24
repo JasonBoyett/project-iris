@@ -7,7 +7,7 @@ import useInterval from '../hooks/useInterval'
 import { formatDate, navigate } from '@acme/helpers'
 import { type SingletonRouter, useRouter } from 'next/router'
 import { FontProvider } from '../cva/fontProvider'
-import type { Font } from '@acme/types'
+import type { Font, Language } from '@acme/types'
 
 export function partitionWords(
   words: string[],
@@ -88,9 +88,9 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
   const router = useRouter()
   const { data } = trpc.excercise.getRandomWords.useQuery(
     {
-      number: userStore.user?.currentWpm as number,
+      number: userStore.user?.currentWpm ?? 230,
       max: 5,
-      language: userStore.user?.language as 'english' | 'spanish',
+      language: userStore.user?.language ?? 'english',
     },
     { enabled: !!userStore },
   )

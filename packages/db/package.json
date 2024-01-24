@@ -12,9 +12,9 @@
     "db-generate": "pnpm with-env prisma generate"
   },
   "dependencies": {
-    "@prisma/client": "^4.7.1",
+    "@acme/helpers": "*",
     "@acme/types": "*",
-    "@acme/helpers": "*"
+    "@prisma/client": "^4.7.1"
   },
   "devDependencies": {
     "dotenv-cli": "^6.0.0",

@@ -11,6 +11,8 @@ import { WordPairs } from './exercises/WordPairs';
 import { LetterMatcher } from './exercises/Letters';
 import { WordFlasher } from './exercises/WordFlasher';
 import { GreenDot } from './exercises/GreenDot';
+import { BoxFlasher } from './BoxFlasher';
+import { NumberMatcher } from './exercises/NumberMatcher';
 
 const TempCompnenet = (
   { text, signal, user }: { text: string, signal: VoidFunction, user: User | undefined }
@@ -57,7 +59,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
           type='oneByTwo'
           user={user}
           signal={signal}
-          rows={5} 
+          rows={5}
         />
       )
     case 'oneByOne':
@@ -66,7 +68,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
           type='oneByOne'
           user={user}
           signal={signal}
-          rows={5} 
+          rows={5}
         />
       )
     case 'twoByOne':
@@ -75,7 +77,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
           type='twoByOne'
           user={user}
           signal={signal}
-          rows={5} 
+          rows={5}
         />
       )
     case 'twoByTwo':
@@ -84,7 +86,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
           type='twoByTwo'
           user={user}
           signal={signal}
-          rows={5} 
+          rows={5}
         />
       )
     case 'fourByOne':
@@ -93,7 +95,7 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
           type='fourByOne'
           user={user}
           signal={signal}
-          rows={5} 
+          rows={5}
         />
       )
     case 'evenNumbers':
@@ -105,17 +107,17 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
       )
     case 'cubeByTwo':
       return (
-        <TempCompnenet
+        <BoxFlasher
           user={user}
-          text={exercise}
+          type={2}
           signal={signal}
         />
       )
     case 'cubeByThree':
       return (
-        <TempCompnenet
+        <BoxFlasher
           user={user}
-          text={exercise}
+          type={3}
           signal={signal}
         />
       )
@@ -136,9 +138,8 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
       )
     case 'numberGuesser':
       return (
-        <TempCompnenet
+        <NumberMatcher
           user={user}
-          text={exercise}
           signal={signal}
         />
       )
@@ -203,7 +204,7 @@ const Next = ({ cycle }: { cycle: VoidFunction }) => {
 
 export const TrainingScreen = () => {
   const { data: next, refetch } = trpc.excercise.getNext.useQuery()
-  const { data: user, refetch : fetchUser } = trpc.user.get.useQuery()
+  const { data: user, refetch: fetchUser } = trpc.user.get.useQuery()
   const [training, setTraining] = useState(false)
 
   const cycle = () => {
@@ -217,7 +218,7 @@ export const TrainingScreen = () => {
       <View>
         {training ? (
           <Session
-            exercise={'greenDot'}
+            exercise={'numberGuesser'}
             signal={cycle}
             user={user as User}
           />
@@ -226,5 +227,5 @@ export const TrainingScreen = () => {
         )}
       </View>
     </SafeAreaView>
-  );
+  )
 }

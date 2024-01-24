@@ -1,5 +1,5 @@
 import { router, protectedProcedure } from '../trpc'
-import { User } from '@acme/types'
+import type { User } from '@acme/types'
 import { userSchema } from '@acme/validators'
 
 export const userRouter = router({
@@ -40,7 +40,7 @@ export const userRouter = router({
           maxWpm: input.maxWpm,
           currentWpm: input.currentWpm,
           createdAt: input.createdAt,
-          updatedAt: input.updatedAt,
+          updatedAt: input.updatedAt ?? new Date(),
           highlightColor: input.highlightColor,
           lastSchulte: input.lastSchulte,
           lastSpeedTest: input.lastSpeedTest,
