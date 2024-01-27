@@ -82,6 +82,7 @@ model User {
   NumberGuesserSession    NumberGuesserSession[]
   BoxFlasherSession       BoxFlasherSession[]
   PairsSession            PairsSession[]
+  SpeedTestSessions       SpeedTestSession[]
   highlightColor          Overlay                @default(GREY)
   lastSchulte             String                 @default(" ")
   lastSpeedTest           String                 @default(" ")
@@ -115,7 +116,7 @@ model TimeTest {
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   sessionId String   @id @default(cuid())
-  CreatedAt DateTime @default(now())
+  CreatedAt DateTime 
   highScore Int      @db.SmallInt
   lowScore  Int      @db.SmallInt
   accuracy  Int      @db.SmallInt
@@ -130,7 +131,7 @@ model SchulteSession {
   time       Int
   errorCount Int         @db.SmallInt
   userId     String      @db.VarChar(255)
-  date       DateTime    @db.DateTime
+  date       DateTime    
   platform   String      @default("web")
 
   @@index([id])
@@ -169,7 +170,7 @@ model NumberGuesserSession {
   longestStreak  Int
   figuresAtStart Int
   figuresAtEnd   Int
-  date           DateTime @db.DateTime
+  date           DateTime 
   platform       String   @default("web")
 
   @@index([id])
@@ -181,7 +182,7 @@ model LetterMatcherSession {
   user          User     @relation(fields: [userId], references: [id])
   numberCorrect Int
   numberWrong   Int
-  date          DateTime @db.DateTime
+  date          DateTime 
   platform      String   @default("web")
 
   @@index([id])
@@ -192,7 +193,7 @@ model WordFlasherSession {
   userId   String
   user     User     @relation(fields: [userId], references: [id])
   speed    Int      @db.SmallInt
-  date     DateTime @db.DateTime
+  date     DateTime 
   type     String   @db.VarChar(255)
   platform String   @default("web")
 
@@ -204,7 +205,7 @@ model BoxFlasherSession {
   userId   String
   user     User     @relation(fields: [userId], references: [id])
   speed    Int
-  date     DateTime @db.DateTime
+  date     DateTime 
   type     BoxType
   platform String   @default("web")
 
@@ -215,7 +216,7 @@ model GreenDotSession {
   id       String   @unique
   userId   String
   user     User     @relation(fields: [userId], references: [id])
-  date     DateTime @db.DateTime
+  date     DateTime 
   platform String   @default("web")
 
   @@index([id])
@@ -225,7 +226,7 @@ model PairsSession {
   id         String   @unique
   userId     String
   user       User     @relation(fields: [userId], references: [id])
-  date       DateTime @db.DateTime
+  date       DateTime 
   time       Int
   errorCount Int
   platform   String   @default("web")
@@ -233,24 +234,15 @@ model PairsSession {
   @@index([id])
 }
 
-model SatPassage {
-  id          String        @unique
-  passageText String
-  questions   SatQuestion[]
-
-  @@index([id])
-}
-
-model SatQuestion {
-  id            String     @unique
-  passageId     String
-  passage       SatPassage @relation(fields: [passageId], references: [id])
-  question      String
-  answerA       String     @db.VarChar(255)
-  answerB       String     @db.VarChar(255)
-  answerC       String     @db.VarChar(255)
-  answerD       String     @db.VarChar(255)
-  correctAnswer String     @db.Char(1)
+model SpeedTestSession {
+  id         String   @unique
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  startSpeed  Int      @db.SmallInt
+  endSpeed   Int      @db.SmallInt
+  date       DateTime 
+  errorCount Int      @db.SmallInt
+  platform   String   @default("web")
 
   @@index([id])
 }
@@ -270,16 +262,10 @@ model SpeedQuestion {
 }
 
 model WordPair {
-  id            Int      @id @default(autoincrement()) @unique
-  primaryWord   String   
+  id            Int      @id @unique @default(autoincrement())
+  primaryWord   String
   secondaryWord String
   language      Language @default(english)
 
   @@index([id])
-}
-
-model Post {
-  id      String @id @default(cuid())
-  title   String
-  content String
 }

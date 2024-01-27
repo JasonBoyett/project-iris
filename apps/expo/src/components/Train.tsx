@@ -1,4 +1,4 @@
-import { Button, SafeAreaView, Text, View } from 'react-native';
+import { Button, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { trpc } from '../utils/trpc';
 import type {
   Exercise,
@@ -13,6 +13,7 @@ import { WordFlasher } from './exercises/WordFlasher';
 import { GreenDot } from './exercises/GreenDot';
 import { BoxFlasher } from './BoxFlasher';
 import { NumberMatcher } from './exercises/NumberMatcher';
+import { TestScreen } from './speedtest'
 
 const TempCompnenet = (
   { text, signal, user }: { text: string, signal: VoidFunction, user: User | undefined }
@@ -167,9 +168,8 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
       )
     case 'speedTest':
       return (
-        <TempCompnenet
+        <TestScreen
           user={user}
-          text={exercise}
           signal={signal}
         />
       )
@@ -192,12 +192,16 @@ const Next = ({ cycle }: { cycle: VoidFunction }) => {
   return (
     <View className='grid grid-cols-1 items-center justify-center min-h-screen gap-5'>
       <Text className='text-6xl text-white p-4'>
-        Click to start next exercise
+        Tap to start next exercise
       </Text>
-      <Button
-        title='Next Exercise'
+      <TouchableOpacity
+        className='bg-white/10 justify-center items-center p-4 rounded-full'
         onPress={() => cycle()}
-      />
+      >
+        <Text className='text-white text-3xl'>
+        Next Exercise
+        </Text>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -218,7 +222,7 @@ export const TrainingScreen = () => {
       <View>
         {training ? (
           <Session
-            exercise={'numberGuesser'}
+            exercise={'speedTest'}
             signal={cycle}
             user={user as User}
           />

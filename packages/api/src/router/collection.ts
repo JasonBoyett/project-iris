@@ -8,6 +8,7 @@ import {
   schulteData,
   letterMatcherData,
   wordPairSessionData,
+  speedTestData,
 } from '@acme/validators'
 import { z } from 'zod'
 
@@ -15,6 +16,13 @@ export const collectionRouter = router({
   highlightSession: protectedProcedure
     .input(highlightData)
     .mutation(async ({ input, ctx }) => {
+      const userId = ctx.auth.userId
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      })
+      if (!user?.isStudySubject) return
       await ctx.prisma.highlightSession.create({
         data: {
           id: uuid(),
@@ -29,6 +37,13 @@ export const collectionRouter = router({
   schulteSession: protectedProcedure
     .input(schulteData)
     .mutation(async ({ input, ctx }) => {
+      const userId = ctx.auth.userId
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      })
+      if (!user?.isStudySubject) return
       await ctx.prisma.schulteSession.create({
         data: {
           id: uuid(),
@@ -45,6 +60,13 @@ export const collectionRouter = router({
   numberGuesserSession: protectedProcedure
     .input(numberGuesserData)
     .mutation(async ({ input, ctx }) => {
+      const userId = ctx.auth.userId
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      })
+      if (!user?.isStudySubject) return
       await ctx.prisma.numberGuesserSession.create({
         data: {
           id: uuid(),
@@ -78,6 +100,13 @@ export const collectionRouter = router({
   evenNumberSession: protectedProcedure
     .input(evenNumbersData)
     .mutation(async ({ input, ctx }) => {
+      const userId = ctx.auth.userId
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      })
+      if (!user?.isStudySubject) return
       await ctx.prisma.evenNumberSession.create({
         data: {
           id: uuid(),
@@ -93,6 +122,13 @@ export const collectionRouter = router({
   boxFlasherSession: protectedProcedure
     .input(boxFlasherData)
     .mutation(async ({ input, ctx }) => {
+      const userId = ctx.auth.userId
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      })
+      if (!user?.isStudySubject) return
       await ctx.prisma.boxFlasherSession.create({
         data: {
           id: uuid(),
@@ -113,6 +149,13 @@ export const collectionRouter = router({
       }).optional()
     )
     .mutation(async ({ ctx, input }) => {
+      const userId = ctx.auth.userId
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      })
+      if (!user?.isStudySubject) return
       await ctx.prisma.greenDotSession.create({
         data: {
           id: uuid(),
@@ -126,12 +169,42 @@ export const collectionRouter = router({
   wordPairSession: protectedProcedure
     .input(wordPairSessionData)
     .mutation(async ({ input, ctx }) => {
+      const userId = ctx.auth.userId
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      })
+      if (!user?.isStudySubject) return
       await ctx.prisma.pairsSession.create({
         data: {
           id: uuid(),
-          userId: ctx.auth.userId as string,
+          userId: ctx.auth.userId,
           time: input.time,
           errorCount: input.errorCount,
+          date: new Date(),
+          platform: input.platform ?? 'web',
+        },
+      })
+    }),
+
+  SpeedTestSession: protectedProcedure
+    .input(speedTestData)
+    .mutation(async ({ input, ctx }) => {
+      const userId = ctx.auth.userId
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      })
+      if (!user?.isStudySubject) return
+      await ctx.prisma.speedTestSession.create({
+        data: {
+          id: uuid(),
+          userId: ctx.auth.userId,
+          startSpeed: input.startSpeed,
+          endSpeed: input.endSpeed,
+          errorCount: input.numberWrong,
           date: new Date(),
           platform: input.platform ?? 'web',
         },

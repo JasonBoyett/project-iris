@@ -119,7 +119,7 @@ async function getWords({
 
 export const excercisePropsRouter = router({
   getSingleSpeedTestProps: protectedProcedure
-    .output(schemas.speedTest)
+    .output(speedTestSchema)
     .query(async ({ ctx }) => {
       const numberOfTables = await ctx.prisma.speedQuestion.count()
       const random = Math.floor(Math.random() * numberOfTables)
@@ -136,9 +136,24 @@ export const excercisePropsRouter = router({
     .output(multiTest)
     .input(z.number())
     .query(async ({ input, ctx }) => {
-      const result = await ctx.prisma.$queryRaw<Array<SpeedQuestion>>(
-        Prisma.sql`SELECT * FROM SpeedQuestion ORDER BY RANDOM() LIMIT ${input}`,
-      )
+      const numberOfTables = await ctx.prisma.speedQuestion.count()
+      const numbers = new Array<number>()
+      for (let i = 1; i <= numberOfTables; i++) {
+        numbers.push(i)
+      }
+      const randomNumbers = numbers
+        .sort(() => Math.random() - Math.random())
+        .slice(0, input)
+      const result = Array<SpeedQuestion>()
+      for (let i = 0; i < input; i++) {
+        const question = await ctx.prisma.speedQuestion.findUnique({
+          where: {
+            id: randomNumbers[i],
+          },
+        })
+        if (question === null || question === undefined) throw new Error('No result')
+        result.push(question)
+      }
       if (result === null || result === undefined) throw new Error('No result')
       return result
     }),

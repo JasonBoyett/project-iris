@@ -3,14 +3,14 @@ import type { ExpoConfig, ConfigContext } from '@expo/config'
 const CLERK_PUBLISHABLE_KEY = 'pk_test_bGVuaWVudC1tdXN0YW5nLTIxLmNsZXJrLmFjY291bnRzLmRldiQ'
 
 const defineConfig = (_ctx: ConfigContext): ExpoConfig => ({
-  name: 'expo',
+  name: 'iris',
   slug: 'expo',
   version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/icon.png',
   userInterfaceStyle: 'automatic',
   splash: {
-    image: './assets/icon.png',
+    image: './assets/IRIS-LOGO.png',
     resizeMode: 'contain',
     backgroundColor: '#2e026d',
   },

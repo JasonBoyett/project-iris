@@ -1,43 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import type { StackNavigation } from '../_app'
+import { FontAwesome5 } from '@expo/vector-icons'
 import type { Exercise, User } from '@acme/types'
-import { Button, Text, TouchableOpacity, View } from 'react-native'
+import { Pressable, Text, TouchableOpacity, View } from 'react-native'
 import { useAuth } from '@clerk/clerk-expo'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { FlashList } from '@shopify/flash-list'
-import type { inferProcedureOutput } from '@trpc/server'
-import type { AppRouter } from '@acme/api'
 import { trpc } from '../utils/trpc'
 import { getAvailableExercises, isAlreadyDone } from '@acme/helpers'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, type ParamListBase } from '@react-navigation/native'
 import useUserStore from '../stores/userStore'
+import { type DrawerNavigationProp } from '@react-navigation/drawer'
 
 const buttonStyle = [
   'text-white md:text-3xl',
   'items-center justify-center',
   'bg-white/10 rounded-full md:p-4',
-  'p-2 md:h-16 h-16',
+  'p-2 h-16',
   'w-1/2',
   'text-white',
   'hover:bg-white/20',
 ].join(' ')
-
-const SignOut = () => {
-  const { signOut } = useAuth()
-  return (
-    <View className='p-2'>
-      <View className={buttonStyle}>
-        <Button
-          title='Sign Out'
-          color='white'
-          onPress={() => {
-            signOut()
-          }}
-        />
-      </View>
-    </View>
-  )
-}
 
 type ExerciseViewProps = {
   text: string
@@ -45,13 +27,14 @@ type ExerciseViewProps = {
   user: User | undefined
 }
 
+
 const ExerciseView = ({ user, text, exercise }: ExerciseViewProps) => {
 
   if (!user) return <></>
   const done = isAlreadyDone(user as User, exercise) ?? false
   return (
     <View className='p-2'>
-      <Text className='text-white text-3xl text-center'>
+      <Text className='text-white text-2xl text-center'>
         {
           `${text} ${done ? ' ✓' : ''}`
         }
@@ -138,7 +121,7 @@ const ExerciseList = ({ user }: { user: User }) => {
 const ExerciseCounter = ({ user }: { user: User }) => {
   const count = getAvailableExercises(user)?.length ?? 0
   return (
-    <View className='p-2 grid grid-cols-1 items-center gap-2'>
+    <View className='gap-2 items-center justify-center'>
       <Text className='text-white text-3xl text-center'>
         Remaining Daily Exercises:
       </Text>
@@ -154,24 +137,9 @@ export const HomeScreen = () => {
   const store = useUserStore()
   const [isChekList, setIsCheckList] = useState(false)
   const { mutate: mutateUser } = trpc.user.set.useMutation()
+  const drawerNav = useNavigation<DrawerNavigationProp<ParamListBase>>()
   const nav = useNavigation<StackNavigation>()
-
-  const TestButton = () => {
-    return (
-      <TouchableOpacity
-        className={buttonStyle}
-        onPress={() => {
-          nav.navigate('SpeedTest')
-        }}
-      >
-        <Text
-          className='text-white text-3xl text-center'
-        >
-          Test Your Progress
-        </Text>
-      </TouchableOpacity>
-    )
-  }
+  const auth = useAuth()
 
   const StartButton = () => {
     return (
@@ -203,16 +171,26 @@ export const HomeScreen = () => {
     }
     if (user.data.updatedAt > store.user.updatedAt) {
       store.setUser(user.data)
-    } 
+    }
     else if (user.data.updatedAt < store.user.updatedAt) {
       mutateUser(store.user)
     }
 
   }, [user.data])
 
+  useLayoutEffect(() => {
+    nav.setOptions({
+      headerLeft: () => (
+        <Pressable onPress={() => drawerNav.toggleDrawer()}>
+          <FontAwesome5 name="grip-lines" size={30} color="black" />
+        </Pressable>
+      )
+    })
+  }, [])
+
   return (
-    <SafeAreaView className='bg-[#2e026d] bg-gradient-to-b from-[#2e026d] to-[#15162c]'>
-      <View className='flex min-h-screen items-center justify-center py-16'>
+    <SafeAreaView className='bg-[#2e026d] bg-gradient-to-b from-[#2e026d] to-[#15162c] min-h-screen'>
+      <View className='flex items-center justify-center'>
         <TouchableOpacity
           onPress={
             () => {
@@ -223,14 +201,16 @@ export const HomeScreen = () => {
         >
           {
             !isChekList
-              ? <ExerciseCounter user={store.user as User} />
-              : <ExerciseList user={store.user as User} />
+              ? <View className='min-h-screen justify-center items-center'>
+                <ExerciseCounter user={store.user as User} />
+                <StartButton />
+              </View>
+              : <View className='justify-center items-center'>
+                <ExerciseList user={store.user as User} />
+                <StartButton />
+              </View>
           }
         </TouchableOpacity>
-        {
-          user.data?.tested ? <StartButton /> : <TestButton />
-        }
-        <SignOut />
       </View>
     </SafeAreaView>
   )

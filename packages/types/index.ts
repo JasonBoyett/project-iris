@@ -22,6 +22,8 @@ export type Overlay = z.infer<typeof highlightColor>
  */
 export type User = z.infer<typeof userSchema>
 
+export type Color = z.infer<typeof highlightColor>
+
 export type WordPair = z.infer<typeof wordPairData>
 
 export type SpeedTest = z.infer<typeof speedTestSchema>

@@ -83,7 +83,12 @@ export const speedTestSchema = z.object({
   answerB: z.string(),
   answerC: z.string(),
   answerD: z.string(),
-  correctAnswer: z.string(),
+  correctAnswer: z.union([
+    z.literal('A'),
+    z.literal('B'),
+    z.literal('C'),
+    z.literal('D'),
+  ]).or(z.string()),
 })
 
 const randomWordInputs = z.object({
@@ -182,6 +187,16 @@ export const wordPairSessionData = z.object({
   time: z.number(),
   platform: z.union([z.literal('mobile'), z.literal('web')])
     .default('web'),
+})
+
+export const speedTestData = z.object({
+  numberWrong: z.number(),
+  startSpeed: z.number(),
+  endSpeed: z.number(),
+  platform: z.union([
+    z.literal('mobile'), 
+    z.literal('web')
+  ]).default('web'),
 })
 
 export const wordPairProps = z.object({

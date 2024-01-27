@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
-import type { SpeedTest } from '~/utils/types'
+import type { SpeedTest } from '@acme/types'
 
 const emptySpeedTest: SpeedTest = {
   id: 0,
@@ -42,8 +42,6 @@ export const useSpeedTestStore = create<{
       setResponse: answer => set(state => ({ ...state, userAnswer: answer })),
       incrementResponseCount: () =>
         set(state => {
-          console.log('I was called')
-          console.log(state.totalResponses)
           const res = {
             current: state.current,
             correctResponses: state.correctResponses,

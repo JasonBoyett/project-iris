@@ -162,6 +162,7 @@ export const NumberMatcher = React.memo((props: ExerciseProps) => {
   const longestStreak = useRef<number>(0)
   const correctCount = useRef<number>(0)
   const incorrectCount = useRef<number>(0)
+  const startTime = useRef<number>(0)
   const [showing, setShowing] = useState<boolean>(false)
   const [display, setDisplay] = useState<string>('Ready')
 
@@ -188,6 +189,7 @@ export const NumberMatcher = React.memo((props: ExerciseProps) => {
       lastNumberGuesser: formatDate(),
       numberGuesserFigures: significantFigures.current,
     })
+    props.signal()
   }
 
   const checkLongest = () => {
@@ -195,7 +197,6 @@ export const NumberMatcher = React.memo((props: ExerciseProps) => {
     if (correctStreakActual.current > longestStreak.current) {
       longestStreak.current = correctStreakActual.current
     }
-  props.signal()
   }
 
   const handleCorrect = () => {
