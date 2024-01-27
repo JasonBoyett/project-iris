@@ -20,6 +20,9 @@ importers:
       '@prisma/client':
         specifier: ^5.7.1
         version: 5.7.1
+      '@react-native-picker/picker':
+        specifier: ^2.6.1
+        version: 2.6.1(react-native@0.72.6)(react@18.2.0)
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.57.1(@typescript-eslint/parser@5.57.1)(eslint@8.29.0)(typescript@4.9.4)
@@ -3884,6 +3887,16 @@ packages:
       - encoding
       - supports-color
       - utf-8-validate
+    dev: false
+
+  /@react-native-picker/picker@2.6.1(react-native@0.72.6)(react@18.2.0):
+    resolution: {integrity: sha512-oJftvmLOj6Y6/bF4kPcK6L83yNBALGmqNYugf94BzP0FQGpHBwimVN2ygqkQ2Sn2ZU3pGUZMs0jV6+Gku2GyYg==}
+    peerDependencies:
+      react: '>=16'
+      react-native: '>=0.57'
+    dependencies:
+      react: 18.2.0
+      react-native: 0.72.6(@babel/core@7.20.5)(@babel/preset-env@7.20.2)(react@18.2.0)
     dev: false
 
   /@react-native/assets-registry@0.72.0:

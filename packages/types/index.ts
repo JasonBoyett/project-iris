@@ -4,7 +4,7 @@ import {
   type language, 
   type userSchema, 
   type wordPairData,
-  type highlightColor,
+  highlightColor,
   type FlasherType,
 } from '@acme/validators'
 import type { speedTestSchema } from '@acme/validators'
@@ -13,6 +13,8 @@ import type { speedTestSchema } from '@acme/validators'
  * Overlay is a type that represents the different overlay colors available for the flasher exercises.
  **/
 export type Overlay = z.infer<typeof highlightColor>
+
+export const colorList = highlightColor.options.map(option => option.value)
 
 
 /*

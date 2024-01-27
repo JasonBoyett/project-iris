@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { SingletonRouter, useRouter } from 'next/router'
 import { Suspense, useEffect, useState } from 'react'
 import { trpc } from '../utils/trpc'
-import type { User, Overlay, Language, Font } from '@acme/types'
+import type { User, Color, Language, Font } from '@acme/types'
 import useUserStore from '../stores/userStore'
 import { HighlightButton } from '../cva/highlightSelectorButton'
 import LoadingSpinner from '../components/loadingspinner'
@@ -18,7 +18,7 @@ const Page: NextPage = () => {
   const [currentWpm, setCurrentWpm] = useState<number>()
   const { mutate } = trpc.user.set.useMutation()
   const store = useUserStore()
-  const [currentHilight, setCurrentHilight] = useState<Overlay>('GREY')
+  const [currentHilight, setCurrentHilight] = useState<Color>('GREY')
   const [currentFont, setCurrentFont] = useState<Font>('sans')
   const inputStyle =
     'rounded-full p-4 h-16 py-5 bg-white/20 text-black font-normal w-full md:w-max'
@@ -101,14 +101,14 @@ const Page: NextPage = () => {
       setFirst(user.firstName)
       setLast(user.lastName)
       setCurrentWpm(user.currentWpm)
-      setCurrentHilight(user.highlightColor as Overlay)
+      setCurrentHilight(user.highlightColor as Color)
       setCurrentFont(user.font as Font)
       setCurrentLanguage(user.language)
     } else if (store.user) {
       setFirst(store.user.firstName)
       setLast(store.user.lastName)
       setCurrentWpm(store.user.currentWpm)
-      setCurrentHilight(store.user.highlightColor as Overlay)
+      setCurrentHilight(store.user.highlightColor as Color)
       setCurrentFont(store.user.font as Font)
       setCurrentLanguage(store.user.language)
     }

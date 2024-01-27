@@ -20,6 +20,7 @@
     "@manypkg/cli": "^0.19.2",
     "@planetscale/database": "^1.13.0",
     "@prisma/client": "^5.7.1",
+    "@react-native-picker/picker": "^2.6.1",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
     "class-variance-authority": "^0.7.0",
