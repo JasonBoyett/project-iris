@@ -143,10 +143,10 @@ export function getNextExercise(user: User | undefined | null) {
 
   const available = getAvailableExercises(user)
 
-  if (!available) return null
+  if (!available) return 'done'
 
   if (available.length === 0 || available === undefined) {
-    return null
+    return 'done' 
   }
   const choice = available[Math.floor(Math.random() * available.length)]
   return choice

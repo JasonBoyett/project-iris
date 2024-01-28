@@ -81,7 +81,12 @@ export default function Page() {
       <div className='text-center text-2xl text-white md:text-4xl'>
         Remaining Daily Exercises:
         <div className='text-8xl text-yellow-400'>
-          {availableExercises?.length ?? '0'}
+          {/*I'm subtracting 1 because the 'done' state is counted as part of the list*/}
+          {
+            ((availableExercises?.length ?? 1) - 1) === 0
+              ? 'Done!'
+              : (availableExercises?.length ?? 1) - 1
+          }
         </div>
       </div>
     )

@@ -1,12 +1,13 @@
-import { 
-  SafeAreaView, 
-  Text, 
-  View, 
-  Pressable, 
-  TextInput, 
-  TouchableOpacity, 
+import {
+  SafeAreaView,
+  Text,
+  View,
+  Pressable,
+  TextInput,
+  TouchableOpacity,
+  Modal,
 } from 'react-native'
-import { useLayoutEffect } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { useNavigation, type ParamListBase } from '@react-navigation/native'
 import { type StackNavigation } from '../_app'
 import { type DrawerNavigationProp } from '@react-navigation/drawer'
@@ -16,6 +17,14 @@ import { trpc } from '../utils/trpc'
 import { Picker } from '@react-native-picker/picker'
 import { type Color, type User, colorList, type Language } from '@acme/types'
 import { Formik } from 'formik'
+import useUserStore from '../stores/userStore'
+
+const prettyLanguages = {
+  english: 'English',
+  spanish: 'Spanish',
+  italian: 'Italian',
+  german: 'German',
+}
 
 const colors = {
   BLUE: 'bg-[#96adfc]',
@@ -65,17 +74,17 @@ const emptyData: FormValues = {
   firstName: '',
   lastName: '',
   highlightColor: 'GREY',
-  currentWpm: 0,
+  currentWpm: 230,
   language: 'english',
   isStudySubject: true,
 }
 
-const setup = (user: User | undefined) => {
+const setup = (user: User | undefined): FormValues => {
   if (!user) return emptyData
   return {
     firstName: user.firstName,
     lastName: user.lastName,
-    highlightColor: user.highlightColor,
+    highlightColor: user.highlightColor ?? 'GREY',
     currentWpm: user.currentWpm,
     language: user.language,
     isStudySubject: user.isStudySubject,
@@ -85,11 +94,70 @@ const setup = (user: User | undefined) => {
 const SettingsScreen = () => {
 
   const drawerNav = useNavigation<DrawerNavigationProp<ParamListBase>>()
+  const [modalVisible, setModalVisible] = useState(false)
   const nav = useNavigation<StackNavigation>()
   const user = trpc.user.get.useQuery().data
   const { mutate: updateUser } = trpc.user.set.useMutation()
+  const store = useUserStore()
 
   const LanguagePicker = Picker<Language>
+  const MyForm = Formik<FormValues>
+
+  const LanguageModal = (props: {
+    visible: boolean,
+    selected: Language,
+    onClose: () => void,
+    callBack: (lang: Language) => void
+  }) => {
+    return (
+      <Modal
+        className='bg-white'
+        animationType="slide"
+        transparent={true}
+        visible={props.visible}
+        onRequestClose={props.onClose}
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: 22,
+          backgroundColor: '#64748b',
+        }}
+       >
+      <View
+        className='flex flex-col items-center justify-center gap-4 min-h-full'
+      >
+      <View
+        className='flex flex-row items-center justify-center gap-4 w-2/3 h-2/3 bg-white rounded-lg'
+      >
+        <LanguagePicker
+          style={{
+            flex: 1,
+          }}
+          selectedValue={props.selected}
+          onValueChange={(itemValue) => props.callBack(itemValue)}
+        >
+          <LanguagePicker.Item color='blak' label="English" value="english" />
+          <LanguagePicker.Item color='black' label="Spanish" value="spanish" />
+          <LanguagePicker.Item color='black' label="Italian" value="italian" />
+          <LanguagePicker.Item color='black' label="German" value="german" />
+
+        </LanguagePicker>
+      </View>
+      <TouchableOpacity
+        className='bg-white/10 rounded-full w-1/2 items-center justify-center p-2'
+        onPress={props.onClose}
+      >
+          <Text 
+            className='text-white text-3xl text-center'
+          >
+            Close
+          </Text>
+      </TouchableOpacity>
+        </View>
+      </Modal>
+    )
+  }
 
   useLayoutEffect(() => {
     nav.setOptions({
@@ -105,12 +173,17 @@ const SettingsScreen = () => {
   }, [])
 
   return (
-    <SafeAreaView
+    <View
       className='bg-[#2e026d] bg-gradient-to-b from-[#2e026d] to-[#15162c] min-h-screen'
     >
-      <Formik
+      <MyForm
         initialValues={setup(user)}
         onSubmit={(values) => {
+          if ( values.firstName.trim() === '' || values.lastName.trim() === '') {
+            alert('Please do not leave any fields blank.')
+            return
+          } 
+          else{
           updateUser({
             currentWpm: values.currentWpm,
             firstName: values.firstName,
@@ -118,6 +191,16 @@ const SettingsScreen = () => {
             language: values.language,
             highlightColor: values.highlightColor,
           })
+          store.setUser({
+            ...store.user as User,
+            currentWpm: values.currentWpm,
+            firstName: values.firstName,
+            lastName: values.lastName,
+            language: values.language,
+            highlightColor: values.highlightColor,
+          })
+          nav.navigate('Home')
+          }
         }}
       >
         {(formikProps) => (
@@ -180,9 +263,9 @@ const SettingsScreen = () => {
                     && !user?.isAdmin
                   ) return
                   formikProps.setFieldValue(
-                  'currentWpm',
-                  formikProps.values.currentWpm + 10
-                )
+                    'currentWpm',
+                    formikProps.values.currentWpm + 10
+                  )
                 }}
                 className='bg-white/10 rounded-full items-center justify-center p-2'
               >
@@ -192,32 +275,31 @@ const SettingsScreen = () => {
                 onPress={() => {
                   if (formikProps.values.currentWpm <= 0) return
                   formikProps.setFieldValue(
-                  'currentWpm',
-                  formikProps.values.currentWpm - 10
-                )
+                    'currentWpm',
+                    formikProps.values.currentWpm - 10
+                  )
                 }}
                 className='bg-white/10 rounded-full items-center justify-center p-2'
               >
                 <AntDesign name="caretdown" size={24} color="white" />
               </TouchableOpacity>
             </View>
-            <View
-              className='flex flex-row items-center justify-center gap-4'
+            <TouchableOpacity
+              className='bg-white/10 rounded-full w-1/2 items-center justify-center p-2'
+              onPress={() => setModalVisible(true)}
             >
-              <LanguagePicker
-                style={{ 
-                  flex: 1,
-                }}
-                selectedValue={formikProps.values.language}
-                onValueChange={(itemValue) => formikProps.setFieldValue('language', itemValue)}
+              <Text
+                className='text-white text-3xl text-center'
               >
-                <LanguagePicker.Item color='white' label="English" value="english" />
-                <LanguagePicker.Item color='white' label="Spanish" value="spanish" />
-                <LanguagePicker.Item color='white' label="Italian" value="italian" />
-                <LanguagePicker.Item color='white' label="German" value="german" />
-
-              </LanguagePicker>
-            </View>
+                {prettyLanguages[formikProps.values.language]}
+              </Text>
+            </TouchableOpacity>
+            <LanguageModal 
+              visible={modalVisible}
+              selected={formikProps.values.language}
+              onClose={() => setModalVisible(false)}
+              callBack={(lang) => formikProps.setFieldValue('language', lang)} 
+            />
             <View
               className='items-center justify-center gap-4'
             >
@@ -299,10 +381,10 @@ const SettingsScreen = () => {
             </TouchableOpacity>
           </View>
         )}
-      </Formik>
+      </MyForm>
       <View className='flex items-center justify-center min-h-screen'>
       </View>
-    </SafeAreaView>
+    </View>
 
   )
 }

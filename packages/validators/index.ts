@@ -112,6 +112,7 @@ export const exercise = z.union([
   z.literal('letterMatcher'),
   z.literal('wordPairs'),
   z.literal('greenDot'),
+  z.literal('done'),
 ])
 
 export const FlasherType = z.union([

@@ -13,7 +13,9 @@ import { WordFlasher } from './exercises/WordFlasher';
 import { GreenDot } from './exercises/GreenDot';
 import { BoxFlasher } from './BoxFlasher';
 import { NumberMatcher } from './exercises/NumberMatcher';
+import { useNavigation } from '@react-navigation/native'
 import { TestScreen } from './speedtest'
+import { StackNavigation } from '../_app';
 
 const TempCompnenet = (
   { text, signal, user }: { text: string, signal: VoidFunction, user: User | undefined }
@@ -39,21 +41,14 @@ const TempCompnenet = (
 }
 
 type ExerciseProps = {
-  exercise: Exercise | undefined
+  exercise: Exercise | 'done'
   signal: VoidFunction
   user: User
 }
 const Session = ({ exercise, signal, user }: ExerciseProps) => {
+  const nav = useNavigation<StackNavigation>()
 
   switch (exercise) {
-    case undefined:
-      return (
-        <TempCompnenet
-          user={user}
-          text='Exercise not found'
-          signal={signal}
-        />
-      )
     case 'oneByTwo':
       return (
         <WordFlasher
@@ -173,16 +168,24 @@ const Session = ({ exercise, signal, user }: ExerciseProps) => {
           signal={signal}
         />
       )
-    default:
+    case 'done':
       return (
         <View className='grid grid-cols-1 items-center justify-center min-h-screen gap-5'>
           <Text className='text-6xl text-white p-4'>
-            You're done for the Day!
+            You're all done!
           </Text>
-          <Button
-            title='Signal'
-            onPress={() => signal()}
-          />
+          <TouchableOpacity
+            onPress={() => 
+              nav.goBack()
+            }
+            className='bg-white/10 justify-center items-center p-4 rounded-full'
+          >
+            <Text
+              className='text-4xl text-white p-4'
+            >
+              Tap to go back
+            </Text>
+          </TouchableOpacity>
         </View>
       )
   }
@@ -192,14 +195,14 @@ const Next = ({ cycle }: { cycle: VoidFunction }) => {
   return (
     <View className='grid grid-cols-1 items-center justify-center min-h-screen gap-5'>
       <Text className='text-6xl text-white p-4'>
-        Tap to start next exercise
+        Tap <Text className='text-yellow-200'>start</Text> to continue
       </Text>
       <TouchableOpacity
-        className='bg-white/10 justify-center items-center p-4 rounded-full'
+        className='bg-white/10 justify-center items-center p-4 w-44 rounded-full'
         onPress={() => cycle()}
       >
-        <Text className='text-white text-3xl'>
-        Next Exercise
+        <Text className='text-white text-6xl'>
+          Start
         </Text>
       </TouchableOpacity>
     </View>
@@ -207,13 +210,20 @@ const Next = ({ cycle }: { cycle: VoidFunction }) => {
 }
 
 export const TrainingScreen = () => {
-  const { data: next, refetch } = trpc.excercise.getNext.useQuery()
+  const { refetch } = trpc.excercise.getNext.useQuery()
   const { data: user, refetch: fetchUser } = trpc.user.get.useQuery()
   const [training, setTraining] = useState(false)
+  const [exercise, setExercise] = useState<Exercise>('done')
 
-  const cycle = () => {
+  const cycle = async () => {
     fetchUser()
-    refetch()
+    await refetch()
+      .then((res) => {
+        setExercise(() => res.data ?? 'done')
+      })
+      .catch(() => {
+        setExercise(() => 'done')
+      })
     setTraining(!training)
   }
 
@@ -222,7 +232,7 @@ export const TrainingScreen = () => {
       <View>
         {training ? (
           <Session
-            exercise={'speedTest'}
+            exercise={exercise}
             signal={cycle}
             user={user as User}
           />

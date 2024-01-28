@@ -2,13 +2,21 @@ import React, { useEffect, useLayoutEffect, useState } from 'react'
 import type { StackNavigation } from '../_app'
 import { FontAwesome5 } from '@expo/vector-icons'
 import type { Exercise, User } from '@acme/types'
-import { Pressable, Text, TouchableOpacity, View } from 'react-native'
+import {
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+  Modal,
+  TextInput,
+} from 'react-native'
 import { useAuth } from '@clerk/clerk-expo'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { trpc } from '../utils/trpc'
 import { getAvailableExercises, isAlreadyDone } from '@acme/helpers'
 import { useNavigation, type ParamListBase } from '@react-navigation/native'
 import useUserStore from '../stores/userStore'
+import { Formik } from 'formik'
 import { type DrawerNavigationProp } from '@react-navigation/drawer'
 
 const buttonStyle = [
@@ -126,9 +134,115 @@ const ExerciseCounter = ({ user }: { user: User }) => {
         Remaining Daily Exercises:
       </Text>
       <Text className='text-9xl text-yellow-400'>
-        {count}
+        {/*I'm subtracting 1 because the 'done' state is counted as part of the list*/}
+        {
+          count === 1
+            ? 'Done!'
+            : count - 1
+        }
       </Text>
     </View>
+  )
+}
+
+const SetupModal = (props: {
+  visible: boolean,
+  setVisible: (visible: boolean) => void,
+  set: (firstName: string, lastName: string) => void,
+}) => {
+  const defaultValues = {
+    firstName: '',
+    lastName: '',
+  }
+
+  return (
+    <Modal
+      transparent={true}
+      visible={props.visible}
+      onRequestClose={() => props.setVisible(false)}
+    >
+      <View
+        className='flex flex-col items-center justify-center bg-white/30 min-h-screen'
+      >
+        <View
+          className={[
+            'bg-[#2e026d] bg-gradient-to-b from-[#2e026d] to-[#15162c]',
+            'rounded-lg p-4 w-3/4 h-3/4'
+          ].join(' ')}
+        >
+        <View
+          className='mt-32'
+        >
+          <Text
+            className='text-white text-5xl text-center'
+          >
+            Welcome to Iris!
+          </Text>
+        </View>
+          <Formik
+            initialValues={defaultValues}
+            onSubmit={(values) => {
+              if (
+                values.firstName === '' ||
+                values.lastName === ''
+              ) {
+                alert("Please don't leave any fields blank");
+                return;
+              }
+              props.set(values.firstName, values.lastName);
+              props.setVisible(false);
+            }}
+          >
+            {(formikProps) => (
+              <View
+                className='flex flex-col items-center justify-center gap-2'
+              >
+                <View
+                  className='flex flex-row items-center justify-center gap-2'
+                >
+                  <Text
+                    className='text-white text-2xl text-center'
+                  >
+                    First Name:
+                  </Text>
+                  <TextInput
+                    className='text-white text-2xl text-center bg-white/10 rounded-full w-1/2 h-10'
+                    placeholder="First Name"
+                    onChangeText={formikProps.handleChange('firstName')}
+                  />
+                </View>
+                <View
+                  className='flex flex-row items-center justify-center gap-2'
+                >
+                  <Text
+                    className='text-white text-2xl text-center'
+                  >
+                    Last Name:
+                  </Text>
+                  <TextInput
+                    className='text-white text-2xl text-center bg-white/10 rounded-full w-1/2 h-10'
+                    placeholder="Last Name"
+                    onChangeText={formikProps.handleChange('lastName')}
+                  />
+                </View>
+                <TouchableOpacity
+                  className='bg-white/10 rounded-full'
+                >
+                  <Text
+                    className='text-white text-3xl text-center p-4'
+                    onPress={() => {
+                      formikProps.handleSubmit();
+                    }}
+                  >
+                    Submit
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </Formik>
+        </View>
+      </View>
+    </Modal>
   )
 }
 
@@ -136,10 +250,10 @@ export const HomeScreen = () => {
   const user = trpc.user.get.useQuery()
   const store = useUserStore()
   const [isChekList, setIsCheckList] = useState(false)
+  const [showSetup, setShowSetup] = useState(false)
   const { mutate: mutateUser } = trpc.user.set.useMutation()
   const drawerNav = useNavigation<DrawerNavigationProp<ParamListBase>>()
   const nav = useNavigation<StackNavigation>()
-  const auth = useAuth()
 
   const StartButton = () => {
     return (
@@ -160,11 +274,25 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     if (!user.data) return
+    console.log(user.data.firstName)
+    console.log(user.data.lastName)
     setIsCheckList(user.data.isUsingChecklist)
   }, [])
 
   useEffect(() => {
     if (!user.data) return
+    if (user.data.firstName === undefined || user.data.lastName === undefined) {
+      console.log('showing setup')
+      setShowSetup(true)
+      return
+    }
+    if (
+      user.data.firstName.trim() === ''
+      || user.data.lastName.trim() === ''
+    ) {
+      console.log('showing setup')
+      setShowSetup(true)
+    }
     if (!store.user) {
       store.setUser(user.data)
       return
@@ -177,6 +305,20 @@ export const HomeScreen = () => {
     }
 
   }, [user.data])
+
+  useEffect(() => {
+    if (Object.keys(store.user).length === 0) return
+    if (store.user.firstName === undefined || store.user.lastName === undefined) {
+      setShowSetup(true)
+      return
+    }
+    if (
+      store.user.firstName.trim() === ''
+      || store.user.lastName.trim() === ''
+    ) {
+      setShowSetup(true)
+    }
+  }, [store.user])
 
   useLayoutEffect(() => {
     nav.setOptions({
@@ -191,6 +333,30 @@ export const HomeScreen = () => {
   return (
     <SafeAreaView className='bg-[#2e026d] bg-gradient-to-b from-[#2e026d] to-[#15162c] min-h-screen'>
       <View className='flex items-center justify-center'>
+        <SetupModal
+          visible={showSetup}
+          setVisible={setShowSetup}
+          set={(firstName, lastName) => {
+            if (!store.user) {
+              setShowSetup(false)
+              return
+            }
+            if (
+              firstName.trim() === ''
+              || lastName.trim() === ''
+            ) {
+              alert("Please don't leave any fields blank")
+              return
+            }
+            mutateUser({ firstName, lastName })
+            store.setUser({ 
+              ...store.user,
+              firstName, 
+              lastName 
+            })
+            setShowSetup(false)
+          }}
+        />
         <TouchableOpacity
           onPress={
             () => {

@@ -1,5 +1,6 @@
 import type { User } from '@acme/types'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import SessionStorage from 'react-native-session-storage'
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 
@@ -10,19 +11,19 @@ import { persist, createJSONStorage } from 'zustand/middleware'
  * there also exists a helper function called useMutateUser that will mutate the user object in the database and in the client at the same time
  */
 export const useUserStore = create<{
-  user: User | undefined
+  user: User
   setUser: (user: User) => void
 }>()(
   persist(
     set => ({
-      user: undefined,
+      user: {} as User,
       setUser: (userFromClient: User) => {
         return set(state => ({ ...state, user: userFromClient }))
       },
     }),
     {
       name: 'user-storage',
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createJSONStorage(() => SessionStorage),
     },
   ),
 )
