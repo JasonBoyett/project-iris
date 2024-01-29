@@ -13,6 +13,7 @@ import type { User } from '@acme/types'
 import { trpc } from '../../utils/trpc'
 import useUserStore from '../../stores/userStore'
 import { formatDate } from '@acme/helpers'
+import Instructions from '../instructions/NumberMatch'
 
 const CORRECT_STREAK_NEEDED = 5
 const INCORRECT_STREAK_CUT_OFF = 3
@@ -147,7 +148,7 @@ type ExerciseProps = {
   user: User
   signal: VoidFunction
 }
-export const NumberMatcher = React.memo((props: ExerciseProps) => {
+const Exercise = React.memo((props: ExerciseProps) => {
   const target = useRef<string>(numberGen(props.user.numberGuesserFigures))
   const significantFigures = useRef<number>(props.user.numberGuesserFigures)
   const correctStreak = useRef<number>(0)
@@ -301,3 +302,13 @@ export const NumberMatcher = React.memo((props: ExerciseProps) => {
     </View>
   )
 })
+
+export const NumberMatcher = (props: ExerciseProps) => {
+  const [instructions, setInstructions] = useState(true)
+
+  return (
+        instructions
+          ? <Instructions user={props.user} callback={() => setInstructions(false)} />
+          : <Exercise {...props} />
+  )
+}

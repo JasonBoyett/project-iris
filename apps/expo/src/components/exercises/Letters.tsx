@@ -16,6 +16,7 @@ import { FontButton } from '../../cva/FontProvider'
 import { trpc } from '../../utils/trpc'
 import useUserStore from '../../stores/userStore'
 import { formatDate } from '@acme/helpers'
+import Instructions from '../instructions/LetterMatch'
 
 type CellProps = {
   letter?: string
@@ -69,7 +70,7 @@ type LetterMatcherProps = {
   size: number
   signal: VoidFunction
 }
-export const LetterMatcher = (props: LetterMatcherProps) => {
+export const Exercise = (props: LetterMatcherProps) => {
   const {
     user,
     size,
@@ -276,5 +277,15 @@ export const LetterMatcher = (props: LetterMatcherProps) => {
         </TouchableOpacity>
       </View>
     </View>
+  )
+}
+
+export const LetterMatcher = (props: LetterMatcherProps) => {
+  const [instructions, setInstructions] = useState(true)
+
+  return (
+        instructions
+          ? <Instructions user={props.user} callback={() => setInstructions(false)} />
+          : <Exercise {...props} />
   )
 }

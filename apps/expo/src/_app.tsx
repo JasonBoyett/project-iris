@@ -7,7 +7,7 @@ import { TRPCProvider } from './utils/trpc'
 
 import { HomeScreen } from './screens/home'
 import SignOutScreen from './screens/signout'
-import { SignInSignUpScreen } from './screens/signin'
+import { SignInSignUpScreen } from './screens/auth'
 import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-expo'
 import { tokenCache } from './utils/cache'
 import Constants from 'expo-constants'

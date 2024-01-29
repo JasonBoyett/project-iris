@@ -1,4 +1,4 @@
-import { useOAuth } from '@clerk/clerk-expo'
+import { useOAuth, useSignUp } from '@clerk/clerk-expo'
 import React from 'react'
 import {
   View,
@@ -13,16 +13,15 @@ import {
   Keyboard
 } from 'react-native'
 import { useWarmUpBrowser } from '../hooks/useWarmUpBrowser'
-import { useSignIn } from '@clerk/clerk-expo'
 import { Formik } from 'formik'
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons'
 
-const SignInWithOAuth = () => {
+const SignUpWithOAuth = () => {
   useWarmUpBrowser()
 
   const { startOAuthFlow: discordFlow } = useOAuth({ strategy: 'oauth_discord' })
   const { startOAuthFlow: githubFlow } = useOAuth({ strategy: 'oauth_github' })
-  const { signIn, setActive, isLoaded } = useSignIn();
+  const { signUp, setActive, isLoaded } = useSignUp();
 
   const styles = StyleSheet.create({
     header: {
@@ -40,7 +39,7 @@ const SignInWithOAuth = () => {
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: 'white',
-      maxHeight: '75%' as unknown as AnimatableNumericValue,
+      maxHeight: '85%' as unknown as AnimatableNumericValue,
       borderRadius: '25%' as unknown as AnimatableNumericValue,
     },
     feildText: {
@@ -157,24 +156,31 @@ const SignInWithOAuth = () => {
     }
 
     try {
-      const completeSignIn = await signIn.create({
-        identifier: email,
+      const completeSignUp = await signUp.create({
+        emailAddress: email,
         password,
       });
-      // This is an important step,
-      // This indicates the user is signed in
-      await setActive({ session: completeSignIn.createdSessionId });
+      await setActive({ session: completeSignUp.createdSessionId }).then((result) => {
+        console.log(result)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     } catch (err: any) {
-      alert('Unable to sign In \n' + (err.message ?? ''))
+      alert('Unable to sign up \n' + (err.message ?? ''))
     }
   };
 
   return (
-    <DismissKeyboard>
-    <View style={styles.baseContainer as StyleProp<ViewStyle>}>
+    <DismissKeyboard>      
+      <View style={styles.baseContainer as StyleProp<ViewStyle>}>
       <Formik
-        initialValues={{ email: '', password: '' }}
+        initialValues={{ email: '', password: '', confirmPassword: '' }}
         onSubmit={(values) => {
+          if (values.password !== values.confirmPassword) {
+            alert('Passwords do not match')
+            return
+          }
           onSignInPress(values.email, values.password)
         }}
       >
@@ -182,7 +188,7 @@ const SignInWithOAuth = () => {
           <View style={styles.centerContainer as StyleProp<ViewStyle>}>
             <View>
               <Text style={styles.header}>
-                Sign in
+                Sign up
               </Text>
             </View>
             <View>
@@ -201,6 +207,16 @@ const SignInWithOAuth = () => {
               <TextInput
                 style={styles.entryFeild}
                 onChangeText={formikProps.handleChange('password')}
+                secureTextEntry={true}
+              />
+            </View>
+            <View>
+              <Text style={styles.feildText}>
+                Confirm Password
+              </Text>
+              <TextInput
+                style={styles.entryFeild}
+                onChangeText={formikProps.handleChange('confirmPassword')}
                 secureTextEntry={true}
               />
             </View>
@@ -226,7 +242,7 @@ const SignInWithOAuth = () => {
               <View
                 style={styles.oAuthButtonContainer as StyleProp<ViewStyle>}
               >
-                <TouchableOpacity 
+                <TouchableOpacity
                   onPress={handleSignInWithGitHubPress}
                   style={styles.oAuthButton as StyleProp<ViewStyle>}
                 >
@@ -240,7 +256,7 @@ const SignInWithOAuth = () => {
               <View
                 style={styles.oAuthButtonContainer as StyleProp<ViewStyle>}
               >
-                <TouchableOpacity 
+                <TouchableOpacity
                   onPress={handleSignInWithDiscordPress}
                   style={styles.oAuthButton as StyleProp<ViewStyle>}
                 >
@@ -256,9 +272,9 @@ const SignInWithOAuth = () => {
           </View>
         )}
       </Formik>
-    </View>
+      </View>
     </DismissKeyboard>
   )
 }
 
-export default SignInWithOAuth
+export default SignUpWithOAuth

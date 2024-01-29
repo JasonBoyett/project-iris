@@ -54,8 +54,8 @@ export type Language = z.infer<typeof language>
  * which ones have been performed in the past day.
  **/
 export type Exercise = z.infer<typeof exercise>
-
-export const ExerciseList = exercise.options.map(option => option.value)
+const listableExercises = exercise.options.filter(option => option.value !== 'done')
+export const ExerciseList = listableExercises.map(option => option.value)
 
 
 const Font = [

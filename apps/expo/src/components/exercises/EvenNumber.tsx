@@ -11,6 +11,7 @@ import { useEffect, useMemo, useState } from 'react'
 import type { User } from '@acme/types'
 import useUserStore from '../../stores/userStore'
 import { formatDate } from '@acme/helpers'
+import Instructions from '../instructions/EvenNumbers'
 
 const generateNumber = (maxFigures: number, isEven: boolean) => {
   let result = ''
@@ -166,7 +167,7 @@ const Table = (props: TableProps) => {
 }
 
 type ExcerciseProps = TableProps
-export const EvenNumbers = (props: ExcerciseProps) => {
+const Exercise = (props: ExcerciseProps) => {
   const {
     user,
     signal,
@@ -176,5 +177,15 @@ export const EvenNumbers = (props: ExcerciseProps) => {
     <View className='items-center justify-center'>
       <Table user={user} signal={signal} />
     </View>
+  )
+}
+
+export const EvenNumbers = (props: ExcerciseProps) => {
+  const [instructions, setInstructions] = useState(true)
+
+  return (
+        instructions
+          ? <Instructions user={props.user} callback={() => setInstructions(false)} />
+          : <Exercise {...props} />
   )
 }

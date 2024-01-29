@@ -1,5 +1,7 @@
 import type { User } from '@acme/types'
+import { useState } from 'react'
 import { View } from 'react-native'
+import Instructions from '../../instructions/GreenDot'
 import { PieTimer } from './Dot'
 import { BackgroundText } from './Text'
 
@@ -7,7 +9,7 @@ type GreenDotProps = {
   user: User,
   signal: VoidFunction,
 }
-export const GreenDot = (props: GreenDotProps) => {
+export const Exercise = (props: GreenDotProps) => {
   const { user, signal } = props
   return (
     <View 
@@ -31,5 +33,15 @@ export const GreenDot = (props: GreenDotProps) => {
       </View>
     </View>
     </View>
+  )
+}
+ 
+export const GreenDot = (props: GreenDotProps) => {
+  const [instructions, setInstructions] = useState(true)
+
+  return (
+        instructions
+          ? <Instructions user={props.user} callback={() => setInstructions(false)} />
+          : <Exercise {...props} />
   )
 }

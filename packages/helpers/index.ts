@@ -140,7 +140,7 @@ export function isAlreadyDone(user: User, exercise: Exercise) {
  **/
 export function getNextExercise(user: User | undefined | null) {
   if (!user) return null
-
+  if (!user.tested) return 'speedTest'
   const available = getAvailableExercises(user)
 
   if (!available) return 'done'
@@ -148,7 +148,13 @@ export function getNextExercise(user: User | undefined | null) {
   if (available.length === 0 || available === undefined) {
     return 'done' 
   }
-  const choice = available[Math.floor(Math.random() * available.length)]
+  const choiceNumber = (() => {
+    if (available.length === 1) return 0
+    return Math.floor(Math.random() * available.length)
+  })()
+  const choice = available[choiceNumber]
+  console.log(available)
+  console.log(choiceNumber)
   return choice
 }
 

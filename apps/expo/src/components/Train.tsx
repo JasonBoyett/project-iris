@@ -15,7 +15,9 @@ import { BoxFlasher } from './BoxFlasher';
 import { NumberMatcher } from './exercises/NumberMatcher';
 import { useNavigation } from '@react-navigation/native'
 import { TestScreen } from './speedtest'
-import { StackNavigation } from '../_app';
+import { type StackNavigation } from '../_app';
+import useUserStore from '../stores/userStore';
+import { getAvailableExercises, getNextExercise } from '@acme/helpers';
 
 const TempCompnenet = (
   { text, signal, user }: { text: string, signal: VoidFunction, user: User | undefined }
@@ -210,21 +212,16 @@ const Next = ({ cycle }: { cycle: VoidFunction }) => {
 }
 
 export const TrainingScreen = () => {
-  const { refetch } = trpc.excercise.getNext.useQuery()
   const { data: user, refetch: fetchUser } = trpc.user.get.useQuery()
   const [training, setTraining] = useState(false)
   const [exercise, setExercise] = useState<Exercise>('done')
+  const store = useUserStore()
 
   const cycle = async () => {
     fetchUser()
-    await refetch()
-      .then((res) => {
-        setExercise(() => res.data ?? 'done')
-      })
-      .catch(() => {
-        setExercise(() => 'done')
-      })
+    setExercise(getNextExercise(store.user) || 'done')   
     setTraining(!training)
+    console.log(store.user)
   }
 
   return (

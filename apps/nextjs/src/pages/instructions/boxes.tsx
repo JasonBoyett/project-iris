@@ -19,7 +19,7 @@ function Paragraph1({ user }: { user: User | undefined }) {
         <p>
           As each box appears on the screen move your eyes to the center of the
           box. Do not actively attempt to read the words at the corners of the
-          box. This exercise is meant to help improve your parifpheral vision.
+          box. This exercise is meant to help improve your peripheral vision.
           In order to get the most out of this exercise, try to stay relaxed and
           focused. The exercise will only be counted as completed if you do not
           navigate away from the page. The page will automatically navigate away

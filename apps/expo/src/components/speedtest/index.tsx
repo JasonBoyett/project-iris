@@ -10,9 +10,42 @@ import { useInterval } from '../../hooks/useInterval'
 import { trpc } from '../../utils/trpc'
 import { useEffect, useRef, useState } from 'react';
 import useSpeedTestStore from '../../stores/useSpeedTestStore';
-import { ClerkLoading } from '@clerk/clerk-expo';
 import useUserStore from '../../stores/userStore';
 import { formatDate } from '@acme/helpers';
+import Instructions from '../instructions/SpeedTest';
+
+const Loading = () => {
+  const [frame, setFrame] = useState(0)
+
+  const getText = () => {
+    switch (frame % 4) {
+      case 0:
+        return 'Loading'
+      case 1:
+        return 'Loading.'
+      case 2:
+        return 'Loading..'
+      case 3:
+        return 'Loading...'
+    }
+  }
+
+  useInterval(() => {
+    setFrame(frame + 1)
+  }, 250)
+
+  return (
+    <View
+      className='flex flex-col items-center justify-center'
+    >
+      <Text
+        className='text-6xl text-white'
+      >
+        {getText()}
+      </Text>
+    </View>
+  )
+}
 
 const GOOD_GRADE = 80
 const FAILING_GRADE = 50
@@ -229,7 +262,7 @@ const Result = (props: {
 }
 
 
-export const TestScreen = (props: { user: User, signal: VoidFunction }) => {
+export const Exercise = (props: { user: User, signal: VoidFunction }) => {
   const questions = trpc.excercise.getMultipleSpeedTestProps.useQuery(TOTAL_QUESTIONS)
   const { mutate } = trpc.user.set.useMutation()
   const collectData = trpc.collect.SpeedTestSession.useMutation().mutate
@@ -356,10 +389,21 @@ export const TestScreen = (props: { user: User, signal: VoidFunction }) => {
       <View className='min-h-screen flex-row justify-between items-center p-2'>
         {
           loading
-            ? <Text>Loading...</Text>
+            ? <Loading />
             : selectSection(section)
         }
       </View>
     </SafeAreaView>
   );
+}
+
+export const TestScreen = (props: { user: User, signal: VoidFunction }) => {
+
+  const [instructions, setInstructions] = useState(true)
+
+  return (
+        instructions
+          ? <Instructions user={props.user} callback={() => setInstructions(false)} />
+          : <Exercise {...props} />
+  )
 }

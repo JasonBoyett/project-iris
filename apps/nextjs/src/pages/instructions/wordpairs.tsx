@@ -17,13 +17,13 @@ function Paragraph1({ user }: { user: User | undefined }) {
       <div className='h-96 w-4/5 items-center gap-2 overflow-y-auto rounded-lg bg-white p-12 text-2xl shadow-md md:h-3/5 md:w-2/5 md:overflow-y-auto'>
         <p>
           <span className='font-bold'>
-            Each cell will contian two words. In five of the cells the words
+            Each cell will contain two words. In five of the cells the words
             will be slightly different and the remaining cells contain matching
             words. Click on all of the cells that contain two different words.
           </span>
           <br />
           There is no time limit, though your time will be recorded to track
-          your progression. so try to go as quickly as you can while remaining
+          your progression. So try to go as quickly as you can while remaining
           accurate. This exercise is designed to help you improve your ability
           to focus and your perception. Try to stay relaxed and focused while
           you are doing this exercise. It is up to you how you want to approach

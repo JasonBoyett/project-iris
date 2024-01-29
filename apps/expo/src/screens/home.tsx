@@ -134,11 +134,10 @@ const ExerciseCounter = ({ user }: { user: User }) => {
         Remaining Daily Exercises:
       </Text>
       <Text className='text-9xl text-yellow-400'>
-        {/*I'm subtracting 1 because the 'done' state is counted as part of the list*/}
         {
-          count === 1
+          count === 0
             ? 'Done!'
-            : count - 1
+            : count
         }
       </Text>
     </View>
@@ -285,6 +284,9 @@ export const HomeScreen = () => {
       console.log('showing setup')
       setShowSetup(true)
       return
+    }
+    if (Object.keys(store.user).length === 0) {
+      store.setUser(user.data)
     }
     if (
       user.data.firstName.trim() === ''

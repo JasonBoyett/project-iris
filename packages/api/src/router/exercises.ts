@@ -178,7 +178,7 @@ export const excercisePropsRouter = router({
     .output(wordPairData.array())
     .query(async ({ input, ctx }) => {
       const result = await ctx.prisma.$queryRaw<Array<WordPair>>(
-        Prisma.sql`SELECT * FROM WordPair ORDER BY RAND() LIMIT ${input.count}`,
+        Prisma.sql`SELECT * FROM WordPair WHERE LENGTH(primaryWord) <= 7 AND LENGTH(secondaryWord) <= 7 ORDER BY RAND() LIMIT ${input.count}`,
       )
       if (result === null || result === undefined) throw new Error('No result')
       return result

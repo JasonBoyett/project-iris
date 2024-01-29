@@ -10,6 +10,40 @@ import { useInterval } from '../../hooks/useInterval'
 import { formatDate } from '@acme/helpers'
 import type { FlasherType, User } from '@acme/types'
 import useUserStore from '../../stores/userStore'
+import Instructions from '../instructions/WordFlasher'
+
+const Loading = () => {
+  const [frame, setFrame] = useState(0)
+
+  const getText = () => {
+    switch (frame % 4) {
+      case 0:
+        return 'Loading'
+      case 1:
+        return 'Loading.'
+      case 2:
+        return 'Loading..'
+      case 3:
+        return 'Loading...'
+    }
+  }
+
+  useInterval(() => {
+    setFrame(frame + 1)
+  }, 250)
+
+  return (
+    <View
+      className='flex flex-col items-center justify-center'
+    >
+      <Text
+        className='text-6xl text-white'
+      >
+        {getText()}
+      </Text>
+    </View>
+  )
+}
 
 type CellProps = {
   content: string,
@@ -123,7 +157,7 @@ type WordFlasherProps = {
   signal: VoidFunction,
   rows: number,
 }
-export const WordFlasher = (props: WordFlasherProps) => {
+const Exercise = (props: WordFlasherProps) => {
   const {
     type,
     user,
@@ -272,9 +306,7 @@ export const WordFlasher = (props: WordFlasherProps) => {
       >
         {
           !!isLoading
-            ? <Text
-              className='text-6xl text-white p-4'
-            >Loading...</Text>
+            ? <Loading />
             : <Grid />
         }
       </View>
@@ -283,3 +315,12 @@ export const WordFlasher = (props: WordFlasherProps) => {
 
 }
 
+export const WordFlasher = (props: WordFlasherProps) => {
+  const [instructions, setInstructions] = useState(true)
+
+  return (
+        instructions
+          ? <Instructions user={props.user} callback={() => setInstructions(false)} />
+          : <Exercise {...props} />
+  )
+}

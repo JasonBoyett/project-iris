@@ -20,9 +20,9 @@ function Paragraph1({ user }: { user: User | undefined }) {
             The goal of this exercise is for you to find the six even numbers in
             the table.
           </span>
-          <br />
+          {'\n'}
           There is no time limit, though your time will be recorded to track
-          your progression. so try to go as quickly as you can while remaining
+          your progression. So try to go as quickly as you can while remaining
           accurate. This exercise is designed to help you improve your ability
           to focus and your perception. Try to stay relaxed and focused while
           you are doing this exercise. It is up to you how you want to approach

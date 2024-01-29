@@ -11,6 +11,7 @@ import React from 'react'
 import { formatDate } from '@acme/helpers'
 import useUserStore from '../../stores/userStore'
 import { useStopWatch } from '../../hooks/useStopWatch'
+import Instructions from '../instructions/SchulteTable'
 
 
 type CellProps = {
@@ -258,7 +259,7 @@ const TableSwitcher = (props: TableSwitcherProps) => {
 
 
 type SchulteTableProps = Pick<TableProps, 'user' | 'signal'>
-export const SchulteTable = (props: SchulteTableProps) => {
+const Exercise = (props: SchulteTableProps) => {
   const { user, signal } = props
   const [level, setLevel] = useState<Level>(user.schulteLevel ?? 'three')
   const [counter, setCount] = useState(0)
@@ -283,5 +284,14 @@ export const SchulteTable = (props: SchulteTableProps) => {
         </Text>
       </View>
     </SafeAreaView>
+  )
+}
+export const SchulteTable = (props: SchulteTableProps) => {
+  const [instructions, setInstructions] = useState(true)
+
+  return (
+        instructions
+          ? <Instructions user={props.user} callback={() => setInstructions(false)} />
+          : <Exercise {...props} />
   )
 }

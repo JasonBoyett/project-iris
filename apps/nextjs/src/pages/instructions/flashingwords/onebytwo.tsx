@@ -19,7 +19,7 @@ const Paragraph1 = ({ user }: { user: User | undefined }) => {
         <p>
           Follow the highlighted word with your eyes. This exercise is meant to
           help improve your ability to scan and focus as you read. Do not
-          actively attempt to read the words, just follow the highligter. In
+          actively attempt to read the words, just follow the highlighter. In
           order to get the most out of this exercise, try to stay relaxed and
           focused. The exercise will only be counted as completed if you do not
           navigate away from the page. The page will automatically navigate away

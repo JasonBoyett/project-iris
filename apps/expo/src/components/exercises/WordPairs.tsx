@@ -3,6 +3,7 @@ import {
   View,
   FlatList,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native'
 import { FontButton } from '../../cva/FontProvider'
 import { trpc } from '../../utils/trpc'
@@ -11,6 +12,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { formatDate } from '@acme/helpers'
 import type { User, WordPair } from '@acme/types'
 import useUserStore from '../../stores/userStore'
+import Instructions from '../instructions/WordPair'
 
 type CellProps = {
   content: string | WordPair,
@@ -23,7 +25,6 @@ const Cell = (props: CellProps) => {
     setter,
     errorSetter,
     content,
-    user,
   } = props
   const [clicked, setClicked] = useState(false)
   const { wordOne, wordTwo } = (() => {
@@ -86,12 +87,11 @@ const Cell = (props: CellProps) => {
   }
 
   return (
-    <FontButton
-      font={user.font ?? 'sans'}
+    <TouchableOpacity
       onPress={press}
     >
       <InnerText />
-    </FontButton>
+    </TouchableOpacity>
   )
 }
 
@@ -128,7 +128,6 @@ const Table = (props: TableProps) => {
     pairs.data.forEach((pair) => {
       content.push({ content: pair })
     })
-    console.log(pairs.data)
     words.data.forEach((word) => {
       content.push({ content: word })
     })
@@ -192,7 +191,7 @@ type Props = {
   user: User,
   signal: VoidFunction,
 }
-export const WordPairs = (props: Props) => {
+const Exercise = (props: Props) => {
   const { user, signal } = props
   return (
     <View>
@@ -201,5 +200,15 @@ export const WordPairs = (props: Props) => {
         signal={signal}
       />
     </View>
+  )
+}
+
+export const WordPairs = (props: Props) => {
+  const [instructions, setInstructions] = useState(true)
+
+  return (
+        instructions
+          ? <Instructions user={props.user} callback={() => setInstructions(false)} />
+          : <Exercise {...props} />
   )
 }

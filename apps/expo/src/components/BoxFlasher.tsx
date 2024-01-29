@@ -11,9 +11,11 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import React from 'react'
 import useUserStore from '../stores/userStore'
 import { formatDate } from '@acme/helpers'
+import Instructions from './instructions/Boxes'
+
 const Loading = () => {
   const [frame, setFrame] = useState(0)
-  
+
   const getText = () => {
     switch (frame % 4) {
       case 0:
@@ -32,7 +34,7 @@ const Loading = () => {
   }, 250)
 
   return (
-    <View 
+    <View
       className='flex flex-col items-center justify-center'
     >
       <Text
@@ -67,8 +69,6 @@ const Box = (props: BoxProps) => {
       maxWidth: 400,
       maxHeight: 200,
       borderRadius: 10,
-      borderWidth: 2,
-      borderColor: visible ? 'black' : 'white',
       backgroundColor: 'white',
       felxDirectoin: 'column',
     },
@@ -251,7 +251,7 @@ const BoxContainer = (props: BoxContainerProps) => {
 
 }
 
-export const BoxFlasher = (props: BoxFlasherProps) => {
+const Exercise = (props: BoxFlasherProps) => {
   const { data: words } = trpc.excercise.getRandomWords.useQuery({
     language: props.user.language,
     number: Math.floor(props.user.currentWpm / 4) * 4,
@@ -259,7 +259,7 @@ export const BoxFlasher = (props: BoxFlasherProps) => {
   })
   return (
     <View
-      className='rounded-xl min-h-screen items-center justify-center'
+      className='rounded-xl min-h-screen iems-center justify-center'
     >
       <BoxContainer
         user={props.user}
@@ -268,5 +268,16 @@ export const BoxFlasher = (props: BoxFlasherProps) => {
         words={words}
       />
     </View>
+  )
+}
+
+
+export const BoxFlasher = (props: BoxFlasherProps) => {
+  const [instructions, setInstructions] = useState(true)
+
+  return (
+        instructions
+          ? <Instructions user={props.user} callback={() => setInstructions(false)} />
+          : <Exercise {...props} />
   )
 }
