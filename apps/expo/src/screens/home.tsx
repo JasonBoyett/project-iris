@@ -10,7 +10,6 @@ import {
   Modal,
   TextInput,
 } from 'react-native'
-import { useAuth } from '@clerk/clerk-expo'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { trpc } from '../utils/trpc'
 import { getAvailableExercises, isAlreadyDone } from '@acme/helpers'
