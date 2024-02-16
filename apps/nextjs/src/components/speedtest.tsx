@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import useInterval from '../hooks/useInterval'
-import type { SpeedQuestion } from '@prisma/client'
+import type { SpeedTest } from '@acme/types'
 import type { User } from '@acme/types'
 import { trpc } from '../utils/trpc'
 import useUserStore from '../stores/userStore'
@@ -8,7 +8,7 @@ import { type SingletonRouter, useRouter } from 'next/router'
 import { formatDate, navigate } from '@acme/helpers'
 
 type QuestionViewProps = {
-  speedQuestion: SpeedQuestion
+  speedQuestion: SpeedTest
   user: User | undefined
   doneSignal: () => void
 }
@@ -44,7 +44,7 @@ function AnswerView({
   speedQuestion,
   user,
 }: {
-  speedQuestion: SpeedQuestion
+  speedQuestion: SpeedTest
   user: User | undefined
 }) {
   const { mutate } = trpc.user.set.useMutation()
@@ -175,7 +175,7 @@ export default function SpeedTest({
   speedQuestion,
 }: {
   user: User | undefined
-  speedQuestion: SpeedQuestion
+  speedQuestion: SpeedTest
 }) {
   const [isAnswerTime, setIsAnswerTime] = useState(false)
   return (

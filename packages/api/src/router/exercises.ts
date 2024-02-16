@@ -11,7 +11,8 @@ import {
   wordPairData,
   wordPairProps,
 } from '@acme/validators'
-import { Prisma, type SpeedQuestion, type WordPair } from '@acme/db'
+import { Prisma, type WordPair } from '@acme/db'
+import { SpeedTest } from '@acme/types'
 import { getNextExercise, getNextURL } from '@acme/helpers'
 
 const multiTest = speedTestSchema.array()
@@ -144,14 +145,15 @@ export const excercisePropsRouter = router({
       const randomNumbers = numbers
         .sort(() => Math.random() - Math.random())
         .slice(0, input)
-      const result = Array<SpeedQuestion>()
+      const result = Array<SpeedTest>()
       for (let i = 0; i < input; i++) {
         const question = await ctx.prisma.speedQuestion.findUnique({
           where: {
             id: randomNumbers[i],
           },
         })
-        if (question === null || question === undefined) throw new Error('No result')
+        if (question === null || question === undefined)
+          throw new Error('No result')
         result.push(question)
       }
       if (result === null || result === undefined) throw new Error('No result')
