@@ -1,0 +1,297 @@
+Date : 2024-01-29 02:53:16
+Directory : /home/jboyett/Documents/dev/github/iris-mobile
+Total : 194 files,  27407 codes, 356 comments, 2962 blanks, all 30725 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| YAML               |          3 |     12,252 |          2 |      1,698 |     13,952 |
+| TypeScript JSX     |        102 |     11,570 |        133 |        786 |     12,489 |
+| TypeScript         |         46 |      2,125 |        169 |        231 |      2,525 |
+| JSON               |         14 |        651 |          0 |         14 |        665 |
+| Markdown           |          3 |        255 |          0 |        127 |        382 |
+| Prisma             |          1 |        233 |          2 |         37 |        272 |
+| JavaScript         |         15 |        191 |         50 |         44 |        285 |
+| JSON with Comments |          8 |         60 |          0 |          8 |         68 |
+| Diff               |          1 |         45 |          0 |          5 |         50 |
+| CSS                |          1 |         25 |          0 |         12 |         37 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                          | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                             |        194 |     27,407 |        356 |      2,962 |     30,725 |
+| . (Files)                                                                                                     |         12 |     12,541 |          6 |      1,773 |     14,320 |
+| .github                                                                                                       |          2 |         79 |          2 |         26 |        107 |
+| .github/ISSUE_TEMPLATE                                                                                        |          1 |         32 |          0 |         12 |         44 |
+| .github/workflows                                                                                             |          1 |         47 |          2 |         14 |         63 |
+| apps                                                                                                          |        145 |     12,608 |        299 |        979 |     13,886 |
+| apps/expo                                                                                                     |         53 |      6,122 |        130 |        392 |      6,644 |
+| apps/expo (Files)                                                                                             |          7 |        140 |         12 |         17 |        169 |
+| apps/expo/.expo-shared                                                                                        |          1 |          4 |          0 |          1 |          5 |
+| apps/expo/expo-plugins                                                                                        |          1 |         29 |          6 |          7 |         42 |
+| apps/expo/src                                                                                                 |         44 |      5,949 |        112 |        367 |      6,428 |
+| apps/expo/src (Files)                                                                                         |          1 |         98 |          0 |          7 |        105 |
+| apps/expo/src/components                                                                                      |         25 |      4,628 |         54 |        268 |      4,950 |
+| apps/expo/src/components (Files)                                                                              |          5 |      1,060 |          4 |         66 |      1,130 |
+| apps/expo/src/components/exercises                                                                            |         10 |      1,699 |         11 |        134 |      1,844 |
+| apps/expo/src/components/exercises (Files)                                                                    |          7 |      1,514 |          6 |        120 |      1,640 |
+| apps/expo/src/components/exercises/GreenDot                                                                   |          3 |        185 |          5 |         14 |        204 |
+| apps/expo/src/components/instructions                                                                         |          9 |      1,503 |         27 |         36 |      1,566 |
+| apps/expo/src/components/speedtest                                                                            |          1 |        366 |         12 |         32 |        410 |
+| apps/expo/src/cva                                                                                             |          2 |        128 |          0 |         11 |        139 |
+| apps/expo/src/hooks                                                                                           |          4 |         90 |         31 |         15 |        136 |
+| apps/expo/src/screens                                                                                         |          6 |        838 |          0 |         47 |        885 |
+| apps/expo/src/stores                                                                                          |          3 |        105 |          6 |          9 |        120 |
+| apps/expo/src/types                                                                                           |          1 |          0 |          1 |          1 |          2 |
+| apps/expo/src/utils                                                                                           |          2 |         62 |         20 |          9 |         91 |
+| apps/nextjs                                                                                                   |         92 |      6,486 |        169 |        587 |      7,242 |
+| apps/nextjs (Files)                                                                                           |          8 |        169 |         13 |         51 |        233 |
+| apps/nextjs/src                                                                                               |         84 |      6,317 |        156 |        536 |      7,009 |
+| apps/nextjs/src (Files)                                                                                       |          1 |         11 |          9 |          3 |         23 |
+| apps/nextjs/src/components                                                                                    |         18 |      2,245 |         15 |        181 |      2,441 |
+| apps/nextjs/src/components (Files)                                                                            |         17 |      2,153 |         15 |        176 |      2,344 |
+| apps/nextjs/src/components/tests                                                                              |          1 |         92 |          0 |          5 |         97 |
+| apps/nextjs/src/cva                                                                                           |          4 |        176 |          0 |         18 |        194 |
+| apps/nextjs/src/env                                                                                           |          3 |         53 |         23 |         17 |         93 |
+| apps/nextjs/src/hooks                                                                                         |          4 |        122 |         35 |         23 |        180 |
+| apps/nextjs/src/pages                                                                                         |         47 |      3,509 |         59 |        259 |      3,827 |
+| apps/nextjs/src/pages (Files)                                                                                 |          7 |        844 |          1 |         37 |        882 |
+| apps/nextjs/src/pages/admin                                                                                   |          4 |        383 |          0 |         30 |        413 |
+| apps/nextjs/src/pages/admin (Files)                                                                           |          2 |        170 |          0 |         14 |        184 |
+| apps/nextjs/src/pages/admin/createquestion                                                                    |          2 |        213 |          0 |         16 |        229 |
+| apps/nextjs/src/pages/api                                                                                     |          1 |          6 |         12 |          5 |         23 |
+| apps/nextjs/src/pages/api/trpc                                                                                |          1 |          6 |         12 |          5 |         23 |
+| apps/nextjs/src/pages/exercises                                                                               |         20 |        748 |          7 |         76 |        831 |
+| apps/nextjs/src/pages/exercises (Files)                                                                       |         13 |        263 |          1 |         32 |        296 |
+| apps/nextjs/src/pages/exercises/schultetable                                                                  |          4 |        131 |          0 |         17 |        148 |
+| apps/nextjs/src/pages/exercises/speedtest                                                                     |          3 |        354 |          6 |         27 |        387 |
+| apps/nextjs/src/pages/instructions                                                                            |         13 |      1,490 |         39 |        105 |      1,634 |
+| apps/nextjs/src/pages/instructions (Files)                                                                    |          8 |      1,002 |         24 |         72 |      1,098 |
+| apps/nextjs/src/pages/instructions/flashingwords                                                              |          5 |        488 |         15 |         33 |        536 |
+| apps/nextjs/src/pages/sign-in                                                                                 |          1 |         19 |          0 |          3 |         22 |
+| apps/nextjs/src/pages/sign-up                                                                                 |          1 |         19 |          0 |          3 |         22 |
+| apps/nextjs/src/stores                                                                                        |          5 |        146 |          6 |         17 |        169 |
+| apps/nextjs/src/styles                                                                                        |          1 |         25 |          0 |         12 |         37 |
+| apps/nextjs/src/utils                                                                                         |          1 |         30 |          9 |          6 |         45 |
+| packages                                                                                                      |         34 |      2,134 |         49 |        179 |      2,362 |
+| packages/api                                                                                                  |         13 |        620 |         13 |         46 |        679 |
+| packages/api (Files)                                                                                          |          4 |         38 |          0 |          5 |         43 |
+| packages/api/src                                                                                              |          9 |        582 |         13 |         41 |        636 |
+| packages/api/src (Files)                                                                                      |          2 |         40 |         12 |          9 |         61 |
+| packages/api/src/router                                                                                       |          7 |        542 |          1 |         32 |        575 |
+| packages/config                                                                                               |          3 |         28 |          1 |          3 |         32 |
+| packages/config/tailwind                                                                                      |          3 |         28 |          1 |          3 |         32 |
+| packages/db                                                                                                   |          7 |        985 |          4 |         66 |      1,055 |
+| packages/db (Files)                                                                                           |          4 |        324 |          2 |          8 |        334 |
+| packages/db/drizzle                                                                                           |          2 |        428 |          0 |         21 |        449 |
+| packages/db/prisma                                                                                            |          1 |        233 |          2 |         37 |        272 |
+| packages/helpers                                                                                              |          3 |        212 |         16 |         18 |        246 |
+| packages/stores                                                                                               |          2 |          0 |          0 |          3 |          3 |
+| packages/types                                                                                                |          3 |         71 |         13 |         20 |        104 |
+| packages/validators                                                                                           |          3 |        218 |          2 |         23 |        243 |
+| patches                                                                                                       |          1 |         45 |          0 |          5 |         50 |
++---------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                                      | language           | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| /home/jboyett/Documents/dev/github/iris-mobile/.eslintrc.cjs                                                  | JavaScript         |         25 |          1 |          1 |         27 |
+| /home/jboyett/Documents/dev/github/iris-mobile/.github/ISSUE_TEMPLATE/bug_report.md                           | Markdown           |         32 |          0 |         12 |         44 |
+| /home/jboyett/Documents/dev/github/iris-mobile/.github/workflows/ci.yml                                       | YAML               |         47 |          2 |         14 |         63 |
+| /home/jboyett/Documents/dev/github/iris-mobile/.prettierrc.cjs                                                | JavaScript         |         16 |          1 |          2 |         19 |
+| /home/jboyett/Documents/dev/github/iris-mobile/README.md                                                      | Markdown           |        131 |          0 |         75 |        206 |
+| /home/jboyett/Documents/dev/github/iris-mobile/app.json                                                       | JSON               |         17 |          0 |          1 |         18 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/.expo-shared/assets.json                             | JSON               |          4 |          0 |          1 |          5 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/app.config.ts                                        | TypeScript         |         37 |          0 |          4 |         41 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/babel.config.js                                      | JavaScript         |         12 |          0 |          1 |         13 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/expo-plugins/with-modify-gradle.js                   | JavaScript         |         29 |          6 |          7 |         42 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/index.ts                                             | TypeScript         |          3 |          3 |          3 |          9 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/metro.config.js                                      | JavaScript         |         13 |          8 |          6 |         27 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/package.json                                         | JSON               |         64 |          0 |          1 |         65 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/_app.tsx                                         | TypeScript JSX     |         98 |          0 |          7 |        105 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/BoxFlasher.tsx                        | TypeScript JSX     |        260 |          0 |         24 |        284 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/Grid.tsx                              | TypeScript JSX     |         47 |          0 |         10 |         57 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/SignInWithOAuth.tsx                   | TypeScript JSX     |        250 |          3 |         12 |        265 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/SignUpWithOAuth.tsx                   | TypeScript JSX     |        268 |          1 |         12 |        281 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/Train.tsx                             | TypeScript JSX     |        235 |          0 |          8 |        243 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/exercises/CubeFlasher.tsx             | TypeScript JSX     |          0 |          0 |          1 |          1 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/exercises/EvenNumber.tsx              | TypeScript JSX     |        175 |          0 |         17 |        192 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/exercises/GreenDot/Dot.tsx            | TypeScript JSX     |         90 |          5 |          9 |        104 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/exercises/GreenDot/Text.tsx           | TypeScript JSX     |         51 |          0 |          1 |         52 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/exercises/GreenDot/index.tsx          | TypeScript JSX     |         44 |          0 |          4 |         48 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/exercises/Letters.tsx                 | TypeScript JSX     |        273 |          0 |         19 |        292 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/exercises/NumberMatcher.tsx           | TypeScript JSX     |        285 |          6 |         24 |        315 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/exercises/SchulteTable.tsx            | TypeScript JSX     |        273 |          0 |         25 |        298 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/exercises/WordFlasher.tsx             | TypeScript JSX     |        308 |          0 |         19 |        327 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/exercises/WordPairs.tsx               | TypeScript JSX     |        200 |          0 |         15 |        215 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/instructions/Boxes.tsx                | TypeScript JSX     |        163 |          3 |          4 |        170 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/instructions/EvenNumbers.tsx          | TypeScript JSX     |        171 |          3 |          4 |        178 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/instructions/GreenDot.tsx             | TypeScript JSX     |        151 |          3 |          4 |        158 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/instructions/LetterMatch.tsx          | TypeScript JSX     |        170 |          3 |          4 |        177 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/instructions/NumberMatch.tsx          | TypeScript JSX     |        155 |          3 |          4 |        162 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/instructions/SchulteTable.tsx         | TypeScript JSX     |        174 |          3 |          4 |        181 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/instructions/SpeedTest.tsx            | TypeScript JSX     |        178 |          3 |          4 |        185 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/instructions/WordFlasher.tsx          | TypeScript JSX     |        163 |          3 |          4 |        170 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/instructions/WordPair.tsx             | TypeScript JSX     |        178 |          3 |          4 |        185 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/components/speedtest/index.tsx                   | TypeScript JSX     |        366 |         12 |         32 |        410 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/cva/FontProvider.tsx                             | TypeScript JSX     |         48 |          0 |          6 |         54 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/cva/WordFlashCell.tsx                            | TypeScript JSX     |         80 |          0 |          5 |         85 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/hooks/useIncrementalState.ts                     | TypeScript         |         30 |          0 |          2 |         32 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/hooks/useInterval.ts                             | TypeScript         |         19 |          2 |          4 |         25 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/hooks/useStopWatch.ts                            | TypeScript         |         31 |         29 |          7 |         67 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/hooks/useWarmUpBrowser.ts                        | TypeScript         |         10 |          0 |          2 |         12 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/screens/Settings.tsx                             | TypeScript JSX     |        376 |          0 |         16 |        392 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/screens/auth.tsx                                 | TypeScript JSX     |         51 |          0 |          5 |         56 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/screens/home.tsx                                 | TypeScript JSX     |        368 |          0 |         18 |        386 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/screens/signout.tsx                              | TypeScript JSX     |         14 |          0 |          2 |         16 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/screens/signup.tsx                               | TypeScript JSX     |         19 |          0 |          4 |         23 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/screens/train.tsx                                | TypeScript JSX     |         10 |          0 |          2 |         12 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/stores/useBoxStore.ts                            | TypeScript         |         15 |          0 |          3 |         18 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/stores/useSpeedTestStore.ts                      | TypeScript         |         67 |          0 |          3 |         70 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/stores/userStore.ts                              | TypeScript         |         23 |          6 |          3 |         32 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/types/nativewind.d.ts                            | TypeScript         |          0 |          1 |          1 |          2 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/utils/cache.ts                                   | TypeScript         |         16 |          3 |          4 |         23 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/src/utils/trpc.tsx                                   | TypeScript JSX     |         46 |         17 |          5 |         68 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/tailwind.config.cjs                                  | JavaScript         |          3 |          1 |          1 |          5 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/expo/tsconfig.json                                        | JSON with Comments |          8 |          0 |          1 |          9 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/.eslintrc.cjs                                      | JavaScript         |          6 |          1 |          1 |          8 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/README.md                                          | Markdown           |         92 |          0 |         40 |        132 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/next-env.d.ts                                      | TypeScript         |          0 |          4 |          2 |          6 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/next.config.mjs                                    | JavaScript         |         17 |          7 |          4 |         28 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/package.json                                       | JSON               |         45 |          0 |          1 |         46 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/postcss.config.cjs                                 | JavaScript         |          1 |          0 |          1 |          2 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/cubeflasher.tsx                     | TypeScript JSX     |        211 |          0 |         11 |        222 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/evensandodds.tsx                    | TypeScript JSX     |        173 |          0 |         20 |        193 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/flasherstartbutton.tsx              | TypeScript JSX     |         49 |          0 |          5 |         54 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/flashingWordsNav.tsx                | TypeScript JSX     |         43 |          0 |          6 |         49 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/flashingcell.tsx                    | TypeScript JSX     |        304 |          2 |         25 |        331 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/greendottext.tsx                    | TypeScript JSX     |         40 |          0 |          1 |         41 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/letterMatcher.tsx                   | TypeScript JSX     |        174 |          0 |         10 |        184 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/loadingspinner.tsx                  | TypeScript JSX     |         23 |          0 |          1 |         24 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/numbermatcher.tsx                   | TypeScript JSX     |        181 |          0 |         13 |        194 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/pietimer.tsx                        | TypeScript JSX     |         94 |          5 |         11 |        110 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/schultedraw.tsx                     | TypeScript JSX     |        118 |          5 |         11 |        134 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/schultetable.tsx                    | TypeScript JSX     |        164 |          0 |         20 |        184 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/sidebar.tsx                         | TypeScript JSX     |         92 |          2 |          4 |         98 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/speedtest.tsx                       | TypeScript JSX     |        190 |          0 |          8 |        198 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/tableswitcher.tsx                   | TypeScript JSX     |         58 |          0 |          3 |         61 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/tests/evensandodds.test.ts          | TypeScript         |         92 |          0 |          5 |         97 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/wordchanger.tsx                     | TypeScript JSX     |         67 |          1 |         10 |         78 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/components/wordpairs.tsx                       | TypeScript JSX     |        172 |          0 |         17 |        189 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/cva/cube-flasher.tsx                           | TypeScript JSX     |         41 |          0 |          4 |         45 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/cva/flashingStyles.tsx                         | TypeScript JSX     |         46 |          0 |          4 |         50 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/cva/fontProvider.tsx                           | TypeScript JSX     |         45 |          0 |          6 |         51 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/cva/highlightSelectorButton.tsx                | TypeScript JSX     |         44 |          0 |          4 |         48 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/env/client.mjs                                 | JavaScript         |         25 |          2 |          7 |         34 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/env/schema.mjs                                 | JavaScript         |         11 |         16 |          4 |         31 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/env/server.mjs                                 | JavaScript         |         17 |          5 |          6 |         28 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/hooks/useInterval.ts                           | TypeScript         |         19 |          2 |          4 |         25 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/hooks/useIsVisible.ts                          | TypeScript         |         16 |          0 |          4 |         20 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/hooks/useStopWatch.ts                          | TypeScript         |         25 |         29 |          6 |         60 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/hooks/useTimer.ts                              | TypeScript         |         62 |          4 |          9 |         75 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/middleware.ts                                  | TypeScript         |         11 |          9 |          3 |         23 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/_app.tsx                                 | TypeScript JSX     |         12 |          1 |          3 |         16 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/admin/createquestion/done.tsx            | TypeScript JSX     |         56 |          0 |          8 |         64 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/admin/createquestion/index.tsx           | TypeScript JSX     |        157 |          0 |          8 |        165 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/admin/index.tsx                          | TypeScript JSX     |         67 |          0 |          9 |         76 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/admin/testexercise.tsx                   | TypeScript JSX     |        103 |          0 |          5 |        108 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/api/trpc/[trpc].ts                       | TypeScript         |          6 |         12 |          5 |         23 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/done.tsx                                 | TypeScript JSX     |         24 |          0 |          2 |         26 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/boxes.tsx                      | TypeScript JSX     |         26 |          0 |          3 |         29 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/cubebythree.tsx                | TypeScript JSX     |         14 |          0 |          2 |         16 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/cubebytwo.tsx                  | TypeScript JSX     |         14 |          0 |          2 |         16 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/evennumbers.tsx                | TypeScript JSX     |         34 |          1 |          3 |         38 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/flashfourbyone.tsx             | TypeScript JSX     |         16 |          0 |          2 |         18 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/flashonebyone.tsx              | TypeScript JSX     |         16 |          0 |          2 |         18 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/flashonebytwo.tsx              | TypeScript JSX     |         16 |          0 |          2 |         18 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/flashtwobyone.tsx              | TypeScript JSX     |         16 |          0 |          2 |         18 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/flashtwobytwo.tsx              | TypeScript JSX     |         16 |          0 |          2 |         18 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/greendot.tsx                   | TypeScript JSX     |         40 |          0 |          4 |         44 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/lettermatcher.tsx              | TypeScript JSX     |         19 |          0 |          3 |         22 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/numbermatcher.tsx              | TypeScript JSX     |         19 |          0 |          3 |         22 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/schultetable/by3.tsx           | TypeScript JSX     |         29 |          0 |          4 |         33 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/schultetable/by5.tsx           | TypeScript JSX     |         29 |          0 |          4 |         33 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/schultetable/by7.tsx           | TypeScript JSX     |         29 |          0 |          4 |         33 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/schultetable/index.tsx         | TypeScript JSX     |         44 |          0 |          5 |         49 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/speedtest/index.tsx            | TypeScript JSX     |         91 |          0 |         10 |        101 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/speedtest/question.tsx         | TypeScript JSX     |        111 |          0 |          5 |        116 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/speedtest/result.tsx           | TypeScript JSX     |        152 |          6 |         12 |        170 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/exercises/wordpairs.tsx                  | TypeScript JSX     |         17 |          0 |          2 |         19 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/index.tsx                                | TypeScript JSX     |         77 |          0 |          5 |         82 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/instructions/boxes.tsx                   | TypeScript JSX     |        127 |          3 |         11 |        141 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/instructions/evennumbers.tsx             | TypeScript JSX     |        120 |          3 |          9 |        132 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/instructions/flashingwords/fourbyone.tsx | TypeScript JSX     |         98 |          3 |          7 |        108 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/instructions/flashingwords/onebyone.tsx  | TypeScript JSX     |         98 |          3 |          7 |        108 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/instructions/flashingwords/onebytwo.tsx  | TypeScript JSX     |         99 |          3 |          7 |        109 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/instructions/flashingwords/twobyone.tsx  | TypeScript JSX     |         97 |          3 |          6 |        106 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/instructions/flashingwords/twobytwo.tsx  | TypeScript JSX     |         96 |          3 |          6 |        105 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/instructions/greendot.tsx                | TypeScript JSX     |         98 |          3 |          8 |        109 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/instructions/lettermatcher.tsx           | TypeScript JSX     |        119 |          3 |          8 |        130 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/instructions/numbermatcher.tsx           | TypeScript JSX     |        105 |          3 |          9 |        117 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/instructions/schultetable.tsx            | TypeScript JSX     |        178 |          3 |         10 |        191 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/instructions/speedtest.tsx               | TypeScript JSX     |        128 |          3 |          9 |        140 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/instructions/wordpairs.tsx               | TypeScript JSX     |        127 |          3 |          8 |        138 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/nav.tsx                                  | TypeScript JSX     |        229 |          0 |         16 |        245 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/next.tsx                                 | TypeScript JSX     |         43 |          0 |          3 |         46 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/settings.tsx                             | TypeScript JSX     |        368 |          0 |          5 |        373 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/setup.tsx                                | TypeScript JSX     |         91 |          0 |          3 |         94 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/sign-in/[[...index]].tsx                 | TypeScript JSX     |         19 |          0 |          3 |         22 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/pages/sign-up/[[...index]].tsx                 | TypeScript JSX     |         19 |          0 |          3 |         22 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/stores/useCubeStore.ts                         | TypeScript         |         20 |          0 |          3 |         23 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/stores/useMutateUser.ts                        | TypeScript         |         17 |          0 |          3 |         20 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/stores/usePairsStore.ts                        | TypeScript         |         14 |          0 |          4 |         18 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/stores/useSpeedTestStore.ts                    | TypeScript         |         74 |          0 |          4 |         78 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/stores/userStore.ts                            | TypeScript         |         21 |          6 |          3 |         30 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/styles/globals.css                             | CSS                |         25 |          0 |         12 |         37 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/src/utils/trpc.ts                                  | TypeScript         |         30 |          9 |          6 |         45 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/tailwind.config.cjs                                | JavaScript         |          3 |          1 |          1 |          5 |
+| /home/jboyett/Documents/dev/github/iris-mobile/apps/nextjs/tsconfig.json                                      | JSON with Comments |          5 |          0 |          1 |          6 |
+| /home/jboyett/Documents/dev/github/iris-mobile/drizzle.config.ts                                              | TypeScript         |         13 |          0 |          4 |         17 |
+| /home/jboyett/Documents/dev/github/iris-mobile/eas.json                                                       | JSON               |         18 |          0 |          1 |         19 |
+| /home/jboyett/Documents/dev/github/iris-mobile/next-env.d.ts                                                  | TypeScript         |          0 |          4 |          2 |          6 |
+| /home/jboyett/Documents/dev/github/iris-mobile/package.json                                                   | JSON               |         50 |          0 |          1 |         51 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/api/index.ts                                          | TypeScript         |          4 |          0 |          2 |          6 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/api/package.json                                      | JSON               |         28 |          0 |          1 |         29 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/api/src/context.ts                                    | TypeScript         |         18 |         12 |          5 |         35 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/api/src/router/auth.ts                                | TypeScript         |          9 |          0 |          2 |         11 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/api/src/router/builders.ts                            | TypeScript         |         28 |          0 |          2 |         30 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/api/src/router/collection.ts                          | TypeScript         |        204 |          0 |         10 |        214 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/api/src/router/exercises.ts                           | TypeScript         |        202 |          0 |         10 |        212 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/api/src/router/index.ts                               | TypeScript         |         16 |          1 |          3 |         20 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/api/src/router/post.ts                                | TypeScript         |         15 |          0 |          2 |         17 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/api/src/router/user.ts                                | TypeScript         |         68 |          0 |          3 |         71 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/api/src/trpc.ts                                       | TypeScript         |         22 |          0 |          4 |         26 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/api/transformer.ts                                    | TypeScript         |          2 |          0 |          1 |          3 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/api/tsconfig.json                                     | JSON with Comments |          4 |          0 |          1 |          5 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/config/tailwind/index.js                              | JavaScript         |          7 |          1 |          1 |          9 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/config/tailwind/package.json                          | JSON               |         15 |          0 |          1 |         16 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/config/tailwind/postcss.js                            | JavaScript         |          6 |          0 |          1 |          7 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/db/drizzle/index.ts                                   | TypeScript         |         48 |          0 |          5 |         53 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/db/drizzle/schema.ts                                  | TypeScript         |        380 |          0 |         16 |        396 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/db/index.ts                                           | TypeScript         |         16 |          2 |          5 |         23 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/db/package-lock.json                                  | JSON               |        280 |          0 |          1 |        281 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/db/package.json                                       | JSON               |         24 |          0 |          1 |         25 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/db/prisma/schema.prisma                               | Prisma             |        233 |          2 |         37 |        272 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/db/tsconfig.json                                      | JSON with Comments |          4 |          0 |          1 |          5 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/helpers/index.ts                                      | TypeScript         |        184 |         16 |         16 |        216 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/helpers/package.json                                  | JSON               |         24 |          0 |          1 |         25 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/helpers/tsconfig.json                                 | JSON with Comments |          4 |          0 |          1 |          5 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/stores/index.ts                                       | TypeScript         |          0 |          0 |          2 |          2 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/stores/user.ts                                        | TypeScript         |          0 |          0 |          1 |          1 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/types/index.ts                                        | TypeScript         |         44 |         13 |         18 |         75 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/types/package.json                                    | JSON               |         23 |          0 |          1 |         24 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/types/tsconfig.json                                   | JSON with Comments |          4 |          0 |          1 |          5 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/validators/index.ts                                   | TypeScript         |        194 |          2 |         21 |        217 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/validators/package.json                               | JSON               |         20 |          0 |          1 |         21 |
+| /home/jboyett/Documents/dev/github/iris-mobile/packages/validators/tsconfig.json                              | JSON with Comments |          4 |          0 |          1 |          5 |
+| /home/jboyett/Documents/dev/github/iris-mobile/patches/react-native@0.70.5.patch                              | Diff               |         45 |          0 |          5 |         50 |
+| /home/jboyett/Documents/dev/github/iris-mobile/pnpm-lock.yaml                                                 | YAML               |     12,196 |          0 |      1,683 |     13,879 |
+| /home/jboyett/Documents/dev/github/iris-mobile/pnpm-workspace.yaml                                            | YAML               |          9 |          0 |          1 |         10 |
+| /home/jboyett/Documents/dev/github/iris-mobile/tsconfig.json                                                  | JSON with Comments |         27 |          0 |          1 |         28 |
+| /home/jboyett/Documents/dev/github/iris-mobile/turbo.json                                                     | JSON               |         39 |          0 |          1 |         40 |
+| Total                                                                                                         |                    |     27,407 |        356 |      2,962 |     30,725 |
++---------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "0fa37b39-ff25-4053-ba33-a30409f8546e"
+      }
+    },
+    "android": {
+      "package": "com.jasonboyett.projectIris"
+    },
+    "ios": {
+      "bundleIdentifier": "com.jasonboyett.projectIris"
+    },
+    "owner": "jasonboyettsoftwareconsulting",
+    "slug": "iris"
+  }
+}

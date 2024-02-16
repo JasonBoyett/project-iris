@@ -1,0 +1,24 @@
+{
+  "name": "@acme/db",
+  "version": "0.1.0",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "with-env": "dotenv -e ../../.env --",
+    "db-push": "pnpm with-env prisma db push",
+    "studio": "pnpm with-env prisma studio",
+    "db-generate": "pnpm with-env prisma generate"
+  },
+  "dependencies": {
+    "@acme/helpers": "*",
+    "@acme/types": "*",
+    "@prisma/client": "^4.7.1"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^6.0.0",
+    "prisma": "^4.6.1",
+    "typescript": "^4.9.3"
+  }
+}
