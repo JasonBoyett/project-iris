@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { trpc } from '../../utils/trpc'
-import { useRouter } from 'next/router'
+import { SingletonRouter, useRouter } from 'next/router'
 import Sidebar from '../../components/sidebar'
 import { useClerk } from '@clerk/nextjs'
+import { navigate } from '@acme/helpers'
 
 export default function Page() {
   const router = useRouter()
