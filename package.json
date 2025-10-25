@@ -1,7 +1,7 @@
 {
   "name": "project-iris",
   "private": true,
-  "packageManager": "bun@1.3.1",
+  "packageManager": "pnpm@7.13.0",
   "workspaces": [
     "apps/*",
     "packages/*",
@@ -13,7 +13,7 @@
     "clean:workspaces": "turbo clean",
     "db-generate": "turbo db-generate",
     "db-push": "turbo db-push",
-    "db-studio": "bunx prisma studio --schema=./packages/db/prisma/schema.prisma",
+    "db-studio": "npx prisma studio --schema=./packages/db/prisma/schema.prisma",
     "dev": "turbo dev --parallel",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo lint",
@@ -44,9 +44,6 @@
     "typescript": "^4.9.3",
     "uuid": "^9.0.1",
     "zustand": "^4.4.7"
-  },
-  "pnpm": {
-    "patchedDependencies": {}
   },
   "devDependencies": {
     "@prisma/nextjs-monorepo-workaround-plugin": "^5.8.1",
