@@ -11,7 +11,7 @@ import {
   wordPairData,
   wordPairProps,
 } from '@acme/validators'
-import { Prisma, type WordPair } from '@acme/db'
+import { Prisma } from '@acme/db'
 import { SpeedTest } from '@acme/types'
 import { getNextExercise, getNextURL } from '@acme/helpers'
 
@@ -179,7 +179,7 @@ export const excercisePropsRouter = router({
     .input(wordPairProps)
     .output(wordPairData.array())
     .query(async ({ input, ctx }) => {
-      const result = await ctx.prisma.$queryRaw<Array<WordPair>>(
+      const result = await ctx.prisma.$queryRaw<Array<any>>(
         Prisma.sql`SELECT * FROM WordPair WHERE LENGTH(primaryWord) <= 7 AND LENGTH(secondaryWord) <= 7 ORDER BY RAND() LIMIT ${input.count}`,
       )
       if (result === null || result === undefined) throw new Error('No result')
