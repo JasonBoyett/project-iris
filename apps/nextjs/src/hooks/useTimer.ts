@@ -9,7 +9,7 @@ export default function useTimer(
 ) {
   const time = useRef(0)
   const running = useRef(false)
-  const ticker = useRef<NodeJS.Timer>()
+  const ticker = useRef<NodeJS.Timeout>()
   const duration = useRef(0)
   const delay = useRef(0)
   const unit = useRef<TimeMeasure>(timeUnit)
@@ -60,7 +60,7 @@ export default function useTimer(
 
   useEffect(() => {
     if (!running) {
-      clearInterval(ticker.current as NodeJS.Timer)
+      clearInterval(ticker.current as NodeJS.Timeout)
       duration.current = 0
       return
     } else {

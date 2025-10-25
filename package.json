@@ -24,7 +24,7 @@
     "@formkit/auto-animate": "^0.8.1",
     "@manypkg/cli": "^0.19.2",
     "@planetscale/database": "^1.13.0",
-    "@prisma/client": "^5.7.1",
+    "@prisma/client": "^4.16.2",
     "@react-native-picker/picker": "^2.6.1",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@prisma/nextjs-monorepo-workaround-plugin": "^5.8.1",
-"@prisma/client": "^4.16.2",
+    "@prisma/client": "^4.16.2",
     "drizzle-kit": "^0.20.9"
   }
 }
