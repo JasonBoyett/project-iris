@@ -9,7 +9,7 @@
     "with-env": "dotenv -e ../../.env --",
     "db-push": "bun with-env prisma db push",
     "db-studio": "bun with-env prisma studio",
-    "db-generate": "prisma generate --schema=./prisma/schema.prisma"
+    "db-generate": "bunx prisma generate --schema=./prisma/schema.prisma"
   },
   "dependencies": {
     "@acme/helpers": "*",
