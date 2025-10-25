@@ -81,11 +81,9 @@ export default function Page() {
       <div className='text-center text-2xl text-white md:text-4xl'>
         Remaining Daily Exercises:
         <div className='text-8xl text-yellow-400'>
-          {
-            ((availableExercises?.length ?? 1)) === 0
-              ? 'Done!'
-              : (availableExercises?.length ?? 1)
-          }
+          {(availableExercises?.length ?? 1) === 0
+            ? 'Done!'
+            : availableExercises?.length ?? 1}
         </div>
       </div>
     )

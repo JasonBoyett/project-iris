@@ -2,6 +2,7 @@ import { router, protectedProcedure } from '../trpc'
 import type { User } from '@acme/types'
 import { userSchema } from '@acme/validators'
 
+
 export const userRouter = router({
   get: protectedProcedure.output(userSchema).query<User>(async ({ ctx }) => {
     const userId = ctx.auth.userId

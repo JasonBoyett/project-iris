@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { type SingletonRouter, useRouter } from 'next/router'
 import Image from 'next/image'
-import Butterfly from 'public/flying-butterfly.gif'
+import Butterfly from '../../public/flying-butterfly.gif'
 import Sidebar from '../components/sidebar'
 import { navigateToNextExercise } from '@acme/helpers'
 import { trpc } from '../utils/trpc'
