@@ -1,10 +1,6 @@
 import Head from 'next/head'
-import dynamic from 'next/dynamic'
 import Sidebar from '../../components/sidebar'
-
-const NumberMatcher = dynamic(() => import('../../components/numbermatcher'), {
-  ssr: false,
-})
+import NumberGrid from '../../components/numbermatcher'
 
 export default function Page() {
   return (
@@ -14,7 +10,7 @@ export default function Page() {
       </Head>
       <div className='flex min-h-screen flex-col items-center justify-center'>
         <Sidebar />
-        <NumberMatcher />
+        <NumberGrid />
       </div>
     </>
   )

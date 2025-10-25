@@ -1,6 +1,5 @@
 import { type ReactElement, useEffect, useRef, useState } from 'react'
 import { trpc } from '../utils/trpc'
-import { StyledCube } from '../cva/cube-flasher'
 import { useCubeStore } from '../stores/useCubeStore'
 import useUserStore from '../stores/userStore'
 import useInterval from '../hooks/useInterval'
@@ -8,6 +7,7 @@ import { formatDate, navigate } from '@acme/helpers'
 import { type SingletonRouter, useRouter } from 'next/router'
 import { FontProvider } from '../cva/fontProvider'
 import type { Font, Language } from '@acme/types'
+import { StyledCube } from '../cva/cube-flasher'
 
 export function partitionWords(
   words: string[],
@@ -58,13 +58,13 @@ function CornerFlasherCell({ number, wordsArray }: CornerFlasherCellProps) {
           {wordsArray[1]}
         </div>
         <div
-          className='absolute top-0 right-0 p-2'
+          className='absolute right-0 top-0 p-2'
           hidden={!visible}
         >
           {wordsArray[2]}
         </div>
         <div
-          className='absolute top-0 left-0 p-2'
+          className='absolute left-0 top-0 p-2'
           hidden={!visible}
         >
           {wordsArray[3]}
@@ -174,7 +174,7 @@ export default function CornerFlasher({ number }: CornerFlasherProps) {
       cubeNumber++
       return cube
     })
-    let holderTwo: ReactElement[] = []
+    let holderTwo: JSX.Element[] = []
     cubes.current.forEach((cube, index) => {
       if (index % number === 0) {
         holderTwo.push(cube)

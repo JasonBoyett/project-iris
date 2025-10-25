@@ -18,6 +18,7 @@ import { formatDate, navigate } from '@acme/helpers'
 import { FontProvider } from '../cva/fontProvider'
 
 const counterContext = createContext<number>(0)
+const useCounterContext = () => useContext(counterContext)
 
 interface CellType extends ReactElement {
   display: JSX.Element
@@ -119,7 +120,7 @@ function Cell({ content, location, loadCheck, user }: CellProps) {
     | null
     | undefined
   >('none')
-  const counter = useContext(counterContext)
+  const counter = useCounterContext()
   const ref = useRef<HTMLDivElement>(null)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isVisible = useIsVisible(ref)
@@ -165,9 +166,9 @@ export function createCells({
   words: string[] | undefined
   user: User
   loadCheck: React.Dispatch<React.SetStateAction<boolean>>
-}) {
+}): JSX.Element[] {
   const cells: ReactElement[] = []
-  if (!words) return
+  if (!words) return []
   words.forEach((word, index) => {
     cells.push(
       <Cell
@@ -179,7 +180,7 @@ export function createCells({
       />,
     )
   })
-  return cells
+  return cells as JSX.Element[]
 }
 
 function Grid({ rows = 7, type }: GridProps) {
@@ -201,11 +202,14 @@ function Grid({ rows = 7, type }: GridProps) {
   const user = store.user
   const router = useRouter()
   const { mutate } = trpc.user.set.useMutation()
-  const buff = trpc.excercise.getRandomWords.useQuery({
-    number: wordsPerCell * (user?.currentWpm as number),
-    language: user?.language ?? 'english',
-    max: max,
-  }, { enabled: !!user })
+  const buff = trpc.excercise.getRandomWords.useQuery(
+    {
+      number: wordsPerCell * (user?.currentWpm as number),
+      language: user?.language ?? 'english',
+      max: max,
+    },
+    { enabled: !!user },
+  )
   const collectData = trpc.collect.highlightSession.useMutation()
 
   function setSpeed(user: User | undefined) {
@@ -268,22 +272,22 @@ function Grid({ rows = 7, type }: GridProps) {
     if (!wordsPerCell) return
     if (!width) return
     if (!user) return
-      ; (() => {
-        const wordsArry = fetched
-        words.current = partitionWords(
-          wordsArry,
-          wordsArry.length / wordsPerCell,
-          rows * width,
-        )
-        setGrid(
-          createCells({
-            words: words.current[0],
-            loadCheck: setIsVisible,
-            user: user,
-          }),
-        )
-        setFont(user.font)
-      })()
+    ;(() => {
+      const wordsArry = fetched
+      words.current = partitionWords(
+        wordsArry,
+        wordsArry.length / wordsPerCell,
+        rows * width,
+      )
+      setGrid(
+        createCells({
+          words: words.current[0],
+          loadCheck: setIsVisible,
+          user: user,
+        }),
+      )
+      setFont(user.font)
+    })()
   }, [fetched])
 
   useInterval(() => {
@@ -316,6 +320,7 @@ function Grid({ rows = 7, type }: GridProps) {
   }, setSpeed(user) as number)
 
   return (
+    /* @ts-ignore eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     <counterContext.Provider value={cellCounter}>
       <FontProvider
         font={font}
@@ -324,7 +329,7 @@ function Grid({ rows = 7, type }: GridProps) {
         {grid}
       </FontProvider>
     </counterContext.Provider>
-  ) as GridType
+  ) as React.ReactElement
 }
 
 export default Grid

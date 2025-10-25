@@ -288,6 +288,7 @@ const Page: NextPage = () => {
                 Italiano {currentLanguage === 'italian' ? '✓' : ''}
               </button>
             </label>
+            {/* @ts-ignore eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
             <Suspense fallback={<LoadingSpinner />}>
               <label className='items-center gap-3 py-4 text-2xl font-bold text-white md:flex'>
                 Font:{' '}

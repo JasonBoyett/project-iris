@@ -1,10 +1,6 @@
 import Head from 'next/head'
-import dynamic from 'next/dynamic'
 import Sidebar from '../../components/sidebar'
-
-const LetterMatcher = dynamic(() => import('../../components/letterMatcher'), {
-  ssr: false,
-})
+import LetterGrid from '../../components/letterMatcher'
 
 export default function Page() {
   return (
@@ -14,7 +10,7 @@ export default function Page() {
       </Head>
       <Sidebar />
       <div className='flex min-h-screen flex-col items-center justify-center'>
-        <LetterMatcher size={7} />
+        <LetterGrid size={7} />
       </div>
     </>
   )

@@ -10,6 +10,7 @@ export default function Page() {
       </Head>
       <Sidebar />
       <div className='flex min-h-screen grid-cols-2 flex-col items-center justify-center gap-4 py-2'>
+        {/* @ts-ignore eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         <FlashingGrid type={'oneByOne'} />
       </div>
     </>

@@ -1,9 +1,6 @@
-import dynamic from 'next/dynamic'
 import Sidebar from '../../components/sidebar'
+import WordPairs from '../../components/wordpairs'
 
-const WordPairs = dynamic(() => import('../../components/wordpairs'), {
-  ssr: false,
-})
 export default function Page() {
   return (
     <div className='grid min-h-screen'>

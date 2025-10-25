@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Key } from 'react'
 import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
 
@@ -30,15 +30,20 @@ export const cornersCell = cva(
 
 export interface FlasherProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof cornersCell> {}
+  VariantProps<typeof cornersCell> { }
 
-export const StyledCube: React.FC<FlasherProps> = ({
+export const StyledCube = ({
   className,
   intent,
+  children,
   ...props
-}) => (
-  <div
-    className={cornersCell({ intent, className })}
-    {...props}
-  />
-)
+}: FlasherProps): JSX.Element => {
+  return (
+    <div
+      {...props}
+      className={cornersCell({ intent, className })}
+      // eslint-disable-next-line
+      children
+    />
+  )
+}

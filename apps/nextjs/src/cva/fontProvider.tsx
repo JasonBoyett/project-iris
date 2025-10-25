@@ -23,13 +23,15 @@ export interface ProviderProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof fontProvider> {}
 
-export const FontProvider: React.FC<ProviderProps> = ({
+export const FontProvider = ({
   className,
   font,
+  children,
   ...props
-}) => (
+}: ProviderProps): JSX.Element => (
   <div
     className={fontProvider({ font, className })}
+    children
     {...props}
   />
 )
@@ -38,13 +40,15 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof fontProvider> {}
 
-export const FontProviderButton: React.FC<ButtonProps> = ({
+export const FontProviderButton = ({
   className,
   font,
+  children,
   ...props
-}) => (
+}: ButtonProps) => (
   <button
     className={fontProvider({ font, className })}
+    children
     {...props}
   />
 )

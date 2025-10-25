@@ -1,13 +1,9 @@
 import Head from 'next/head'
-import dynamic from 'next/dynamic'
 import Sidebar from '../../../components/sidebar'
 import TableSwitcher from '../../../components/tableswitcher'
 import { trpc } from '../../../utils/trpc'
 import type { User } from '@acme/types'
-
-const SchulteTable = dynamic(() => import('../../../components/schultetable'), {
-  ssr: false,
-})
+import SchulteTable from '../../../components/schultetable'
 
 export default function Page() {
   const user = trpc.user.get.useQuery()
@@ -19,7 +15,7 @@ export default function Page() {
       </Head>
       <TableSwitcher
         user={user.data as User}
-        className='absolute top-0 right-0 mt-4 mr-4 flex gap-4'
+        className='absolute right-0 top-0 mr-4 mt-4 flex gap-4'
       />
       <Sidebar />
       <div className='grid min-h-screen'>

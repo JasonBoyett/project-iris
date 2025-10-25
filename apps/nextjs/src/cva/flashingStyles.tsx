@@ -36,14 +36,16 @@ export interface ButtonProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof cell> {}
 
-export const StyledCell: React.FC<ButtonProps> = ({
+export const StyledCell = ({
   className,
   intent,
   flashColor,
+  children,
   ...props
-}) => (
+}: ButtonProps) => (
   <div
     className={cell({ intent, flashColor, className })}
+    children
     {...props}
   />
 )

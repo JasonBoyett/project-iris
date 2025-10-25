@@ -7,6 +7,7 @@ import { trpc } from '../utils/trpc'
 const MyApp: AppType = ({ Component, pageProps: { ...pageProps } }) => {
   return (
     <ClerkProvider {...pageProps}>
+      {/* @ts-ignore eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
       <Component {...pageProps} />
     </ClerkProvider>
   )

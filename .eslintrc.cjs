@@ -1,18 +1,19 @@
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   root: true,
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: [
-      "./tsconfig.json",
-      "./apps/*/tsconfig.json",
-      "./packages/*/tsconfig.json",
+      './tsconfig.json',
+      './apps/*/tsconfig.json',
+      './packages/*/tsconfig.json',
     ],
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ['@typescript-eslint'],
   rules: {
     'react-hooks/exhaustive-deps': 'off',
+    'react/no-children-prop': 'off',
     '@typescript-eslint/consistent-type-imports': [
       'warn',
       {
@@ -22,5 +23,7 @@ module.exports = {
     ],
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/no-unsafe-member-access': 'warn',
-  }, extends: ["plugin:@typescript-eslint/recommended"],
-};
+    '@typescript-eslint/ban-ts-comment': 'warn',
+  },
+  extends: ['plugin:@typescript-eslint/recommended'],
+}

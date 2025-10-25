@@ -35,13 +35,15 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof highlightButton> {}
 
-export const HighlightButton: React.FC<ButtonProps> = ({
+export const HighlightButton = ({
   className,
   intent,
+  children,
   ...props
-}) => (
+}: ButtonProps) => (
   <button
     className={highlightButton({ intent, className })}
+    children
     {...props}
   />
 )
