@@ -14,7 +14,7 @@
   "dependencies": {
     "@acme/helpers": "*",
     "@acme/types": "*",
-    "@prisma/client": "^4.7.1"
+    "@prisma/client": "^4.16.2"
   },
   "devDependencies": {
     "dotenv-cli": "^6.0.0",
