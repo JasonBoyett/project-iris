@@ -32,18 +32,19 @@ export const userSchema = z.object({
       z.literal('YELLOW'),
     ])
     .optional(),
-  font: z.union([
-    z.literal('sans'),
-    z.literal('serif'),
-    z.literal('mono'),
-    z.literal('robotoMono'),
-    z.literal('rem'),
-    z.literal('kanit'),
-    z.literal('preahvihear'),
-    z.literal('bebasNeue'),
-    z.literal('chakraPetch'),
-    z.literal('ibmPlexMono'),
-  ])
+  font: z
+    .union([
+      z.literal('sans'),
+      z.literal('serif'),
+      z.literal('mono'),
+      z.literal('robotoMono'),
+      z.literal('rem'),
+      z.literal('kanit'),
+      z.literal('preahvihear'),
+      z.literal('bebasNeue'),
+      z.literal('chakraPetch'),
+      z.literal('ibmPlexMono'),
+    ])
     .default('sans'),
   language: language.default('english'),
   lastSchulte: z.string().default(' '),
@@ -61,11 +62,9 @@ export const userSchema = z.object({
   lastGreenDot: z.string().default(' '),
   lastWordPairs: z.string().default(' '),
   numberGuesserFigures: z.number().default(0),
-  schulteLevel: z.union([
-    z.literal('three'),
-    z.literal('five'),
-    z.literal('seven'),
-  ]).default('three'),
+  schulteLevel: z
+    .union([z.literal('three'), z.literal('five'), z.literal('seven')])
+    .default('three'),
   schulteAdvanceCount: z.number().default(0),
   isAdmin: z.boolean().default(false),
   isStudySubject: z.boolean().default(false),
@@ -87,7 +86,7 @@ export const speedTestSchema = z.object({
 const randomWordInputs = z.object({
   number: z.number(),
   max: z.number(),
-  language: language, 
+  language: language,
 })
 
 const exercise = z.union([
@@ -120,11 +119,7 @@ export const highlightData = z.object({
 
 export const schulteData = z.object({
   userId: z.string(),
-  type: z.union([
-    z.literal('three'),
-    z.literal('five'),
-    z.literal('seven'),
-  ]),
+  type: z.union([z.literal('three'), z.literal('five'), z.literal('seven')]),
   time: z.number(),
   errorCount: z.number(),
 })
@@ -152,10 +147,7 @@ export const evenNumbersData = z.object({
 
 export const boxFlasherData = z.object({
   userId: z.string(),
-  type: z.union([
-    z.literal('two'),
-    z.literal('three'),
-  ]),
+  type: z.union([z.literal('two'), z.literal('three')]),
   speed: z.number(),
 })
 
@@ -176,10 +168,24 @@ export const wordPairProps = z.object({
   language: language,
 })
 
+export const createAdminInputSchema = z.object({
+  email: z.string().nullable(),
+})
+
+export const createAdminResultSchema = z.union([
+  z.literal('success'),
+  z.literal('error'),
+  z.literal('alreadyAdmin'),
+  z.literal('invalidEmail'),
+  z.literal('unauthorized'),
+])
+
 export const schemas = {
   user: userSchema,
   speedTest: speedTestSchema,
-  exercise: exercise
+  exercise: exercise,
+  createAdminInputSchema,
+  createAdminResultSchema,
 }
 
 export const inputs = {

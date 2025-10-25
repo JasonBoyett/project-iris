@@ -18,6 +18,5 @@ const config = {
     locales: ['en'],
     defaultLocale: 'en',
   },
-  runtime: 'experimental-edge',
 }
 export default config

@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 import { useAuth } from '@clerk/nextjs'
 import { type SingletonRouter, useRouter } from 'next/router'
 import { navigate } from '~/utils/helpers'
-import { SignedOut } from '@clerk/clerk-react'
+import { SignedOut } from '@clerk/nextjs'
 
 const Home: NextPage = () => {
   const authState = useAuth()

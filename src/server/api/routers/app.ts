@@ -4,8 +4,15 @@ import { z } from 'zod'
 import type { SpeedQuestion } from '@prisma/client'
 import type { Language, User, WordPair } from '~/utils/types'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
-import { schemas, inputs, wordPairData, wordPairProps } from '~/utils/validators'
+import {
+  schemas,
+  inputs,
+  wordPairData,
+  wordPairProps,
+  createAdminInputSchema,
+} from '~/utils/validators'
 import { getNextExercise, getNextURL } from '~/utils/helpers'
+import { clerkClient } from '@clerk/nextjs/server'
 
 export const userRouter = createTRPCRouter({
   getUnique: publicProcedure
@@ -61,7 +68,7 @@ export const userRouter = createTRPCRouter({
           lastCubeByTwo: input.lastCubeByTwo,
           lastNumberGuesser: input.lastNumberGuesser,
           lastLetterMatcher: input.lastLetterMatcher,
-          lastWordPairs: input.lastWordPairs, 
+          lastWordPairs: input.lastWordPairs,
           lastGreenDot: input.lastGreenDot,
           numberGuesserFigures: input.numberGuesserFigures,
           schulteLevel: input.schulteLevel,
@@ -74,6 +81,55 @@ export const userRouter = createTRPCRouter({
         },
       })
     }),
+
+  createAdmin: publicProcedure
+    .input(schemas.createAdminInputSchema)
+    .output(schemas.createAdminResultSchema.nullable())
+    .mutation(async ({ input, ctx }) => {
+      type Variant = z.infer<typeof schemas.createAdminResultSchema>
+      if (!input.email) return null
+      try {
+        const callerId = ctx.auth?.userId
+        if (!callerId) return 'unauthorized'
+        const caller = await ctx.prisma.user.findUnique({
+          where: {
+            id: callerId,
+          },
+        })
+        if (caller === null || caller === undefined) return 'unauthorized'
+        if (!caller.isAdmin) return 'unauthorized'
+        const emailMatches = await clerkClient.users.getUserList({
+          emailAddress: [input.email],
+        })
+        if (emailMatches.length === 0) return 'invalidEmail'
+
+        let result: Variant = 'invalidEmail'
+        for (const clerkUser of emailMatches) {
+          const irisUser = await ctx.prisma.user.findUnique({
+            where: {
+              id: clerkUser.id,
+            },
+          })
+          if (!irisUser) continue
+          if (irisUser.isAdmin && result !== 'success') {
+            result = 'alreadyAdmin'
+            continue
+          }
+          await ctx.prisma.user.update({
+            where: {
+              id: clerkUser.id,
+            },
+            data: {
+              isAdmin: true,
+            },
+          })
+          result = 'success'
+        }
+        return result
+      } catch (_) {
+        return 'error'
+      }
+    }),
 })
 
 async function getRandomWords(size: number, language: Language) {
@@ -85,35 +141,50 @@ async function getRandomWords(size: number, language: Language) {
   }
   if (language === 'spanish') {
     const response = await axios.get<string[]>(
-      `https://random-word-api.herokuapp.com/word?lang=es&number=${size}`
+      `https://random-word-api.herokuapp.com/word?lang=es&number=${size}`,
     )
     return response.data
   }
   if (language === 'italian') {
     const response = await axios.get<string[]>(
-      `https://random-word-api.herokuapp.com/word?lang=it&number=${size}`
+      `https://random-word-api.herokuapp.com/word?lang=it&number=${size}`,
     )
     return response.data
   }
   if (language === 'german') {
     const response = await axios.get<string[]>(
-      `https://random-word-api.herokuapp.com/word?lang=de&number=${size}`
+      `https://random-word-api.herokuapp.com/word?lang=de&number=${size}`,
     )
     return response.data
   }
-
 }
 type GetRandomWordsLimitLength = {
-  wordsReturned: number,
-  wordLength: number,
+  wordsReturned: number
+  wordLength: number
   language: Language
 }
-async function getRandomWordsLimitLength({ wordsReturned, wordLength, language }: GetRandomWordsLimitLength) {
+async function getRandomWordsLimitLength({
+  wordsReturned,
+  wordLength,
+  language,
+}: GetRandomWordsLimitLength) {
   const blockSize = Math.ceil(wordsReturned / 3)
   const words = new Array<string>()
-  const block1 = await getWords({ wordsReturned: blockSize, wordLength: wordLength, language: language })
-  const block2 = await getWords({ wordsReturned: blockSize, wordLength: wordLength - 1, language: language })
-  const block3 = await getWords({ wordsReturned: blockSize, wordLength: wordLength - 2, language: language })
+  const block1 = await getWords({
+    wordsReturned: blockSize,
+    wordLength: wordLength,
+    language: language,
+  })
+  const block2 = await getWords({
+    wordsReturned: blockSize,
+    wordLength: wordLength - 1,
+    language: language,
+  })
+  const block3 = await getWords({
+    wordsReturned: blockSize,
+    wordLength: wordLength - 2,
+    language: language,
+  })
   if (block1 === undefined || block2 === undefined || block3 === undefined) {
     return
   }
@@ -126,32 +197,38 @@ async function getRandomWordsLimitLength({ wordsReturned, wordLength, language }
   block3.forEach((word) => {
     words.push(word)
   })
-  return words.slice(0, wordsReturned).sort(() => (Math.random() > .5) ? 1 : -1)
+  return words
+    .slice(0, wordsReturned)
+    .sort(() => (Math.random() > 0.5 ? 1 : -1))
 }
 
-async function getWords({ wordsReturned, wordLength, language }: GetRandomWordsLimitLength) {
+async function getWords({
+  wordsReturned,
+  wordLength,
+  language,
+}: GetRandomWordsLimitLength) {
   if (language === 'english') {
     const response = await axios.get<string[]>(
-      `https://random-word-api.herokuapp.com/word?number=${wordsReturned}&length=${wordLength}`
+      `https://random-word-api.herokuapp.com/word?number=${wordsReturned}&length=${wordLength}`,
     )
     console.log(response.data)
     return response.data
   }
   if (language === 'spanish') {
     const response = await axios.get<string[]>(
-      `https://random-word-api.herokuapp.com/word?lang=es&number=${wordsReturned}&length=${wordLength}`
+      `https://random-word-api.herokuapp.com/word?lang=es&number=${wordsReturned}&length=${wordLength}`,
     )
     return response.data
   }
   if (language === 'italian') {
     const response = await axios.get<string[]>(
-      `https://random-word-api.herokuapp.com/word?lang=it&number=${wordsReturned}&length=${wordLength}`
+      `https://random-word-api.herokuapp.com/word?lang=it&number=${wordsReturned}&length=${wordLength}`,
     )
     return response.data
   }
   if (language === 'german') {
     const response = await axios.get<string[]>(
-      `https://random-word-api.herokuapp.com/word?lang=de&number=${wordsReturned}&length=${wordLength}`
+      `https://random-word-api.herokuapp.com/word?lang=de&number=${wordsReturned}&length=${wordLength}`,
     )
     return response.data
   }
@@ -189,8 +266,7 @@ export const excercisesPropsRouter = createTRPCRouter({
     .query<string[] | undefined>(async ({ input }) => {
       if (input.max < 0) {
         return getRandomWords(input.number, input.language)
-      }
-      else {
+      } else {
         return getRandomWordsLimitLength({
           wordsReturned: input.number,
           wordLength: input.max,
@@ -229,7 +305,7 @@ export const createSpeedTestRouter = createTRPCRouter({
           correctAnswer: input.correctAnswer,
         },
       })
-    })
+    }),
 })
 
 export const createNextExcerciseRouter = createTRPCRouter({
@@ -239,5 +315,5 @@ export const createNextExcerciseRouter = createTRPCRouter({
     .query(({ input }) => {
       const next = getNextExercise(input)
       return getNextURL(next)
-    })
+    }),
 })
