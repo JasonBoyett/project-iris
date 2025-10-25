@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "@prisma/nextjs-monorepo-workaround-plugin": "^5.8.1",
+"@prisma/client": "^4.16.2",
     "drizzle-kit": "^0.20.9"
   }
 }
