@@ -4,6 +4,7 @@ import { userRouter } from './user'
 import { collectionRouter } from './collection'
 import { excercisePropsRouter } from './exercises'
 import { buildSpeedTestRouter } from './builders'
+import { adminRouter } from './admin'
 
 export const appRouter = router({
   auth: authRouter,
@@ -11,6 +12,7 @@ export const appRouter = router({
   excercise: excercisePropsRouter,
   buildSpeedTest: buildSpeedTestRouter,
   collect: collectionRouter,
+  admin: adminRouter,
 })
 
 // export type definition of API

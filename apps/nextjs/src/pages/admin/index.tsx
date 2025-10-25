@@ -25,25 +25,24 @@ export default function Page() {
 
   function Display() {
     return (
-
       <>
         <Sidebar />
-        <div className='flex flex-col items-center justify-center min-h-screen py-2 gap-2'>
+        <div className='flex min-h-screen flex-col items-center justify-center gap-2 py-2'>
           <button
             onClick={navToTestExercise}
-            className='flex bg-white/20 rounded-full items-center p-4 h-12 py-2 text-white text-2xl md:text-4xl font-normal'
+            className='flex h-12 items-center rounded-full bg-white/20 p-4 py-2 text-2xl font-normal text-white md:text-4xl'
           >
             Test Exercise
           </button>
           <button
             onClick={navToCreatQuestion}
-            className='flex bg-white/20 rounded-full items-center p-4 h-12 py-2 text-white text-2xl md:text-4xl font-normal'
+            className='flex h-12 items-center rounded-full bg-white/20 p-4 py-2 text-2xl font-normal text-white md:text-4xl'
           >
             Create Speed Test Question
           </button>
           <button
             onClick={navToAddAdmin}
-            className='flex bg-white/20 rounded-full items-center p-4 h-12 py-2 text-white text-2xl md:text-4xl font-normal'
+            className='flex h-12 items-center rounded-full bg-white/20 p-4 py-2 text-2xl font-normal text-white md:text-4xl'
           >
             Add Administrator
           </button>

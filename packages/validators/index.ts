@@ -9,33 +9,6 @@ export const language = z.union([
   z.literal('italian'),
 ])
 
-export const font = z.union([
-  z.literal('sans'),
-  z.literal('serif'),
-  z.literal('mono'),
-  z.literal('robotoMono'),
-  z.literal('rem'),
-  z.literal('kanit'),
-  z.literal('preahvihear'),
-  z.literal('bebasNeue'),
-  z.literal('chakraPetch'),
-  z.literal('ibmPlexMono'),
-])
-
-
-export const highlightColor = z.union([
-  z.literal('BLUE'),
-  z.literal('BLUE_GREY'),
-  z.literal('GREEN'),
-  z.literal('GREY'),
-  z.literal('ORANGE'),
-  z.literal('PEACH'),
-  z.literal('PURPLE'),
-  z.literal('RED'),
-  z.literal('TURQUOISE'),
-  z.literal('YELLOW'),
-])
-
 export const userSchema = z.object({
   id: z.string(),
   firstName: z.string(),
@@ -45,8 +18,34 @@ export const userSchema = z.object({
   testSpeed: z.number().default(230),
   createdAt: z.date(),
   updatedAt: z.date(),
-  highlightColor: highlightColor.optional(),
-  font: font.default('sans'),
+  highlightColor: z
+    .union([
+      z.literal('BLUE'),
+      z.literal('BLUE_GREY'),
+      z.literal('GREEN'),
+      z.literal('GREY'),
+      z.literal('ORANGE'),
+      z.literal('PEACH'),
+      z.literal('PURPLE'),
+      z.literal('RED'),
+      z.literal('TURQUOISE'),
+      z.literal('YELLOW'),
+    ])
+    .optional(),
+  font: z
+    .union([
+      z.literal('sans'),
+      z.literal('serif'),
+      z.literal('mono'),
+      z.literal('robotoMono'),
+      z.literal('rem'),
+      z.literal('kanit'),
+      z.literal('preahvihear'),
+      z.literal('bebasNeue'),
+      z.literal('chakraPetch'),
+      z.literal('ibmPlexMono'),
+    ])
+    .default('sans'),
   language: language.default('english'),
   lastSchulte: z.string().default(' '),
   lastSpeedTest: z.string().default(' '),
@@ -63,11 +62,9 @@ export const userSchema = z.object({
   lastGreenDot: z.string().default(' '),
   lastWordPairs: z.string().default(' '),
   numberGuesserFigures: z.number().default(0),
-  schulteLevel: z.union([
-    z.literal('three'),
-    z.literal('five'),
-    z.literal('seven'),
-  ]).default('three'),
+  schulteLevel: z
+    .union([z.literal('three'), z.literal('five'), z.literal('seven')])
+    .default('three'),
   schulteAdvanceCount: z.number().default(0),
   isAdmin: z.boolean().default(false),
   isStudySubject: z.boolean().default(false),
@@ -83,12 +80,7 @@ export const speedTestSchema = z.object({
   answerB: z.string(),
   answerC: z.string(),
   answerD: z.string(),
-  correctAnswer: z.union([
-    z.literal('A'),
-    z.literal('B'),
-    z.literal('C'),
-    z.literal('D'),
-  ]).or(z.string()),
+  correctAnswer: z.string(),
 })
 
 const randomWordInputs = z.object({
@@ -123,20 +115,37 @@ export const FlasherType = z.union([
   z.literal('twoByOne'),
 ])
 export const highlightData = z.object({
-  type: FlasherType,
+  type: z.union([
+    z.literal('fourByOne'),
+    z.literal('oneByTwo'),
+    z.literal('twoByTwo'),
+    z.literal('oneByOne'),
+    z.literal('twoByOne'),
+  ]),
   userId: z.string(),
   speed: z.number(),
-  platform: z.union([z.literal('mobile'), z.literal('web')])
-    .default('web'),
+  platform: z.union([z.literal('mobile'), z.literal('web')]).default('web'),
 })
+
+export const highlightColor = z.union([
+  z.literal('BLUE'),
+  z.literal('BLUE_GREY'),
+  z.literal('GREEN'),
+  z.literal('GREY'),
+  z.literal('ORANGE'),
+  z.literal('PEACH'),
+  z.literal('PURPLE'),
+  z.literal('RED'),
+  z.literal('TURQUOISE'),
+  z.literal('YELLOW'),
+])
 
 export const schulteData = z.object({
   userId: z.string(),
   type: z.union([z.literal('three'), z.literal('five'), z.literal('seven')]),
   time: z.number(),
   errorCount: z.number(),
-  platform: z.union([z.literal('mobile'), z.literal('web')])
-    .default('web'),
+  platform: z.union([z.literal('mobile'), z.literal('web')]).default('web'),
 })
 
 export const numberGuesserData = z.object({
@@ -146,58 +155,49 @@ export const numberGuesserData = z.object({
   longestStreak: z.number(),
   figuresAtStart: z.number(),
   figuresAtEnd: z.number(),
-  platform: z.union([z.literal('mobile'), z.literal('web')])
-    .default('web'),
+  platform: z.union([z.literal('mobile'), z.literal('web')]).default('web'),
 })
 
 export const letterMatcherData = z.object({
   userId: z.string(),
   numberCorrect: z.number(),
   numberWrong: z.number(),
-  platform: z.union([z.literal('mobile'), z.literal('web')])
-    .default('web'),
+  platform: z.union([z.literal('mobile'), z.literal('web')]).default('web'),
 })
 
 export const evenNumbersData = z.object({
   userId: z.string(),
   time: z.number(),
   errorCount: z.number(),
-  platform: z.union([z.literal('mobile'), z.literal('web')])
-    .default('web'),
+  platform: z.union([z.literal('mobile'), z.literal('web')]).default('web'),
 })
 
 export const boxFlasherData = z.object({
   userId: z.string(),
   type: z.union([z.literal('two'), z.literal('three')]),
   speed: z.number(),
-  platform: z.union([z.literal('mobile'), z.literal('web')])
-    .default('web'),
+  platform: z.union([z.literal('mobile'), z.literal('web')]).default('web'),
 })
 
 export const wordPairData = z.object({
   primaryWord: z.string(),
   secondaryWord: z.string(),
   language: language,
-  platform: z.union([z.literal('mobile'), z.literal('web')])
-    .default('web'),
+  platform: z.union([z.literal('mobile'), z.literal('web')]).default('web'),
 })
 
 export const wordPairSessionData = z.object({
   userId: z.string(),
   errorCount: z.number(),
   time: z.number(),
-  platform: z.union([z.literal('mobile'), z.literal('web')])
-    .default('web'),
+  platform: z.union([z.literal('mobile'), z.literal('web')]).default('web'),
 })
 
 export const speedTestData = z.object({
   numberWrong: z.number(),
   startSpeed: z.number(),
   endSpeed: z.number(),
-  platform: z.union([
-    z.literal('mobile'), 
-    z.literal('web')
-  ]).default('web'),
+  platform: z.union([z.literal('mobile'), z.literal('web')]).default('web'),
 })
 
 export const wordPairProps = z.object({
@@ -205,10 +205,24 @@ export const wordPairProps = z.object({
   language: language,
 })
 
+export const createAdminInputSchema = z.object({
+  email: z.string().nullable(),
+})
+
+export const createAdminResultSchema = z.union([
+  z.literal('success'),
+  z.literal('error'),
+  z.literal('alreadyAdmin'),
+  z.literal('invalidEmail'),
+  z.literal('unauthorized'),
+])
+
 export const schemas = {
   user: userSchema,
   speedTest: speedTestSchema,
   exercise: exercise,
+  createAdminInputSchema,
+  createAdminResultSchema,
 }
 
 export const inputs = {
