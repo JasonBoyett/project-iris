@@ -1,0 +1,272 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+enum Overlay {
+  BLUE
+  BLUE_GREY
+  GREEN
+  GREY
+  ORANGE
+  PEACH
+  PURPLE
+  RED
+  TURQUOISE
+  YELLOW
+}
+
+enum Font {
+  sans
+  serif
+  mono
+  robotoMono
+  rem
+  kanit
+  preahvihear
+  bebasNeue
+  chakraPetch
+  ibmPlexMono
+}
+
+enum Language {
+  english
+  spanish
+  italian
+  german
+}
+
+enum HighlightType {
+  fourByOne
+  oneByTwo
+  twoByTwo
+  oneByOne
+  twoByOne
+}
+
+enum SchulteType {
+  three
+  five
+  seven
+}
+
+enum BoxType {
+  two
+  three
+}
+
+model User {
+  id                      String                 @id @unique
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @updatedAt
+  firstName               String                 @default("Default") @db.VarChar(255)
+  lastName                String                 @default("User") @db.VarChar(255)
+  maxWpm                  Int                    @default(250) @db.SmallInt
+  testSpeed               Int                    @default(230) @db.SmallInt
+  currentWpm              Int                    @default(230) @db.SmallInt
+  timeTests               TimeTest[]
+  shulteSessions          SchulteSession[]
+  evenNumberSessions      EvenNumberSession[]
+  wordGridFlasherSessions HighlightSession[]
+  wordFlasherSessions     WordFlasherSession[]
+  LetterMatcherSessions   LetterMatcherSession[]
+  GreenDotSessions        GreenDotSession[]
+  NumberGuesserSession    NumberGuesserSession[]
+  BoxFlasherSession       BoxFlasherSession[]
+  PairsSession            PairsSession[]
+  SpeedTestSessions       SpeedTestSession[]
+  highlightColor          Overlay                @default(GREY)
+  lastSchulte             String                 @default(" ")
+  lastSpeedTest           String                 @default(" ")
+  lastFourByOne           String                 @default(" ")
+  lastOneByTwo            String                 @default(" ")
+  lastTwoByTwo            String                 @default(" ")
+  lastOneByOne            String                 @default(" ")
+  lastTwoByOne            String                 @default(" ")
+  lastEvenNumbers         String                 @default(" ")
+  lastCubeByTwo           String                 @default(" ")
+  lastCubeByThree         String                 @default(" ")
+  lastNumberGuesser       String                 @default(" ")
+  lastLetterMatcher       String                 @default(" ")
+  lastWordPairs           String                 @default(" ")
+  lastGreenDot            String                 @default(" ")
+  numberGuesserFigures    Int                    @default(4)
+  font                    Font                   @default(sans)
+  isUsingChecklist        Boolean                @default(true)
+  isAdmin                 Boolean                @default(false)
+  isStudySubject          Boolean                @default(true)
+  schulteLevel            SchulteType            @default(three)
+  schulteAdvanceCount     Int                    @default(0)
+  language                Language               @default(english)
+  tested                  Boolean                @default(false)
+
+  @@index([id])
+}
+
+model TimeTest {
+  id        String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  sessionId String   @id @default(cuid())
+  CreatedAt DateTime 
+  highScore Int      @db.SmallInt
+  lowScore  Int      @db.SmallInt
+  accuracy  Int      @db.SmallInt
+
+  @@index([id])
+}
+
+model SchulteSession {
+  id         String      @unique
+  user       User        @relation(fields: [userId], references: [id])
+  type       SchulteType
+  time       Int
+  errorCount Int         @db.SmallInt
+  userId     String      @db.VarChar(255)
+  date       DateTime    
+  platform   String      @default("web")
+
+  @@index([id])
+}
+
+model EvenNumberSession {
+  id         String   @unique
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  errorCount Int      @db.SmallInt
+  time       Int
+  date       DateTime @db.DateTime
+  platform   String   @default("web")
+
+  @@index([id])
+}
+
+model HighlightSession {
+  id       String        @unique
+  userId   String
+  user     User          @relation(fields: [userId], references: [id])
+  speed    Int           @db.SmallInt
+  date     DateTime      @db.DateTime
+  type     HighlightType
+  platform String        @default("web")
+
+  @@index([id])
+}
+
+model NumberGuesserSession {
+  id             String   @unique
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  numberCorrect  Int
+  numberWrong    Int
+  longestStreak  Int
+  figuresAtStart Int
+  figuresAtEnd   Int
+  date           DateTime 
+  platform       String   @default("web")
+
+  @@index([id])
+}
+
+model LetterMatcherSession {
+  id            String   @unique
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  numberCorrect Int
+  numberWrong   Int
+  date          DateTime 
+  platform      String   @default("web")
+
+  @@index([id])
+}
+
+model WordFlasherSession {
+  id       String   @unique
+  userId   String
+  user     User     @relation(fields: [userId], references: [id])
+  speed    Int      @db.SmallInt
+  date     DateTime 
+  type     String   @db.VarChar(255)
+  platform String   @default("web")
+
+  @@index([id])
+}
+
+model BoxFlasherSession {
+  id       String   @unique
+  userId   String
+  user     User     @relation(fields: [userId], references: [id])
+  speed    Int
+  date     DateTime 
+  type     BoxType
+  platform String   @default("web")
+
+  @@index([id])
+}
+
+model GreenDotSession {
+  id       String   @unique
+  userId   String
+  user     User     @relation(fields: [userId], references: [id])
+  date     DateTime 
+  platform String   @default("web")
+
+  @@index([id])
+}
+
+model PairsSession {
+  id         String   @unique
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  date       DateTime 
+  time       Int
+  errorCount Int
+  platform   String   @default("web")
+
+  @@index([id])
+}
+
+model SpeedTestSession {
+  id         String   @unique
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  startSpeed  Int      @db.SmallInt
+  endSpeed   Int      @db.SmallInt
+  date       DateTime 
+  errorCount Int      @db.SmallInt
+  platform   String   @default("web")
+
+  @@index([id])
+}
+
+model SpeedQuestion {
+  id            Int      @id @unique
+  passage       String   @db.Text
+  question      String   @db.Text
+  answerA       String
+  answerB       String
+  answerC       String
+  answerD       String
+  correctAnswer String
+  language      Language @default(english)
+
+  @@index([id])
+}
+
+model WordPair {
+  id            Int      @id @unique @default(autoincrement())
+  primaryWord   String
+  secondaryWord String
+  language      Language @default(english)
+
+  @@index([id])
+}

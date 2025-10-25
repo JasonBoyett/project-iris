@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@acme/db/src/generated/client'
 
 declare global {
   // allow global `var` declarations
