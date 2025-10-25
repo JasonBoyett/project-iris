@@ -30,7 +30,7 @@ export const cornersCell = cva(
 
 export interface FlasherProps
   extends React.HTMLAttributes<HTMLDivElement>,
-  VariantProps<typeof cornersCell> { }
+    VariantProps<typeof cornersCell> {}
 
 export const StyledCube = ({
   className,
