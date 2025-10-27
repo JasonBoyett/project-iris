@@ -2,11 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@acme/db/src/generated/client'
 
 export async function GET(request: NextRequest) {
-  // Security check (optional but recommended)
-  const authHeader = request.headers.get('authorization')
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  // const authHeader = request.headers.get('authorization')
+  // if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  // }
   try {
     const prisma = new PrismaClient()
     await prisma.user.updateMany({
