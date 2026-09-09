@@ -55,10 +55,10 @@ export default function Page() {
 
   const current = countDownPosition > 0 
     ? countDownPosition 
-    : words[currentIndex - 1] ?? ''
+    : words[currentIndex] ?? ''
   const previous = countDownPosition > 0 
     ? ''
-    : words[currentIndex] ?? ''
+    : words[currentIndex - 1] ?? ''
   const next = countDownPosition > 0 
     ? '' 
     : words[currentIndex + 1] ?? ''  
