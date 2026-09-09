@@ -81,7 +81,7 @@ function colorSelector(user: User) {
     case 'YELLOW':
       return 'yellow'
   }
-  return 'none'
+  return 'blue'
 }
 
 export function partitionWords(
