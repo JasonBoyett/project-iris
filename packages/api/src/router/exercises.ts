@@ -123,11 +123,13 @@ export const excercisePropsRouter = router({
     .output(speedTestSchema)
     .query(async ({ ctx }) => {
       const numberOfTables = await ctx.prisma.speedQuestion.count()
-      const random = Math.floor(Math.random() * numberOfTables)
-      const result = await ctx.prisma.speedQuestion.findUnique({
-        where: {
-          id: random,
+      if (numberOfTables === 0) throw new Error('No speed test questions found')
+
+      const result = await ctx.prisma.speedQuestion.findFirst({
+        orderBy: {
+          id: 'asc',
         },
+        skip: Math.floor(Math.random() * numberOfTables),
       })
       if (result === null || result === undefined) throw new Error('No result')
       return result

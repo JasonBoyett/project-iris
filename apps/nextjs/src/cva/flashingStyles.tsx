@@ -24,7 +24,6 @@ export const cell = cva(
         yellow: 'bg-[#F8fd89]',
       },
     },
-    compoundVariants: [{ intent: 'noFlash', flashColor: 'none' }],
     defaultVariants: {
       intent: 'noFlash',
       flashColor: 'none',
@@ -45,7 +44,8 @@ export const StyledCell = ({
 }: ButtonProps) => (
   <div
     className={cell({ intent, flashColor, className })}
-    children
     {...props}
-  />
+  >
+    {children}
+  </div>
 )

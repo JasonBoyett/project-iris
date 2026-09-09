@@ -51,13 +51,15 @@ export default function Page() {
   useEffect(() => {
     if (!userStore.user) return
     if (!exerciseStore) return
+    console.log('ran')
+    console.log(exerciseStore.current)
     setQuestion(exerciseStore.current.question)
     setAnswerA(exerciseStore.current.answerA)
     setAnswerB(exerciseStore.current.answerB)
     setAnswerC(exerciseStore.current.answerC)
     setAnswerD(exerciseStore.current.answerD)
-    setRate(userStore.user.testSpeed)
-    setFont(userStore.user.font)
+    setRate(userStore.user.testSpeed ?? 0)
+    setFont(userStore.user.font ?? 'sans')
   }, [exerciseStore, userStore.user])
 
   return (

@@ -1,4 +1,4 @@
-import React, { Key } from 'react'
+import React from 'react'
 import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
 
@@ -17,11 +17,10 @@ export const cornersCell = cva(
   {
     variants: {
       intent: {
-        noFlash: 'bg-invsible invsible',
+        noFlash: 'invisible',
         flash: 'rounded-lg border-black border-2 gap-1 bg-white',
       },
     },
-    compoundVariants: [{ intent: 'noFlash' }],
     defaultVariants: {
       intent: 'noFlash',
     },
@@ -42,8 +41,8 @@ export const StyledCube = ({
     <div
       {...props}
       className={cornersCell({ intent, className })}
-      // eslint-disable-next-line
-      children
-    />
+    >
+      {children}
+    </div>
   )
 }

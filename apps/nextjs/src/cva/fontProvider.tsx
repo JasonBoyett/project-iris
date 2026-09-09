@@ -31,9 +31,10 @@ export const FontProvider = ({
 }: ProviderProps): JSX.Element => (
   <div
     className={fontProvider({ font, className })}
-    children
     {...props}
-  />
+  >
+    {children}
+  </div>
 )
 
 export interface ButtonProps
@@ -48,7 +49,8 @@ export const FontProviderButton = ({
 }: ButtonProps) => (
   <button
     className={fontProvider({ font, className })}
-    children
     {...props}
-  />
+  >
+    {children}
+  </button>
 )

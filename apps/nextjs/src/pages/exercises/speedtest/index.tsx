@@ -11,20 +11,23 @@ import Sidebar from '../../../components/sidebar'
 import { userHilightToHex } from '@acme/helpers'
 
 export const TESTS_PER_DAY = 10
+const CPOUNTDOWN = 5
 
 export default function Page() {
-  const [counter, setCounter] = useState(0)
   const [hex, setHex] = useState<string>('#000000')
   const [words, setWords] = useState<string[]>([''])
   const [font, setFont] = useState<Font>('sans')
-  const userStore = useUserStore(state => state)
-  const exerciseStore = useSpeedTestStore(state => state)
   const [loading, setLoading] = useState(true)
   const [time, setTime] = useState(100)
-  const [previous, setPrevious] = useState<string>('')
-  const [next, setNext] = useState<string>('')
-  const [current, setCurrent] = useState('Loading...')
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [countDownPosition, setCountDownPosition] = useState(CPOUNTDOWN)
+
+  const setUser = useUserStore(state => state.setUser)
+  const setUpSpeedTest = useSpeedTestStore(state => state.setUp)
+
   const { data } = trpc.excercise.getSingleSpeedTestProps.useQuery()
+  const { data: user } = trpc.user.get.useQuery()
+
   const router = useRouter()
 
   function navigateToQuestion() {
@@ -38,58 +41,72 @@ export default function Page() {
   }
 
   useEffect(() => {
-    if (!data) return
-    if (!data.id) return
-    if (!userStore.user) return
-    if (!data.passage) return
-    setWords(() => {
-      if (!data.passage) return ['']
-      return data.passage.split(' ')
-    })
-    setFont(userStore.user.font)
-    setHex(userHilightToHex(userStore.user))
-    exerciseStore.setUp(data)
-    setLoading(() => false)
-    setTime(wpmToMiliseconds(userStore.user.testSpeed))
-  }, [data, userStore.user])
+    if (!data?.id || !user || !data.passage) return
+
+    setWords(data.passage.split(' '))
+    setCurrentIndex(0)
+    setFont(user.font)
+    setHex(userHilightToHex(user))
+    setUser(user)
+    setUpSpeedTest(data)
+    setLoading(false)
+    setTime(wpmToMiliseconds(user.testSpeed))
+  }, [data, setUpSpeedTest, setUser, user])
+
+  const current = countDownPosition > 0 
+    ? countDownPosition 
+    : words[currentIndex - 1] ?? ''
+  const previous = countDownPosition > 0 
+    ? ''
+    : words[currentIndex] ?? ''
+  const next = countDownPosition > 0 
+    ? '' 
+    : words[currentIndex + 1] ?? ''  
 
   useInterval(() => {
-    if (!!loading) return
-    if (counter === words.length) return navigateToQuestion()
-    setPrevious((): string => {
-      if (!words.at(counter - 1)) return ''
-      return words.at(counter - 1) as string
-    })
-    setCurrent((): string => {
-      if (!words.at(counter)) return ''
-      return words.at(counter) as string
-    })
-    setNext((): string => {
-      if (!words.at(counter + 1)) return ''
-      return words.at(counter + 1) as string
-    })
-    setCounter(prev => prev + 1)
+    if (loading) return
+    if (countDownPosition) {
+      setCountDownPosition(prev => prev - 1)
+      return
+    }
+
+
+    if (currentIndex >= words.length - 1) {
+      navigateToQuestion()
+      return
+    }
+
+    setCurrentIndex(prev => prev + 1)
   }, time)
 
   return (
     <>
-      <Head>Speed Test</Head>
+      <Head>
+        <title>Speed Test</title>
+      </Head>
+
       <Sidebar />
 
       <main>
         <center>
           <FontProvider
-            className='flex h-screen items-center justify-center'
+            className="flex h-screen items-center justify-center"
             font={font}
           >
-            <div className='flex w-5/6 flex-col items-center justify-center gap-4 rounded-xl bg-white p-4 md:w-2/3'>
-              <h1 className='text-center text-4xl'>{previous}</h1>
+            <div className="flex w-5/6 flex-col items-center justify-center gap-4 rounded-xl bg-white p-4 md:w-2/3">
+              <h1 className="text-center text-4xl">
+                {previous}
+              </h1>
+
               <h1
                 className={`text-center text-4xl bg-[${hex}] w-5/6 rounded-xl md:w-1/3`}
               >
                 {current}
               </h1>
-              <h1 className='text-center text-4xl'>{next}</h1>
+
+              <h1 className="text-center text-4xl">
+                {next}
+              </h1>
             </div>
           </FontProvider>
         </center>
@@ -97,4 +114,3 @@ export default function Page() {
     </>
   )
 }
-
