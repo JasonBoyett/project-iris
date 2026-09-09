@@ -81,6 +81,7 @@ export const speedTestSchema = z.object({
   answerC: z.string(),
   answerD: z.string(),
   correctAnswer: z.string(),
+  language: language,
 })
 
 const randomWordInputs = z.object({
