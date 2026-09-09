@@ -4,6 +4,7 @@ import type { SpeedTest } from '@acme/types'
 
 const emptySpeedTest: SpeedTest = {
   id: 0,
+  language: 'english',
   question: '',
   passage: '',
   answerA: '',

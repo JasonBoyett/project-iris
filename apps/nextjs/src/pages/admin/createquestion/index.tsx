@@ -39,6 +39,7 @@ function QuestionForm() {
       return
     }
     const body = {
+      language: 'english' as const,
       passage,
       question,
       answerA,

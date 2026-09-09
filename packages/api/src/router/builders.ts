@@ -23,6 +23,7 @@ export const buildSpeedTestRouter = router({
           answerC: input.answerC,
           answerD: input.answerD,
           correctAnswer: input.correctAnswer,
+          language: input.language,
         },
       })
     }),
