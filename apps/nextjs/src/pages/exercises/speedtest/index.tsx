@@ -8,6 +8,7 @@ import { trpc } from '../../../utils/trpc'
 import Head from 'next/head'
 import { FontProvider } from '../../../cva/fontProvider'
 import Sidebar from '../../../components/sidebar'
+import SpeedTestControls from '../../../components/speedtestcontrols'
 import { userHilightToHex } from '@acme/helpers'
 
 export const TESTS_PER_DAY = 10
@@ -18,15 +19,17 @@ export default function Page() {
   const [words, setWords] = useState<string[]>([''])
   const [font, setFont] = useState<Font>('sans')
   const [loading, setLoading] = useState(true)
-  const [time, setTime] = useState(100)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [countDownPosition, setCountDownPosition] = useState(CPOUNTDOWN)
-
+  const [time, setTime] = useState(100)
+  const [speed, setSpeed] = useState(0)
   const setUser = useUserStore(state => state.setUser)
   const setUpSpeedTest = useSpeedTestStore(state => state.setUp)
 
   const { data } = trpc.excercise.getSingleSpeedTestProps.useQuery()
   const { data: user } = trpc.user.get.useQuery()
+
+  const [isPaused, setIsPaused] = useState(false)
 
   const router = useRouter()
 
@@ -50,34 +53,32 @@ export default function Page() {
     setUser(user)
     setUpSpeedTest(data)
     setLoading(false)
+    setSpeed(user.testSpeed)
     setTime(wpmToMiliseconds(user.testSpeed))
   }, [data, setUpSpeedTest, setUser, user])
 
-  const current = countDownPosition > 0 
-    ? countDownPosition 
-    : words[currentIndex] ?? ''
-  const previous = countDownPosition > 0 
-    ? ''
-    : words[currentIndex - 1] ?? ''
-  const next = countDownPosition > 0 
-    ? '' 
-    : words[currentIndex + 1] ?? ''  
+  const current =
+    countDownPosition > 0 ? countDownPosition : words[currentIndex] ?? ''
+  const previous = countDownPosition > 0 ? '' : words[currentIndex - 1] ?? ''
+  const next = countDownPosition > 0 ? '' : words[currentIndex + 1] ?? ''
 
-  useInterval(() => {
-    if (loading) return
-    if (countDownPosition) {
-      setCountDownPosition(prev => prev - 1)
-      return
-    }
+  useInterval(
+    () => {
+      if (loading) return
+      if (countDownPosition) {
+        setCountDownPosition(prev => prev - 1)
+        return
+      }
 
+      if (currentIndex >= words.length - 1) {
+        navigateToQuestion()
+        return
+      }
 
-    if (currentIndex >= words.length - 1) {
-      navigateToQuestion()
-      return
-    }
-
-    setCurrentIndex(prev => prev + 1)
-  }, time)
+      setCurrentIndex(prev => prev + 1)
+    },
+    loading || isPaused ? null : time,
+  )
 
   return (
     <>
@@ -90,13 +91,11 @@ export default function Page() {
       <main>
         <center>
           <FontProvider
-            className="flex h-screen items-center justify-center"
+            className='flex h-screen flex-col items-center justify-center'
             font={font}
           >
-            <div className="flex w-5/6 flex-col items-center justify-center gap-4 rounded-xl bg-white p-4 md:w-2/3">
-              <h1 className="text-center text-4xl">
-                {previous}
-              </h1>
+            <div className='flex w-5/6 flex-col items-center justify-center gap-4 rounded-xl bg-white p-4 md:w-2/3'>
+              <h1 className='text-center text-4xl'>{previous}</h1>
 
               <h1
                 className={`text-center text-4xl bg-[${hex}] w-5/6 rounded-xl md:w-1/3`}
@@ -104,10 +103,19 @@ export default function Page() {
                 {current}
               </h1>
 
-              <h1 className="text-center text-4xl">
-                {next}
-              </h1>
+              <h1 className='text-center text-4xl'>{next}</h1>
             </div>
+            {user?.isAdmin && (
+              <SpeedTestControls
+                isPaused={isPaused}
+                onTogglePause={() => setIsPaused(previous => !previous)}
+                speed={speed}
+                onChangeSpeed={newSpeed => {
+                  setSpeed(newSpeed)
+                  setTime(wpmToMiliseconds(newSpeed))
+                }}
+              />
+            )}
           </FontProvider>
         </center>
       </main>
